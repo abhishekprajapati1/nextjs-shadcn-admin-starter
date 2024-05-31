@@ -1,0 +1,47 @@
+import axios, { AxiosError } from 'axios';
+import { getCookie } from 'cookies-next';
+import { TOKENS } from './constants';
+
+export const baseURL = process.env.NODE_ENV === "development" ? "http://localhost:4000/api/" : "https://api.hospotribe.com/api/";
+const BearerToken = `Bearer ${getCookie(TOKENS.AUTH_TOKEN)}`;
+
+const api = axios.create({
+    baseURL,
+    withCredentials: true,
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': BearerToken,
+    }
+});
+
+export const multipartApi = axios.create({
+    baseURL,
+    withCredentials: true,
+    headers: {
+        'Content-Type': 'multipart/formdata',
+        'Authorization': BearerToken
+    }
+});
+
+
+export type RequestError = AxiosError & {
+    response: {
+        data: {
+            success: boolean,
+            message?: string,
+            error?: any;
+        }
+    }
+}
+
+export const getErrorMessage = (error: RequestError) => {
+    let message;
+    if (Array.isArray(error?.response?.data?.message) && error?.response?.data?.message.length > 0) {
+        message = error?.response?.data?.message[0];
+    } else {
+        message = error?.response?.data?.message || error?.message || "Something went wrong";
+    }
+    return message;
+}
+
+export default api;
