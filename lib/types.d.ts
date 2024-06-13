@@ -5,4 +5,22 @@ export interface IWrapper {
     children: React.ReactNode;
 }
 
+export type FileType = {
+    id: string;
+    name?: string;
+    fieldname?: string;
+    url: string;
+}
+
 export interface IconInterface extends React.SVGProps<SVGSVGElement> { }
+export interface IOwner {
+    id: string,
+    name: string,
+    created_at: Date,
+    account_verified: Date | null,
+    email: string,
+    email_verified: Date | null,
+    phone_number: string,
+    company_name: string,
+    avatar: FileType,
+}

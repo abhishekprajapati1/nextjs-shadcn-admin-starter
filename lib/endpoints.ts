@@ -2,6 +2,9 @@ const ENDPOINTS = {
     AUTH: {
         LOGIN: "auth/login"
     },
+    OWNERS: {
+        GET_ALL: "owners"
+    },
     FST: {
         TASK_ICONS: {
             GET_ALL: "manage/task-icons",

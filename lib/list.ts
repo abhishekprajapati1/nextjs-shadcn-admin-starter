@@ -8,6 +8,12 @@ import TaskIcon from "@/components/icons/TaskIcon";
 export const sidebar_menus: IMenuLink[] = [
     {
         icon: TaskIcon,
+        title: "Users",
+        variant: "ghost",
+        href: "/users",
+    },
+    {
+        icon: TaskIcon,
         title: "Task Icons",
         variant: "ghost",
         href: "/fst/task-icons"
