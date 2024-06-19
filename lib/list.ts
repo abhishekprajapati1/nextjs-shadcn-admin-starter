@@ -4,10 +4,11 @@ import IncidentIcon from "@/components/icons/IncidentIcon";
 import IncidentLevelIcon from "@/components/icons/IncidentLevelIcon";
 import InjuryIcon from "@/components/icons/InjuryIcon";
 import TaskIcon from "@/components/icons/TaskIcon";
+import UsersIcon from "@/components/icons/UsersIcon";
 
 export const sidebar_menus: IMenuLink[] = [
     {
-        icon: TaskIcon,
+        icon: UsersIcon,
         title: "Users",
         variant: "ghost",
         href: "/users",

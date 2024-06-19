@@ -24,3 +24,10 @@ export interface IOwner {
     company_name: string,
     avatar: FileType,
 }
+export interface IFormOption {
+    id: string,
+    type: string,
+    label: string,
+    xero_key?: string | null,
+    myob_key?: string | null
+}
