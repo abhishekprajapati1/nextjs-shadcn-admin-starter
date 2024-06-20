@@ -83,7 +83,7 @@ const IncidentTypesPage = () => {
               <OptionCard
                 key={data.id}
                 label={data.label}
-                totalLinkedRecords={data._count.injury_types}
+                totalLinkedRecords={data._count.incident_types}
                 id={data.id}
                 useDelete={useDeleteIncidentType}
                 onEdit={() => handleEdit(data)}

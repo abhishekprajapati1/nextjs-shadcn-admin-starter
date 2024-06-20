@@ -18,8 +18,12 @@ const ENDPOINTS = {
     WHS: {
         INJURY_TYPES: "manage/injury-types",
         MUTATE_INJURY_TYPES: (id: string) => `manage/injury-types/${id}`,
+        INJURY_LEVELS: "manage/injury-levels",
+        MUTATE_INJURY_LEVELS: (id: string) => `manage/injury-levels/${id}`,
         INCIDENT_TYPES: "manage/incident-types",
         MUTATE_INCIDENT_TYPES: (id: string) => `manage/incident-types/${id}`,
+        INCIDENT_LEVELS: "manage/incident-levels",
+        MUTATE_INCIDENT_LEVELS: (id: string) => `manage/incident-levels/${id}`,
     }
 }
 
