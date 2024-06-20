@@ -1,6 +1,7 @@
 const ENDPOINTS = {
     AUTH: {
-        LOGIN: "auth/login"
+        LOGIN: "auth/login",
+        LOGOUT: "auth/logout",
     },
     OWNERS: {
         GET_ALL: (filter: string) => `owners${filter !== "all" ? "?status=" + filter : ""}`,
@@ -15,7 +16,8 @@ const ENDPOINTS = {
         }
     },
     WHS: {
-        INJURY_TYPES: "manage/injury-types"
+        INJURY_TYPES: "manage/injury-types",
+        MUTATE_INJURY_TYPES: (id: string) => `manage/injury-types/${id}`
     }
 }
 

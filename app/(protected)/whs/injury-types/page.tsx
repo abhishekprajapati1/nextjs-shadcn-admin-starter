@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import ENDPOINTS from "@/lib/endpoints";
 import useFetch from "@/lib/hooks/useFetch";
 import useCreateInjuryType from "@/lib/mutations/whs/useCreateInjuryType";
+import useDeleteInjuryType from "@/lib/mutations/whs/useDeleteInjuryType";
+import useUpdateInjuryType from "@/lib/mutations/whs/useUpdateInjuryType";
 import { IFormOption } from "@/lib/types";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { setDataToEdit, setShowForm } from "@/store/slices/injury-type.slice";
@@ -28,6 +30,19 @@ const InjuryTypesPage = () => {
     },
   });
 
+  const { mutate: updateType, isPending: updating } = useUpdateInjuryType({
+    id: dataToEdit?.id || "",
+    onSuccess: () => {
+      dispatch(setDataToEdit(null));
+      dispatch(setShowForm(false));
+    },
+  });
+
+  const handleEdit = (data: IFormOption) => {
+    dispatch(setDataToEdit(data));
+    dispatch(setShowForm(true));
+  };
+
   return (
     <div className="flex flex-col h-full overflow-auto">
       <PageHeader
@@ -40,16 +55,18 @@ const InjuryTypesPage = () => {
           Add New
         </Button>
       </PageHeader>
+
       <OptionForm
         open={showForm}
         data={dataToEdit || null}
-        mutationFn={dataToEdit ? () => null : createType}
+        mutationFn={dataToEdit ? updateType : createType}
         onOpenChange={(bool) => {
           dispatch(setDataToEdit(null));
           dispatch(setShowForm(bool));
         }}
-        isMutating={dataToEdit ? false : creating}
+        isMutating={dataToEdit ? updating : creating}
       />
+
       <div className="p-4 lg:p-10 w-full overflow-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {isLoading && (
           <div className="h-full grid place-content-center">
@@ -64,8 +81,10 @@ const InjuryTypesPage = () => {
               <OptionCard
                 key={data.id}
                 label={data.label}
-                onDelete={() => null}
-                onEdit={() => null}
+                totalLinkedRecords={data._count.injury_types}
+                id={data.id}
+                useDelete={useDeleteInjuryType}
+                onEdit={() => handleEdit(data)}
               />
             );
           })}

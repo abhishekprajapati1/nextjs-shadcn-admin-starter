@@ -39,6 +39,12 @@ const OptionForm: React.FC<OptionFormProps> = ({
     }
   }, [data]);
 
+  React.useEffect(() => {
+    if (!open) {
+      form.reset({ label: "" });
+    }
+  }, [open]);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
@@ -68,13 +74,18 @@ const OptionForm: React.FC<OptionFormProps> = ({
               disabled={isMutating}
               type={isMutating ? "button" : "submit"}
               size="lg"
+              className="gap-2"
             >
               {isMutating && (
                 <React.Fragment>
-                  <SpinnerIcon /> Creating...
+                  <SpinnerIcon /> {data ? "Updating" : "Creating..."}
                 </React.Fragment>
               )}
-              {!isMutating && "Add Label"}
+              {!isMutating && (
+                <React.Fragment>
+                  {data ? "Update label" : "Add label"}
+                </React.Fragment>
+              )}
             </Button>
           </form>
         </Form>
