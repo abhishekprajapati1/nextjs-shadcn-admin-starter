@@ -5,6 +5,7 @@ import IncidentLevelIcon from "@/components/icons/IncidentLevelIcon";
 import InjuryIcon from "@/components/icons/InjuryIcon";
 import TaskIcon from "@/components/icons/TaskIcon";
 import UsersIcon from "@/components/icons/UsersIcon";
+import WitnessIcon from "@/components/icons/WitnessIcon";
 
 export const sidebar_menus: IMenuLink[] = [
     {
@@ -44,6 +45,12 @@ export const sidebar_menus: IMenuLink[] = [
         href: "/whs/injury-levels"
     },
     {
+        icon: WitnessIcon,
+        title: "Witness Types",
+        variant: "ghost",
+        href: "/whs/witness-types"
+    },
+    {
         icon: DamageIcon,
         title: "Damage Types",
         variant: "ghost",
@@ -54,5 +61,11 @@ export const sidebar_menus: IMenuLink[] = [
         title: "Damage Levels",
         variant: "ghost",
         href: "/whs/damage-levels"
+    },
+    {
+        icon: DamageIcon,
+        title: "Regions",
+        variant: "ghost",
+        href: "/regions"
     },
 ]

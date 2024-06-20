@@ -28,6 +28,10 @@ const ENDPOINTS = {
         MUTATE_DAMAGE_TYPES: (id: string) => `manage/damage-types/${id}`,
         DAMAGE_LEVELS: "manage/damage-levels",
         MUTATE_DAMAGE_LEVELS: (id: string) => `manage/damage-levels/${id}`,
+        WITNESS_TYPES: "manage/witness-types",
+        MUTATE_WITNESS_TYPES: (id: string) => `manage/witness-types/${id}`,
+        REGIONS: "manage/regions",
+        MUTATE_REGIONS: (id: string) => `manage/regions/${id}`,
     }
 }
 

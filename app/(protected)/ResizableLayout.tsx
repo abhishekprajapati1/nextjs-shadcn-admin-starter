@@ -66,7 +66,7 @@ const ResizableLayout: React.FC<ResizableLayoutProps> = ({
           <div
             className={cn(
               "flex flex-shrink-0 h-16 items-center",
-              isCollapsed ? "h-[52px] justify-center" : "px-5"
+              isCollapsed ? "justify-center" : "px-5"
             )}
           >
             <strong>

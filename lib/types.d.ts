@@ -28,7 +28,7 @@ export interface IFormOption {
     id: string,
     type: string,
     label: string,
-    xero_key?: string | null,
-    myob_key?: string | null,
+    xero_key?: string,
+    myob_key?: string,
     _count: { [key: string]: number }
 }

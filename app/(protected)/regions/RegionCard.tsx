@@ -1,21 +1,23 @@
 "use client";
+import DeleteIcon from "@/components/icons/DeleteIcon";
+import EditIcon from "@/components/icons/EditIcon";
+import SpinnerIcon from "@/components/icons/SpinnerIcon";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import React from "react";
-import { Card, CardContent } from "./ui/card";
-import { Button } from "./ui/button";
-import EditIcon from "./icons/EditIcon";
-import DeleteIcon from "./icons/DeleteIcon";
-import SpinnerIcon from "./icons/SpinnerIcon";
 
-interface OptionCardProps {
+interface RegionCardProps {
   label: string;
+  xero_key: string;
   id: string;
   onEdit: () => void;
   totalLinkedRecords?: number;
   useDelete: () => any;
 }
 
-const OptionCard: React.FC<OptionCardProps> = ({
+const RegionCard: React.FC<RegionCardProps> = ({
   label,
+  xero_key,
   id,
   useDelete,
   onEdit,
@@ -25,13 +27,16 @@ const OptionCard: React.FC<OptionCardProps> = ({
 
   return (
     <Card>
-      <CardContent className="pt-6 h-full flex flex-col">
+      <CardContent className="pt-6 h-full flex flex-col h-full">
         <h3 className="text-base capitalize text-gray-600 flex-shrink-0 mb-4">
+          <span className="mr-2 text-xs py-1 px-2 rounded-md bg-gray-100 border-gray-400">
+            {xero_key}
+          </span>
           {label}
         </h3>
-        <div className="flex items-baseline flex-grow">
+        <div className="flex flex-grow items-baseline">
           <span className="text-xs text-gray-400 flex-shrink-0 h-full">
-            {totalLinkedRecords} injured
+            {totalLinkedRecords} addresses
           </span>
           <div className="flex items-end justify-end gap-2 flex-grow h-full">
             <Button
@@ -59,4 +64,4 @@ const OptionCard: React.FC<OptionCardProps> = ({
   );
 };
 
-export default OptionCard;
+export default RegionCard;
