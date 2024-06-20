@@ -17,7 +17,9 @@ const ENDPOINTS = {
     },
     WHS: {
         INJURY_TYPES: "manage/injury-types",
-        MUTATE_INJURY_TYPES: (id: string) => `manage/injury-types/${id}`
+        MUTATE_INJURY_TYPES: (id: string) => `manage/injury-types/${id}`,
+        INCIDENT_TYPES: "manage/incident-types",
+        MUTATE_INCIDENT_TYPES: (id: string) => `manage/incident-types/${id}`,
     }
 }
 

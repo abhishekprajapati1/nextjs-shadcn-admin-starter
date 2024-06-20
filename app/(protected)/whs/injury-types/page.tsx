@@ -12,7 +12,7 @@ import useDeleteInjuryType from "@/lib/mutations/whs/useDeleteInjuryType";
 import useUpdateInjuryType from "@/lib/mutations/whs/useUpdateInjuryType";
 import { IFormOption } from "@/lib/types";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { setDataToEdit, setShowForm } from "@/store/slices/injury-type.slice";
+import { setDataToEdit, setShowForm } from "@/store/slices/types.slice";
 import React from "react";
 
 const InjuryTypesPage = () => {
@@ -21,7 +21,7 @@ const InjuryTypesPage = () => {
   });
   const dispatch = useAppDispatch();
   const { showForm, dataToEdit } = useAppSelector(
-    (store) => store.injuryTypeStore
+    (store) => store.typeStore
   );
   const { mutate: createType, isPending: creating } = useCreateInjuryType({
     onSuccess: () => {

@@ -10,8 +10,8 @@ const initialState: InitialState = {
     showForm: false,
     dataToEdit: null
 }
-const injuryTypeSlice = createSlice({
-    name: "injury-types",
+const typeSlice = createSlice({
+    name: "types",
     initialState,
     reducers: {
         setShowForm: (state, { payload }: { payload: boolean }) => {
@@ -23,5 +23,5 @@ const injuryTypeSlice = createSlice({
     }
 });
 
-export const { setDataToEdit, setShowForm } = injuryTypeSlice.actions;
-export default injuryTypeSlice.reducer;
+export const { setDataToEdit, setShowForm } = typeSlice.actions;
+export default typeSlice.reducer;

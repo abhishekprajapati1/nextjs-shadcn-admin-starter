@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import userStore from './slices/users.slice';
-import injuryTypeStore from './slices/injury-type.slice';
+import typeStore from './slices/types.slice';
 
 const store = configureStore({
     reducer: {
-        userStore, injuryTypeStore
+        userStore, typeStore
     }
 });
 
