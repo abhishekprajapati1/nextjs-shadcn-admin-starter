@@ -24,6 +24,10 @@ const ENDPOINTS = {
         MUTATE_INCIDENT_TYPES: (id: string) => `manage/incident-types/${id}`,
         INCIDENT_LEVELS: "manage/incident-levels",
         MUTATE_INCIDENT_LEVELS: (id: string) => `manage/incident-levels/${id}`,
+        DAMAGE_TYPES: "manage/damage-types",
+        MUTATE_DAMAGE_TYPES: (id: string) => `manage/damage-types/${id}`,
+        DAMAGE_LEVELS: "manage/damage-levels",
+        MUTATE_DAMAGE_LEVELS: (id: string) => `manage/damage-levels/${id}`,
     }
 }
 
