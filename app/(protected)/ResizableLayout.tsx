@@ -73,7 +73,7 @@ const ResizableLayout: React.FC<ResizableLayoutProps> = ({
               {isCollapsed ? (
                 <HospoTribeIcon className="size-6" />
               ) : (
-                "HospoTribe"
+                "Akku Ka Chasma"
               )}
             </strong>
           </div>
