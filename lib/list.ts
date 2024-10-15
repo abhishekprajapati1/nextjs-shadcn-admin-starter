@@ -6,6 +6,7 @@ import IncidentLevelIcon from "@/components/icons/IncidentLevelIcon";
 import InjuryIcon from "@/components/icons/InjuryIcon";
 import LenseFeatureIcon from "@/components/icons/LenseFeatureIcon";
 import TaskIcon from "@/components/icons/TaskIcon";
+import PowerType from "@/components/icons/UsersIcon";
 import UsersIcon from "@/components/icons/UsersIcon";
 import WitnessIcon from "@/components/icons/WitnessIcon";
 
@@ -23,10 +24,10 @@ export const sidebar_menus: IMenuLink[] = [
     href: "/lense-feature",
   },
   {
-    icon: UsersIcon,
-    title: "Users",
+    icon: PowerType,
+    title: "Power-types",
     variant: "ghost",
-    href: "/users",
+    href: "/power-types",
   },
   {
     icon: TaskIcon,

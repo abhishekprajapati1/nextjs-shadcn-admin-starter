@@ -3,11 +3,13 @@ import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import userStore from './slices/users.slice';
 import typeStore from './slices/types.slice';
 import lenseFeatureStore from './lense-feature';
+import powerTypeStore from './power-types';
 
 const store = configureStore({
     reducer: {
         userStore, typeStore,
-        lenseFeatureStore
+        lenseFeatureStore,
+        powerTypeStore
     }
 });
 
