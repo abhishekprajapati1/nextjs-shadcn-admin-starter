@@ -16,7 +16,7 @@ import React from "react";
 import { setCookie } from "cookies-next";
 import { Nav } from "./Nav";
 import { sidebar_menus } from "@/lib/list";
-import HospoTribeIcon from "@/components/icons/HospoTribeIcon";
+import BrandIcon from "@/components/icons/BrandIcon";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import LogoutIcon from "@/components/icons/LogoutIcon";
@@ -54,24 +54,24 @@ const ResizableLayout: React.FC<ResizableLayoutProps> = ({
             setIsCollapsed(false);
             setCookie(
               "react-resizable-panels:collapsed",
-              JSON.stringify(false)
+              JSON.stringify(false),
             );
           }}
           className={cn(
             "flex flex-col",
             isCollapsed &&
-              "min-w-[50px] transition-all duration-300 ease-in-out"
+              "min-w-[50px] transition-all duration-300 ease-in-out",
           )}
         >
           <div
             className={cn(
               "flex flex-shrink-0 h-16 items-center",
-              isCollapsed ? "justify-center" : "px-5"
+              isCollapsed ? "justify-center" : "px-5",
             )}
           >
             <strong>
               {isCollapsed ? (
-                <HospoTribeIcon className="size-6" />
+                <BrandIcon className="size-6" />
               ) : (
                 "Akku Ka Chasma"
               )}
@@ -84,7 +84,12 @@ const ResizableLayout: React.FC<ResizableLayoutProps> = ({
 
           <div className="flex-shrink-0">
             <Separator />
-            <div className={cn("py-2", Boolean(isCollapsed) ? "grid place-content-center" : "px-5")}>
+            <div
+              className={cn(
+                "py-2",
+                Boolean(isCollapsed) ? "grid place-content-center" : "px-5",
+              )}
+            >
               {Boolean(isCollapsed) && (
                 <Tooltip delayDuration={0}>
                   <TooltipTrigger asChild>

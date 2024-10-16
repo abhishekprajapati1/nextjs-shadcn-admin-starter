@@ -20,6 +20,9 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import useUpdatePowerType from "@/lib/mutations/admin/power-types/useUpdatePowerTypes";
 import { resetStore, showModal } from "@/store/power-types/form.slice";
+import FileInput from "../ui/file-input";
+import FilePreview from "../ui/file-input/FilePreview";
+import DragDropIcon from "../icons/DragDropIcon";
 
 const PowerTypeForm: React.FC = () => {
   const form = useForm<z.infer<typeof powerTypeSchema>>({
@@ -63,57 +66,67 @@ const PowerTypeForm: React.FC = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="grid gap-4 py-4 ">
-          <div className="flex flex-col  gap-4">
-            {/* Image Upload */}
-            <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Image</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="file"
-                      onChange={(event) => {
-                        field.onChange(event.target?.files?.[0]);
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+      <form className="flex flex-col gap-4" onSubmit={form.handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-4">
+          {/* Image Upload */}
+          <FormField
+            control={form.control}
+            name="image"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Image</FormLabel>
+                <FormControl>
+                  <FileInput
+                    value={field.value?.[0]}
+                    onChange={(files) => field.onChange(files?.[0])}
+                    className="size-[100px]"
+                  >
+                    <FilePreview
+                      file={field.value}
+                      {...(data?.default_url && {
+                        defaultValue: {
+                          type: "image",
+                          url: data?.default_url,
+                        },
+                      })}
+                      className="size-full grid place-content-center"
+                    >
+                      <DragDropIcon className="size-[25px]" />
+                    </FilePreview>
+                  </FileInput>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter title" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter title" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Enter description" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="Enter description" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
         <DialogFooter>

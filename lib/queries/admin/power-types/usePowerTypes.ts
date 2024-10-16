@@ -15,7 +15,7 @@ const usePowerTypes = () => {
     (store) => store.powerTypeStore.dataStore,
   );
 
-  const page_size = 1; // Number of records per page.
+  const page_size = 10; // Number of records per page.
 
   const result = useInfiniteQuery<IPowerType[]>({
     initialPageParam: 1,

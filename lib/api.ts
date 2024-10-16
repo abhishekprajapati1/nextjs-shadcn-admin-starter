@@ -9,15 +9,6 @@ export const baseURL =
     : "https://api.hospotribe.com/api/";
 const BearerToken = `Bearer ${getCookie(TOKENS.AUTH_TOKEN)}`;
 
-const api = axios.create({
-  baseURL,
-  withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: BearerToken,
-  },
-});
-
 type ApiClientProps = {
   multipart?: boolean;
   token?: string;
@@ -37,15 +28,6 @@ export const getApiClient = (params?: ApiClientProps) => {
     },
   });
 };
-
-export const multipartApi = axios.create({
-  baseURL,
-  withCredentials: true,
-  headers: {
-    "Content-Type": "multipart/formdata",
-    Authorization: BearerToken,
-  },
-});
 
 export type RequestError = AxiosError & {
   response: {
@@ -74,6 +56,7 @@ export const getErrorMessage = (error: RequestError) => {
 };
 
 export const logout = async () => {
+  const api = getApiClient();
   try {
     const response = await api.delete("auth/logout");
     const msg = response.data.data?.message;
@@ -84,5 +67,3 @@ export const logout = async () => {
     toast({ description: message, variant: "destructive" });
   }
 };
-
-export default api;
