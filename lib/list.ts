@@ -21,11 +21,11 @@ export const sidebar_menus: IMenuLink[] = [
     icon: LenseFeatureIcon,
     title: "Lense Feature",
     variant: "ghost",
-    href: "/lense-feature",
+    href: "/lense-features",
   },
   {
     icon: PowerType,
-    title: "Power-types",
+    title: "Power Types",
     variant: "ghost",
     href: "/power-types",
   },

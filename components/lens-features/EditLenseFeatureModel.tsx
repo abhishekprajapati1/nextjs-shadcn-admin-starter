@@ -12,16 +12,19 @@ import Modal from "@/components/ui/modal";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { showEditModal } from "@/store/lense-feature/modal.slice";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 
-const EditLenseFeatureModel:React.FC = () =>
-{
+const EditLenseFeatureModel: React.FC = () => {
   const dispatch = useAppDispatch();
-  const edit_modal = useAppSelector((store) => store.lenseFeatureStore.modalStore.edit_modal);
-  
+  const edit_modal = useAppSelector(
+    (store) => store.lenseFeatureStore.modalStore.edit_modal,
+  );
+
   return (
-    <Modal  open={edit_modal} onOpenChange={(val) => dispatch(showEditModal(val))}> 
-<DialogHeader>
+    <Modal
+      open={edit_modal}
+      onOpenChange={(val) => dispatch(showEditModal(val))}
+    >
+      <DialogHeader>
         <DialogTitle>Edit profile</DialogTitle>
         <DialogDescription>
           Make changes to your profile here. Click save when you're done.
@@ -51,4 +54,4 @@ const EditLenseFeatureModel:React.FC = () =>
     </Modal>
   );
 };
-export default EditLenseFeatureModel;      
+export default EditLenseFeatureModel;

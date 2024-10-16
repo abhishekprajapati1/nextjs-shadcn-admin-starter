@@ -1,9 +1,9 @@
 import React from "react";
-import LenseFeatureList from "@/components/lens-feature/LenseFeatureList";
-import DeleteLenseFeatureModal from "@/components/lens-feature/DeleteLenseFeatureModal";
-import Header from "@/components/lens-feature/header";
-import EditLenseFeatureModel from "@/components/lens-feature/EditLenseFeatureModel";
-import AddLensFeatureModal from "@/components/lens-feature/AddLensFeatureModal";
+import LenseFeatureList from "@/components/lens-features/LenseFeatureList";
+import DeleteLenseFeatureModal from "@/components/lens-features/DeleteLenseFeatureModal";
+import Header from "@/components/lens-features/header";
+import EditLenseFeatureModel from "@/components/lens-features/EditLenseFeatureModel";
+import AddLensFeatureModal from "@/components/lens-features/AddLensFeatureModal";
 import PageWrapper from "@/components/wrappers/PageWrapper";
 
 const Page = () => {

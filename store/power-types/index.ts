@@ -1,10 +1,11 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import modalStore from './modal.slice';
-
+import dataStore from './data.slice';
+import formStore from './form.slice';
 
 
 const powerTypeStore = combineReducers({
-    modalStore,
+    dataStore,
+    formStore,
 });
 
 export default powerTypeStore;
