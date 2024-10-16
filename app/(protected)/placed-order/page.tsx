@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import DeletePlaceOrderFeature from "@/components/placed-order/deletePlaceOrderFeature";
 import EditPlaceOrderModel from "@/components/placed-order/EditPlaceOrderFeature";
 import Header from "@/components/placed-order/header";
@@ -17,3 +18,9 @@ return(
 )
 }
 export default page;
+=======
+const Page = () => {
+  return <div></div>;
+};
+export default Page;
+>>>>>>> ba83f601a81a3d09f3990d5ad02edfeaa50fed5a

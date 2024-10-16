@@ -1,39 +1,67 @@
-import Image from "next/image";
+"use client";
+import React from "react";
 import DeleteIcon from "../icons/DeleteIcon";
 import EditIcon from "../icons/EditIcon";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
-import { showDeleteModal, showEditModal } from "@/store/power-types/modal.slice";
 import { useAppDispatch } from "@/store";
+import { FileType, IRecordMeta } from "@/lib/types";
+import { Skeleton } from "../ui/skeleton";
+import Avatar from "../ui/avatar";
+import { capitalizeFirstLetter } from "@/lib/utils";
+import { setData, setPowerTypeId } from "@/store/power-types/form.slice";
+import { setPowerTypeToDelete } from "@/store/power-types/data.slice";
 
-const PowerType = () => {
+export interface IPowerType extends IRecordMeta {
+  image?: FileType;
+  title?: string;
+  description?: string;
+}
+
+interface PowerTypeProps {
+  data?: IPowerType;
+}
+
+const PowerType: React.FC<PowerTypeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
-  
+
+  if (!data) {
+    return <PowerTypeSkeleton />;
+  }
+
   return (
     <Card>
       <CardContent className="pt-6 h-full flex flex-col gap-2">
         <div className="flex flex-col gap-2">
-          <Image
-            src="/chasma.png"
-            alt="Single Vision Lens"
-            width={200}
-            height={200}
+          <Avatar
+            size="6xl"
+            className="rounded-md"
+            src={data?.image?.url}
+            alt="Image for power type"
+            fallback={data?.title?.charAt(0)?.toUpperCase()}
           />
           <div className="flex-grow">
-            <h3 className="text-lg font-semibold text-gray-800">
-              Hard Coat Lens
+            <h3 className="text-lg font-semibold text-gray-800 capitalize">
+              {data?.title}
             </h3>
             <p className="text-sm text-gray-500">
-              This lens comes with hard-coat technology that gives you
-              protection from scratches only.
+              {capitalizeFirstLetter(data?.description)}
             </p>
           </div>
         </div>
         <div className="flex items-baseline flex-grow">
           <div className="flex items-end justify-end gap-2 flex-grow h-full">
             <Button
-              // disabled={isDeleting}
-              onClick={() => dispatch(showEditModal(true))}
+              onClick={() => {
+                dispatch(setPowerTypeId(data?.id || ""));
+                dispatch(
+                  setData({
+                    title: data?.title,
+                    description: data?.description,
+                    default_url: data?.image?.url,
+                  }),
+                );
+              }}
               variant="secondary"
               size="icon"
             >
@@ -43,11 +71,44 @@ const PowerType = () => {
               // disabled={isDeleting}
               variant="ghost"
               size="icon"
-              onClick={() => dispatch(showDeleteModal(true))}
+              onClick={() =>
+                dispatch(
+                  setPowerTypeToDelete({
+                    id: data?.id || "",
+                    label: data.title || "",
+                  }),
+                )
+              }
               className="bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white ease-linear duration-300"
             >
               <DeleteIcon />
             </Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+const PowerTypeSkeleton = () => {
+  return (
+    <Card>
+      <CardContent className="pt-6 h-full flex flex-col gap-2">
+        <div className="flex flex-col gap-4">
+          <Skeleton className="size-[100px]" />
+          <div className="flex-grow flex flex-col gap-2">
+            <Skeleton className="w-2/3" />
+            <div className="flex flex-col gap-1">
+              <Skeleton className="h-2" />
+              <Skeleton className="h-2 w-4/5" />
+              <Skeleton className="h-2 w-1/3" />
+            </div>
+          </div>
+        </div>
+        <div className="flex items-baseline flex-grow">
+          <div className="flex items-end justify-end gap-2 flex-grow h-full">
+            <Skeleton className="size-[40px] bg-secondary" />
+            <Skeleton className="size-[40px] bg-destructive/10" />
           </div>
         </div>
       </CardContent>

@@ -5,9 +5,8 @@ import ResizableLayout from './ResizableLayout';
 import { parse } from '@/lib/utils';
 
 const ProtectedLayout: React.FC<IWrapper> = ({ children }) => {
-    // protect();
+    protect();
     let defaultCollapsed = checkToken("react-resizable-panels:collapsed");
-
 
     return (
         <ResizableLayout
