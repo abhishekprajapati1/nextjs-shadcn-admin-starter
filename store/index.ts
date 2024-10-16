@@ -4,12 +4,16 @@ import userStore from './slices/users.slice';
 import typeStore from './slices/types.slice';
 import lenseFeatureStore from './lense-feature';
 import powerTypeStore from './power-types';
+import PlaceOrderStore from './placed-order';
+import ProductDetailStore from './product-detail';
 
 const store = configureStore({
     reducer: {
         userStore, typeStore,
         lenseFeatureStore,
-        powerTypeStore
+        powerTypeStore,
+        PlaceOrderStore,
+        ProductDetailStore
     }
 });
 

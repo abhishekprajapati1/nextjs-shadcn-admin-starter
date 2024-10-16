@@ -1,13 +1,15 @@
 import { IMenuLink } from "@/app/(protected)/Nav";
 import DamageIcon from "@/components/icons/DamageIcon";
 import DashboardIcon from "@/components/icons/DashobardIcon";
-import IncidentIcon from "@/components/icons/IncidentIcon";
+import Productdetail from "@/components/icons/ProductDeatailIcon";
+import IncidentIcon from "@/components/icons/ProductDeatailIcon";
 import IncidentLevelIcon from "@/components/icons/IncidentLevelIcon";
 import InjuryIcon from "@/components/icons/InjuryIcon";
 import LenseFeatureIcon from "@/components/icons/LenseFeatureIcon";
-import TaskIcon from "@/components/icons/TaskIcon";
-import PowerType from "@/components/icons/UsersIcon";
-import UsersIcon from "@/components/icons/UsersIcon";
+import PlacedOrder from "@/components/icons/placed-orderIcon";
+import TaskIcon from "@/components/icons/placed-orderIcon";
+import PowerType from "@/components/icons/power-typeIcon";
+import UsersIcon from "@/components/icons/power-typeIcon";
 import WitnessIcon from "@/components/icons/WitnessIcon";
 
 export const sidebar_menus: IMenuLink[] = [
@@ -30,16 +32,16 @@ export const sidebar_menus: IMenuLink[] = [
     href: "/power-types",
   },
   {
-    icon: TaskIcon,
-    title: "Task Icons",
+    icon: PlacedOrder,
+    title: "Placed order",
     variant: "ghost",
-    href: "/fst/task-icons",
+    href: "/placed-order",
   },
   {
-    icon: IncidentIcon,
-    title: "Incident Types",
+    icon: Productdetail,
+    title: "Product Deatils",
     variant: "ghost",
-    href: "/whs/incident-types",
+    href: "/product-detail",
   },
   {
     icon: IncidentLevelIcon,

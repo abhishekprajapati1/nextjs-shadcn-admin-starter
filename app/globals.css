@@ -75,3 +75,43 @@
     @apply bg-background text-foreground;
   }
 }
+/* table classes */
+table {
+  @apply min-w-full border-collapse;
+}
+tr > th {
+  @apply min-w-fit text-nowrap py-4 text-start font-medium text-xs text-primary-foreground bg-primary;
+}
+tr > th:nth-child(1) {
+  @apply flex items-center justify-start pl-4 rounded-s-xl;
+}
+tr > th:nth-last-child(1) {
+  @apply flex items-center justify-end pr-4 rounded-e-xl;
+}
+tr > th:nth-child(1) > * {
+  @apply pl-4;
+}
+tr > th:nth-last-child(1) > * {
+  @apply flex items-center justify-end pr-4;
+}
+tbody {
+  @apply text-accent-foreground/70;
+}
+tr > td > * {
+  @apply h-11 flex text-nowrap text-sm items-center;
+}
+tr > td {
+  @apply bg-white;
+}
+tr > td:nth-child(1) {
+  @apply rounded-s-md;
+}
+tr > td:nth-last-child(1) {
+  @apply rounded-e-md;
+}
+tr > td:nth-child(1) > * {
+  @apply pl-4;
+}
+tr > td:nth-last-child(1) > * {
+  @apply flex items-center justify-end pr-4;
+}
