@@ -1,10 +1,11 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import modalStore from './modal.slice';
+import dataStore from './data.slice';
+import formStore from './form.slice';
 
 
-
-const lenseFeatureStore = combineReducers({
-    modalStore,
+const lensFeatureStore = combineReducers({
+    dataStore,
+    formStore,
 });
 
-export default lenseFeatureStore;
+export default lensFeatureStore;

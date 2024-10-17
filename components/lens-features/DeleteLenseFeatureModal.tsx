@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button, ProcessIndicator } from "@/components/ui/button";
 import {
   DialogDescription,
   DialogFooter,
@@ -7,40 +7,46 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import Modal from "@/components/ui/modal";
-import { showDeleteModal } from "@/store/lense-feature/modal.slice";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
+import { capitalizeFirstLetter } from "@/lib/utils";
+import { setLensFeatureToDelete } from "@/store/lense-feature/data.slice";
+import useDeleteLensFeature from "@/lib/mutations/admin/lens-feature/useDeletePowerType";
 
 const DeleteLensFeatureModal: React.FC = () => {
   const dispatch = useAppDispatch();
-  
+  const { mutate: deleteLensFeature, isPending } = useDeleteLensFeature();
+
   // Accessing delete_modal from store
-  const delete_modal = useAppSelector((store) => store.lenseFeatureStore.modalStore.delete_modal
+  const LensFeatureToDelete = useAppSelector(
+    (store) => store.lensFeatureStore.dataStore.LensFeatureToDelete,
   );
 
   return (
     <Modal
-      open={delete_modal}
-      onOpenChange={(val) => dispatch(showDeleteModal(val))} // Toggle modal visibility
+      showCloseIcon
+      open={Boolean(LensFeatureToDelete)}
+      onOpenChange={(val) =>
+        dispatch(setLensFeatureToDelete(val ? LensFeatureToDelete : null))
+      }
     >
       <DialogHeader>
-        <DialogTitle>Delete Feature</DialogTitle> {/* Changed title to match delete purpose */}
+        <DialogTitle>Delete Power Type</DialogTitle>
+        {/* Changed title to match delete purpose */}
         <DialogDescription>
-          Are you sure you want to delete this feature? This action cannot be undone.
-        </DialogDescription> {/* Updated description to reflect delete action */}
+          Are you sure you want to delete &nbsp;
+          <strong className="text-primary">
+            {capitalizeFirstLetter(LensFeatureToDelete?.label)}
+          </strong>
+          ? This action cannot be undone.
+        </DialogDescription>
+        {/* Updated description to reflect delete action */}
       </DialogHeader>
       <DialogFooter>
-        <Button 
-          variant="destructive" 
-          onClick={() => {
-            // Handle the delete action here
-            console.log("Feature deleted");
-            dispatch(showDeleteModal(false)); // Close modal after deletion
-          }}
-        >
-          Confirm Delete
+        <Button variant="destructive" onClick={() => deleteLensFeature()}>
+          <ProcessIndicator isProcessing={isPending} btnText="Confirm Delete" />
         </Button>
-        <Button onClick={() => dispatch(showDeleteModal(false))}>
+        <Button onClick={() => dispatch(setLensFeatureToDelete(null))}>
           Cancel
         </Button>
       </DialogFooter>
