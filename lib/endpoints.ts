@@ -11,6 +11,13 @@ const ENDPOINTS = {
       update: (id: string) => `power-types/${id}`,
       delete: (id: string) => `power-types/${id}`,
     },
+    lens_features: {
+      fetch_all: (queryString?: string) =>
+        `lens-features${queryString ? "?" + queryString : ""}`,
+      create: "lens-features",
+      update: (id: string) => `lens-features/${id}`,
+      delete: (id: string) => `lens-features/${id}`,
+    },
   },
   OWNERS: {
     GET_ALL: (filter: string) =>

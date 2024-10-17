@@ -1,5 +1,5 @@
 
-import { ILensFeature } from "@/components/lens-features/LenseFeature";
+import { ILensFeature } from "@/components/lens-features/LensFeature";
 import { IDefaultUrl } from "@/lib/types";
 import { createSlice } from "@reduxjs/toolkit";
 

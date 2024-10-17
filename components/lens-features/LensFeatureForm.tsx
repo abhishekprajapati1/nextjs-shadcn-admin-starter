@@ -5,9 +5,7 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import useCreatePowerType from "@/lib/mutations/admin/power-types/useCreatePowerTypes";
 import { useForm } from "react-hook-form";
-import { powerTypeSchema } from "@/lib/validations/admin/power-type.validation";
 import { z } from "zod";
 import {
   Form,
@@ -18,31 +16,33 @@ import {
   FormMessage,
 } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useUpdatePowerType from "@/lib/mutations/admin/power-types/useUpdatePowerTypes";
-import { resetStore, showModal } from "@/store/power-types/form.slice";
+import { resetStore, showModal } from "@/store/lens-features/form.slice";
 import FileInput from "../ui/file-input";
 import FilePreview from "../ui/file-input/FilePreview";
 import DragDropIcon from "../icons/DragDropIcon";
+import { lensFeatureSchema } from "@/lib/validations/admin/lens-feature.validation";
+import useUpdateLensFeature from "@/lib/mutations/admin/lens-features/useUpdateLensFeatures";
+import useCreateLensFeature from "@/lib/mutations/admin/lens-features/useCreateLensFeatures";
 
-const LensTypeForm: React.FC = () => {
-  const form = useForm<z.infer<typeof powerTypeSchema>>({
+const LensFeatureForm: React.FC = () => {
+  const form = useForm<z.infer<typeof lensFeatureSchema>>({
     defaultValues: { image: null, description: "", title: "" },
     mode: "onBlur",
-    resolver: zodResolver(powerTypeSchema),
+    resolver: zodResolver(lensFeatureSchema),
   });
 
   const dispatch = useAppDispatch();
-  const { data, power_type_id } = useAppSelector(
-    (store) => store.powerTypeStore.formStore,
+  const { data, lens_feature_id  } = useAppSelector(
+    (store) => store.lensFeatureStore.formStore,
   );
 
-  const { mutate: updatePowerType, isPending: updating } = useUpdatePowerType(
+  const { mutate: updateLensFeature, isPending: updating } = useUpdateLensFeature(
     () => {
       form.reset();
     },
   );
 
-  const { mutate: createPowerType, isPending: creating } = useCreatePowerType(
+  const { mutate: createLensFeature, isPending: creating } = useCreateLensFeature(
     () => {
       form.reset();
     },
@@ -50,11 +50,11 @@ const LensTypeForm: React.FC = () => {
 
   const isPending = updating || creating;
 
-  const onSubmit = (data: z.infer<typeof powerTypeSchema>) => {
-    if (power_type_id) {
-      updatePowerType(data);
+  const onSubmit = (data: z.infer<typeof lensFeatureSchema>) => {
+    if (lens_feature_id) {
+      updateLensFeature(data);
     } else {
-      createPowerType(data);
+      createLensFeature(data);
     }
   };
 
@@ -133,16 +133,16 @@ const LensTypeForm: React.FC = () => {
           <Button
             type="button"
             onClick={() =>
-              dispatch(power_type_id ? resetStore() : showModal(false))
+              dispatch(lens_feature_id ? resetStore() : showModal(false))
             }
             variant="secondary"
           >
-            {power_type_id ? "Discard" : "Cancel"}
+            {lens_feature_id ? "Discard" : "Cancel"}
           </Button>
           <Button type="submit">
             <ProcessIndicator
               isProcessing={isPending}
-              btnText={power_type_id ? "Save" : "Create"}
+              btnText={lens_feature_id ? "Save" : "Create"}
             />
           </Button>
         </DialogFooter>
@@ -151,4 +151,4 @@ const LensTypeForm: React.FC = () => {
   );
 };
 
-export default LensTypeForm;
+export default LensFeatureForm;

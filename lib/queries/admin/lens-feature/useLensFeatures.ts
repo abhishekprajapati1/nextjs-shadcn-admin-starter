@@ -2,12 +2,12 @@ import React from "react";
 import { getApiClient } from "@/lib/api";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { setTotal } from "@/store/power-types/data.slice";
+import { setTotal } from "@/store/lens-features/data.slice";
 import { generateQueryString } from "@/lib/utils";
 import ENDPOINTS from "@/lib/endpoints";
-import { ILensFeature } from "@/components/lens-features/LenseFeature";
+import { ILensFeature } from "@/components/lens-features/LensFeature";
 
-const useLensFeature = () => {
+const useLensFeatures = () => {
   const dispatch = useAppDispatch();
   const api = getApiClient();
   // Get sort_by selection
@@ -19,7 +19,7 @@ const useLensFeature = () => {
 
   const result = useInfiniteQuery<ILensFeature[]>({
     initialPageParam: 1,
-    queryKey: ["lens-feature", search_term, sort_by],
+    queryKey: ["lens-features", search_term, sort_by],
     queryFn: async ({ pageParam }) => {
       const filterObj = {
         page: pageParam?.toString(),
@@ -31,7 +31,7 @@ const useLensFeature = () => {
       const queryString = generateQueryString(filterObj);
 
       const response = await api.get(
-        ENDPOINTS.admin.power_types.fetch_all(queryString),
+        ENDPOINTS.admin.lens_features.fetch_all(queryString),
       );
 
       dispatch(setTotal(response?.data?.total));
@@ -61,4 +61,4 @@ const useLensFeature = () => {
   };
 };
 
-export default useLensFeature;
+export default useLensFeatures;

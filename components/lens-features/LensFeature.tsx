@@ -1,15 +1,14 @@
-import Image from "next/image";
 import DeleteIcon from "../icons/DeleteIcon";
 import EditIcon from "../icons/EditIcon";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { useAppDispatch } from "@/store";
 import { FileType, IRecordMeta } from "@/lib/types";
-import { setLensFeatureToDelete } from "@/store/lense-feature/data.slice";
+import { setLensFeatureToDelete } from "@/store/lens-features/data.slice";
 import { Skeleton } from "../ui/skeleton";
 import Avatar from "../ui/avatar";
 import { capitalizeFirstLetter } from "@/lib/utils";
-import { setData, setLensFeatureId } from "@/store/lense-feature/form.slice";
+import { setData, setLensFeatureId } from "@/store/lens-features/form.slice";
 export interface ILensFeature extends IRecordMeta {
   image?: FileType;
   title?: string;
@@ -20,7 +19,7 @@ interface LensFeatureProps {
   data?: ILensFeature;
 }
 
-const LenseFeature: React.FC<LensFeatureProps> = ({ data }) => {
+const LensFeature: React.FC<LensFeatureProps> = ({ data }) => {
   const dispatch = useAppDispatch();
 
   if (!data) {
@@ -34,7 +33,7 @@ const LenseFeature: React.FC<LensFeatureProps> = ({ data }) => {
           size="6xl"
           className="rounded-md"
           src={data?.image?.url}
-          alt="Image for power type"
+          alt="Image for lens feature"
           fallback={data?.title?.charAt(0)?.toUpperCase()}
         />
         <div className="flex-grow">
@@ -113,4 +112,4 @@ const LensFeatureSkeleton = () => {
     </Card>
   );
 };
-export default LenseFeature;
+export default LensFeature;

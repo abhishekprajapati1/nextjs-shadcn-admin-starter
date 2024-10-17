@@ -7,12 +7,14 @@ import {
 import Modal from "@/components/ui/modal";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
-import LensTypeForm from "./LensTypeForm";
-import { showModal } from "@/store/lense-feature/form.slice";
+import LensFeatureForm from "./LensFeatureForm";
+import { showModal } from "@/store/lens-features/form.slice";
 
 const AddLensFeatureModal: React.FC = () => {
   const dispatch = useAppDispatch();
-  const modal = useAppSelector((store) => store.lensFeatureStore.formStore.modal);
+  const modal = useAppSelector(
+    (store) => store.lensFeatureStore.formStore.modal,
+  );
 
   return (
     <Modal
@@ -21,12 +23,12 @@ const AddLensFeatureModal: React.FC = () => {
       onOpenChange={(val) => dispatch(showModal(val))}
     >
       <DialogHeader>
-        <DialogTitle>Add Feature</DialogTitle>
+        <DialogTitle>Add Lens Feature</DialogTitle>
         <DialogDescription>
-          Fill in the details to add a new Feature.
+          Fill in the details to add a new lens feature.
         </DialogDescription>
       </DialogHeader>
-      <LensTypeForm />
+      <LensFeatureForm />
     </Modal>
   );
 };

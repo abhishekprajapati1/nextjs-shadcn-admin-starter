@@ -2,12 +2,12 @@ import { toast } from "@/components/ui/use-toast";
 import { RequestError, getApiClient, getErrorMessage } from "@/lib/api";
 import ENDPOINTS from "@/lib/endpoints";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { setLensFeatureToDelete } from "@/store/lense-feature/data.slice";
+import { setLensFeatureToDelete } from "@/store/lens-features/data.slice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const useDeleteLensFeature = (onSuccess?: () => void) => {
-  const LensFeatureToDelete = useAppSelector(
-    (store) => store.lensFeatureStore.dataStore.LensFeatureToDelete,
+  const lensFeatureToDelete = useAppSelector(
+    (store) => store.lensFeatureStore.dataStore.lensFeatureToDelete,
   );
   const dispatch = useAppDispatch();
 
@@ -16,14 +16,14 @@ const useDeleteLensFeature = (onSuccess?: () => void) => {
   const mutation = useMutation({
     mutationFn: async () => {
       const res = await api.delete(
-        ENDPOINTS.admin.power_types.delete(LensFeatureToDelete?.id || ""),
+        ENDPOINTS.admin.lens_features.delete(lensFeatureToDelete?.id || ""),
       );
       return res.data;
     },
     onSuccess: (_data) => {
       if (onSuccess) onSuccess();
       dispatch(setLensFeatureToDelete(null));
-      queryClient.invalidateQueries({ queryKey: ["power-types"] });
+      queryClient.invalidateQueries({ queryKey: ["lens-features"] });
     },
     onError: (error: RequestError) => {
       const message = getErrorMessage(error);

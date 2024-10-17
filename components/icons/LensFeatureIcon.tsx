@@ -1,7 +1,7 @@
 import React from "react";
 import { IconInterface } from "@/lib/types";
 
-const LenseFeatureIcon: React.FC<IconInterface> = (props) => {
+const LensFeatureIcon: React.FC<IconInterface> = (props) => {
   return (
     <svg
       stroke="currentColor"
@@ -18,4 +18,4 @@ const LenseFeatureIcon: React.FC<IconInterface> = (props) => {
   );
 };
 
-export default LenseFeatureIcon;
+export default LensFeatureIcon;

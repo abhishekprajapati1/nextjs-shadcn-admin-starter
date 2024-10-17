@@ -2,25 +2,25 @@ import { IDeleteRecord } from "@/lib/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type InitialState = {
-  LensFeatureToDelete: IDeleteRecord | null;
+  lensFeatureToDelete: IDeleteRecord | null;
   sort_by: string;
   search_term?: string;
   total: number;
 };
 
 const initialState: InitialState = {
-  LensFeatureToDelete: null,
+  lensFeatureToDelete: null,
   sort_by: "",
   search_term: "",
   total: 0,
 };
 
 const LensFeatureSlice = createSlice({
-  name: "customer/data",
+  name: "lens-features/data",
   initialState,
   reducers: {
     setLensFeatureToDelete: (state, { payload }: { payload: IDeleteRecord | null }) => {
-      state.LensFeatureToDelete = payload;
+      state.lensFeatureToDelete = payload;
     },
     setSortBy: (state, { payload }: { payload: string }) => {
       state.sort_by = payload;

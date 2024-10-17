@@ -2,14 +2,19 @@ import { toast } from "@/components/ui/use-toast";
 import { RequestError, getApiClient, getErrorMessage } from "@/lib/api";
 import ENDPOINTS from "@/lib/endpoints";
 import { lensFeatureSchema } from "@/lib/validations/admin/lens-feature.validation";
-import { useAppDispatch } from "@/store";
-import { showModal } from "@/store/power-types/form.slice";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { resetStore } from "@/store/lens-features/form.slice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 
-const useCreateLensFeature = (onSuccess?: () => void) => {
-  const api = getApiClient({ multipart: true });
+const useUpdateLensFeature = (onSuccess?: () => void) => {
   const dispatch = useAppDispatch();
+
+  const lens_feature_id = useAppSelector(
+    (store) => store.lensFeatureStore.formStore.lens_feature_id,
+  );
+
+  const api = getApiClient({ multipart: true });
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (data: z.infer<typeof lensFeatureSchema>) => {
@@ -17,13 +22,16 @@ const useCreateLensFeature = (onSuccess?: () => void) => {
       const formdata = new FormData();
       if (image) formdata.append("image", image);
       formdata.append("json_payload", JSON.stringify(rest));
-      const res = await api.post(ENDPOINTS.admin.power_types.create, formdata);
+      const res = await api.put(
+        ENDPOINTS.admin.lens_features.update(lens_feature_id),
+        formdata,
+      );
       return res.data;
     },
-    onSuccess: (data) => {
-      dispatch(showModal(false));
+    onSuccess: (_data) => {
+      dispatch(resetStore());
       if (onSuccess) onSuccess();
-      queryClient.invalidateQueries({ queryKey: ["power-types"] });
+      queryClient.invalidateQueries({ queryKey: ["lens-features"] });
     },
     onError: (error: RequestError) => {
       const message = getErrorMessage(error);
@@ -36,4 +44,4 @@ const useCreateLensFeature = (onSuccess?: () => void) => {
   return mutation;
 };
 
-export default useCreateLensFeature;
+export default useUpdateLensFeature;

@@ -5,7 +5,7 @@ import typeStore from './slices/types.slice';
 import powerTypeStore from './power-types';
 import PlaceOrderStore from './placed-order';
 import ProductDetailStore from './product-detail';
-import lensFeatureStore from './lense-feature';
+import lensFeatureStore from './lens-features';
 
 const store = configureStore({
     reducer: {

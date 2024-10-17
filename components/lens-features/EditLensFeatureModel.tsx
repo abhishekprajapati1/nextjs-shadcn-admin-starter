@@ -8,28 +8,28 @@ import Modal from "@/components/ui/modal";
 import { useAppDispatch, useAppSelector } from "@/store";
 import React from "react";
 
-import LensTypeForm from "./LensTypeForm";
-import { setLensFeatureId } from "@/store/lense-feature/form.slice";
+import LensFeatureForm from "./LensFeatureForm";
+import { setLensFeatureId } from "@/store/lens-features/form.slice";
 
 const EditLensFeatureModel: React.FC = () => {
   const dispatch = useAppDispatch();
-  const LensFeatureId = useAppSelector(
+  const lens_feature_id = useAppSelector(
     (store) => store.lensFeatureStore.formStore.lens_feature_id,
   );
 
   return (
     <Modal
-      open={Boolean(LensFeatureId)}
-      onOpenChange={(val) => dispatch(setLensFeatureId(val ? LensFeatureId : ""))}
+      open={Boolean(lens_feature_id)}
+      onOpenChange={(val) => dispatch(setLensFeatureId(val ? lens_feature_id : ""))}
       showCloseIcon
     >
       <DialogHeader>
-        <DialogTitle>Update LensFeature</DialogTitle>
+        <DialogTitle>Update Lens Feature</DialogTitle>
         <DialogDescription>
-          Make changes to LensFeature here. Click save when you're done.
+          Make changes to lens feature here. Click save when you're done.
         </DialogDescription>
       </DialogHeader>
-      <LensTypeForm />
+      <LensFeatureForm />
     </Modal>
   );
 };

@@ -1,21 +1,21 @@
 "use client";
-import LenseFeature from "./LenseFeature";
+import LensFeature from "./LensFeature";
 import { Button, ProcessIndicator } from "../ui/button";
-import useLensFeature from "@/lib/queries/admin/lens-feature/useLensFeature";
+import useLensFeatures from "@/lib/queries/admin/lens-feature/useLensFeatures";
 
-const LenseFeatureList = () => {
+const LensFeatureList = () => {
   const { data, isLoading, isFetching, hasNextPage, fetchNextPage } =
-    useLensFeature();
+    useLensFeatures();
 
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
-        <LenseFeature />
-        <LenseFeature />
-        <LenseFeature />
-        <LenseFeature />
-        <LenseFeature />
-        <LenseFeature />
+        <LensFeature />
+        <LensFeature />
+        <LensFeature />
+        <LensFeature />
+        <LensFeature />
+        <LensFeature />
       </div>
     );
   }
@@ -23,7 +23,7 @@ const LenseFeatureList = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
       {data?.map((d) => {
-        return <LenseFeature key={d.id} data={d} />;
+        return <LensFeature key={d.id} data={d} />;
       })}
 
       {hasNextPage && (
@@ -42,4 +42,4 @@ const LenseFeatureList = () => {
   );
 };
 
-export default LenseFeatureList;
+export default LensFeatureList;

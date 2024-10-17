@@ -10,33 +10,33 @@ import Modal from "@/components/ui/modal";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { capitalizeFirstLetter } from "@/lib/utils";
-import { setLensFeatureToDelete } from "@/store/lense-feature/data.slice";
-import useDeleteLensFeature from "@/lib/mutations/admin/lens-feature/useDeletePowerType";
+import { setLensFeatureToDelete } from "@/store/lens-features/data.slice";
+import useDeleteLensFeature from "@/lib/mutations/admin/lens-features/useDeleteLensFeature";
 
 const DeleteLensFeatureModal: React.FC = () => {
   const dispatch = useAppDispatch();
   const { mutate: deleteLensFeature, isPending } = useDeleteLensFeature();
 
   // Accessing delete_modal from store
-  const LensFeatureToDelete = useAppSelector(
-    (store) => store.lensFeatureStore.dataStore.LensFeatureToDelete,
+  const lensFeatureToDelete = useAppSelector(
+    (store) => store.lensFeatureStore.dataStore.lensFeatureToDelete,
   );
 
   return (
     <Modal
       showCloseIcon
-      open={Boolean(LensFeatureToDelete)}
+      open={Boolean(lensFeatureToDelete)}
       onOpenChange={(val) =>
-        dispatch(setLensFeatureToDelete(val ? LensFeatureToDelete : null))
+        dispatch(setLensFeatureToDelete(val ? lensFeatureToDelete : null))
       }
     >
       <DialogHeader>
-        <DialogTitle>Delete Power Type</DialogTitle>
+        <DialogTitle>Delete Lens Feature</DialogTitle>
         {/* Changed title to match delete purpose */}
         <DialogDescription>
           Are you sure you want to delete &nbsp;
           <strong className="text-primary">
-            {capitalizeFirstLetter(LensFeatureToDelete?.label)}
+            {capitalizeFirstLetter(lensFeatureToDelete?.label)}
           </strong>
           ? This action cannot be undone.
         </DialogDescription>
