@@ -2,27 +2,24 @@ import React from "react";
 import { getApiClient } from "@/lib/api";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { setTotal } from "@/store/power-types/data.slice";
+import { setTotal } from "@/store/lens-features/data.slice";
 import { generateQueryString } from "@/lib/utils";
-import { IPowerType } from "@/components/power-types/PowerType";
 import ENDPOINTS from "@/lib/endpoints";
-interface UsePowerTypes {
-  completeFetch?: boolean;
-}
-const usePowerTypes = (configs?: UsePowerTypes) => {
-  const { completeFetch = false } = configs || {};
+import { ILensFeature } from "@/components/lens-features/LensFeature";
+
+const useLensFeatures = () => {
   const dispatch = useAppDispatch();
   const api = getApiClient();
   // Get sort_by selection
   const { sort_by, total, search_term } = useAppSelector(
-    (store) => store.powerTypeStore.dataStore,
+    (store) => store.lensFeatureStore.dataStore,
   );
 
-  const page_size = completeFetch ? 1000 : 10; // Number of records per page.
+  const page_size = 10; // Number of records per page.
 
-  const result = useInfiniteQuery<IPowerType[]>({
+  const result = useInfiniteQuery<ILensFeature[]>({
     initialPageParam: 1,
-    queryKey: ["power-types", search_term, sort_by],
+    queryKey: ["lens-features", search_term, sort_by],
     queryFn: async ({ pageParam }) => {
       const filterObj = {
         page: pageParam?.toString(),
@@ -34,7 +31,7 @@ const usePowerTypes = (configs?: UsePowerTypes) => {
       const queryString = generateQueryString(filterObj);
 
       const response = await api.get(
-        ENDPOINTS.admin.power_types.fetch_all(queryString),
+        ENDPOINTS.admin.lens_features.fetch_all(queryString),
       );
 
       dispatch(setTotal(response?.data?.total));
@@ -51,7 +48,7 @@ const usePowerTypes = (configs?: UsePowerTypes) => {
   const customers = React.useMemo(() => {
     return result.data?.pages.reduce((acc, page) => {
       return [...acc, ...page];
-    }, [] as IPowerType[]);
+    }, [] as ILensFeature[]);
   }, [result?.data]);
 
   return {
@@ -64,4 +61,4 @@ const usePowerTypes = (configs?: UsePowerTypes) => {
   };
 };
 
-export default usePowerTypes;
+export default useLensFeatures;

@@ -1,19 +1,9 @@
-'use client'
-
+"use client";
 
 import PageHeader from "@/components/PageHeader";
 
-const HeaderButton=() => {
- 
-  return (
-    <PageHeader
-          title="Lense Features" children={undefined}             />
-      
-       
-        
-    
-    
-  )
+const HeaderButton = () => {
+  return <PageHeader title="Dashboard">A</PageHeader>;
 };
 
 export default HeaderButton;

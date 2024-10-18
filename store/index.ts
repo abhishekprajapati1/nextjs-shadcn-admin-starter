@@ -2,15 +2,15 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import userStore from './slices/users.slice';
 import typeStore from './slices/types.slice';
-import lenseFeatureStore from './lense-feature';
 import powerTypeStore from './power-types';
 import PlaceOrderStore from './placed-order';
 import ProductDetailStore from './product-detail';
+import lensFeatureStore from './lens-features';
 
 const store = configureStore({
     reducer: {
         userStore, typeStore,
-        lenseFeatureStore,
+        lensFeatureStore,
         powerTypeStore,
         PlaceOrderStore,
         ProductDetailStore
