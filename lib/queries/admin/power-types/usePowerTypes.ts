@@ -6,8 +6,11 @@ import { setTotal } from "@/store/power-types/data.slice";
 import { generateQueryString } from "@/lib/utils";
 import { IPowerType } from "@/components/power-types/PowerType";
 import ENDPOINTS from "@/lib/endpoints";
-
-const usePowerTypes = () => {
+interface UsePowerTypes {
+  completeFetch?: boolean;
+}
+const usePowerTypes = (configs?: UsePowerTypes) => {
+  const { completeFetch = false } = configs || {};
   const dispatch = useAppDispatch();
   const api = getApiClient();
   // Get sort_by selection
@@ -15,7 +18,7 @@ const usePowerTypes = () => {
     (store) => store.powerTypeStore.dataStore,
   );
 
-  const page_size = 10; // Number of records per page.
+  const page_size = completeFetch ? 1000 : 10; // Number of records per page.
 
   const result = useInfiniteQuery<IPowerType[]>({
     initialPageParam: 1,

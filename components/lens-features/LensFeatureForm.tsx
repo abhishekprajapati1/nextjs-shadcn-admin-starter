@@ -23,6 +23,8 @@ import DragDropIcon from "../icons/DragDropIcon";
 import { lensFeatureSchema } from "@/lib/validations/admin/lens-feature.validation";
 import useUpdateLensFeature from "@/lib/mutations/admin/lens-features/useUpdateLensFeatures";
 import useCreateLensFeature from "@/lib/mutations/admin/lens-features/useCreateLensFeatures";
+import Combobox, { ComboboxOption } from "../ui/combo-box";
+import usePowerTypes from "@/lib/queries/admin/power-types/usePowerTypes";
 
 const LensFeatureForm: React.FC = () => {
   const form = useForm<z.infer<typeof lensFeatureSchema>>({
@@ -32,23 +34,40 @@ const LensFeatureForm: React.FC = () => {
   });
 
   const dispatch = useAppDispatch();
-  const { data, lens_feature_id  } = useAppSelector(
+
+  const { data, lens_feature_id } = useAppSelector(
     (store) => store.lensFeatureStore.formStore,
   );
 
-  const { mutate: updateLensFeature, isPending: updating } = useUpdateLensFeature(
-    () => {
-      form.reset();
-    },
-  );
+  const { mutate: updateLensFeature, isPending: updating } =
+    useUpdateLensFeature(() => {
+      form.reset({
+        description: "",
+        image: null,
+        power_type_id: "",
+        title: "",
+      });
+    });
 
-  const { mutate: createLensFeature, isPending: creating } = useCreateLensFeature(
-    () => {
-      form.reset();
-    },
-  );
+  const { mutate: createLensFeature, isPending: creating } =
+    useCreateLensFeature(() => {
+      form.reset({
+        description: "",
+        image: null,
+        power_type_id: "",
+        title: "",
+      });
+    });
 
   const isPending = updating || creating;
+
+  // create options for power type
+  const { data: powerTypes } = usePowerTypes({ completeFetch: true });
+  const power_type_options: ComboboxOption[] =
+    powerTypes?.map((pt) => ({
+      value: pt.id || "",
+      label: pt.title || "",
+    })) || [];
 
   const onSubmit = (data: z.infer<typeof lensFeatureSchema>) => {
     if (lens_feature_id) {
@@ -60,13 +79,20 @@ const LensFeatureForm: React.FC = () => {
 
   React.useEffect(() => {
     if (data) {
-      form.reset({ title: data?.title, description: data?.description });
+      form.reset({
+        title: data?.title,
+        description: data?.description,
+        power_type_id: data?.power_type_id,
+      });
     }
   }, [data, form]);
 
   return (
     <Form {...form}>
-      <form className="flex flex-col gap-4" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className="flex flex-col gap-4"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <div className="flex flex-col gap-4">
           {/* Image Upload */}
           <FormField
@@ -96,6 +122,25 @@ const LensFeatureForm: React.FC = () => {
                   </FileInput>
                 </FormControl>
                 <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="power_type_id"
+            render={({ field }) => (
+              <FormItem className="flex gap-4 items-center">
+                <FormLabel className="flex-shrink-0">Power Type</FormLabel>
+                <FormControl>
+                  <Combobox
+                    options={power_type_options}
+                    placeholder="Select power type"
+                    value={field.value}
+                    onChange={field.onChange}
+                    className="flex-grow"
+                  />
+                </FormControl>
               </FormItem>
             )}
           />
