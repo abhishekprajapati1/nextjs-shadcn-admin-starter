@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from "@/store";
 const EditPlaceOrderModel:React.FC=()=>
 {
 const dispatch=useAppDispatch();
-const edit_modal=useAppSelector((store)=> store.ProductDetailStore.modalStore.edit_modal);
+const edit_modal=useAppSelector((store)=> store.productDetailStore.modalStore.edit_modal);
 
 
   return (

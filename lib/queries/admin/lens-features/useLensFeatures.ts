@@ -7,7 +7,12 @@ import { generateQueryString } from "@/lib/utils";
 import ENDPOINTS from "@/lib/endpoints";
 import { ILensFeature } from "@/components/lens-features/LensFeature";
 
-const useLensFeatures = () => {
+interface UseLensFeature {
+  completeFetch?: boolean;
+}
+
+const useLensFeatures = (configs?: UseLensFeature) => {
+  const { completeFetch = false } = configs || {};
   const dispatch = useAppDispatch();
   const api = getApiClient();
   // Get sort_by selection
@@ -15,7 +20,7 @@ const useLensFeatures = () => {
     (store) => store.lensFeatureStore.dataStore,
   );
 
-  const page_size = 10; // Number of records per page.
+  const page_size = completeFetch ? 1000 : 10; // Number of records per page.
 
   const result = useInfiniteQuery<ILensFeature[]>({
     initialPageParam: 1,

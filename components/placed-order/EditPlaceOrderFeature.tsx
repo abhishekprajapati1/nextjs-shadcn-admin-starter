@@ -11,21 +11,21 @@ import { useDispatch, useSelector } from "react-redux";
 import React from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import {showEditPlaceOrder} from "@/store/placed-order/modal.slice";
+import { showEditPlaceOrder } from "@/store/placed-order/modal.slice";
 import { useAppDispatch, useAppSelector } from "@/store";
 
-const EditPlaceOrderModel:React.FC=()=>
-{
-const dispatch=useAppDispatch();
-const edit_modal=useAppSelector((store)=> store.PlaceOrderStore.modalStore.edit_modal);
-
+const EditPlaceOrderModel: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const edit_modal = useAppSelector(
+    (store) => store.placeOrderStore.modalStore.edit_modal,
+  );
 
   return (
     <Modal
-    open={edit_modal}
-    onOpenChange={(val) => dispatch(showEditPlaceOrder(val))}
+      open={edit_modal}
+      onOpenChange={(val) => dispatch(showEditPlaceOrder(val))}
     >
-<DialogHeader>
+      <DialogHeader>
         <DialogTitle>Edit profile</DialogTitle>
         <DialogDescription>
           Make changes to your profile here. Click save when you're done.
@@ -52,7 +52,6 @@ const edit_modal=useAppSelector((store)=> store.PlaceOrderStore.modalStore.edit_
       <DialogFooter>
         <Button type="submit">Save changes</Button>
       </DialogFooter>
-
     </Modal>
   );
 };

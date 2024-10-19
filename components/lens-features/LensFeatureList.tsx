@@ -1,7 +1,7 @@
 "use client";
 import LensFeature from "./LensFeature";
 import { Button, ProcessIndicator } from "../ui/button";
-import useLensFeatures from "@/lib/queries/admin/lens-feature/useLensFeatures";
+import useLensFeatures from "@/lib/queries/admin/lens-features/useLensFeatures";
 
 const LensFeatureList = () => {
   const { data, isLoading, isFetching, hasNextPage, fetchNextPage } =

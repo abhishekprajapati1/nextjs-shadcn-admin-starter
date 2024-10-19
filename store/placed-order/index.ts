@@ -3,8 +3,8 @@ import modalStore from './modal.slice';
 
 
 
-const PlaceOrderStore = combineReducers({
+const placeOrderStore = combineReducers({
     modalStore,
 });
 
-export default PlaceOrderStore;
+export default placeOrderStore;

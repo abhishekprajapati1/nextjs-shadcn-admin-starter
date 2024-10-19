@@ -3,8 +3,8 @@ import modalStore from './modal.slice';
 
 
 
-const ProductDetailStore = combineReducers({
+const productDetailStore = combineReducers({
     modalStore,
 });
 
-export default ProductDetailStore;
+export default productDetailStore;

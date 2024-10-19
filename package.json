@@ -1,9 +1,9 @@
 {
-  "name": "manage.hospotribe.com",
+  "name": "akkukachasma.com",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start -p 3333",
     "lint": "next lint"

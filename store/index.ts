@@ -1,20 +1,23 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
-import userStore from './slices/users.slice';
-import typeStore from './slices/types.slice';
-import powerTypeStore from './power-types';
-import PlaceOrderStore from './placed-order';
-import ProductDetailStore from './product-detail';
-import lensFeatureStore from './lens-features';
+import { configureStore } from "@reduxjs/toolkit";
+import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
+import userStore from "./slices/users.slice";
+import typeStore from "./slices/types.slice";
+import powerTypeStore from "./power-types";
+import placeOrderStore from "./placed-order";
+import productDetailStore from "./product-detail";
+import lensFeatureStore from "./lens-features";
+import lensDetailStore from "./lens-details";
 
 const store = configureStore({
-    reducer: {
-        userStore, typeStore,
-        lensFeatureStore,
-        powerTypeStore,
-        PlaceOrderStore,
-        ProductDetailStore
-    }
+  reducer: {
+    userStore,
+    typeStore,
+    lensFeatureStore,
+    lensDetailStore,
+    powerTypeStore,
+    placeOrderStore,
+    productDetailStore,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
