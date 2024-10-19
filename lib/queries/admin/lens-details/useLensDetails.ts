@@ -12,7 +12,7 @@ const useLensDetails = () => {
   const api = getApiClient();
   // Get sort_by selection
   const { sort_by, total, search_term } = useAppSelector(
-    (store) => store.lensFeatureStore.dataStore,
+    (store) => store.lensDetailStore.dataStore,
   );
 
   const page_size = 10; // Number of records per page.
@@ -25,7 +25,7 @@ const useLensDetails = () => {
         page: pageParam?.toString(),
         sort_by,
         page_size: page_size?.toString(),
-        search_term,
+        search_term: search_term.query_string,
       };
 
       const queryString = generateQueryString(filterObj);

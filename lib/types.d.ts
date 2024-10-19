@@ -6,6 +6,11 @@ export interface IRecordMeta {
   updated_at?: string;
 }
 
+export interface ISearchTerm {
+  query: string;
+  query_string: string;
+}
+
 export interface IDefaultUrl {
   default_url?: string;
 }

@@ -1,17 +1,21 @@
-import { IDeleteRecord } from "@/lib/types";
+import { IDeleteRecord, ISearchTerm } from "@/lib/types";
+import { generateQueryString } from "@/lib/utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type InitialState = {
   lensDetailToDelete: IDeleteRecord | null;
   sort_by: string;
-  search_term?: string;
+  search_term: ISearchTerm;
   total: number;
 };
 
 const initialState: InitialState = {
   lensDetailToDelete: null,
   sort_by: "",
-  search_term: "",
+  search_term: {
+    query_string: "",
+    query: "",
+  },
   total: 0,
 };
 
@@ -31,9 +35,20 @@ const lensDetailSlice = createSlice({
     setTotal: (state, { payload }: { payload: number }) => {
       state.total = payload;
     },
+    setSearchTerm: (state, { payload }: { payload: string }) => {
+      state.search_term.query = payload;
+    },
+    buildQueryString: (state, { payload }: { payload: string }) => {
+      state.search_term.query_string = payload;
+    },
   },
 });
 
-export const { setLensDetailToDelete, setSortBy, setTotal } =
-  lensDetailSlice.actions;
+export const {
+  setLensDetailToDelete,
+  setSortBy,
+  setTotal,
+  setSearchTerm,
+  buildQueryString,
+} = lensDetailSlice.actions;
 export default lensDetailSlice.reducer;

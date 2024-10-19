@@ -17,15 +17,15 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   return (
     <React.Fragment>
       <div
-        className={`flex w-full px-4 lg:px-10 justify-between items-center gap-4 h-16  ${
+        className={`flex w-full px-4 lg:px-10 items-center gap-4 h-16  ${
           className || ""
         }`}
       >
-        <div className="">
+        <div className="flex-shrink-0">
           <h3 className="font-bold capitalize tracking-wide">{title}</h3>
           {tagline && <p className="text-xs tracking-wide">{tagline}</p>}
         </div>
-        {children}
+        <div className="flex-grow flex justify-end">{children}</div>
       </div>
       <Separator />
     </React.Fragment>

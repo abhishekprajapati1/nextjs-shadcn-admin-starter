@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { getCookie } from "cookies-next";
 import { TOKENS } from "./constants";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/lib/hooks/use-toast";
 
 export const baseURL =
   process.env.NODE_ENV === "development"

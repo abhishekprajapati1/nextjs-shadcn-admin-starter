@@ -1,4 +1,4 @@
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/lib/hooks/use-toast";
 import { RequestError, getApiClient, getErrorMessage } from "@/lib/api";
 import ENDPOINTS from "@/lib/endpoints";
 import { lensDetailSchema } from "@/lib/validations/admin/lens-details.validation";

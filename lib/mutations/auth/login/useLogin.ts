@@ -3,7 +3,7 @@ import ENDPOINTS from "@/lib/endpoints";
 import { RequestError, getApiClient, getErrorMessage } from "@/lib/api";
 import { z } from "zod";
 import { loginSchema } from "@/lib/validations/login.validation";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/lib/hooks/use-toast";
 
 const useLogin = (ret?: string) => {
   const api = getApiClient();
