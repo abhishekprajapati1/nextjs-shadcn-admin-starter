@@ -29,7 +29,7 @@ const AddLensDeatailModal: React.FC = () => {
           Fill in the details to add a new lens feature.
         </DialogDescription>
       </DialogHeader>
-      <LensDetailForm /><tbody></tbody>
+      <LensDetailForm /><tbody>igin</tbody>
     </Modal>
   );
 };
