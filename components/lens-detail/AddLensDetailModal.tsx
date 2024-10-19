@@ -9,6 +9,7 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { showModal } from "@/store/lens-features/form.slice";
 import LensDetailForm from "./LensDetailForm";
+import LensFeatureForm from "../lens-features/LensFeatureForm";
 
 const AddLensDeatailModal: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +29,7 @@ const AddLensDeatailModal: React.FC = () => {
           Fill in the details to add a new lens feature.
         </DialogDescription>
       </DialogHeader>
-      <LensFeatureForm />
+      <LensDetailForm /><tbody></tbody>
     </Modal>
   );
 };
