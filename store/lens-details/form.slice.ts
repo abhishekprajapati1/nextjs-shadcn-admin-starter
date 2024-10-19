@@ -20,7 +20,7 @@ const lensDetailFormSlice = createSlice({
   reducers: {
     setData: (
       state,
-      { payload }: { payload: Partial<ILensDetail & IDefaultUrl> | nul },
+      { payload }: { payload: Partial<ILensDetail & IDefaultUrl> | null },
     ) => {
       state.data = payload;
     },

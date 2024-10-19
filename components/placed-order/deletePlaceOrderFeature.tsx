@@ -10,7 +10,7 @@ import { showDeletePlaceOrder } from "@/store/placed-order/modal.slice";
 const DeletePlaceOrderFeature:React.FC=()=>{
 
     const dispatch=useAppDispatch();
-    const delete_modal=useAppSelector((store)=> store.PlaceOrderStore.modalStore.delete_modal);
+    const delete_modal=useAppSelector((store)=> store.placeOrderStore.modalStore.delete_modal);
     return(
         <Modal open={delete_modal} onOpenChange={(val) => dispatch(showDeletePlaceOrder(val))}>
 <DialogHeader>
