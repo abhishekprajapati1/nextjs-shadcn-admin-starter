@@ -1,11 +1,11 @@
-import { ILensFeature } from "@/components/lens-features/LensFeature";
+import { ILensDetail } from "@/components/lens-details/LensDetail";
 import { IDefaultUrl } from "@/lib/types";
 import { createSlice } from "@reduxjs/toolkit";
 
 type InitialState = {
   lens_detail_id: string;
   modal: boolean;
-  data: Partial<ILensFeature & IDefaultUrl> | null;
+  data: Partial<ILensDetail & IDefaultUrl> | null;
 };
 
 const initialState: InitialState = {
@@ -14,17 +14,17 @@ const initialState: InitialState = {
   lens_detail_id: "",
 };
 
-const LensDetailFormSlice = createSlice({
-  name: "lens-detail/form",
+const lensDetailFormSlice = createSlice({
+  name: "lens-details/form",
   initialState,
   reducers: {
     setData: (
       state,
-      { payload }: { payload: Partial<ILensFeature & IDefaultUrl> },
+      { payload }: { payload: Partial<ILensDetail & IDefaultUrl> | nul },
     ) => {
       state.data = payload;
     },
-    setLensFeatureId: (state, { payload }: { payload: string }) => {
+    setLensDetailId: (state, { payload }: { payload: string }) => {
       state.lens_detail_id = payload;
     },
     showModal: (state, { payload }: { payload: boolean }) => {
@@ -37,5 +37,5 @@ const LensDetailFormSlice = createSlice({
 });
 
 export const { setData, setLensDetailId, showModal, resetStore } =
-LensDetailFormSlice.actions;
-export default LensDetailFormSlice.reducer;
+  lensDetailFormSlice.actions;
+export default lensDetailFormSlice.reducer;

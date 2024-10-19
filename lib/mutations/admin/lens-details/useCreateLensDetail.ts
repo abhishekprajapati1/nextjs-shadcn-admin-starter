@@ -1,32 +1,29 @@
 import { toast } from "@/components/ui/use-toast";
 import { RequestError, getApiClient, getErrorMessage } from "@/lib/api";
 import ENDPOINTS from "@/lib/endpoints";
-import { lensFeatureSchema } from "@/lib/validations/admin/lens-feature.validation";
+import { lensDetailSchema } from "@/lib/validations/admin/lens-details.validation";
 import { useAppDispatch } from "@/store";
-import { resetStore } from "@/store/lens-features/form.slice";
+import { showModal } from "@/store/lens-details/form.slice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 
-const useCreateLensFeature = (onSuccess?: () => void) => {
+const useCreateLensDetails = (onSuccess?: () => void) => {
   const api = getApiClient({ multipart: true });
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: async (data: z.infer<typeof lensFeatureSchema>) => {
+    mutationFn: async (data: z.infer<typeof lensDetailSchema>) => {
       const { image, ...rest } = data;
       const formdata = new FormData();
       if (image) formdata.append("image", image);
       formdata.append("json_payload", JSON.stringify(rest));
-      const res = await api.post(
-        ENDPOINTS.admin.lens_features.create,
-        formdata,
-      );
+      const res = await api.post(ENDPOINTS.admin.lens_details.create, formdata);
       return res.data;
     },
     onSuccess: (data) => {
-      dispatch(resetStore());
+      dispatch(showModal(false));
       if (onSuccess) onSuccess();
-      queryClient.invalidateQueries({ queryKey: ["lens-features"] });
+      queryClient.invalidateQueries({ queryKey: ["lens-details"] });
     },
     onError: (error: RequestError) => {
       const message = getErrorMessage(error);
@@ -39,4 +36,4 @@ const useCreateLensFeature = (onSuccess?: () => void) => {
   return mutation;
 };
 
-export default useCreateLensFeature;
+export default useCreateLensDetails;

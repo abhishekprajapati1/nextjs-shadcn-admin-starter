@@ -40,24 +40,10 @@ const LensFeatureForm: React.FC = () => {
   );
 
   const { mutate: updateLensFeature, isPending: updating } =
-    useUpdateLensFeature(() => {
-      form.reset({
-        description: "",
-        image: null,
-        power_type_id: "",
-        title: "",
-      });
-    });
+    useUpdateLensFeature();
 
   const { mutate: createLensFeature, isPending: creating } =
-    useCreateLensFeature(() => {
-      form.reset({
-        description: "",
-        image: null,
-        power_type_id: "",
-        title: "",
-      });
-    });
+    useCreateLensFeature();
 
   const isPending = updating || creating;
 

@@ -10,8 +10,8 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
-  data: null,
   modal: false,
+  data: null,
   lens_feature_id: "",
 };
 

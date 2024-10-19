@@ -2,12 +2,12 @@ import React from "react";
 import { getApiClient } from "@/lib/api";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { setTotal } from "@/store/lens-features/data.slice";
+import { setTotal } from "@/store/lens-details/data.slice";
 import { generateQueryString } from "@/lib/utils";
 import ENDPOINTS from "@/lib/endpoints";
-import { ILensFeature } from "@/components/lens-features/LensFeature";
+import { ILensDetail } from "@/components/lens-details/LensDetail";
 
-const useLensFeatures = () => {
+const useLensDetails = () => {
   const dispatch = useAppDispatch();
   const api = getApiClient();
   // Get sort_by selection
@@ -17,9 +17,9 @@ const useLensFeatures = () => {
 
   const page_size = 10; // Number of records per page.
 
-  const result = useInfiniteQuery<ILensFeature[]>({
+  const result = useInfiniteQuery<ILensDetail[]>({
     initialPageParam: 1,
-    queryKey: ["lens-features", search_term, sort_by],
+    queryKey: ["lens-details", search_term, sort_by],
     queryFn: async ({ pageParam }) => {
       const filterObj = {
         page: pageParam?.toString(),
@@ -31,7 +31,7 @@ const useLensFeatures = () => {
       const queryString = generateQueryString(filterObj);
 
       const response = await api.get(
-        ENDPOINTS.admin.lens_features.fetch_all(queryString),
+        ENDPOINTS.admin.lens_details.fetch_all(queryString),
       );
 
       dispatch(setTotal(response?.data?.total));
@@ -45,14 +45,14 @@ const useLensFeatures = () => {
     },
   });
 
-  const customers = React.useMemo(() => {
+  const lens_details = React.useMemo(() => {
     return result.data?.pages.reduce((acc, page) => {
       return [...acc, ...page];
-    }, [] as ILensFeature[]);
+    }, []);
   }, [result?.data]);
 
   return {
-    data: customers,
+    data: lens_details,
     isLoading: result.isLoading,
     isFetching: result.isFetching,
     hasNextPage: result.hasNextPage,
@@ -61,4 +61,4 @@ const useLensFeatures = () => {
   };
 };
 
-export default useLensFeatures;
+export default useLensDetails;

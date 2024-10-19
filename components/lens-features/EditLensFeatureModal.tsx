@@ -9,9 +9,9 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import React from "react";
 
 import LensFeatureForm from "./LensFeatureForm";
-import { setLensFeatureId } from "@/store/lens-features/form.slice";
+import { resetStore, setLensFeatureId } from "@/store/lens-features/form.slice";
 
-const EditLensFeatureModel: React.FC = () => {
+const EditLensFeatureModal: React.FC = () => {
   const dispatch = useAppDispatch();
   const lens_feature_id = useAppSelector(
     (store) => store.lensFeatureStore.formStore.lens_feature_id,
@@ -20,7 +20,12 @@ const EditLensFeatureModel: React.FC = () => {
   return (
     <Modal
       open={Boolean(lens_feature_id)}
-      onOpenChange={(val) => dispatch(setLensFeatureId(val ? lens_feature_id : ""))}
+      onOpenChange={(val) => {
+        if (!val) {
+          dispatch(resetStore());
+        }
+        dispatch(setLensFeatureId(val ? lens_feature_id : ""));
+      }}
       showCloseIcon
     >
       <DialogHeader>
@@ -33,4 +38,4 @@ const EditLensFeatureModel: React.FC = () => {
     </Modal>
   );
 };
-export default EditLensFeatureModel;
+export default EditLensFeatureModal;

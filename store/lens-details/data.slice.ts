@@ -15,11 +15,14 @@ const initialState: InitialState = {
   total: 0,
 };
 
-const LensDetailSlice = createSlice({
-  name: "lens-deatail/data",
+const lensDetailSlice = createSlice({
+  name: "lens-details/data",
   initialState,
   reducers: {
-    setLensDetailToDelete: (state, { payload }: { payload: IDeleteRecord | null }) => {
+    setLensDetailToDelete: (
+      state,
+      { payload }: { payload: IDeleteRecord | null },
+    ) => {
       state.lensDetailToDelete = payload;
     },
     setSortBy: (state, { payload }: { payload: string }) => {
@@ -31,5 +34,6 @@ const LensDetailSlice = createSlice({
   },
 });
 
-export const { setLensDetailToDelete, setSortBy, setTotal } = LensDetailSlice.actions;
-export default LensDetailSlice.reducer;
+export const { setLensDetailToDelete, setSortBy, setTotal } =
+  lensDetailSlice.actions;
+export default lensDetailSlice.reducer;

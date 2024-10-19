@@ -7,10 +7,10 @@ import {
 import Modal from "@/components/ui/modal";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { showModal } from "@/store/lens-features/form.slice";
 import LensDetailForm from "./LensDetailForm";
+import { showModal } from "@/store/lens-details/form.slice";
 
-const AddLensDeatailModal: React.FC = () => {
+const AddLensDetailModal: React.FC = () => {
   const dispatch = useAppDispatch();
   const modal = useAppSelector(
     (store) => store.lensDetailStore.formStore.modal,
@@ -21,16 +21,17 @@ const AddLensDeatailModal: React.FC = () => {
       showCloseIcon
       open={modal}
       onOpenChange={(val) => dispatch(showModal(val))}
+      className="max-w-[700px]"
     >
       <DialogHeader>
-        <DialogTitle>Add Lens Feature</DialogTitle>
+        <DialogTitle>Add Lens Detail</DialogTitle>
         <DialogDescription>
-          Fill in the details to add a new lens feature.
+          Fill in the details to add a new lens detail.
         </DialogDescription>
       </DialogHeader>
-      <LensFeatureForm />
+      <LensDetailForm />
     </Modal>
   );
 };
 
-export default AddLensDeatailModal;
+export default AddLensDetailModal;
