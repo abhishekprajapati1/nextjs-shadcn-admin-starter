@@ -1,5 +1,6 @@
 import { IMenuLink } from "@/app/(protected)/Nav";
 import DashboardIcon from "@/components/icons/DashobardIcon";
+import FramematerialIconIcon from "@/components/icons/FramematerialIcon";
 import LensDetailsIcon from "@/components/icons/LensDetailsIcon";
 import LensFeatureIcon from "@/components/icons/LensFeatureIcon";
 import PowerType from "@/components/icons/PowerTypeIcon";
@@ -28,5 +29,11 @@ export const sidebar_menus: IMenuLink[] = [
     title: "Lens  Details",
     variant: "ghost",
     href: "/lens-details",
+  },
+  {
+    icon: FramematerialIconIcon,
+    title: "Frame Matarials",
+    variant: "ghost",
+    href: "/frame-materials",
   },
 ];
