@@ -14,5 +14,5 @@ const page = () => {
       <DeletePlaceOrderFeature />
     </>
   );
-};
+}
 export default page;

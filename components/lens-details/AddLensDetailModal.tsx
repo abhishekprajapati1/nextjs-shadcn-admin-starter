@@ -33,5 +33,4 @@ const AddLensDetailModal: React.FC = () => {
     </Modal>
   );
 };
-
 export default AddLensDetailModal;
