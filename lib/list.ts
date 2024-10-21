@@ -1,4 +1,5 @@
 import { IMenuLink } from "@/app/(protected)/Nav";
+import BrandIcon from "@/components/icons/BrandIcon";
 import DashboardIcon from "@/components/icons/DashobardIcon";
 import FramematerialIconIcon from "@/components/icons/FramematerialIcon";
 import LensDetailsIcon from "@/components/icons/LensDetailsIcon";
@@ -35,5 +36,11 @@ export const sidebar_menus: IMenuLink[] = [
     title: "Frame Matarials",
     variant: "ghost",
     href: "/frame-materials",
+  },
+  {
+    icon: BrandIcon,
+    title: "Brand",
+    variant: "ghost",
+    href: "/brand",
   },
 ];

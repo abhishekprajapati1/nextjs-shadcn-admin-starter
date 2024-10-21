@@ -8,7 +8,7 @@ import { z } from "zod";
 import { frameMaterialSchema } from "@/lib/validations/admin/frame-materials.validation";
 
 const useCreateFrameMaterials = (onSuccess?: () => void) => {
-  const api = getApiClient({ multipart: true });
+  const api = getApiClient();
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const mutation = useMutation({

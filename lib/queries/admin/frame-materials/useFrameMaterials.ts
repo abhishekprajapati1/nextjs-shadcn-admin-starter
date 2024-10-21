@@ -28,7 +28,7 @@ const useFrameMaterials = (configs?: UseFrameMaterials) => {
         page: pageParam?.toString(),
         sort_by,
         page_size: page_size?.toString(),
-        search_term,
+        search_term: search_term.query_string,
       };
 
       const queryString = generateQueryString();

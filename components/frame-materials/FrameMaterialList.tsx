@@ -6,7 +6,7 @@ import useFrameMaterials from "@/lib/queries/admin/frame-materials/useFrameMater
 const FrameMaterialList = () => {
   const { data, isLoading, isFetching, hasNextPage, fetchNextPage } =
   useFrameMaterials();
-
+ console.log(data);
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
@@ -25,6 +25,7 @@ const FrameMaterialList = () => {
       {data?.map((d) => {
         return <FrameMaterial key={d.id} data={d} />;
       })}
+
 
       {hasNextPage && (
         <div className="min-h-24 grid place-content-center">

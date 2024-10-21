@@ -17,7 +17,6 @@ const page=()=>
       <Header />
       <PageWrapper>
      <FrameMaterialList />
-     
       </PageWrapper>
     </div>
         </>

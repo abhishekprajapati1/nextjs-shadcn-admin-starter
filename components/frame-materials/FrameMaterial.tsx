@@ -9,9 +9,10 @@ import { IRecordMeta } from "@/lib/types";
 import { Skeleton } from "../ui/skeleton";
 import Avatar from "../ui/avatar";
 import { capitalizeFirstLetter } from "@/lib/utils";
-import { setData} from "@/store/frame-materials/form.slice";
+import { setData } from "@/store/frame-materials/form.slice";
 
 import { setFrameMaterialsId } from "@/store/frame-materials/form.slice";
+import { setFrameMaterialToDelete } from "@/store/frame-materials/data.slice";
 
 export interface IFrameMaterial extends IRecordMeta {
   title?: string;
@@ -29,30 +30,18 @@ const FrameMaterial: React.FC<FrameMaterialsProps> = ({ data }) => {
     return <FrameMaterialsSkeleton />;
   }
 
-    function setFrameMaterialsDelete(arg0: { id: string; label: string; }): any {
-        throw new Error("Function not implemented.");
-    }
-
   return (
     <Card>
       <CardContent className="pt-6 h-full flex flex-col gap-2">
-        <div className="flex flex-col gap-2">
-          <Avatar
-            size="6xl"
-            className="rounded-md"
-            alt="Image for power type"
-            fallback={data?.title?.charAt(0)?.toUpperCase()}
-          />
-          <div className="flex-grow">
-            <h3 className="text-lg font-semibold text-gray-800 capitalize">
-              {data?.title}
-            </h3>
-            <p className="text-sm text-gray-500">
-              {capitalizeFirstLetter(data?.description)}
-            </p>
-          </div>
+        <div className="flex-grow">
+          <h3 className="text-lg font-semibold text-gray-800 capitalize">
+            {data?.title}
+          </h3>
+          <p className="text-sm text-gray-500">
+            {capitalizeFirstLetter(data?.description)}
+          </p>
         </div>
-        <div className="flex items-baseline flex-grow">
+        <div className="flex items-baseline">
           <div className="flex items-end justify-end gap-2 flex-grow h-full">
             <Button
               onClick={() => {
@@ -61,8 +50,7 @@ const FrameMaterial: React.FC<FrameMaterialsProps> = ({ data }) => {
                   setData({
                     title: data?.title,
                     description: data?.description,
-                  
-                  }),
+                  })
                 );
               }}
               variant="secondary"
@@ -76,10 +64,10 @@ const FrameMaterial: React.FC<FrameMaterialsProps> = ({ data }) => {
               size="icon"
               onClick={() =>
                 dispatch(
-                  setFrameMaterialsDelete({
+                  setFrameMaterialToDelete({
                     id: data?.id || "",
                     label: data.title || "",
-                  }),
+                  })
                 )
               }
               className="bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white ease-linear duration-300"

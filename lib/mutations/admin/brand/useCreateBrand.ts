@@ -1,28 +1,24 @@
 import { toast } from "@/lib/hooks/use-toast";
 import { RequestError, getApiClient, getErrorMessage } from "@/lib/api";
 import ENDPOINTS from "@/lib/endpoints";
-import { useAppDispatch, useAppSelector } from "@/store";
+import { useAppDispatch } from "@/store";
+import { resetStore } from "@/store/frame-materials/form.slice";//chnge
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { setFrameMaterialToDelete } from "@/store/frame-materials/data.slice";
+import { z } from "zod";
+import { frameMaterialSchema } from "@/lib/validations/admin/frame-materials.validation";
 
-const useDeleteFrameMaterials = (onSuccess?: () => void) => {
-  const frameMaterialsToDelete = useAppSelector(
-    (store) => store.frameMaterialStore.dataStore.frameMaterialToDelete,
-  );
-  const dispatch = useAppDispatch();
-
+const useCreateBrand = (onSuccess?: () => void) => {
   const api = getApiClient();
+  const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: async () => {
-      const res = await api.delete(
-        ENDPOINTS.admin.frame_materials.delete(frameMaterialsToDelete?.id || ""),
-      );
+    mutationFn: async (data: z.infer<typeof frameMaterialSchema>) => {
+      const res = await api.post(ENDPOINTS.admin.frame_materials.create, data);
       return res.data;
     },
-    onSuccess: (_data) => {
+    onSuccess: (data) => {
+      dispatch(resetStore());
       if (onSuccess) onSuccess();
-      dispatch(setFrameMaterialToDelete(null));
       queryClient.invalidateQueries({ queryKey: ["frame-materials"] });
     },
     onError: (error: RequestError) => {
@@ -36,4 +32,4 @@ const useDeleteFrameMaterials = (onSuccess?: () => void) => {
   return mutation;
 };
 
-export default useDeleteFrameMaterials;
+export default useCreateBrand;
