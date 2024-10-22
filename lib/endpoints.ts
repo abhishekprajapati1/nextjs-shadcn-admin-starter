@@ -11,6 +11,13 @@ const ENDPOINTS = {
       update: (id: string) => `power-types/${id}`,
       delete: (id: string) => `power-types/${id}`,
     },
+    shapes: {
+      fetch_all: (queryString?: string) =>
+        `shapes${queryString ? "?" + queryString : ""}`,
+      create: "shapes",
+      update: (id: string) => `shapes/${id}`,
+      delete: (id: string) => `shapes/${id}`,
+    },
     lens_features: {
       fetch_all: (queryString?: string) =>
         `lens-features${queryString ? "?" + queryString : ""}`,
@@ -38,6 +45,13 @@ const ENDPOINTS = {
       create: "brands",
       update: (id: string) => `brands/${id}`,
       delete: (id: string) => `brands/${id}`,
+    },
+    colors: {
+      fetch_all: (queryString?: string) =>
+        `colors${queryString ? "?" + queryString : ""}`,
+      create: "colors",
+      update: (id: string) => `colors/${id}`,
+      delete: (id: string) => `colors/${id}`,
     },
   },
   OWNERS: {

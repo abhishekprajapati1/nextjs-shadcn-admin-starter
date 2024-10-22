@@ -7,13 +7,14 @@ import {
 import Modal from "@/components/ui/modal";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { showModal } from "@/store/colors/form.slice";
-import ColoreForm from "./ColorForm";
+import { showModal } from "@/store/shapes/form.slice";
+import ShapeForm from "./ShapeForm";
+
 
 
 const AddModal: React.FC = () => {
   const dispatch = useAppDispatch();
-  const modal = useAppSelector((store) => store.colorStore.formStore.modal);
+  const modal = useAppSelector((store) => store.shapeStore.formStore.modal);
 
   return (
     <Modal
@@ -22,12 +23,12 @@ const AddModal: React.FC = () => {
       onOpenChange={(val) => dispatch(showModal(val))}
     >
       <DialogHeader>
-        <DialogTitle>Add colore</DialogTitle>
+        <DialogTitle>Add Shape</DialogTitle>
         <DialogDescription>
-          Fill in the details to add a new colore.
+          Fill in the details to add a new Shape.
         </DialogDescription>
       </DialogHeader>
-      <ColoreForm />
+      <ShapeForm />
     </Modal>
   );
 };

@@ -2,10 +2,10 @@ import React from "react";
 import { getApiClient } from "@/lib/api";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { setTotal } from "@/store/colors/data.slice";
+import { setTotal } from "@/store/shapes/data.slice";
 import { generateQueryString } from "@/lib/utils";
 import ENDPOINTS from "@/lib/endpoints";
-import { IColor } from "@/components/colors/ListItem";
+import { IShape } from "@/components/shapes/ListItem";
 interface UseItems {
     completeFetch?: boolean;
 }
@@ -15,14 +15,14 @@ const useItems = (configs?: UseItems) => {
     const api = getApiClient();
     // Get sort_by selection
     const { sort_by, total, search_term } = useAppSelector(
-        (store) => store.colorStore.dataStore,
+        (store) => store.shapeStore.dataStore,
     );
 
     const page_size = completeFetch ? 1000 : 10; // Number of records per page.
 
-    const result = useInfiniteQuery<IColor[]>({
+    const result = useInfiniteQuery<IShape[]>({
         initialPageParam: 1,
-        queryKey: ["colors", search_term, sort_by],
+        queryKey: ["shapes", search_term, sort_by],
         queryFn: async ({ pageParam }) => {
             const filterObj = {
                 page: pageParam?.toString(),
@@ -34,7 +34,7 @@ const useItems = (configs?: UseItems) => {
             const queryString = generateQueryString(filterObj);
 
             const response = await api.get(
-                ENDPOINTS.admin.colors.fetch_all(queryString),
+                ENDPOINTS.admin.shapes.fetch_all(queryString),
             );
 
             dispatch(setTotal(response?.data?.total));

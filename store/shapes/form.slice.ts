@@ -1,11 +1,11 @@
 
-import { IColor } from "@/components/colors/ListItem";
+
 import { createSlice } from "@reduxjs/toolkit";
 
 type InitialState = {
   item_id: string; // used to edit the item.
   modal: boolean;
-  data: Partial<IColor> | null;
+  data: Partial<IShape> | null;
 };
 
 const initialState: InitialState = {
@@ -15,12 +15,12 @@ const initialState: InitialState = {
 };
 
 const formSlice = createSlice({
-  name: "colors/form",
+  name: "shapes/form",
   initialState,
   reducers: {
     setData: (
       state,
-      { payload }: { payload: Partial<IColor> | null },
+      { payload }: { payload: Partial<IShape> | null },
     ) => {
       state.data = payload;
     },

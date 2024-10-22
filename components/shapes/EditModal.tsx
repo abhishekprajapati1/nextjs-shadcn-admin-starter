@@ -8,13 +8,13 @@ import Modal from "@/components/ui/modal";
 import { useAppDispatch, useAppSelector } from "@/store";
 import React from "react";
 
-import { resetStore } from "@/store/colors/form.slice";
-import Form from "./ColorForm";
-import { setItemId } from "@/store/colors/form.slice";
+import { resetStore } from "@/store/shapes/form.slice";
+import Form from "./ShapeForm";
+import { setItemId } from "@/store/shapes/form.slice";
 
 const EditModal: React.FC = () => {
   const dispatch = useAppDispatch();
-  const item_id = useAppSelector((store) => store.colorStore.formStore.item_id);
+  const item_id = useAppSelector((store) => store.shapeStore.formStore.item_id);
 
   return (
     <Modal
@@ -28,9 +28,9 @@ const EditModal: React.FC = () => {
       showCloseIcon
     >
       <DialogHeader>
-        <DialogTitle>Update Colore</DialogTitle>
+        <DialogTitle>Update Shape</DialogTitle>
         <DialogDescription>
-          Make changes to Colore here. Click save when you're done.
+          Make changes to shape here. Click save when you're done.
         </DialogDescription>
       </DialogHeader>
       <Form />

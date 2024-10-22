@@ -10,8 +10,8 @@ import Modal from "@/components/ui/modal";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { capitalizeFirstLetter } from "@/lib/utils";
-import useDelete from "@/lib/mutations/admin/colors/useDelete";
-import { setItemToDelete } from "@/store/colors/data.slice";
+import useDelete from "@/lib/mutations/admin/shapes/useDelete";
+import { setItemToDelete } from "@/store/shapes/data.slice";
 
 const DeleteModal: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +19,7 @@ const DeleteModal: React.FC = () => {
 
   // Accessing delete_modal from store
   const itemToDelete = useAppSelector(
-    (store) => store.colorStore.dataStore.itemToDelete
+    (store) => store.shapeStore.dataStore.itemToDelete
   );
 
   return (
@@ -31,7 +31,7 @@ const DeleteModal: React.FC = () => {
       }
     >
       <DialogHeader>
-        <DialogTitle>Delete colore</DialogTitle>
+        <DialogTitle>Delete Brand</DialogTitle>
         {/* Changed title to match delete purpose */}
         <DialogDescription>
           Are you sure you want to delete &nbsp;

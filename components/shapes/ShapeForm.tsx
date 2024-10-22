@@ -17,12 +17,14 @@ import {
 } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { formSchema } from "@/lib/validations/admin/brands.validation";
-import useUpdateBrand from "@/lib/mutations/admin/brands/useUpdate";
-import useCreateBrand from "@/lib/mutations/admin/brands/useCreate";
-import { resetStore, showModal } from "@/store/brands/form.slice";
+import { formSchema } from "@/lib/validations/admin/shapes.validation";
+import useUpdateBrand from "@/lib/mutations/admin/colors/useUpdate";
+import useCreateBrand from "@/lib/mutations/admin/colors/useCreate";
+import { resetStore, showModal } from "@/store/shapes/form.slice";
+import useUpdate from "@/lib/mutations/admin/shapes/useUpdate";
+import useCreate from "@/lib/mutations/admin/shapes/useCreate";
 
-const BrandForm: React.FC = () => {
+const ShapeForm: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: { title: "", description: "" },
     mode: "onBlur",
@@ -32,28 +34,28 @@ const BrandForm: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { data, item_id } = useAppSelector(
-    (store) => store.brandStore.formStore
+    (store) => store.shapeStore.formStore
   );
 
-  const { mutate: updateBrand, isPending: updating } = useUpdateBrand();
+  const { mutate: updateColor, isPending: updating } = useUpdate();
 
-  const { mutate: createBrand, isPending: creating } = useCreateBrand();
+  const { mutate: createColor, isPending: creating } = useCreate();
 
   const isPending = updating || creating;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     if (item_id) {
-      updateBrand(data);
+      updateColor(data);
     } else {
-      createBrand(data);
+      createColor(data);
     }
   };
 
   React.useEffect(() => {
     if (data) {
       form.reset({
-        title: data?.title,
-        description: data?.description,
+        //  title: data?.title,
+        // description: data?.description,
       });
     }
   }, [data, form]);
@@ -65,33 +67,9 @@ const BrandForm: React.FC = () => {
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className="flex flex-col gap-4">
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Title</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter title" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          
 
-          <FormField
-            name="description"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="Enter description" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          
         </div>
 
         <DialogFooter>
@@ -114,4 +92,4 @@ const BrandForm: React.FC = () => {
   );
 };
 
-export default BrandForm;
+export default ShapeForm;
