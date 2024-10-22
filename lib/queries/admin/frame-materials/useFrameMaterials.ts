@@ -31,7 +31,7 @@ const useFrameMaterials = (configs?: UseFrameMaterials) => {
         search_term: search_term.query_string,
       };
 
-      const queryString = generateQueryString();
+      const queryString = generateQueryString(filterObj);
 
       const response = await api.get(
         ENDPOINTS.admin.frame_materials.fetch_all(queryString),

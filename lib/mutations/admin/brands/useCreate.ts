@@ -2,24 +2,24 @@ import { toast } from "@/lib/hooks/use-toast";
 import { RequestError, getApiClient, getErrorMessage } from "@/lib/api";
 import ENDPOINTS from "@/lib/endpoints";
 import { useAppDispatch } from "@/store";
-import { resetStore } from "@/store/frame-materials/form.slice";//chnge
+import { resetStore } from "@/store/brands/form.slice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
-import { frameMaterialSchema } from "@/lib/validations/admin/frame-materials.validation";
+import { brandSchema } from "@/lib/validations/admin/brands.validation";
 
-const useCreateBrand = (onSuccess?: () => void) => {
+const useCreate = (onSuccess?: () => void) => {
   const api = getApiClient();
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: async (data: z.infer<typeof frameMaterialSchema>) => {
-      const res = await api.post(ENDPOINTS.admin.frame_materials.create, data);
+    mutationFn: async (data: z.infer<typeof brandSchema>) => {
+      const res = await api.post(ENDPOINTS.admin.brands.create, data);
       return res.data;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       dispatch(resetStore());
       if (onSuccess) onSuccess();
-      queryClient.invalidateQueries({ queryKey: ["frame-materials"] });
+      queryClient.invalidateQueries({ queryKey: ["brands"] });
     },
     onError: (error: RequestError) => {
       const message = getErrorMessage(error);
@@ -32,4 +32,4 @@ const useCreateBrand = (onSuccess?: () => void) => {
   return mutation;
 };
 
-export default useCreateBrand;
+export default useCreate;

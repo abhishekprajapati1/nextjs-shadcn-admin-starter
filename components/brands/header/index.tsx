@@ -4,38 +4,27 @@ import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
 import PageHeader from "@/components/PageHeader";
 import PlusIcon from "@/components/icons/PlusIcon";
-import { showModal } from "@/store/frame-materials/form.slice";
+import { showModal } from "@/store/brands/form.slice";
 import { useAppSelector } from "@/store";
 import { Cross2Icon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
-import {
-  buildQueryString,
-  setSearchTerm,
-} from "@/store/frame-materials/data.slice";
+import { setSearchTerm } from "@/store/brands/data.slice";
 
 const Header = () => {
   const [search, setSearch] = React.useState(false);
+  const [query, setQuery] = React.useState("");
   const dispatch = useDispatch();
-  const { total, search_term } = useAppSelector(
-    (store) => store.frameMaterialStore.dataStore,
-  );
-
-  const handleSearchInput = (val: string) => {
-    dispatch(setSearchTerm(val));
-  };
+  const total = useAppSelector((store) => store.brandStore.dataStore.total);
 
   React.useEffect(() => {
-    const debounceId = setTimeout(
-      () => dispatch(buildQueryString(search_term.query)),
-      400,
-    );
+    const debounceId = setTimeout(() => dispatch(setSearchTerm(query)), 400);
     return () => clearTimeout(debounceId);
-  }, [search_term.query, dispatch]);
+  }, [query, dispatch]);
 
   return (
     <PageHeader
-      title="Brand"
+      title="Brands"
       tagline={`${total} items`}
       className="flex-shrink-0"
     >
@@ -46,8 +35,8 @@ const Header = () => {
           <React.Fragment>
             <Input
               placeholder="Search..."
-              value={search_term.query}
-              onChange={(e) => handleSearchInput(e.target.value)}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
             />
             <Button
               type="button"

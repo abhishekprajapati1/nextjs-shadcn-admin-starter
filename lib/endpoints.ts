@@ -32,6 +32,13 @@ const ENDPOINTS = {
       update: (id: string) => `frame-materials/${id}`,
       delete: (id: string) => `frame-materials/${id}`,
     },
+    brands: {
+      fetch_all: (queryString?: string) =>
+        `brands${queryString ? "?" + queryString : ""}`,
+      create: "brands",
+      update: (id: string) => `brands/${id}`,
+      delete: (id: string) => `brands/${id}`,
+    },
   },
   OWNERS: {
     GET_ALL: (filter: string) =>

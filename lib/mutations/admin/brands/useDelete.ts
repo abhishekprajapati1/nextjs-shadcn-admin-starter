@@ -3,11 +3,11 @@ import { RequestError, getApiClient, getErrorMessage } from "@/lib/api";
 import ENDPOINTS from "@/lib/endpoints";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { setFrameMaterialToDelete } from "@/store/frame-materials/data.slice";
+import { setItemToDelete } from "@/store/brands/data.slice";
 
-const useDeleteFrameMaterials = (onSuccess?: () => void) => {
-  const frameMaterialsToDelete = useAppSelector(
-    (store) => store.frameMaterialStore.dataStore.frameMaterialToDelete,
+const useDelete = (onSuccess?: () => void) => {
+  const itemToDelete = useAppSelector(
+    (store) => store.brandStore.dataStore.itemToDelete,
   );
   const dispatch = useAppDispatch();
 
@@ -16,14 +16,14 @@ const useDeleteFrameMaterials = (onSuccess?: () => void) => {
   const mutation = useMutation({
     mutationFn: async () => {
       const res = await api.delete(
-        ENDPOINTS.admin.frame_materials.delete(frameMaterialsToDelete?.id || ""),
+        ENDPOINTS.admin.brands.delete(itemToDelete?.id || ""),
       );
       return res.data;
     },
     onSuccess: (_data) => {
       if (onSuccess) onSuccess();
-      dispatch(setFrameMaterialToDelete(null));
-      queryClient.invalidateQueries({ queryKey: ["frame-materials"] });
+      dispatch(setItemToDelete(null));
+      queryClient.invalidateQueries({ queryKey: ["brands"] });
     },
     onError: (error: RequestError) => {
       const message = getErrorMessage(error);
@@ -36,4 +36,4 @@ const useDeleteFrameMaterials = (onSuccess?: () => void) => {
   return mutation;
 };
 
-export default useDeleteFrameMaterials;
+export default useDelete;
