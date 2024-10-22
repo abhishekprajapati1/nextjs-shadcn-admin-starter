@@ -5,11 +5,11 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import { setTotal } from "@/store/brands/data.slice";
 import { generateQueryString } from "@/lib/utils";
 import ENDPOINTS from "@/lib/endpoints";
-import { IFrameMaterial } from "@/components/brands/ListItem";
-interface UseFrameMaterials {
+import { IBrand } from "@/components/brands/ListItem";
+interface UseItems {
     completeFetch?: boolean;
 }
-const useBrands = (configs?: UseFrameMaterials) => {
+const useItems = (configs?: UseItems) => {
     const { completeFetch = false } = configs || {};
     const dispatch = useAppDispatch();
     const api = getApiClient();
@@ -20,7 +20,7 @@ const useBrands = (configs?: UseFrameMaterials) => {
 
     const page_size = completeFetch ? 1000 : 10; // Number of records per page.
 
-    const result = useInfiniteQuery<IFrameMaterial[]>({
+    const result = useInfiniteQuery<IBrand[]>({
         initialPageParam: 1,
         queryKey: ["brands", search_term, sort_by],
         queryFn: async ({ pageParam }) => {
@@ -28,7 +28,7 @@ const useBrands = (configs?: UseFrameMaterials) => {
                 page: pageParam?.toString(),
                 sort_by,
                 page_size: page_size?.toString(),
-                search_term: search_term.query_string,
+                search_term: search_term,
             };
 
             const queryString = generateQueryString(filterObj);
@@ -51,7 +51,7 @@ const useBrands = (configs?: UseFrameMaterials) => {
     const customers = React.useMemo(() => {
         return result.data?.pages.reduce((acc, page) => {
             return [...acc, ...page];
-        }, [] as IFrameMaterial[]);
+        }, []);
     }, [result?.data]);
 
     return {
@@ -64,4 +64,4 @@ const useBrands = (configs?: UseFrameMaterials) => {
     };
 };
 
-export default useBrands;
+export default useItems;
