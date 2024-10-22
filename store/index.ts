@@ -9,6 +9,7 @@ import lensFeatureStore from "./lens-features";
 import lensDetailStore from "./lens-details";
 import frameMaterialStore from "./frame-materials";
 import brandStore from "./brands";
+import colorStore from "./colors";
 
 const store = configureStore({
   reducer: {
@@ -20,7 +21,8 @@ const store = configureStore({
     placeOrderStore,
     productDetailStore,
     frameMaterialStore,
-    brandStore
+    brandStore,
+    colorStore,
   },
 });
 

@@ -1,24 +1,28 @@
 import { toast } from "@/lib/hooks/use-toast";
 import { RequestError, getApiClient, getErrorMessage } from "@/lib/api";
 import ENDPOINTS from "@/lib/endpoints";
-import { useAppDispatch } from "@/store";
-import { resetStore } from "@/store/brands/form.slice";
+import { useAppDispatch, useAppSelector } from "@/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { z } from "zod";
-import { formSchema } from "@/lib/validations/admin/brands.validation";
+import { setItemToDelete } from "@/store/brands/data.slice";
 
-const useCreate = (onSuccess?: () => void) => {
-  const api = getApiClient();
+const useDelete = (onSuccess?: () => void) => {
+  const itemToDelete = useAppSelector(
+    (store) => store.brandStore.dataStore.itemToDelete,
+  );
   const dispatch = useAppDispatch();
+
+  const api = getApiClient();
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: async (data: z.infer<typeof formSchema>) => {
-      const res = await api.post(ENDPOINTS.admin.brands.create, data);
+    mutationFn: async () => {
+      const res = await api.delete(
+        ENDPOINTS.admin.brands.delete(itemToDelete?.id || ""),
+      );
       return res.data;
     },
-    onSuccess: () => {
-      dispatch(resetStore());
+    onSuccess: (_data) => {
       if (onSuccess) onSuccess();
+      dispatch(setItemToDelete(null));
       queryClient.invalidateQueries({ queryKey: ["brands"] });
     },
     onError: (error: RequestError) => {
@@ -32,4 +36,4 @@ const useCreate = (onSuccess?: () => void) => {
   return mutation;
 };
 
-export default useCreate;
+export default useDelete;
