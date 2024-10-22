@@ -39,7 +39,7 @@ interface LensDetailProps {
   data?: ILensDetail;
 }
 
-const LensFeature: React.FC<LensDetailProps> = ({ data }) => {
+const LensDeatail: React.FC<LensDetailProps> = ({ data }) => {
   const dispatch = useAppDispatch();
 
   const handleEdit = () => {
@@ -227,4 +227,4 @@ const LensFeatureSkeleton = () => {
     </Card>
   );
 };
-export default LensFeature;
+export default LensDeatail;

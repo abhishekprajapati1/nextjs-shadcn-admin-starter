@@ -25,6 +25,20 @@ const ENDPOINTS = {
       update: (id: string) => `lens-details/${id}`,
       delete: (id: string) => `lens-details/${id}`,
     },
+    frame_materials: {
+      fetch_all: (queryString?: string) =>
+        `frame-materials${queryString ? "?" + queryString : ""}`,
+      create: "frame-materials",
+      update: (id: string) => `frame-materials/${id}`,
+      delete: (id: string) => `frame-materials/${id}`,
+    },
+    brands: {
+      fetch_all: (queryString?: string) =>
+        `brands${queryString ? "?" + queryString : ""}`,
+      create: "brands",
+      update: (id: string) => `brands/${id}`,
+      delete: (id: string) => `brands/${id}`,
+    },
   },
   OWNERS: {
     GET_ALL: (filter: string) =>

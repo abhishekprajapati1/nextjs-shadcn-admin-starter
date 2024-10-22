@@ -54,19 +54,19 @@ const ResizableLayout: React.FC<ResizableLayoutProps> = ({
             setIsCollapsed(false);
             setCookie(
               "react-resizable-panels:collapsed",
-              JSON.stringify(false),
+              JSON.stringify(false)
             );
           }}
           className={cn(
             "flex flex-col",
             isCollapsed &&
-              "min-w-[50px] transition-all duration-300 ease-in-out",
+              "min-w-[50px] transition-all duration-300 ease-in-out"
           )}
         >
           <div
             className={cn(
               "flex flex-shrink-0 h-16 items-center",
-              isCollapsed ? "justify-center" : "px-5",
+              isCollapsed ? "justify-center" : "px-5"
             )}
           >
             <strong>
@@ -77,7 +77,7 @@ const ResizableLayout: React.FC<ResizableLayoutProps> = ({
               )}
             </strong>
           </div>
-          <div className="flex-grow">
+          <div className="flex-grow overflow-auto">
             <Separator />
             <Nav isCollapsed={Boolean(isCollapsed)} links={sidebar_menus} />
           </div>
@@ -87,7 +87,7 @@ const ResizableLayout: React.FC<ResizableLayoutProps> = ({
             <div
               className={cn(
                 "py-2",
-                Boolean(isCollapsed) ? "grid place-content-center" : "px-5",
+                Boolean(isCollapsed) ? "grid place-content-center" : "px-5"
               )}
             >
               {Boolean(isCollapsed) && (
