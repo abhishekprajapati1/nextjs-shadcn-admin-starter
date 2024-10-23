@@ -88,24 +88,7 @@ const LensFeatureForm: React.FC = () => {
               <FormItem>
                 <FormLabel>Image</FormLabel>
                 <FormControl>
-                  <FileInput
-                    value={field.value?.[0]}
-                    onChange={(files) => field.onChange(files?.[0])}
-                    className="size-[100px]"
-                  >
-                    <FilePreview
-                      file={field.value}
-                      {...(data?.default_url && {
-                        defaultValue: {
-                          type: "image",
-                          url: data?.default_url,
-                        },
-                      })}
-                      className="size-full grid place-content-center"
-                    >
-                      <DragDropIcon className="size-[25px]" />
-                    </FilePreview>
-                  </FileInput>
+                 
                 </FormControl>
                 <FormMessage />
               </FormItem>
