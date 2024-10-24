@@ -65,106 +65,90 @@ const CouponManagerForm: React.FC = () => {
 
   return (
     <Form {...form}>
-    <form className="flex flex-col gap-4" onSubmit={form.handleSubmit(onSubmit)}>
-      {/* Image upload */}
-      <FormField
-        control={form.control}
-        name="image"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Image</FormLabel>
-            <FormControl>
-              <FileInput
-                value={field.value}
-                onChange={(files) => field.onChange(files?.[0])}
-                className="size-[100px]"
-              >
-                <FilePreview
-                  file={field.value}
-                  {...(data?.default_url && {
-                    defaultValue: {
-                      type: "image",
-                      url: data?.default_url,
-                    },
-                  })}
-                  className="size-full grid place-content-center"
+      <form
+        className="flex flex-col gap-4"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
+        {/* Image upload */}
+        <FormField
+          control={form.control}
+          name="image"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Image</FormLabel>
+              <FormControl>
+                <FileInput
+                  value={field.value}
+                  onChange={(files) => field.onChange(files?.[0])}
+                  className="size-[100px]"
                 >
-                  <DragDropIcon className="size-[25px]" />
-                </FilePreview>
-              </FileInput>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+                  <FilePreview
+                    file={field.value}
+                    {...(data?.image?.url && {
+                      defaultValue: {
+                        type: "image",
+                        url: data?.image?.url,
+                      },
+                    })}
+                    className="size-full grid place-content-center"
+                  >
+                    <DragDropIcon className="size-[25px]" />
+                  </FilePreview>
+                </FileInput>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      {/* Shape Type dropdown */}
-      <FormField
-        control={form.control}
-        name="coupon-manager"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Coupon-Manager Type</FormLabel>
-            <FormControl>
-              <select
-                {...field}
-                className="block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
-              >
-                <option value="">Select coupon type</option>
-                <option value="type1">Type 1</option>
-                <option value="type2">Type 2</option>
-              </select>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        {/* Title input */}
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Title</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter title" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      {/* Title input */}
-      <FormField
-        control={form.control}
-        name="title"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Title</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter title" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+        {/* Description textarea */}
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Enter description" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      {/* Description textarea */}
-      <FormField
-        control={form.control}
-        name="description"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Description</FormLabel>
-            <FormControl>
-              <Textarea placeholder="Enter description" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-
-      {/* Footer with buttons */}
-      <DialogFooter>
-        <Button
-          type="button"
-          onClick={() => dispatch(item_id ? resetStore() : showModal(false))}
-          variant="secondary"
-        >
-          {item_id ? "Discard" : "Cancel"}
-        </Button>
-        <Button type="submit">
-          <ProcessIndicator isProcessing={isPending} btnText={item_id ? "Save" : "Create"} />
-        </Button>
-      </DialogFooter>
-    </form>
-  </Form>
+        {/* Footer with buttons */}
+        <DialogFooter>
+          <Button
+            type="button"
+            onClick={() => dispatch(item_id ? resetStore() : showModal(false))}
+            variant="secondary"
+          >
+            {item_id ? "Discard" : "Cancel"}
+          </Button>
+          <Button type="submit">
+            <ProcessIndicator
+              isProcessing={isPending}
+              btnText={item_id ? "Save" : "Create"}
+            />
+          </Button>
+        </DialogFooter>
+      </form>
+    </Form>
   );
 };
 
