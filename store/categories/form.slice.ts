@@ -5,7 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 type InitialState = {
   item_id: string; // used to edit the item.
   modal: boolean;
-  data: Partial<ICategorie> | null;
+  data: Partial<ICategorie & { default_url: string }> | null;
 };
 
 const initialState: InitialState = {
@@ -20,7 +20,7 @@ const formSlice = createSlice({
   reducers: {
     setData: (
       state,
-      { payload }: { payload: Partial<ICategorie> | null },
+      { payload }: { payload: Partial<ICategorie & { default_url: string }> | null },
     ) => {
       state.data = payload;
     },

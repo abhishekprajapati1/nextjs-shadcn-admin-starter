@@ -5,7 +5,7 @@ import EditIcon from "../icons/EditIcon";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { useAppDispatch } from "@/store";
-import { IRecordMeta } from "@/lib/types";
+import { FileType, IRecordMeta } from "@/lib/types";
 import { Skeleton } from "../ui/skeleton";
 import { capitalizeFirstLetter } from "@/lib/utils";
 import { setData } from "@/store/categories/form.slice";
@@ -15,6 +15,7 @@ import { setItemToDelete } from "@/store/categories/data.slice";
 export interface ICategorie extends IRecordMeta {
   title?: string;
   description?: string;
+  image: FileType | null;
 }
 
 interface ListItemProps {

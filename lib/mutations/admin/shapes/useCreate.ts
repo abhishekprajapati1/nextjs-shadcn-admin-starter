@@ -5,7 +5,7 @@ import { useAppDispatch } from "@/store";
 import { resetStore } from "@/store/colors/form.slice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
-import { formSchema } from "@/lib/validations/admin/colors.validation";
+import { formSchema } from "@/lib/validations/admin/shapes.validation";
 
 const useCreate = (onSuccess?: () => void) => {
   const api = getApiClient();

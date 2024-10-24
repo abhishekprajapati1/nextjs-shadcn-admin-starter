@@ -25,21 +25,23 @@ import DragDropIcon from "../icons/DragDropIcon";
 
 // Form validation schema
 const formSchema = z.object({
-  shape: z.string().min(1, "Shape type is required"),
   title: z.string().min(1, "Title is required"),
+  seo_title: z.string().min(1, "Please provide a seo friendly title."),
   description: z.string().min(1, "Description is required"),
-  image: z.any().optional(),  // Optional for image upload
+  image: z.any().optional(), // Optional for image upload
 });
 
 const ShapeForm: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
-    defaultValues: { title: "", description: "", shape: "", image: null },
+    defaultValues: { title: "", description: "", seo_title: "", image: null },
     mode: "onBlur",
     resolver: zodResolver(formSchema),
   });
 
   const dispatch = useAppDispatch();
-  const { data, item_id } = useAppSelector((store) => store.shapeStore.formStore);
+  const { data, item_id } = useAppSelector(
+    (store) => store.shapeStore.formStore
+  );
 
   const { mutate: updateShape, isPending: updating } = useUpdate();
   const { mutate: createShape, isPending: creating } = useCreate();
@@ -58,7 +60,7 @@ const ShapeForm: React.FC = () => {
       form.reset({
         title: data?.title,
         description: data?.description,
-        shape: data?.shape,
+        seo_title: data?.seo_title,
         image: data?.image,
       });
     }
@@ -66,7 +68,10 @@ const ShapeForm: React.FC = () => {
 
   return (
     <Form {...form}>
-      <form className="flex flex-col gap-4" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className="flex flex-col gap-4"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         {/* Image upload */}
         <FormField
           control={form.control}
@@ -82,10 +87,10 @@ const ShapeForm: React.FC = () => {
                 >
                   <FilePreview
                     file={field.value}
-                    {...(data?.default_url && {
+                    {...(data?.image?.url && {
                       defaultValue: {
                         type: "image",
-                        url: data?.default_url,
+                        url: data?.image?.url,
                       },
                     })}
                     className="size-full grid place-content-center"
@@ -93,28 +98,6 @@ const ShapeForm: React.FC = () => {
                     <DragDropIcon className="size-[25px]" />
                   </FilePreview>
                 </FileInput>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Shape Type dropdown */}
-        <FormField
-          control={form.control}
-          name="shape"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Shape Type</FormLabel>
-              <FormControl>
-                <select
-                  {...field}
-                  className="block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
-                >
-                  <option value="">Select shape type</option>
-                  <option value="type1">Type 1</option>
-                  <option value="type2">Type 2</option>
-                </select>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -130,6 +113,20 @@ const ShapeForm: React.FC = () => {
               <FormLabel>Title</FormLabel>
               <FormControl>
                 <Input placeholder="Enter title" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="seo_title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Title</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter Seo Title" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -161,7 +158,10 @@ const ShapeForm: React.FC = () => {
             {item_id ? "Discard" : "Cancel"}
           </Button>
           <Button type="submit">
-            <ProcessIndicator isProcessing={isPending} btnText={item_id ? "Save" : "Create"} />
+            <ProcessIndicator
+              isProcessing={isPending}
+              btnText={item_id ? "Save" : "Create"}
+            />
           </Button>
         </DialogFooter>
       </form>
