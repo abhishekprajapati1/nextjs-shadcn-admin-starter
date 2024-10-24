@@ -3,7 +3,7 @@ import ListItem from "./ListItem";
 import useItems from "@/lib/queries/admin/colors/useItems";
 
 const List = () => {
-  const { data, isLoading } = useItems({ completeFetch: true });
+  const { data, isLoading } = useItems();
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
