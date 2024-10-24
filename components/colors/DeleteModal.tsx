@@ -34,11 +34,16 @@ const DeleteModal: React.FC = () => {
         <DialogTitle>Delete colore</DialogTitle>
         {/* Changed title to match delete purpose */}
         <DialogDescription>
-          Are you sure you want to delete &nbsp;
-          <strong className="text-primary">
-            {capitalizeFirstLetter(itemToDelete?.label)}
-          </strong>
-          ? This action cannot be undone.
+          <span className="break-words">
+            Are you sure you want to delete &nbsp;
+          </span>
+          <span
+            className="inline-block w-10 h-4 rounded"
+            style={{ backgroundColor: itemToDelete?.label }}
+          />
+          <span className="break-words">
+            &nbsp; ? This action cannot be undone.
+          </span>
         </DialogDescription>
         {/* Updated description to reflect delete action */}
       </DialogHeader>

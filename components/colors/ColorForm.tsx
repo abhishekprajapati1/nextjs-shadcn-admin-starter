@@ -3,7 +3,6 @@ import { Button, ProcessIndicator } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
-
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -11,7 +10,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,10 +19,11 @@ import { formSchema } from "@/lib/validations/admin/colors.validation";
 import { resetStore, showModal } from "@/store/colors/form.slice";
 import useUpdate from "@/lib/mutations/admin/colors/useUpdate";
 import useCreate from "@/lib/mutations/admin/colors/useCreate";
+import { Input } from "../ui/input";
 
 const ColoreForm: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
-    defaultValues: { title: "", description: "" },
+    defaultValues: { color: "#000000" },
     mode: "onBlur",
     resolver: zodResolver(formSchema),
   });
@@ -52,8 +51,7 @@ const ColoreForm: React.FC = () => {
   React.useEffect(() => {
     if (data) {
       form.reset({
-        //  title: data?.title,
-        // description: data?.description,
+        color: data?.color,
       });
     }
   }, [data, form]);
@@ -64,9 +62,31 @@ const ColoreForm: React.FC = () => {
         className="flex flex-col gap-4"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <div className="flex flex-col gap-4">
-          
-          
+        <div className="flex items-center gap-4">
+          <FormField
+            control={form.control}
+            name="color"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input type="color" className="size-8 p-0" {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <span className="text-xs text-gray-500">OR</span>
+          <FormField
+            control={form.control}
+            name="color"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input placeholder="Enter hex color code." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
         <DialogFooter>

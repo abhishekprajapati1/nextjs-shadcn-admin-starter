@@ -5,14 +5,17 @@ import EditIcon from "../icons/EditIcon";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { useAppDispatch } from "@/store";
-import { IRecordMeta } from "@/lib/types";
+import { FileType, IRecordMeta } from "@/lib/types";
 import { Skeleton } from "../ui/skeleton";
 import { setData } from "@/store/shapes/form.slice";
 import { setItemId } from "@/store/shapes/form.slice";
 import { setItemToDelete } from "@/store/shapes/data.slice";
 
 export interface IShape extends IRecordMeta {
-  color?: string;
+  title: string;
+  seo_title: string;
+  description: string;
+  image: FileType | null;
 }
 
 interface ListItemProps {
@@ -25,31 +28,20 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
   if (!data) {
     return <ListItemSkeleton />;
   }
-  
 
   return (
     <Card>
       <CardContent className="pt-6 flex items-center gap-4">
-        {data?.color && (
-          <div
-            className="flex-grow h-9 rounded-md"
-            style={{ background: data?.color }}
-          />
-        )}
-
-        {!data?.color && (
-          <div className="flex-grow h-9 rounded-md bg-gray-50 grid place-content-center text-gray-300">
-            Invalid color
-          </div>
-        )}
-
         <div className="flex items-center gap-4">
           <Button
             onClick={() => {
               dispatch(setItemId(data?.id || ""));
               dispatch(
                 setData({
-                  color: data?.color,
+                  title: data?.title,
+                  seo_title: data?.seo_title,
+                  description: data?.description,
+                  image: data?.image,
                 })
               );
             }}
@@ -65,7 +57,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
               dispatch(
                 setItemToDelete({
                   id: data?.id || "",
-                  label: data.color || "",
+                  label: data.title || "",
                 })
               )
             }

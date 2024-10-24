@@ -8,8 +8,7 @@ import Modal from "@/components/ui/modal";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { showModal } from "@/store/colors/form.slice";
-import ColoreForm from "./ColorForm";
-
+import ColorForm from "./ColorForm";
 
 const AddModal: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -22,12 +21,13 @@ const AddModal: React.FC = () => {
       onOpenChange={(val) => dispatch(showModal(val))}
     >
       <DialogHeader>
-        <DialogTitle>Add colore</DialogTitle>
+        <DialogTitle>Add color</DialogTitle>
         <DialogDescription>
-          Fill in the details to add a new colore.
+          Click the color picker to select the color or you can enter the hex
+          color code.
         </DialogDescription>
       </DialogHeader>
-      <ColoreForm />
+      <ColorForm />
     </Modal>
   );
 };

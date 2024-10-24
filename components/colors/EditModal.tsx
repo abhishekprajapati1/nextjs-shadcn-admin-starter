@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import React from "react";
 
 import { resetStore } from "@/store/colors/form.slice";
-import Form from "./ColorForm";
+import ColorForm from "./ColorForm";
 import { setItemId } from "@/store/colors/form.slice";
 
 const EditModal: React.FC = () => {
@@ -28,12 +28,13 @@ const EditModal: React.FC = () => {
       showCloseIcon
     >
       <DialogHeader>
-        <DialogTitle>Update Colore</DialogTitle>
+        <DialogTitle>Update Color</DialogTitle>
         <DialogDescription>
-          Make changes to Colore here. Click save when you're done.
+          Click the color picker to select the color or you can enter the hex
+          color code.. Click save when you're done.
         </DialogDescription>
       </DialogHeader>
-      <Form />
+      <ColorForm />
     </Modal>
   );
 };
