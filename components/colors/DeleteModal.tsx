@@ -10,8 +10,8 @@ import Modal from "@/components/ui/modal";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { capitalizeFirstLetter } from "@/lib/utils";
-import useDelete from "@/lib/mutations/admin/brands/useDelete";
-import { setItemToDelete } from "@/store/brands/data.slice";
+import useDelete from "@/lib/mutations/admin/colors/useDelete";
+import { setItemToDelete } from "@/store/colors/data.slice";
 
 const DeleteModal: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +19,7 @@ const DeleteModal: React.FC = () => {
 
   // Accessing delete_modal from store
   const itemToDelete = useAppSelector(
-    (store) => store.brandStore.dataStore.itemToDelete
+    (store) => store.colorStore.dataStore.itemToDelete
   );
 
   return (
@@ -31,14 +31,19 @@ const DeleteModal: React.FC = () => {
       }
     >
       <DialogHeader>
-        <DialogTitle>Delete Brand</DialogTitle>
+        <DialogTitle>Delete colore</DialogTitle>
         {/* Changed title to match delete purpose */}
         <DialogDescription>
-          Are you sure you want to delete &nbsp;
-          <strong className="text-primary">
-            {capitalizeFirstLetter(itemToDelete?.label)}
-          </strong>
-          ? This action cannot be undone.
+          <span className="break-words">
+            Are you sure you want to delete &nbsp;
+          </span>
+          <span
+            className="inline-block w-10 h-4 rounded"
+            style={{ backgroundColor: itemToDelete?.label }}
+          />
+          <span className="break-words">
+            &nbsp; ? This action cannot be undone.
+          </span>
         </DialogDescription>
         {/* Updated description to reflect delete action */}
       </DialogHeader>

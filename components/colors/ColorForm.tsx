@@ -3,8 +3,6 @@ import { Button, ProcessIndicator } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -12,19 +10,20 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { formSchema } from "@/lib/validations/admin/brands.validation";
-import useUpdateBrand from "@/lib/mutations/admin/brands/useUpdate";
-import useCreateBrand from "@/lib/mutations/admin/brands/useCreate";
-import { resetStore, showModal } from "@/store/brands/form.slice";
+import { formSchema } from "@/lib/validations/admin/colors.validation";
 
-const BrandForm: React.FC = () => {
+import { resetStore, showModal } from "@/store/colors/form.slice";
+import useUpdate from "@/lib/mutations/admin/colors/useUpdate";
+import useCreate from "@/lib/mutations/admin/colors/useCreate";
+import { Input } from "../ui/input";
+
+const ColoreForm: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
-    defaultValues: { title: "", description: "" },
+    defaultValues: { color: "#000000" },
     mode: "onBlur",
     resolver: zodResolver(formSchema),
   });
@@ -32,28 +31,27 @@ const BrandForm: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { data, item_id } = useAppSelector(
-    (store) => store.brandStore.formStore
+    (store) => store.colorStore.formStore
   );
 
-  const { mutate: updateBrand, isPending: updating } = useUpdateBrand();
+  const { mutate: updateColor, isPending: updating } = useUpdate();
 
-  const { mutate: createBrand, isPending: creating } = useCreateBrand();
+  const { mutate: createColor, isPending: creating } = useCreate();
 
   const isPending = updating || creating;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     if (item_id) {
-      updateBrand(data);
+      updateColor(data);
     } else {
-      createBrand(data);
+      createColor(data);
     }
   };
 
   React.useEffect(() => {
     if (data) {
       form.reset({
-        title: data?.title,
-        description: data?.description,
+        color: data?.color,
       });
     }
   }, [data, form]);
@@ -64,29 +62,26 @@ const BrandForm: React.FC = () => {
         className="flex flex-col gap-4"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <div className="flex flex-col gap-4">
+        <div className="flex items-center gap-4">
           <FormField
             control={form.control}
-            name="title"
+            name="color"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter title" {...field} />
+                  <Input type="color" className="size-8 p-0" {...field} />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
-
+          <span className="text-xs text-gray-500">OR</span>
           <FormField
-            name="description"
             control={form.control}
+            name="color"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Enter description" {...field} />
+                  <Input placeholder="Enter hex color code." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -114,4 +109,4 @@ const BrandForm: React.FC = () => {
   );
 };
 
-export default BrandForm;
+export default ColoreForm;

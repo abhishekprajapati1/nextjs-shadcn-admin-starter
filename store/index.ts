@@ -10,6 +10,9 @@ import lensDetailStore from "./lens-details";
 import frameMaterialStore from "./frame-materials";
 import brandStore from "./brands";
 import colorStore from "./colors";
+import shapeStore from "./shapes";
+import categorieStore from "./categories";
+import couponManagerStore from "./coupon-manager";
 
 const store = configureStore({
   reducer: {
@@ -23,6 +26,9 @@ const store = configureStore({
     frameMaterialStore,
     brandStore,
     colorStore,
+    shapeStore,
+    categorieStore,
+    couponManagerStore,
   },
 });
 

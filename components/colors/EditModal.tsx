@@ -8,13 +8,13 @@ import Modal from "@/components/ui/modal";
 import { useAppDispatch, useAppSelector } from "@/store";
 import React from "react";
 
-import { resetStore } from "@/store/brands/form.slice";
-import Form from "./BrandForm";
-import { setItemId } from "@/store/brands/form.slice";
+import { resetStore } from "@/store/colors/form.slice";
+import ColorForm from "./ColorForm";
+import { setItemId } from "@/store/colors/form.slice";
 
 const EditModal: React.FC = () => {
   const dispatch = useAppDispatch();
-  const item_id = useAppSelector((store) => store.brandStore.formStore.item_id);
+  const item_id = useAppSelector((store) => store.colorStore.formStore.item_id);
 
   return (
     <Modal
@@ -28,12 +28,13 @@ const EditModal: React.FC = () => {
       showCloseIcon
     >
       <DialogHeader>
-        <DialogTitle>Update Brand</DialogTitle>
+        <DialogTitle>Update Color</DialogTitle>
         <DialogDescription>
-          Make changes to brand here. Click save when you're done.
+          Click the color picker to select the color or you can enter the hex
+          color code.. Click save when you're done.
         </DialogDescription>
       </DialogHeader>
-      <Form />
+      <ColorForm />
     </Modal>
   );
 };

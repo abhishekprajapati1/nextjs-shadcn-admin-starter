@@ -15,7 +15,7 @@ const initialState: InitialState = {
 };
 
 const formSlice = createSlice({
-  name: "brands/form",
+  name: "colors/form",
   initialState,
   reducers: {
     setData: (

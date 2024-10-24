@@ -40,7 +40,8 @@ export function Nav({ links, isCollapsed }: NavProps) {
                     buttonVariants({ variant: link.variant, size: "icon" }),
                     "h-9 w-9",
                     link.variant === "default" &&
-                      "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white"
+                      "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white",
+                    "focus:outline-none focus:ring focus:ring-offset-2 focus:ring-dark-500 active:bg-dark-700"
                   )}
                 >
                   <link.icon className="size-6" />
@@ -59,7 +60,8 @@ export function Nav({ links, isCollapsed }: NavProps) {
                 buttonVariants({ variant: link.variant, size: "sm" }),
                 link.variant === "default" &&
                   "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
-                "flex items-center gap-4 justify-start"
+                "flex items-center gap-4 justify-start",
+                 "focus:outline-none focus:ring focus:ring-offset-2 focus:ring-dark-500 active:bg-dark-700"
               )}
             >
               <link.icon className="size-6 flex-shrink-0" />

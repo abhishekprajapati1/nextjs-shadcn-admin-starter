@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
 import PageHeader from "@/components/PageHeader";
 import PlusIcon from "@/components/icons/PlusIcon";
-import { showModal } from "@/store/brands/form.slice";
+import { showModal } from "@/store/colors/form.slice";
 import { useAppSelector } from "@/store";
 import { cn } from "@/lib/utils";
 

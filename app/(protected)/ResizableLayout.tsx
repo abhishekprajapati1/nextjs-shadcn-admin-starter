@@ -16,11 +16,11 @@ import React from "react";
 import { setCookie } from "cookies-next";
 import { Nav } from "./Nav";
 import { sidebar_menus } from "@/lib/list";
-import BrandIcon from "@/components/icons/BrandIcon";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import LogoutIcon from "@/components/icons/LogoutIcon";
 import { logout } from "@/lib/api";
+import LogoIcon from "@/components/icons/logoIcon";
 
 interface ResizableLayoutProps extends IWrapper {
   defaultCollapsed?: boolean;
@@ -69,9 +69,10 @@ const ResizableLayout: React.FC<ResizableLayoutProps> = ({
               isCollapsed ? "justify-center" : "px-5"
             )}
           >
+            
             <strong>
               {isCollapsed ? (
-                <BrandIcon className="size-6" />
+                <LogoIcon className="size-6" />
               ) : (
                 "Akku Ka Chasma"
               )}

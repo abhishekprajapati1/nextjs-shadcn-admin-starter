@@ -7,12 +7,12 @@ import {
 import Modal from "@/components/ui/modal";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { showModal } from "@/store/brands/form.slice";
-import BrandForm from "./BrandForm";
+import { showModal } from "@/store/colors/form.slice";
+import ColorForm from "./ColorForm";
 
 const AddModal: React.FC = () => {
   const dispatch = useAppDispatch();
-  const modal = useAppSelector((store) => store.brandStore.formStore.modal);
+  const modal = useAppSelector((store) => store.colorStore.formStore.modal);
 
   return (
     <Modal
@@ -21,12 +21,13 @@ const AddModal: React.FC = () => {
       onOpenChange={(val) => dispatch(showModal(val))}
     >
       <DialogHeader>
-        <DialogTitle>Add Brand</DialogTitle>
+        <DialogTitle>Add color</DialogTitle>
         <DialogDescription>
-          Fill in the details to add a new brand.
+          Click the color picker to select the color or you can enter the hex
+          color code.
         </DialogDescription>
       </DialogHeader>
-      <BrandForm />
+      <ColorForm />
     </Modal>
   );
 };
