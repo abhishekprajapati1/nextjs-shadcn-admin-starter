@@ -17,9 +17,7 @@ import {
 } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { resetStore, showModal } from "@/store/lens-features/form.slice";
-import FileInput from "../ui/file-input";
-import FilePreview from "../ui/file-input/FilePreview";
-import DragDropIcon from "../icons/DragDropIcon";
+
 import { lensFeatureSchema } from "@/lib/validations/admin/lens-feature.validation";
 import useUpdateLensFeature from "@/lib/mutations/admin/lens-features/useUpdateLensFeatures";
 import useCreateLensFeature from "@/lib/mutations/admin/lens-features/useCreateLensFeatures";

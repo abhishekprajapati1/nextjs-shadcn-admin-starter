@@ -46,6 +46,13 @@ const ENDPOINTS = {
       update: (id: string) => `brands/${id}`,
       delete: (id: string) => `brands/${id}`,
     },
+    categories: {
+      fetch_all: (queryString?: string) =>
+        `categories${queryString ? "?" + queryString : ""}`,
+      create: "categories",
+      update: (id: string) => `categories/${id}`,
+      delete: (id: string) => `categories/${id}`,
+    },
     colors: {
       fetch_all: (queryString?: string) =>
         `colors${queryString ? "?" + queryString : ""}`,
