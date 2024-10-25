@@ -67,6 +67,7 @@ const ENDPOINTS = {
       update: (id: string) => `colors/${id}`,
       delete: (id: string) => `colors/${id}`,
     },
+
   },
   OWNERS: {
     GET_ALL: (filter: string) =>

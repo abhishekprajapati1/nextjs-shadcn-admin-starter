@@ -2,7 +2,7 @@ import { toast } from "@/lib/hooks/use-toast";
 import { RequestError, getApiClient, getErrorMessage } from "@/lib/api";
 import ENDPOINTS from "@/lib/endpoints";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { resetStore } from "@/store/colors/form.slice";
+import { resetStore } from "@/store/shapes/form.slice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import { formSchema } from "@/lib/validations/admin/shapes.validation";
@@ -11,7 +11,7 @@ const useUpdate = (onSuccess?: () => void) => {
   const dispatch = useAppDispatch();
 
   const item_id = useAppSelector(
-    (store) => store.colorStore.formStore.item_id,
+    (store) => store.shapeStore.formStore.item_id,
   );
 
   const api = getApiClient();
@@ -21,7 +21,7 @@ const useUpdate = (onSuccess?: () => void) => {
 
 
       const res = await api.put(
-        ENDPOINTS.admin.colors.update(item_id),
+        ENDPOINTS.admin.shapes.update(item_id),
         data,
       );
       return res.data;
@@ -29,7 +29,7 @@ const useUpdate = (onSuccess?: () => void) => {
     onSuccess: (_data) => {
       dispatch(resetStore());
       if (onSuccess) onSuccess();
-      queryClient.invalidateQueries({ queryKey: ["colors"] });
+      queryClient.invalidateQueries({ queryKey: ["shapes"] });
     },
     onError: (error: RequestError) => {
       const message = getErrorMessage(error);
