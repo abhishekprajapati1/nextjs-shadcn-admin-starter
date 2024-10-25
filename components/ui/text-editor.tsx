@@ -86,7 +86,7 @@ const modules = {
           "#003700",
           "#002966",
           "#3d1466",
-          "custom-color",
+          "custom_color",
         ],
       },
     ],

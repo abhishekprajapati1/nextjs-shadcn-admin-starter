@@ -49,10 +49,14 @@ const ShapeForm: React.FC = () => {
   const isPending = updating || creating;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    if (item_id) {
-      updateShape(data);
+    if (form.formState.isDirty) {
+      if (item_id) {
+        updateShape(data);
+      } else {
+        createShape(data);
+      }
     } else {
-      createShape(data);
+      dispatch(resetStore());
     }
   };
 
