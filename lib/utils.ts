@@ -24,7 +24,7 @@ export const bytesToMB = (bytes: number): number => {
 
 export const capitalizeFirstLetter = (string?: string): string => {
   try {
-    if(string){
+    if (string) {
       return string?.charAt(0)?.toUpperCase() + string?.slice(1);
     }
     return "";
@@ -68,3 +68,5 @@ export const generateQueryString = (
 
   return qs.stringify(validFilters());
 };
+
+

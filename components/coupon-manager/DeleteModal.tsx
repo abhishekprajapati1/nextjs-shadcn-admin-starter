@@ -19,7 +19,7 @@ const DeleteModal: React.FC = () => {
 
   // Accessing delete_modal from store
   const itemToDelete = useAppSelector(
-    (store) => store.couponManagerStore.dataStore.itemToDelete
+    (store) => store.couponStore.dataStore.itemToDelete,
   );
 
   return (
@@ -31,12 +31,12 @@ const DeleteModal: React.FC = () => {
       }
     >
       <DialogHeader>
-        <DialogTitle>Delete Coupon-Manager</DialogTitle>
+        <DialogTitle>Delete Coupon</DialogTitle>
         {/* Changed title to match delete purpose */}
         <DialogDescription>
           Are you sure you want to delete &nbsp;
-          <strong className="text-primary">
-            {capitalizeFirstLetter(itemToDelete?.label)}
+          <strong className="text-primary uppercase">
+            {itemToDelete?.label}
           </strong>
           ? This action cannot be undone.
         </DialogDescription>

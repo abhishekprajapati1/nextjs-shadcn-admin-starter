@@ -3,11 +3,11 @@ import { RequestError, getApiClient, getErrorMessage } from "@/lib/api";
 import ENDPOINTS from "@/lib/endpoints";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { setItemToDelete } from "@/store/colors/data.slice";
+import { setItemToDelete } from "@/store/shapes/data.slice";
 
 const useDelete = (onSuccess?: () => void) => {
   const itemToDelete = useAppSelector(
-    (store) => store.colorStore.dataStore.itemToDelete,
+    (store) => store.shapeStore.dataStore.itemToDelete,
   );
   const dispatch = useAppDispatch();
 
@@ -16,14 +16,14 @@ const useDelete = (onSuccess?: () => void) => {
   const mutation = useMutation({
     mutationFn: async () => {
       const res = await api.delete(
-        ENDPOINTS.admin.colors.delete(itemToDelete?.id || ""),
+        ENDPOINTS.admin.shapes.delete(itemToDelete?.id || ""),
       );
       return res.data;
     },
     onSuccess: (_data) => {
       if (onSuccess) onSuccess();
       dispatch(setItemToDelete(null));
-      queryClient.invalidateQueries({ queryKey: ["colors"] });
+      queryClient.invalidateQueries({ queryKey: ["shapes"] });
     },
     onError: (error: RequestError) => {
       const message = getErrorMessage(error);

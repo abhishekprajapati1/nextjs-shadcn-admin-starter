@@ -55,10 +55,10 @@ const ENDPOINTS = {
     },
     coupon_manager: {
       fetch_all: (queryString?: string) =>
-        `coupon-manager${queryString ? "?" + queryString : ""}`,
-      create: "coupon-manager",
-      update: (id: string) => `coupon-manager/${id}`,
-      delete: (id: string) => `coupon-manager/${id}`,
+        `coupons${queryString ? "?" + queryString : ""}`,
+      create: "coupons",
+      update: (id: string) => `coupons/${id}`,
+      delete: (id: string) => `coupons/${id}`,
     },
     colors: {
       fetch_all: (queryString?: string) =>

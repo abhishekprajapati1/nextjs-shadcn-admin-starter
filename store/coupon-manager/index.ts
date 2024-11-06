@@ -3,9 +3,9 @@ import dataStore from './data.slice';
 import formStore from './form.slice';
 
 
-const couponManagerStore = combineReducers({
+const couponStore = combineReducers({
     dataStore,
     formStore,
 });
 
-export default couponManagerStore;
+export default couponStore;

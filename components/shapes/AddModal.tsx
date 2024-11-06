@@ -10,8 +10,6 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import { showModal } from "@/store/shapes/form.slice";
 import ShapeForm from "./ShapeForm";
 
-
-
 const AddModal: React.FC = () => {
   const dispatch = useAppDispatch();
   const modal = useAppSelector((store) => store.shapeStore.formStore.modal);
@@ -21,6 +19,7 @@ const AddModal: React.FC = () => {
       showCloseIcon
       open={modal}
       onOpenChange={(val) => dispatch(showModal(val))}
+      className="max-w-[1000px]"
     >
       <DialogHeader>
         <DialogTitle>Add Shape</DialogTitle>

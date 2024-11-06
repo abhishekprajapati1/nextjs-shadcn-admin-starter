@@ -19,7 +19,7 @@ const useCreate = (onSuccess?: () => void) => {
     onSuccess: () => {
       dispatch(resetStore());
       if (onSuccess) onSuccess();
-      queryClient.invalidateQueries({ queryKey: ["coupon-manager"] });
+      queryClient.invalidateQueries({ queryKey: ["coupons"] });
     },
     onError: (error: RequestError) => {
       const message = getErrorMessage(error);

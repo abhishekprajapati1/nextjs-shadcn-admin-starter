@@ -1,11 +1,10 @@
-
-import { ICouponManager } from "@/components/coupon-manager/ListItem";
+import { ICoupon } from "@/components/coupon-manager/ListItem";
 import { createSlice } from "@reduxjs/toolkit";
 
 type InitialState = {
   item_id: string; // used to edit the item.
   modal: boolean;
-  data: Partial<ICouponManager> | null;
+  data: Partial<ICoupon> | null;
 };
 
 const initialState: InitialState = {
@@ -18,10 +17,7 @@ const formSlice = createSlice({
   name: "coupon-manager/form",
   initialState,
   reducers: {
-    setData: (
-      state,
-      { payload }: { payload: Partial<ICouponManager> | null },
-    ) => {
+    setData: (state, { payload }: { payload: Partial<ICoupon> | null }) => {
       state.data = payload;
     },
     setItemId: (state, { payload }: { payload: string }) => {
@@ -36,6 +32,5 @@ const formSlice = createSlice({
   },
 });
 
-export const { setData, setItemId, showModal, resetStore } =
-  formSlice.actions;
+export const { setData, setItemId, showModal, resetStore } = formSlice.actions;
 export default formSlice.reducer;

@@ -5,103 +5,146 @@ import EditIcon from "../icons/EditIcon";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { useAppDispatch } from "@/store";
-import { FileType, IRecordMeta } from "@/lib/types";
+import { IRecordMeta } from "@/lib/types";
 import { Skeleton } from "../ui/skeleton";
 import { capitalizeFirstLetter } from "@/lib/utils";
 import { setData } from "@/store/coupon-manager/form.slice";
 import { setItemId } from "@/store/coupon-manager/form.slice";
 import { setItemToDelete } from "@/store/coupon-manager/data.slice";
+import { z } from "zod";
+import { formSchema } from "@/lib/validations/admin/coupon-manager.validation";
+import dayjs from "@/lib/dayjs";
 
-export interface ICouponManager extends IRecordMeta {
-  title?: string;
-  description?: string;
-  image: FileType | null;
-}
+export interface ICoupon extends IRecordMeta, z.infer<typeof formSchema> {}
 
 interface ListItemProps {
-  data?: ICouponManager;
+  data?: ICoupon;
 }
 
 const ListItem: React.FC<ListItemProps> = ({ data }) => {
   const dispatch = useAppDispatch();
+
+  const handleEditClick = () => {
+    dispatch(setItemId(data?.id || ""));
+    dispatch(
+      setData({
+        name: data?.name,
+        discount_type: data?.discount_type,
+        discount_value: data?.discount_value,
+        minimum_order: data?.minimum_order,
+        per_user_limit: data?.per_user_limit,
+        quantity: data?.quantity,
+        valid_from: data?.valid_from,
+        valid_till: data?.valid_till,
+      }),
+    );
+  };
 
   if (!data) {
     return <ListItemSkeleton />;
   }
 
   return (
-    <Card>
-      <CardContent className="pt-6 h-full flex flex-col gap-2">
-        <div className="flex-grow">
-          <h3 className="text-lg font-semibold text-gray-800 capitalize">
-            {data?.title}
-          </h3>
-          <p className="text-sm text-gray-500">
-            {capitalizeFirstLetter(data?.description)}
-          </p>
+    <tr>
+      <td className="uppercase">
+        <div>{data?.name}</div>
+      </td>
+      <td>
+        <div className="justify-center">Rs. {data?.minimum_order}</div>
+      </td>
+      <td>
+        <div className="justify-center">
+          {data?.discount_value || 0}
+          {data?.discount_type === "PERCENT" ? " %" : " ₹"}
         </div>
-        <div className="flex items-baseline">
-          <div className="flex items-end justify-end gap-2 flex-grow h-full">
-            <Button
-              onClick={() => {
-                dispatch(setItemId(data?.id || ""));
-                dispatch(
-                  setData({
-                    title: data?.title,
-                    description: data?.description,
-                  })
-                );
-              }}
-              variant="secondary"
-              size="icon"
-            >
-              <EditIcon />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() =>
-                dispatch(
-                  setItemToDelete({
-                    id: data?.id || "",
-                    label: data.title || "",
-                  })
-                )
-              }
-              className="bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white ease-linear duration-300"
-            >
-              <DeleteIcon />
-            </Button>
-          </div>
+      </td>
+      <td>
+        <div className="justify-center">{data?.quantity}</div>
+      </td>
+      <td>
+        <div className="justify-center">{data?.per_user_limit}</div>
+      </td>
+      <td>
+        <div>{dayjs(data?.valid_from).format("MMM DD, YYYY")}</div>
+      </td>
+      <td>
+        <div>{dayjs(data?.valid_till).format("MMM DD, YYYY")}</div>
+      </td>
+      <td>
+        <div className="flex items-center gap-2">
+          <Button
+            onClick={() => handleEditClick()}
+            variant="secondary"
+            size="icon"
+          >
+            <EditIcon />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() =>
+              dispatch(
+                setItemToDelete({
+                  id: data?.id || "",
+                  label: data.name || "",
+                }),
+              )
+            }
+            className="bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white ease-linear duration-300"
+          >
+            <DeleteIcon />
+          </Button>
         </div>
-      </CardContent>
-    </Card>
+      </td>
+    </tr>
   );
 };
 
 const ListItemSkeleton = () => {
   return (
-    <Card>
-      <CardContent className="pt-6 h-full flex flex-col gap-2">
-        <div className="flex flex-col gap-4">
-          <Skeleton className="size-[100px]" />
-          <div className="flex-grow flex flex-col gap-2">
-            <Skeleton className="w-2/3" />
-            <div className="flex flex-col gap-1">
-              <Skeleton className="h-2" />
-              <Skeleton className="h-2 w-4/5" />
-              <Skeleton className="h-2 w-1/3" />
-            </div>
-          </div>
+    <tr>
+      <td className="uppercase">
+        <div>
+          <Skeleton className="w-[150px]" />
         </div>
-        <div className="flex items-baseline flex-grow">
-          <div className="flex items-end justify-end gap-2 flex-grow h-full">
-            <Skeleton className="size-[40px] bg-secondary" />
-            <Skeleton className="size-[40px] bg-destructive/10" />
-          </div>
+      </td>
+      <td>
+        <div className="justify-center">
+          <Skeleton className="w-20" />
         </div>
-      </CardContent>
-    </Card>
+      </td>
+      <td>
+        <div className="justify-center">
+          <Skeleton className="w-12" />
+        </div>
+      </td>
+      <td>
+        <div className="justify-center">
+          <Skeleton className="w-12" />
+        </div>
+      </td>
+      <td>
+        <div className="justify-center">
+          <Skeleton className="w-12" />
+        </div>
+      </td>
+      <td>
+        <div>
+          <Skeleton className="w-[130px]" />
+        </div>
+      </td>
+      <td>
+        <div>
+          <Skeleton className="w-[130px]" />
+        </div>
+      </td>
+      <td>
+        <div className="flex items-center gap-2">
+          <Skeleton className="size-9" />
+          <Skeleton className="size-9 bg-destructive/50" />
+        </div>
+      </td>
+    </tr>
   );
 };
 export default ListItem;

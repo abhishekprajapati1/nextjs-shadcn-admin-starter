@@ -22,6 +22,7 @@ import useCreate from "@/lib/mutations/admin/shapes/useCreate";
 import FileInput from "../ui/file-input";
 import FilePreview from "../ui/file-input/FilePreview";
 import DragDropIcon from "../icons/DragDropIcon";
+import TextEditor from "../ui/text-editor";
 
 // Form validation schema
 const formSchema = z.object({
@@ -33,7 +34,7 @@ const formSchema = z.object({
 
 const ShapeForm: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
-    defaultValues: { title: "", description: "", seo_title: "", image: null },
+    defaultValues: { title: "", description: "", seo_title: "" },
     mode: "onBlur",
     resolver: zodResolver(formSchema),
   });
@@ -48,10 +49,14 @@ const ShapeForm: React.FC = () => {
   const isPending = updating || creating;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    if (item_id) {
-      updateShape(data);
+    if (form.formState.isDirty) {
+      if (item_id) {
+        updateShape(data);
+      } else {
+        createShape(data);
+      }
     } else {
-      createShape(data);
+      dispatch(resetStore());
     }
   };
 
@@ -61,7 +66,6 @@ const ShapeForm: React.FC = () => {
         title: data?.title,
         description: data?.description,
         seo_title: data?.seo_title,
-        image: data?.image,
       });
     }
   }, [data, form]);
@@ -72,7 +76,6 @@ const ShapeForm: React.FC = () => {
         className="flex flex-col gap-4"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        {/* Image upload */}
         <FormField
           control={form.control}
           name="image"
@@ -105,33 +108,35 @@ const ShapeForm: React.FC = () => {
         />
 
         {/* Title input */}
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter title" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex gap-4">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter title" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="seo_title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter Seo Title" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="seo_title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Seo Title</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Seo Title" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         {/* Description textarea */}
         <FormField
@@ -139,9 +144,8 @@ const ShapeForm: React.FC = () => {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea placeholder="Enter description" {...field} />
+                <TextEditor placeholder="Enter description" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
