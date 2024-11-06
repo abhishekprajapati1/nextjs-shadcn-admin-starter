@@ -7,7 +7,7 @@ import { setItemToDelete } from "@/store/coupon-manager/data.slice";
 
 const useDelete = (onSuccess?: () => void) => {
   const itemToDelete = useAppSelector(
-    (store) => store.couponManagerStore.dataStore.itemToDelete,
+    (store) => store.couponStore.dataStore.itemToDelete,
   );
   const dispatch = useAppDispatch();
 
@@ -23,7 +23,7 @@ const useDelete = (onSuccess?: () => void) => {
     onSuccess: (_data) => {
       if (onSuccess) onSuccess();
       dispatch(setItemToDelete(null));
-      queryClient.invalidateQueries({ queryKey: ["coupon-manager"] });
+      queryClient.invalidateQueries({ queryKey: ["coupons"] });
     },
     onError: (error: RequestError) => {
       const message = getErrorMessage(error);

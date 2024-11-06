@@ -11,15 +11,13 @@ const useUpdate = (onSuccess?: () => void) => {
   const dispatch = useAppDispatch();
 
   const item_id = useAppSelector(
-    (store) => store.couponManagerStore.formStore.item_id,
+    (store) => store.couponStore.formStore.item_id,
   );
 
   const api = getApiClient();
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (data: z.infer<typeof formSchema>) => {
-
-
       const res = await api.put(
         ENDPOINTS.admin.coupon_manager.update(item_id),
         data,
@@ -29,7 +27,7 @@ const useUpdate = (onSuccess?: () => void) => {
     onSuccess: (_data) => {
       dispatch(resetStore());
       if (onSuccess) onSuccess();
-      queryClient.invalidateQueries({ queryKey: ["coupon-manager"] });
+      queryClient.invalidateQueries({ queryKey: ["coupons"] });
     },
     onError: (error: RequestError) => {
       const message = getErrorMessage(error);

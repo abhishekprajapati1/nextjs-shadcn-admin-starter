@@ -8,22 +8,49 @@ const List = () => {
     useItems();
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-      </div>
+      <table style={{ borderCollapse: "separate", borderSpacing: "0 10px" }}>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th className="text-center min-w-[135px]">Minimum Order</th>
+            <th className="text-center min-w-[100px]">Discount</th>
+            <th className="text-center min-w-[135px]">Quantity</th>
+            <th className="text-center min-w-[135px]">Per User Limit</th>
+            <th className="min-w-[160px]">Valid From</th>
+            <th className="min-w-[160px]">Valid Till</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array(4)
+            .fill("")
+            ?.map((d) => {
+              return <ListItem key={d.id} />;
+            })}
+        </tbody>
+      </table>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
-      {data?.map((d) => {
-        return <ListItem key={d.id} data={d} />;
-      })}
+    <table style={{ borderCollapse: "separate", borderSpacing: "0 10px" }}>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th className="text-center min-w-[135px]">Minimum Order</th>
+          <th className="text-center min-w-[100px]">Discount</th>
+          <th className="text-center min-w-[135px]">Quantity</th>
+          <th className="text-center min-w-[135px]">Per User Limit</th>
+          <th className="min-w-[160px]">Valid From</th>
+          <th className="min-w-[160px]">Valid Till</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data?.map((d) => {
+          return <ListItem key={d.id} data={d} />;
+        })}
+      </tbody>
 
       {hasNextPage && (
         <div className="min-h-24 grid place-content-center">
@@ -37,7 +64,7 @@ const List = () => {
           </Button>
         </div>
       )}
-    </div>
+    </table>
   );
 };
 

@@ -3,143 +3,149 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    :root {
+        --background: 0 0% 100%;
+        --foreground: 240 10% 3.9%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+        --card: 0 0% 100%;
+        --card-foreground: 240 10% 3.9%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 240 10% 3.9%;
 
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
+        --primary: 240 5.9% 10%;
+        --primary-foreground: 0 0% 98%;
 
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
+        --secondary: 240 4.8% 95.9%;
+        --secondary-foreground: 240 5.9% 10%;
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+        --muted: 240 4.8% 95.9%;
+        --muted-foreground: 240 3.8% 46.1%;
 
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+        --accent: 240 4.8% 95.9%;
+        --accent-foreground: 240 5.9% 10%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
 
-    --success: 152 56% 46%;
-    --success-foreground: 0 0% 98%;
+        --success: 152 56% 46%;
+        --success-foreground: 0 0% 98%;
 
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
+        --border: 240 5.9% 90%;
+        --input: 240 5.9% 90%;
+        --ring: 240 10% 3.9%;
 
-    --radius: 0.5rem;
-  }
+        --radius: 0.5rem;
+    }
 
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    .dark {
+        --background: 240 10% 3.9%;
+        --foreground: 0 0% 98%;
 
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+        --card: 240 10% 3.9%;
+        --card-foreground: 0 0% 98%;
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+        --popover: 240 10% 3.9%;
+        --popover-foreground: 0 0% 98%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
+        --primary: 0 0% 98%;
+        --primary-foreground: 240 5.9% 10%;
 
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+        --secondary: 240 3.7% 15.9%;
+        --secondary-foreground: 0 0% 98%;
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+        --muted: 240 3.7% 15.9%;
+        --muted-foreground: 240 5% 64.9%;
 
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+        --accent: 240 3.7% 15.9%;
+        --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 0 0% 98%;
 
-    --success: var(--success);
-    --success-foreground: var(--success-foreground);
+        --success: var(--success);
+        --success-foreground: var(--success-foreground);
 
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-  }
+        --border: 240 3.7% 15.9%;
+        --input: 240 3.7% 15.9%;
+        --ring: 240 4.9% 83.9%;
+    }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+    * {
+        @apply border-border;
+    }
 
-  body {
-    @apply bg-background text-foreground;
-  }
-  /* table classes */
-  table {
-    @apply min-w-full border-collapse;
-  }
-  tr > th {
-    @apply min-w-fit text-nowrap py-4 text-start font-medium text-xs text-primary-foreground bg-primary;
-  }
-  tr > th:nth-child(1) {
-    @apply flex items-center justify-start pl-4 rounded-s-xl;
-  }
-  tr > th:nth-last-child(1) {
-    @apply flex items-center justify-end pr-4 rounded-e-xl;
-  }
-  tr > th:nth-child(1) > * {
-    @apply pl-4;
-  }
-  tr > th:nth-last-child(1) > * {
-    @apply flex items-center justify-end pr-4;
-  }
-  tbody {
-    @apply text-accent-foreground/70;
-  }
-  tr > td > * {
-    @apply h-11 flex text-nowrap text-sm items-center;
-  }
-  tr > td {
-    @apply bg-white;
-  }
-  tr > td:nth-child(1) {
-    @apply rounded-s-md;
-  }
-  tr > td:nth-last-child(1) {
-    @apply rounded-e-md;
-  }
-  tr > td:nth-child(1) > * {
-    @apply pl-4;
-  }
-  tr > td:nth-last-child(1) > * {
-    @apply flex items-center justify-end pr-4;
-  }
+    body {
+        @apply bg-background text-foreground;
+    }
+    /* table classes */
+    table {
+        @apply min-w-full border-collapse;
+    }
+    tr > th {
+        @apply min-w-fit text-nowrap py-4 text-start font-medium text-sm text-muted-foreground border-b;
+    }
+    tr > th:nth-child(1) {
+        @apply flex items-center justify-start pl-4;
+    }
+    tr > th:nth-last-child(1) {
+        @apply flex items-center justify-end pr-4;
+    }
+    tr > th:nth-child(1) > * {
+        @apply pl-4;
+    }
+    tr > th:nth-last-child(1) > * {
+        @apply flex items-center justify-end pr-4;
+    }
+    tbody {
+        @apply text-accent-foreground/70;
+    }
 
-  /* transition/animation classes */
-  .animate-smooth {
-    @apply transition-all ease-linear duration-300;
-  }
+    tbody > tr {
+        @apply !shadow-[0px_0px_20px_#00000005];
+    }
 
-  /* custom text editor */
-  .custom-text-editor {
-    @apply rounded-md border border-input px-3 py-1 shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50;
-  }
-  .custom-text-editor .ql-container {
-    @apply !border-none;
-  }
-  .custom-text-editor .ql-toolbar {
-    @apply !border-none flex items-center flex-wrap gap-y-4;
-  }
-  .custom-text-editor .ql-editor {
-    @apply min-h-[10rem] rounded-md;
-  }
-  .editor-error .ql-editor {
-    @apply !border !border-solid !border-destructive;
-  }
+    tr > td > * {
+        @apply h-12 flex text-nowrap text-sm items-center;
+    }
+
+    tr > td {
+        @apply bg-white;
+    }
+    tr > td:nth-child(1) {
+        @apply rounded-s-md;
+    }
+    tr > td:nth-last-child(1) {
+        @apply rounded-e-md;
+    }
+    tr > td:nth-child(1) > * {
+        @apply pl-4;
+    }
+    tr > td:nth-last-child(1) > * {
+        @apply flex items-center justify-end pr-4;
+    }
+
+    /* transition/animation classes */
+    .animate-smooth {
+        @apply transition-all ease-linear duration-300;
+    }
+
+    /* custom text editor */
+    .custom-text-editor {
+        @apply rounded-md border border-input px-3 py-1 shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50;
+    }
+    .custom-text-editor .ql-container {
+        @apply !border-none;
+    }
+    .custom-text-editor .ql-toolbar {
+        @apply !border-none flex items-center flex-wrap gap-y-4;
+    }
+    .custom-text-editor .ql-editor {
+        @apply min-h-[10rem] rounded-md;
+    }
+    .editor-error .ql-editor {
+        @apply !border !border-solid !border-destructive;
+    }
 }
