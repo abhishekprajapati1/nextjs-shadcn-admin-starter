@@ -3,7 +3,20 @@ import { IconInterface } from "@/lib/types";
 
 const CouponManagIcon: React.FC<IconInterface> = (props) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" {...props} height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M280-280h160v-160H280v160Zm240 0h160v-160H520v160ZM280-520h160v-160H280v160Zm240 0h160v-160H520v160ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/></svg>
+    <svg
+      stroke="currentColor"
+      fill="currentColor"
+      strokeWidth="0"
+      viewBox="0 0 24 24"
+      height="1em"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path fill="none" d="M0 0h24v24H0V0z"></path>
+      <path d="m21.41 11.58-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM13 20.01 4 11V4h7v-.01l9 9-7 7.02z"></path>
+      <circle cx="6.5" cy="6.5" r="1.5"></circle>
+    </svg>
   );
 };
 

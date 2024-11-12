@@ -53,10 +53,14 @@ const CouponForm: React.FC = () => {
   const isPending = updating || creating;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    if (item_id) {
-      update(data);
+    if (form.formState.isDirty) {
+      if (item_id) {
+        update(data);
+      } else {
+        create(data);
+      }
     } else {
-      create(data);
+      dispatch(resetStore());
     }
   };
 

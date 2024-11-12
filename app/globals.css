@@ -85,7 +85,7 @@
         @apply min-w-full border-collapse;
     }
     tr > th {
-        @apply min-w-fit text-nowrap py-4 text-start font-medium text-sm text-muted-foreground border-b;
+        @apply min-w-fit text-nowrap py-4 text-start font-extrabold text-sm text-muted-foreground border-b;
     }
     tr > th:nth-child(1) {
         @apply flex items-center justify-start pl-4;

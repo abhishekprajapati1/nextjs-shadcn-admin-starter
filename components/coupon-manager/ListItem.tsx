@@ -50,12 +50,13 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
         <div>{data?.name}</div>
       </td>
       <td>
-        <div className="justify-center">Rs. {data?.minimum_order}</div>
+        <div className="justify-center">₹{data?.minimum_order}</div>
       </td>
       <td>
         <div className="justify-center">
+          {data?.discount_type === "FIXED" && "₹"}
           {data?.discount_value || 0}
-          {data?.discount_type === "PERCENT" ? " %" : " ₹"}
+          {data?.discount_type === "PERCENT" && "%"}
         </div>
       </td>
       <td>
