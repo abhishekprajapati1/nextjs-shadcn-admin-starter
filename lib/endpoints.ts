@@ -24,6 +24,7 @@ const ENDPOINTS = {
       create: "lens-features",
       update: (id: string) => `lens-features/${id}`,
       delete: (id: string) => `lens-features/${id}`,
+      
     },
     lens_details: {
       fetch_all: (queryString?: string) =>
