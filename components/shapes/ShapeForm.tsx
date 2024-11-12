@@ -41,7 +41,7 @@ const ShapeForm: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const { data, item_id } = useAppSelector(
-    (store) => store.shapeStore.formStore
+    (store) => store.shapeStore.formStore,
   );
 
   const { mutate: updateShape, isPending: updating } = useUpdate();
@@ -59,6 +59,7 @@ const ShapeForm: React.FC = () => {
       dispatch(resetStore());
     }
   };
+  console.log("see this", form.formState.isDirty);
 
   React.useEffect(() => {
     if (data) {
