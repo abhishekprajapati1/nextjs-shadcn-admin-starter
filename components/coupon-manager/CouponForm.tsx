@@ -43,7 +43,7 @@ const CouponForm: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { data, item_id } = useAppSelector(
-    (store) => store.couponStore.formStore,
+    (store) => store.couponStore.formStore
   );
 
   const { mutate: update, isPending: updating } = useUpdate();
@@ -53,14 +53,10 @@ const CouponForm: React.FC = () => {
   const isPending = updating || creating;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    if (form.formState.isDirty) {
-      if (item_id) {
-        update(data);
-      } else {
-        create(data);
-      }
+    if (item_id) {
+      update(data);
     } else {
-      dispatch(resetStore());
+      create(data);
     }
   };
 
@@ -144,7 +140,7 @@ const CouponForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                        isNaN(+e.target.value) ? 0 : +e.target.value
                       )
                     }
                   />
@@ -166,7 +162,7 @@ const CouponForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                        isNaN(+e.target.value) ? 0 : +e.target.value
                       )
                     }
                   />
@@ -191,7 +187,7 @@ const CouponForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                        isNaN(+e.target.value) ? 0 : +e.target.value
                       )
                     }
                   />
@@ -248,7 +244,7 @@ const CouponForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                        isNaN(+e.target.value) ? 0 : +e.target.value
                       )
                     }
                   />

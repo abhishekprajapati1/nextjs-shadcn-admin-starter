@@ -8,26 +8,26 @@ import Modal from "@/components/ui/modal";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { showModal } from "@/store/categories/form.slice";
-import CategoriesForm from "./CategoriesForm";
-
+import CategoryForm from "./CategoryForm";
 
 const AddModal: React.FC = () => {
   const dispatch = useAppDispatch();
-  const modal = useAppSelector((store) => store.categorieStore.formStore.modal);
+  const modal = useAppSelector((store) => store.categoryStore.formStore.modal);
 
   return (
     <Modal
       showCloseIcon
       open={modal}
       onOpenChange={(val) => dispatch(showModal(val))}
+      className="max-w-[1000px]"
     >
       <DialogHeader>
-        <DialogTitle>Add Categories</DialogTitle>
+        <DialogTitle>Add Category</DialogTitle>
         <DialogDescription>
-          Fill in the details to add a new Categories.
+          Fill in the details to add a new category.
         </DialogDescription>
       </DialogHeader>
-      <CategoriesForm />
+      <CategoryForm />
     </Modal>
   );
 };

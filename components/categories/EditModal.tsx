@@ -9,12 +9,12 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import React from "react";
 
 import { resetStore } from "@/store/categories/form.slice";
-import CategoriesForm from "./CategoriesForm";
+import Form from "./CategoryForm";
 import { setItemId } from "@/store/categories/form.slice";
 
 const EditModal: React.FC = () => {
   const dispatch = useAppDispatch();
-  const item_id = useAppSelector((store) => store.categorieStore.formStore.item_id);
+  const item_id = useAppSelector((store) => store.categoryStore.formStore.item_id);
 
   return (
     <Modal
@@ -26,14 +26,15 @@ const EditModal: React.FC = () => {
         dispatch(setItemId(val ? item_id : ""));
       }}
       showCloseIcon
+      className="max-w-[1000px]"
     >
       <DialogHeader>
-        <DialogTitle>Update Categorie</DialogTitle>
+        <DialogTitle>Update Category</DialogTitle>
         <DialogDescription>
-          Make changes to Categorie here. Click save when you're done.
+          Make changes to shape here. Click save when you're done.
         </DialogDescription>
       </DialogHeader>
-      <CategoriesForm />
+      <Form />
     </Modal>
   );
 };

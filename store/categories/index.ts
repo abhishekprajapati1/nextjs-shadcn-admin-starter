@@ -3,9 +3,9 @@ import dataStore from './data.slice';
 import formStore from './form.slice';
 
 
-const categorieStore = combineReducers({
+const categoryStore = combineReducers({
     dataStore,
     formStore,
 });
 
-export default categorieStore;
+export default categoryStore;

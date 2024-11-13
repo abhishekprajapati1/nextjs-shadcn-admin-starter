@@ -3,7 +3,6 @@ import React from "react";
 import { Button, ProcessIndicator } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -23,14 +22,7 @@ import FileInput from "../ui/file-input";
 import FilePreview from "../ui/file-input/FilePreview";
 import DragDropIcon from "../icons/DragDropIcon";
 import TextEditor from "../ui/text-editor";
-
-// Form validation schema
-const formSchema = z.object({
-  title: z.string().min(1, "Title is required"),
-  seo_title: z.string().min(1, "Please provide a seo friendly title."),
-  description: z.string().min(1, "Description is required"),
-  image: z.any().optional(), // Optional for image upload
-});
+import { formSchema } from "@/lib/validations/admin/shapes.validation";
 
 const ShapeForm: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -41,7 +33,7 @@ const ShapeForm: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const { data, item_id } = useAppSelector(
-    (store) => store.shapeStore.formStore,
+    (store) => store.shapeStore.formStore
   );
 
   const { mutate: updateShape, isPending: updating } = useUpdate();

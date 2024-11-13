@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import { setTotal } from "@/store/categories/data.slice";
 import { generateQueryString } from "@/lib/utils";
 import ENDPOINTS from "@/lib/endpoints";
-import { ICategorie } from "@/components/categories/ListItem";
+import { ICategory } from "@/components/categories/ListItem";
 interface UseItems {
     completeFetch?: boolean;
 }
@@ -15,12 +15,12 @@ const useItems = (configs?: UseItems) => {
     const api = getApiClient();
     // Get sort_by selection
     const { sort_by, total, search_term } = useAppSelector(
-        (store) => store.categorieStore.dataStore,
+        (store) => store.categoryStore.dataStore,
     );
 
     const page_size = completeFetch ? 1000 : 10; // Number of records per page.
 
-    const result = useInfiniteQuery<ICategorie[]>({
+    const result = useInfiniteQuery<ICategory[]>({
         initialPageParam: 1,
         queryKey: ["categories", search_term, sort_by],
         queryFn: async ({ pageParam }) => {

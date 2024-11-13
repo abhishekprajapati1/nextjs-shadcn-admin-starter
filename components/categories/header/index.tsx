@@ -15,7 +15,7 @@ const Header = () => {
   const [search, setSearch] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const dispatch = useDispatch();
-  const total = useAppSelector((store) => store.categorieStore.dataStore.total);
+  const total = useAppSelector((store) => store.categoryStore.dataStore.total);
 
   React.useEffect(() => {
     const debounceId = setTimeout(() => dispatch(setSearchTerm(query)), 400);

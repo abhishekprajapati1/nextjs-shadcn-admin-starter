@@ -1,9 +1,8 @@
 import { z } from "zod";
 
 export const formSchema = z.object({
-  image: z.any().optional(),
-  power_type_id: z.string().min(1, { message: "Please select a power type." }),
-  title: z.string().min(1, { message: "Please enter a title" }),
-  description: z.string().optional()
-  
+  title: z.string().min(1, "Title is required"),
+  seo_title: z.string().min(1, "Please provide a seo friendly title."),
+  description: z.string().min(1, "Description is required"),
+  image: z.any().optional(), // Optional for image upload
 });

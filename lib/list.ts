@@ -94,9 +94,9 @@ export const sidebar_menus: IMenuLink[] = [
   },
   {
     icon: BlogIcon,
-    title: "Blog Posts",
+    title: "Articles",
     variant: "ghost",
-    href: "/blog-posts",
+    href: "/articles",
   },
   {
     icon: NewslettersIcon,

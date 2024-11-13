@@ -1,11 +1,11 @@
 
-import { ICategorie } from "@/components/categories/ListItem";
+import { ICategory } from "@/components/categories/ListItem";
 import { createSlice } from "@reduxjs/toolkit";
 
 type InitialState = {
   item_id: string; // used to edit the item.
   modal: boolean;
-  data: Partial<ICategorie & { default_url: string }> | null;
+  data: Partial<ICategory & { default_url: string }> | null;
 };
 
 const initialState: InitialState = {
@@ -20,7 +20,7 @@ const formSlice = createSlice({
   reducers: {
     setData: (
       state,
-      { payload }: { payload: Partial<ICategorie & { default_url: string }> | null },
+      { payload }: { payload: Partial<ICategory & { default_url: string }> | null },
     ) => {
       state.data = payload;
     },

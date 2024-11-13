@@ -11,7 +11,7 @@ const useUpdate = (onSuccess?: () => void) => {
   const dispatch = useAppDispatch();
 
   const item_id = useAppSelector(
-    (store) => store.categorieStore.formStore.item_id,
+    (store) => store.categoryStore.formStore.item_id,
   );
 
   const api = getApiClient();

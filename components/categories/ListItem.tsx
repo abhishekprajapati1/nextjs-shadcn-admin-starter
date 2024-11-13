@@ -7,19 +7,20 @@ import { Card, CardContent } from "../ui/card";
 import { useAppDispatch } from "@/store";
 import { FileType, IRecordMeta } from "@/lib/types";
 import { Skeleton } from "../ui/skeleton";
-import { capitalizeFirstLetter } from "@/lib/utils";
-import { setData } from "@/store/categories/form.slice";
-import { setItemId } from "@/store/categories/form.slice";
+import { setData, setItemId } from "@/store/categories/form.slice";
 import { setItemToDelete } from "@/store/categories/data.slice";
+import { capitalizeFirstLetter } from "@/lib/utils";
+import Avatar from "../ui/avatar";
 
-export interface ICategorie extends IRecordMeta {
-  title?: string;
-  description?: string;
+export interface ICategory extends IRecordMeta {
+  title: string;
+  seo_title: string;
+  description: string;
   image: FileType | null;
 }
 
 interface ListItemProps {
-  data?: ICategorie;
+  data?: ICategory;
 }
 
 const ListItem: React.FC<ListItemProps> = ({ data }) => {
@@ -32,15 +33,24 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
   return (
     <Card>
       <CardContent className="pt-6 h-full flex flex-col gap-2">
-        <div className="flex-grow">
-          <h3 className="text-lg font-semibold text-gray-800 capitalize">
-            {data?.title}
-          </h3>
-          <p className="text-sm text-gray-500">
-            {capitalizeFirstLetter(data?.description)}
-          </p>
+        <div className="flex flex-col gap-2">
+          <Avatar
+            size="6xl"
+            className="rounded-md"
+            src={data?.image?.url}
+            alt="Image for category"
+            fallback={data?.title?.charAt(0)?.toUpperCase()}
+          />
+          <div className="flex-grow">
+            <h3 className="text-lg font-semibold text-gray-800 capitalize">
+              {data?.title}
+            </h3>
+            <p className="text-sm text-gray-500">
+              {capitalizeFirstLetter(data?.seo_title)}
+            </p>
+          </div>
         </div>
-        <div className="flex items-baseline">
+        <div className="flex items-baseline flex-grow">
           <div className="flex items-end justify-end gap-2 flex-grow h-full">
             <Button
               onClick={() => {
@@ -48,7 +58,9 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
                 dispatch(
                   setData({
                     title: data?.title,
+                    seo_title: data?.seo_title,
                     description: data?.description,
+                    image: data?.image,
                   })
                 );
               }}

@@ -19,7 +19,7 @@ const DeleteModal: React.FC = () => {
 
   // Accessing delete_modal from store
   const itemToDelete = useAppSelector(
-    (store) => store.categorieStore.dataStore.itemToDelete
+    (store) => store.categoryStore.dataStore.itemToDelete
   );
 
   return (

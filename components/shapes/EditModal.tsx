@@ -26,6 +26,7 @@ const EditModal: React.FC = () => {
         dispatch(setItemId(val ? item_id : ""));
       }}
       showCloseIcon
+      className="max-w-[1000px]"
     >
       <DialogHeader>
         <DialogTitle>Update Shape</DialogTitle>

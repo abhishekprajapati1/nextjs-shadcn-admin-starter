@@ -1,8 +1,7 @@
 "use client";
+import React from "react";
 import { Button, ProcessIndicator } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
-import React from "react";
-import { useAppDispatch, useAppSelector } from "@/store";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { useForm } from "react-hook-form";
@@ -16,49 +15,52 @@ import {
   FormMessage,
 } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-import { formSchema } from "@/lib/validations/admin/categories.validation";
-
+import { useAppDispatch, useAppSelector } from "@/store";
 import { resetStore, showModal } from "@/store/categories/form.slice";
 import useUpdate from "@/lib/mutations/admin/categories/useUpdate";
 import useCreate from "@/lib/mutations/admin/categories/useCreate";
 import FileInput from "../ui/file-input";
 import FilePreview from "../ui/file-input/FilePreview";
 import DragDropIcon from "../icons/DragDropIcon";
+import TextEditor from "../ui/text-editor";
+import { formSchema } from "@/lib/validations/admin/categories.validation";
 
-const CategoriesForm: React.FC = () => {
+const CategoryForm: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
-    defaultValues: { image: null, title: "", description: "" },
+    defaultValues: { title: "", description: "", seo_title: "" },
     mode: "onBlur",
     resolver: zodResolver(formSchema),
   });
 
   const dispatch = useAppDispatch();
-
   const { data, item_id } = useAppSelector(
-    (store) => store.categorieStore.formStore
+    (store) => store.categoryStore.formStore
   );
 
-  const { mutate: updateCategories, isPending: updating } = useUpdate();
-
-  const { mutate: createCategories, isPending: creating } = useCreate();
-
+  const { mutate: updateShape, isPending: updating } = useUpdate();
+  const { mutate: createShape, isPending: creating } = useCreate();
   const isPending = updating || creating;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    if (item_id) {
-      updateCategories(data);
+    if (form.formState.isDirty) {
+      if (item_id) {
+        updateShape(data);
+      } else {
+        createShape(data);
+      }
     } else {
-      createCategories(data);
+      dispatch(resetStore());
     }
   };
+
+  console.log("see this", form.formState.isDirty);
 
   React.useEffect(() => {
     if (data) {
       form.reset({
         title: data?.title,
         description: data?.description,
-        image: data?.image,
+        seo_title: data?.seo_title,
       });
     }
   }, [data, form]);
@@ -69,7 +71,6 @@ const CategoriesForm: React.FC = () => {
         className="flex flex-col gap-4"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        {/* Image upload */}
         <FormField
           control={form.control}
           name="image"
@@ -84,10 +85,10 @@ const CategoriesForm: React.FC = () => {
                 >
                   <FilePreview
                     file={field.value}
-                    {...(data?.default_url && {
+                    {...(data?.image?.url && {
                       defaultValue: {
                         type: "image",
-                        url: data?.default_url,
+                        url: data?.image?.url,
                       },
                     })}
                     className="size-full grid place-content-center"
@@ -102,19 +103,35 @@ const CategoriesForm: React.FC = () => {
         />
 
         {/* Title input */}
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter title" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex gap-4">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter title" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="seo_title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Seo Title</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Seo Title" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         {/* Description textarea */}
         <FormField
@@ -122,9 +139,8 @@ const CategoriesForm: React.FC = () => {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea placeholder="Enter description" {...field} />
+                <TextEditor placeholder="Enter description" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -152,4 +168,4 @@ const CategoriesForm: React.FC = () => {
   );
 };
 
-export default CategoriesForm;
+export default CategoryForm;

@@ -11,8 +11,8 @@ import frameMaterialStore from "./frame-materials";
 import brandStore from "./brands";
 import colorStore from "./colors";
 import shapeStore from "./shapes";
-import categorieStore from "./categories";
 import couponStore from "./coupon-manager";
+import categoryStore from "./categories";
 
 const store = configureStore({
   reducer: {
@@ -27,7 +27,7 @@ const store = configureStore({
     brandStore,
     colorStore,
     shapeStore,
-    categorieStore,
+    categoryStore,
     couponStore,
   },
 });

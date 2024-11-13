@@ -7,7 +7,7 @@ import { setItemToDelete } from "@/store/categories/data.slice";
 
 const useDelete = (onSuccess?: () => void) => {
   const itemToDelete = useAppSelector(
-    (store) => store.categorieStore.dataStore.itemToDelete,
+    (store) => store.categoryStore.dataStore.itemToDelete,
   );
   const dispatch = useAppDispatch();
 
