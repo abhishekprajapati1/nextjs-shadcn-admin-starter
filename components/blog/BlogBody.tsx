@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import { resetStore, showModal } from "@/store/categories/form.slice";
 import useUpdate from "@/lib/mutations/admin/categories/useUpdate";
 import useCreate from "@/lib/mutations/admin/categories/useCreate";
-import { formSchema } from "@/lib/validations/admin/categories.validation";
+import { formSchema } from "@/lib/validations/admin/articles.validation";
 import {
   Form,
   FormControl,
@@ -22,6 +22,8 @@ import { IoImage } from "react-icons/io5";
 import { Button, ProcessIndicator } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { Input } from "../ui/input";
+import TextEditor from "../ui/text-editor";
+import MultiTextInput from "../ui/mult-text-input";
 
 const BlogBody: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -32,7 +34,7 @@ const BlogBody: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const { data, item_id } = useAppSelector(
-    (store) => store.categoryStore.formStore
+    (store) => store.categoryStore.formStore,
   );
 
   const { mutate: updateShape, isPending: updating } = useUpdate();
@@ -40,15 +42,7 @@ const BlogBody: React.FC = () => {
   const isPending = updating || creating;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    if (form.formState.isDirty) {
-      if (item_id) {
-        updateShape(data);
-      } else {
-        createShape(data);
-      }
-    } else {
-      dispatch(resetStore());
-    }
+    console.log("see this", data);
   };
 
   console.log("see this", form.formState.isDirty);
@@ -115,20 +109,22 @@ const BlogBody: React.FC = () => {
             />
           </div>
           <div className="col-span-4 bg-white p-5 shadow-md flex flex-col justify-around rounded-lg">
-            <div className="w-full flex justify-evenly pb-5">
+            <div className="w-full flex gap-2">
               <Button
                 type="button"
                 onClick={() =>
                   dispatch(item_id ? resetStore() : showModal(false))
                 }
                 variant="secondary"
-                className="text-md font-semibold text-secondary-foreground/60 px-12 py-7 bg-muted-foreground/15"
+                className="flex-grow"
+                size="lg"
               >
                 {item_id ? "Discard" : "Save draft"}
               </Button>
               <Button
+                size="lg"
                 type="submit"
-                className="text-md font-semibold text-muted-foreground px-12 py-7 bg-blue-600 text-white"
+                className="w-[120px] flex-shrink-0"
               >
                 <ProcessIndicator
                   isProcessing={isPending}
@@ -164,11 +160,7 @@ const BlogBody: React.FC = () => {
                     Slug
                   </FormLabel>
                   <FormControl>
-                    <Textarea
-                      className="h-10 text-xs border-none"
-                      placeholder="enter-custom-slug"
-                      {...field}
-                    />
+                    <Textarea placeholder="enter-custom-slug" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -176,17 +168,17 @@ const BlogBody: React.FC = () => {
             />
             <FormField
               control={form.control}
-              name="title"
+              name="keywords"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-sm text-secondary-foreground/80">
-                    Tags
+                    keywords
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      className="text-xs border-b-2 border-t-0 border-r-0 border-l-0"
-                      placeholder="Enter a keyword..."
-                      {...field}
+                    <MultiTextInput
+                      id="keyword-input"
+                      value={field.value}
+                      onChange={field.onChange}
                     />
                   </FormControl>
                   <FormMessage className="text-[10px] text-secondary-foreground/50">
@@ -196,29 +188,35 @@ const BlogBody: React.FC = () => {
               )}
             />
           </div>
-          <div className="col-span-8 pt-6">
-            <FormField
-              name="description"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-3xl font-bold text-muted-foreground/60">
-                    Enter Blog Title Here...
-                  </FormLabel>
-                  <FormControl>
-                    <Textarea
-                      className="h-12 text-start border-none"
-                      // placeholder="Start typing your content here..."
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-xs text-muted-foreground/60 italic">
-                    Start typing your content here...
-                  </FormMessage>
-                </FormItem>
-              )}
-            />
-          </div>
+          <FormField
+            name="description"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem className="col-span-8 pt-6">
+                <FormControl>
+                  <Textarea
+                    placeholder="Enter Blog Title Here..."
+                    className="text-3xl border-none font-bold placeholder:text-muted-foreground/60"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="description"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem className="col-span-8 pt-6">
+                <FormControl>
+                  <TextEditor
+                    placeholder="Enter Blog Title Here..."
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
         </form>
       </Form>
     </div>
