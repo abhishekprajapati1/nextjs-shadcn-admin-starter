@@ -24,38 +24,62 @@ import { Textarea } from "../ui/textarea";
 import { Input } from "../ui/input";
 import TextEditor from "../ui/text-editor";
 import MultiTextInput from "../ui/mult-text-input";
+import MultiSelect from "../ui/multi-select";
 
-const BlogBody: React.FC = () => {
+const ArticleForm: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
-    defaultValues: { title: "", description: "", seo_title: "" },
+    defaultValues: { title: "", description: "", seo_title: "", slug: "" },
     mode: "onBlur",
     resolver: zodResolver(formSchema),
   });
 
-  const dispatch = useAppDispatch();
-  const { data, item_id } = useAppSelector(
-    (store) => store.categoryStore.formStore,
-  );
+  const dataValueProps = [
+    {
+      value: "circl",
+      label: "Circle",
+    },
+    {
+      value: "oval",
+      label: "Oval",
+    },
+    {
+      value: "square",
+      label: "Square",
+    },
+    {
+      value: "rectangle",
+      label: "Rectangle",
+    },
+    {
+      value: "trapezoidal",
+      label: "Trapezoidal",
+    },
+  ];
+
+  // const dispatch = useAppDispatch();
+  // const { data, item_id } = useAppSelector(
+  //   (store) => store.categoryStore.formStore
+  // );
 
   const { mutate: updateShape, isPending: updating } = useUpdate();
   const { mutate: createShape, isPending: creating } = useCreate();
   const isPending = updating || creating;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log("see this", data);
+    console.log("see this form data here", data);
   };
 
-  console.log("see this", form.formState.isDirty);
+  // console.log("see this", form.formState.isDirty);
 
-  React.useEffect(() => {
-    if (data) {
-      form.reset({
-        title: data?.title,
-        description: data?.description,
-        seo_title: data?.seo_title,
-      });
-    }
-  }, [data, form]);
+  // React.useEffect(() => {
+  //   if (data) {
+  //     form.reset({
+  //       title: data?.title,
+  //       description: data?.description,
+  //       seo_title: data?.seo_title,
+  //     });
+  //   }
+  // }, [data, form]);
 
   return (
     <div className="container mx-auto">
@@ -78,12 +102,12 @@ const BlogBody: React.FC = () => {
                     >
                       <FilePreview
                         file={field.value}
-                        {...(data?.image?.url && {
-                          defaultValue: {
-                            type: "image",
-                            url: data?.image?.url,
-                          },
-                        })}
+                        // {...(data?.image?.url && {
+                        //   defaultValue: {
+                        //     type: "image",
+                        //     url: data?.image?.url,
+                        //   },
+                        // })}
                         className="size-full flex flex-col items-center justify-center bg-cyan-50/20 border-none"
                       >
                         <p className="text-sm text-muted-foreground">
@@ -111,15 +135,16 @@ const BlogBody: React.FC = () => {
           <div className="col-span-4 bg-white p-5 shadow-md flex flex-col justify-around rounded-lg">
             <div className="w-full flex gap-2">
               <Button
-                type="button"
-                onClick={() =>
-                  dispatch(item_id ? resetStore() : showModal(false))
-                }
+                type="submit"
+                // onClick={() =>
+                //   dispatch(item_id ? resetStore() : showModal(false))
+                // }
                 variant="secondary"
                 className="flex-grow"
                 size="lg"
               >
-                {item_id ? "Discard" : "Save draft"}
+                {/* {item_id ? "Discard" : "Save draft"} */}
+                Save draft
               </Button>
               <Button
                 size="lg"
@@ -128,12 +153,13 @@ const BlogBody: React.FC = () => {
               >
                 <ProcessIndicator
                   isProcessing={isPending}
-                  btnText={item_id ? "Save" : "Publish"}
+                  // btnText={item_id ? "Save" : "Publish"}
+                  btnText={"Publish"}
                 />
               </Button>
             </div>
             <FormField
-              name="description"
+              name="seo_title"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
@@ -152,7 +178,7 @@ const BlogBody: React.FC = () => {
               )}
             />
             <FormField
-              name="description"
+              name="slug"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
@@ -187,9 +213,75 @@ const BlogBody: React.FC = () => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="shapes"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-secondary-foreground/80">
+                    shapes
+                  </FormLabel>
+                  <FormControl>
+                    <MultiSelect
+                      id="shapes-input"
+                      value={field.value}
+                      onChange={field.onChange}
+                      dataValueProps={dataValueProps}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-[10px] text-secondary-foreground/50">
+                    ! Select shapes once from dropdown!
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-secondary-foreground/80">
+                    category
+                  </FormLabel>
+                  <FormControl>
+                    <MultiSelect
+                      id="category-input"
+                      value={field.value}
+                      onChange={field.onChange}
+                      dataValueProps={dataValueProps}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-[10px] text-secondary-foreground/50">
+                    ! Select category once from dropdown!
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="products"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-secondary-foreground/80">
+                    products
+                  </FormLabel>
+                  <FormControl>
+                    <MultiSelect
+                      id="products-input"
+                      value={field.value}
+                      onChange={field.onChange}
+                      dataValueProps={dataValueProps}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-[10px] text-secondary-foreground/50">
+                    ! Select products once from dropdown!
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
           </div>
           <FormField
-            name="description"
+            name="title"
             control={form.control}
             render={({ field }) => (
               <FormItem className="col-span-8 pt-6">
@@ -223,4 +315,4 @@ const BlogBody: React.FC = () => {
   );
 };
 
-export default BlogBody;
+export default ArticleForm;

@@ -1,185 +1,118 @@
 "use client";
-import React from "react";
-import { Button, ProcessIndicator } from "@/components/ui/button";
-import { DialogFooter } from "@/components/ui/dialog";
-// import { Input } from "../ui/input";
-// import { Textarea } from "../ui/textarea";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-// import {
-//   Form,
-//   FormControl,
-//   FormField,
-//   FormItem,
-//   FormLabel,
-//   FormMessage,
-// } from "../";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { resetStore, showModal } from "@/store/categories/form.slice";
-import useUpdate from "@/lib/mutations/admin/categories/useUpdate";
-import useCreate from "@/lib/mutations/admin/categories/useCreate";
-// import FileInput from "../ui/file-input";
-// import FilePreview from "../ui/file-input/FilePreview";
-// import DragDropIcon from "../icons/DragDropIcon";
-// import TextEditor from "../ui/text-editor";
-import { formSchema } from "@/lib/validations/admin/categories.validation";
+
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import FileInput from "@/components/ui/file-input";
-import FilePreview from "@/components/ui/file-input/FilePreview";
-import DragDropIcon from "@/components/icons/DragDropIcon";
-import TextEditor from "@/components/ui/text-editor";
-import { Input } from "@/components/ui/input";
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import PlusIcon from "@/components/icons/PlusIcon";
 
-const CategoryForm: React.FC = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    defaultValues: { title: "", description: "", seo_title: "" },
-    mode: "onBlur",
-    resolver: zodResolver(formSchema),
-  });
+const frameworks = [
+  {
+    value: "next.js",
+    label: "Next.js",
+  },
+  {
+    value: "sveltekit",
+    label: "SvelteKit",
+  },
+  {
+    value: "nuxt.js",
+    label: "Nuxt.js",
+  },
+  {
+    value: "remix",
+    label: "Remix",
+  },
+  {
+    value: "astro",
+    label: "Astro",
+  },
+];
 
-  const dispatch = useAppDispatch();
-  const { data, item_id } = useAppSelector(
-    (store) => store.categoryStore.formStore
-  );
+export default function MultiSelect() {
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState<string[]>([]);
 
-  const { mutate: updateShape, isPending: updating } = useUpdate();
-  const { mutate: createShape, isPending: creating } = useCreate();
-  const isPending = updating || creating;
-
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    if (form.formState.isDirty) {
-      if (item_id) {
-        updateShape(data);
-      } else {
-        createShape(data);
-      }
+  const handleSetValue = (val: string) => {
+    if (value.includes(val)) {
+      value.splice(value.indexOf(val), 1);
+      setValue(value.filter((item) => item !== val));
     } else {
-      dispatch(resetStore());
+      setValue((prevValue) => [...prevValue, val]);
     }
   };
 
-  console.log("see this", form.formState.isDirty);
-
-  React.useEffect(() => {
-    if (data) {
-      form.reset({
-        title: data?.title,
-        description: data?.description,
-        seo_title: data?.seo_title,
-      });
-    }
-  }, [data, form]);
-
   return (
-    <Form {...form}>
-      <form
-        className="flex flex-col gap-4"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
-        {/* <FormField
-          control={form.control}
-          name="image"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Image</FormLabel>
-              <FormControl>
-                <FileInput
-                  value={field.value}
-                  onChange={(files) => field.onChange(files?.[0])}
-                  className="size-[100px]"
-                >
-                  <FilePreview
-                    file={field.value}
-                    {...(data?.image?.url && {
-                      defaultValue: {
-                        type: "image",
-                        url: data?.image?.url,
-                      },
-                    })}
-                    className="size-full grid place-content-center"
+    <Popover open={open} onOpenChange={setOpen}>
+      <div className="flex gap-2 flex-wrap justify-start w-[200px]">
+        {value?.length
+          ? value.map((val, i) => (
+              <div
+                key={i}
+                className="px-2 py-1 rounded-xl border bg-slate-200 text-xs font-medium"
+              >
+                {frameworks.find((framework) => framework.value === val)?.label}
+              </div>
+            ))
+          : "select"}
+      </div>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-[200px] justify-between"
+        >
+          {/* <div className="flex gap-2 justify-start">
+            {value?.length
+              ? value.map((val, i) => (
+                  <div
+                    key={i}
+                    className="px-2 py-1 rounded-xl border bg-slate-200 text-xs font-medium"
                   >
-                    <DragDropIcon className="size-[25px]" />
-                    <p>prashant</p>
-                  </FilePreview>
-                </FileInput>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
-
-        {/* Title input */}
-        <div className="flex gap-4">
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Title</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter title" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="seo_title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Seo Title</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter Seo Title" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        {/* Description textarea */}
-        {/* <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <TextEditor placeholder="Enter description" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
-
-        {/* Footer with buttons */}
-        {/* <DialogFooter>
-          <Button
-            type="button"
-            onClick={() => dispatch(item_id ? resetStore() : showModal(false))}
-            variant="secondary"
-          >
-            {item_id ? "Discard" : "Cancel"}
-          </Button>
-          <Button type="submit">
-            <ProcessIndicator
-              isProcessing={isPending}
-              btnText={item_id ? "Save" : "Create"}
-            />
-          </Button>
-        </DialogFooter> */}
-      </form>
-    </Form>
+                    {
+                      frameworks.find((framework) => framework.value === val)
+                        ?.label
+                    }
+                  </div>
+                ))
+              : "Select framework..."}
+          </div> */}
+          Select framework...
+          <PlusIcon />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[200px] p-0">
+        <Command>
+          <CommandGroup>
+            <CommandList>
+              {frameworks.map((framework) => (
+                <CommandItem
+                  key={framework.value}
+                  value={framework.value}
+                  onSelect={() => {
+                    handleSetValue(framework.value);
+                  }}
+                >
+                  {framework.label}
+                </CommandItem>
+              ))}
+            </CommandList>
+          </CommandGroup>
+        </Command>
+      </PopoverContent>
+    </Popover>
   );
-};
-
-export default CategoryForm;
+}

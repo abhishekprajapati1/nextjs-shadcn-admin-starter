@@ -24,19 +24,18 @@ const MultiTextInput: FC<MultiTextInputProps> = ({
     setTags(newTags);
     onChange(newTags);
   };
-  
-  
+
   const handleKeywordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-    if (inputValue.endsWith(',')) {
+    if (inputValue.endsWith(",")) {
       const newKeyword = inputValue.slice(0, -1).trim();
       if (newKeyword && !tags.includes(newKeyword)) {
         const newTags = [...tags, newKeyword];
         setTags(newTags);
         onChange(newTags);
-        setKeyword('');
+        setKeyword("");
       } else {
-        setKeyword('');
+        setKeyword("");
       }
     } else {
       setKeyword(inputValue);
@@ -58,11 +57,7 @@ const MultiTextInput: FC<MultiTextInputProps> = ({
       )}
       <div className="flex items-center flex-wrap gap-1 mb-2">
         {tags.map((tag) => (
-          <Selected
-            key={tag}
-            label={tag}
-            onClose={() => handleTagClose(tag)}
-          />
+          <Selected key={tag} label={tag} onClose={() => handleTagClose(tag)} />
         ))}
       </div>
       <Input

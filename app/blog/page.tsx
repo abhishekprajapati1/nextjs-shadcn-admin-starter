@@ -1,12 +1,12 @@
-import BlogBody from "@/components/blog/BlogBody";
-import Header from "@/components/blog/header";
+import ArticleForm from "@/components/article/ArticleForm";
+import Header from "@/components/article/header";
 import React from "react";
 
 const page = () => {
   return (
     <>
       <Header />
-      <BlogBody/>
+      <ArticleForm />
     </>
   );
 };
