@@ -34,6 +34,7 @@
     "dayjs": "^1.11.11",
     "next": "14.2.3",
     "qs": "^6.13.0",
+    "quill-image-resize-module-react": "^3.0.0",
     "react": "^18",
     "react-dom": "^18",
     "react-dropzone": "^14.2.3",

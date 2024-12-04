@@ -134,7 +134,10 @@
 
     /* custom text editor */
     .custom-text-editor {
-        @apply rounded-md border border-input px-3 py-1 shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50;
+        @apply border-none rounded-md border border-input px-3 py-1 shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50;
+    }
+    .custom-text-editor img {
+        @apply !inline-block align-baseline;
     }
     .custom-text-editor .ql-container {
         @apply !border-none;

@@ -13,6 +13,7 @@ import colorStore from "./colors";
 import shapeStore from "./shapes";
 import couponStore from "./coupon-manager";
 import categoryStore from "./categories";
+import articleStore from "./articles";
 
 const store = configureStore({
   reducer: {
@@ -29,6 +30,7 @@ const store = configureStore({
     shapeStore,
     categoryStore,
     couponStore,
+    articleStore,
   },
 });
 
