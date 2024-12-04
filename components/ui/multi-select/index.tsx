@@ -92,7 +92,9 @@ const MultiSelect: FC<MultiSelectInputProps> = ({
           aria-expanded={open}
           className="w-full h-fit justify-between"
         >
-          Select framework...
+          <span className="text-sm font-normal text-secondary-foreground/70">
+            Select...
+          </span>
           <PlusIcon />
         </Button>
       </PopoverTrigger>
