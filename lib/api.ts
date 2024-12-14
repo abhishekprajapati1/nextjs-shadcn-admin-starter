@@ -3,10 +3,18 @@ import { getCookie } from "cookies-next";
 import { TOKENS } from "./constants";
 import { toast } from "@/lib/hooks/use-toast";
 
-export const baseURL =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:4000/api/"
-    : "https://api.hospotribe.com/api/";
+export const getBaseUrl = () => {
+  if (process.env.NODE_ENV !== "development") {
+    return "https://akkukachasma.com";
+  }
+  if (typeof window === "undefined") {
+    return process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  }
+
+  return "http://localhost:8000";
+};
+
+export const baseURL = getBaseUrl() + "/api";
 const BearerToken = `Bearer ${getCookie(TOKENS.AUTH_TOKEN)}`;
 
 type ApiClientProps = {
