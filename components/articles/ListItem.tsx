@@ -47,14 +47,14 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
 
   return (
     <Card className="overflow-hidden">
-      <CardContent className="!p-0 h-full flex flex-col gap-2">
+      <CardContent className="!p-0 h-full flex flex-col">
         <Avatar
           className="rounded-none w-full min-h-52 flex-shrink-0"
           src={data?.thumbnail?.url}
           alt="Image for power type"
           fallback={data?.title?.charAt(0)?.toUpperCase()}
         />
-        <div className="flex-grow p-4 flex flex-col">
+        <div className="flex-grow px-4 pb-4 pt-2 flex flex-col">
           <div className="flex-grow">
             <Badge
               variant={
@@ -104,7 +104,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
                   })
                 }
               >
-                <PaperPlaneIcon />
+                <PaperPlaneIcon className="-rotate-[30deg]" />
               </Button>
               <Button variant="secondary" size="icon" asChild>
                 <Link href={`/articles/${id}`} prefetch>
