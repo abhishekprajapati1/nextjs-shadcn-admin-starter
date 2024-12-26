@@ -4,6 +4,14 @@ const ENDPOINTS = {
     LOGOUT: "auth/logout",
   },
   admin: {
+    articles: {
+      fetch_all: (queryString?: string) =>
+        `articles${queryString ? "?" + queryString : ""}`,
+      create: `articles`,
+      fetch_single: (id: string) => `articles/${id}`,
+      update: (id?: string) => `articles/${id}`,
+      delete: (id?: string) => `articles/${id}`,
+    },
     power_types: {
       fetch_all: (queryString?: string) =>
         `power-types${queryString ? "?" + queryString : ""}`,
@@ -24,7 +32,6 @@ const ENDPOINTS = {
       create: "lens-features",
       update: (id: string) => `lens-features/${id}`,
       delete: (id: string) => `lens-features/${id}`,
-
     },
     lens_details: {
       fetch_all: (queryString?: string) =>

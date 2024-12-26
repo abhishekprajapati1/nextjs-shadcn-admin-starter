@@ -68,7 +68,6 @@ const PowerType: React.FC<PowerTypeProps> = ({ data }) => {
               <EditIcon />
             </Button>
             <Button
-              // disabled={isDeleting}
               variant="ghost"
               size="icon"
               onClick={() =>

@@ -14,16 +14,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import PlusIcon from "@/components/icons/PlusIcon";
-
-interface DataValueProps {
-  value: string;
-  label: string;
-}
+import { InputOption } from "@/lib/types";
 
 interface MultiSelectInputProps {
   value: string[] | undefined;
   onChange: (value: string[]) => void;
-  dataValueProps: DataValueProps[]; // selectData for dropdown now passed as a prop
+  options: InputOption[];
   label?: string;
   id: string;
 }
@@ -33,7 +29,7 @@ const MultiSelect: FC<MultiSelectInputProps> = ({
   label,
   value,
   onChange,
-  dataValueProps,
+  options,
 }) => {
   const [open, setOpen] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
@@ -74,7 +70,7 @@ const MultiSelect: FC<MultiSelectInputProps> = ({
             key={tag}
             className="flex items-center gap-1 px-2 py-1 rounded-xl border bg-slate-200 text-xs font-medium"
           >
-            {dataValueProps.find((framework) => framework.value === tag)?.label}
+            {options.find((option) => option.value === tag)?.label}
             <button
               type="button"
               className="ml-2 text-red-500"
@@ -102,14 +98,14 @@ const MultiSelect: FC<MultiSelectInputProps> = ({
         <Command>
           <CommandGroup>
             <CommandList>
-              {dataValueProps.map((framework) => (
+              {options.map((option) => (
                 <CommandItem
                   id={id}
-                  key={framework.value}
-                  value={framework.value}
-                  onSelect={() => handleSetValue(framework.value)}
+                  key={option.value}
+                  value={option.value}
+                  onSelect={() => handleSetValue(option.value)}
                 >
-                  {framework.label}
+                  {option.label}
                 </CommandItem>
               ))}
             </CommandList>

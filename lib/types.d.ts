@@ -30,6 +30,11 @@ export type FileType = {
   url: string;
 };
 
+export interface InputOption {
+  value?: string;
+  label?: string;
+}
+
 export interface IconInterface extends React.SVGProps<SVGSVGElement> {}
 export interface IOwner {
   id: string;

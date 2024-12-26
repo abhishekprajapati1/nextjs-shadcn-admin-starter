@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { resetStore, showModal } from "@/store/categories/form.slice";
-import useUpdate from "@/lib/mutations/admin/categories/useUpdate";
-import useCreate from "@/lib/mutations/admin/categories/useCreate";
+import { resetStore, showModal } from "@/store/articles/form.slice";
+import useUpdate from "@/lib/mutations/admin/articles/useUpdate";
+import useCreate from "@/lib/mutations/admin/articles/useCreate";
 import { formSchema } from "@/lib/validations/admin/articles.validation";
 import {
   Form,
@@ -26,8 +26,17 @@ import TextEditor from "../ui/text-editor";
 import MultiTextInput from "../ui/mult-text-input";
 import MultiSelect from "../ui/multi-select";
 import DragDropIcon from "../icons/DragDropIcon";
+import useShapes from "@/lib/queries/admin/shapes/useItems";
+import useCategories from "@/lib/queries/admin/categories/useItems";
+import useFetch from "@/lib/hooks/use-fetch";
+import ENDPOINTS from "@/lib/endpoints";
+import { IArticle } from "./ListItem";
 
-const ArticleForm: React.FC = () => {
+interface ArticleFormProps {
+  id?: string;
+}
+
+const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       title: "",
@@ -44,7 +53,21 @@ const ArticleForm: React.FC = () => {
     mode: "onBlur",
     resolver: zodResolver(formSchema),
   });
-
+  const { data } = useFetch<IArticle>({
+    endpoint: ENDPOINTS.admin.articles.fetch_single(id),
+    enabledKey: id,
+    validate: true,
+  });
+  const { data: shapes } = useShapes({ completeFetch: true });
+  const { data: categories } = useCategories({ completeFetch: true });
+  const shapeOptions = shapes?.map((s) => ({
+    value: s.id,
+    label: s.title,
+  }));
+  const categoryOptions = categories?.map((s) => ({
+    value: s.id,
+    label: s.title,
+  }));
   const dataValueProps = [
     {
       value: "circl",
@@ -68,8 +91,8 @@ const ArticleForm: React.FC = () => {
     },
   ];
 
-  const { mutate: updateShape, isPending: updating } = useUpdate();
-  const { mutate: createShape, isPending: creating } = useCreate();
+  const { mutate: update, isPending: updating } = useUpdate();
+  const { mutate: create, isPending: creating } = useCreate();
   const isPending = updating || creating;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
@@ -78,15 +101,17 @@ const ArticleForm: React.FC = () => {
 
   // console.log("see this", form.formState.isDirty);
 
-  // React.useEffect(() => {
-  //   if (data) {
-  //     form.reset({
-  //       title: data?.title,
-  //       description: data?.description,
-  //       seo_title: data?.seo_title,
-  //     });
-  //   }
-  // }, [data, form]);
+  React.useEffect(() => {
+    if (data) {
+      form.reset({
+        title: data?.title,
+        description: data?.description,
+        seo_title: data?.seo_title,
+        shape_ids: data?.shape_ids || [],
+        category_ids: data?.category_ids || [],
+      });
+    }
+  }, [data, form]);
 
   return (
     <Form {...form}>
@@ -108,12 +133,12 @@ const ArticleForm: React.FC = () => {
                   >
                     <FilePreview
                       file={field.value}
-                      // {...(data?.image?.url && {
-                      //   defaultValue: {
-                      //     type: "image",
-                      //     url: data?.image?.url,
-                      //   },
-                      // })}
+                      {...(data?.image?.url && {
+                        defaultValue: {
+                          type: "image",
+                          url: data?.image?.url,
+                        },
+                      })}
                       className="size-full grid place-content-center"
                     >
                       <DragDropIcon className="size-[25px]" />
@@ -261,7 +286,7 @@ const ArticleForm: React.FC = () => {
                     id="shapes-input"
                     value={field.value}
                     onChange={field.onChange}
-                    dataValueProps={dataValueProps}
+                    options={shapeOptions || []}
                   />
                 </FormControl>
                 <FormMessage className="text-[10px] text-secondary-foreground/50">
@@ -283,7 +308,7 @@ const ArticleForm: React.FC = () => {
                     id="category-input"
                     value={field.value}
                     onChange={field.onChange}
-                    dataValueProps={dataValueProps}
+                    options={categoryOptions || []}
                   />
                 </FormControl>
                 <FormMessage className="text-[10px] text-secondary-foreground/50">
@@ -292,7 +317,7 @@ const ArticleForm: React.FC = () => {
               </FormItem>
             )}
           />
-          <FormField
+          {/* <FormField
             control={form.control}
             name="product_ids"
             render={({ field }) => (
@@ -305,7 +330,7 @@ const ArticleForm: React.FC = () => {
                     id="products-input"
                     value={field.value}
                     onChange={field.onChange}
-                    dataValueProps={dataValueProps}
+                    options={dataValueProps}
                   />
                 </FormControl>
                 <FormMessage className="text-[10px] text-secondary-foreground/50">
@@ -313,7 +338,7 @@ const ArticleForm: React.FC = () => {
                 </FormMessage>
               </FormItem>
             )}
-          />
+          /> */}
         </div>
       </form>
     </Form>

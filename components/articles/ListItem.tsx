@@ -7,16 +7,20 @@ import { Card, CardContent } from "../ui/card";
 import { useAppDispatch } from "@/store";
 import { FileType, IRecordMeta } from "@/lib/types";
 import { Skeleton } from "../ui/skeleton";
-import { setData, setItemId } from "@/store/shapes/form.slice";
-import { setItemToDelete } from "@/store/shapes/data.slice";
+import { setData, setItemId } from "@/store/articles/form.slice";
+import { setItemToDelete } from "@/store/articles/data.slice";
 import { capitalizeFirstLetter } from "@/lib/utils";
 import Avatar from "../ui/avatar";
+import { useRouter } from "next/navigation";
 
 export interface IArticle extends IRecordMeta {
   title: string;
   seo_title: string;
   description: string;
-  image: FileType | null;
+  thumbnail: FileType | null;
+  thumbnail_alt?: string;
+  category_ids?: string[];
+  shape_ids?: string[];
 }
 
 interface ListItemProps {
@@ -24,7 +28,15 @@ interface ListItemProps {
 }
 
 const ListItem: React.FC<ListItemProps> = ({ data }) => {
+  const { id, ...rest } = data || {};
   const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  const handleEdit = () => {
+    dispatch(setItemId(data?.id || ""));
+    dispatch(setData(rest));
+    router.push(`/admin/articles/${id}`);
+  };
 
   if (!data) {
     return <ListItemSkeleton />;
@@ -35,9 +47,8 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
       <CardContent className="pt-6 h-full flex flex-col gap-2">
         <div className="flex flex-col gap-2">
           <Avatar
-            size="6xl"
-            className="rounded-md"
-            src={data?.image?.url}
+            className="rounded-md w-full min-h-52"
+            src={data?.thumbnail?.url}
             alt="Image for power type"
             fallback={data?.title?.charAt(0)?.toUpperCase()}
           />
@@ -45,7 +56,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
             <h3 className="text-lg font-semibold text-gray-800 capitalize">
               {data?.title}
             </h3>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 line-clamp-2">
               {capitalizeFirstLetter(data?.seo_title)}
             </p>
           </div>
@@ -53,17 +64,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
         <div className="flex items-baseline flex-grow">
           <div className="flex items-end justify-end gap-2 flex-grow h-full">
             <Button
-              onClick={() => {
-                dispatch(setItemId(data?.id || ""));
-                dispatch(
-                  setData({
-                    title: data?.title,
-                    seo_title: data?.seo_title,
-                    description: data?.description,
-                    image: data?.image,
-                  }),
-                );
-              }}
+              onClick={() => handleEdit()}
               variant="secondary"
               size="icon"
             >

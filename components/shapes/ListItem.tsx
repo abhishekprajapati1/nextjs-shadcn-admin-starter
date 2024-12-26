@@ -35,8 +35,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
       <CardContent className="pt-6 h-full flex flex-col gap-2">
         <div className="flex flex-col gap-2">
           <Avatar
-            size="6xl"
-            className="rounded-md"
+            className="rounded-md w-full min-h-52"
             src={data?.image?.url}
             alt="Image for power type"
             fallback={data?.title?.charAt(0)?.toUpperCase()}
@@ -45,7 +44,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
             <h3 className="text-lg font-semibold text-gray-800 capitalize">
               {data?.title}
             </h3>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 line-clamp-2">
               {capitalizeFirstLetter(data?.seo_title)}
             </p>
           </div>
