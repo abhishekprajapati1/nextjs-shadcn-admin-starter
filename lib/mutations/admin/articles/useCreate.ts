@@ -17,7 +17,7 @@ const useCreate = (onSuccess?: () => void) => {
       const formData = new FormData();
       if (thumbnail) formData.append("thumbnail", thumbnail);
       formData.append("json_payload", JSON.stringify(rest));
-      const res = await api.post(ENDPOINTS.admin.articles.create, thumbnail);
+      const res = await api.post(ENDPOINTS.admin.articles.create, formData);
       return res.data;
     },
     onSuccess: () => {

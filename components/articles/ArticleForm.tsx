@@ -3,8 +3,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { resetStore, showModal } from "@/store/articles/form.slice";
 import useUpdate from "@/lib/mutations/admin/articles/useUpdate";
 import useCreate from "@/lib/mutations/admin/articles/useCreate";
 import { formSchema } from "@/lib/validations/admin/articles.validation";
@@ -18,7 +16,6 @@ import {
 } from "@/components/ui/form";
 import FileInput from "@/components/ui/file-input";
 import FilePreview from "@/components/ui/file-input/FilePreview";
-import { IoImage } from "react-icons/io5";
 import { Button, ProcessIndicator } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { Input } from "../ui/input";
@@ -31,12 +28,14 @@ import useCategories from "@/lib/queries/admin/categories/useItems";
 import useFetch from "@/lib/hooks/use-fetch";
 import ENDPOINTS from "@/lib/endpoints";
 import { IArticle } from "./ListItem";
+import { useRouter } from "next/navigation";
 
 interface ArticleFormProps {
   id?: string;
 }
 
 const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       title: "",
@@ -46,7 +45,6 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
       category_ids: [],
       content: "",
       keywords: [],
-      product_ids: [],
       shape_ids: [],
       thumbnail: null,
     },
@@ -73,15 +71,15 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
     label: s.title,
   }));
 
-  const { mutate: update, isPending: updating } = useUpdate();
+  const { mutate: update, isPending: updating } = useUpdate(id);
   const { mutate: create, isPending: creating } = useCreate();
   const isPending = updating || creating;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     if (id) {
-      update(data);
+      update(data, { onSuccess: () => router.replace("/articles") });
     } else {
-      create(data);
+      create(data, { onSuccess: () => router.replace("/articles") });
     }
   };
 
@@ -120,10 +118,10 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
                   >
                     <FilePreview
                       file={field.value}
-                      {...(data?.image?.url && {
+                      {...(data?.thumbnail?.url && {
                         defaultValue: {
                           type: "image",
-                          url: data?.image?.url,
+                          url: data?.thumbnail?.url,
                         },
                       })}
                       className="size-full grid place-content-center"
@@ -175,19 +173,27 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
         <div className="col-span-12 lg:col-span-4 bg-white p-5 shadow-md flex flex-col-reverse lg:flex-col justify-around rounded-lg gap-6">
           <div className="w-full flex gap-2">
             <Button
-              type="button"
+              type={id ? "button" : "submit"}
               variant="secondary"
               className="flex-grow"
               size="lg"
+              onClick={() =>
+                id
+                  ? router.replace("/articles")
+                  : form.setValue("status", "DRAFT")
+              }
             >
-              {/* {item_id ? "Discard" : "Save draft"} */}
-              Save draft
+              {id ? "Discard" : "Save draft"}
             </Button>
-            <Button size="lg" type="submit" className="w-[120px] flex-shrink-0">
+            <Button
+              onClick={() => form.setValue("status", "PUBLISHED")}
+              size="lg"
+              type="submit"
+              className="w-[120px] flex-shrink-0"
+            >
               <ProcessIndicator
                 isProcessing={isPending}
-                // btnText={item_id ? "Save" : "Publish"}
-                btnText={"Publish"}
+                btnText={id ? "Save" : "Publish"}
               />
             </Button>
           </div>

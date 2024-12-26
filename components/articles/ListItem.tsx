@@ -13,7 +13,7 @@ import { capitalizeFirstLetter } from "@/lib/utils";
 import Avatar from "../ui/avatar";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
+export type ArticleStatus = "DRAFT" | "ARCHIVED" | "PUBLISHED";
 export interface IArticle extends IRecordMeta {
   title: string;
   seo_title: string;
@@ -25,6 +25,7 @@ export interface IArticle extends IRecordMeta {
   shape_ids?: string[];
   slug: string;
   keywords: string[];
+  status: ArticleStatus;
 }
 
 interface ListItemProps {
