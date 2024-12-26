@@ -12,7 +12,7 @@ const useUpdate = (article_id: string, onSuccess?: () => void) => {
   const api = getApiClient();
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: async (data: z.infer<typeof formSchema>) => {
+    mutationFn: async (data: Partial<z.infer<typeof formSchema>>) => {
       const { thumbnail, ...rest } = data;
 
       const formData = new FormData();

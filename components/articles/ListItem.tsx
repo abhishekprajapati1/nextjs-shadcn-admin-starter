@@ -13,6 +13,9 @@ import { capitalizeFirstLetter } from "@/lib/utils";
 import Avatar from "../ui/avatar";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Badge } from "../ui/badge";
+import { ArchiveIcon, PaperPlaneIcon } from "@radix-ui/react-icons";
+import useUpdate from "@/lib/mutations/admin/articles/useUpdate";
 export type ArticleStatus = "DRAFT" | "ARCHIVED" | "PUBLISHED";
 export interface IArticle extends IRecordMeta {
   title: string;
@@ -36,6 +39,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
   const { id, ...rest } = data || {};
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const { mutate: update, isPending: updating } = useUpdate(data?.id || "");
 
   if (!data) {
     return <ListItemSkeleton />;
@@ -52,6 +56,28 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
         />
         <div className="flex-grow p-4 flex flex-col">
           <div className="flex-grow">
+            <Badge
+              variant={
+                data?.status === "PUBLISHED"
+                  ? "success"
+                  : data?.status === "DRAFT"
+                    ? "secondary"
+                    : "destructive"
+              }
+              title={
+                data?.status === "PUBLISHED"
+                  ? "This post is currently live and visible on internet."
+                  : data?.status === "DRAFT"
+                    ? "This post is not published. May be it needs some improvements."
+                    : "This post has been archived and it is not visible on page. If not restored it will be removed permanently withing 30 days of archiving."
+              }
+            >
+              {data?.status === "PUBLISHED"
+                ? "Live"
+                : data?.status === "DRAFT"
+                  ? "Unpublished"
+                  : "Archived"}
+            </Badge>
             <h3 className="text-lg font-semibold text-gray-800 capitalize">
               {data?.title}
             </h3>
@@ -61,10 +87,47 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
           </div>
           <div className="flex items-baseline flex-shrink-0">
             <div className="flex items-end justify-end gap-2 flex-grow h-full">
+              <Button
+                variant="ghost"
+                size="icon"
+                disabled={updating}
+                title={
+                  data?.status === "PUBLISHED"
+                    ? "Revert to draft"
+                    : "Publish this post."
+                }
+                className="bg-success/10 hover:bg-success text-success hover:text-white ease-linear duration-300"
+                onClick={() =>
+                  update({
+                    status:
+                      data?.status === "PUBLISHED" ? "DRAFT" : "PUBLISHED",
+                  })
+                }
+              >
+                <PaperPlaneIcon />
+              </Button>
               <Button variant="secondary" size="icon" asChild>
                 <Link href={`/articles/${id}`} prefetch>
                   <EditIcon />
                 </Link>
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                disabled={updating}
+                title={
+                  data?.status === "ARCHIVED"
+                    ? "Restore article"
+                    : "Archive article."
+                }
+                className="bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white ease-linear duration-300"
+                onClick={() =>
+                  update({
+                    status: data?.status === "ARCHIVED" ? "DRAFT" : "ARCHIVED",
+                  })
+                }
+              >
+                <ArchiveIcon />
               </Button>
               <Button
                 variant="ghost"

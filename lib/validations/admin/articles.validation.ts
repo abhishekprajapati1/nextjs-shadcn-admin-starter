@@ -11,7 +11,7 @@ export const formSchema = z.object({
   shape_ids: z.array(z.string()).optional(), // Shapes is now optional
   category_ids: z.array(z.string()).optional(), // category is now optional
   product_ids: z.array(z.string()).optional(), // products is now optional
-  status: z.string().refine((value) => {
+  status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]).refine((value) => {
     if (value !== "DRAFT" && value !== "PUBLISHED" && value !== "ARCHIVED") {
       throw new Error("Status must be either DRAFT, PUBLISHED or ARCHIVED");
     }
