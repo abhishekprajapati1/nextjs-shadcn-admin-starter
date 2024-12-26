@@ -78,19 +78,24 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
   const isPending = updating || creating;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log("see this form data here", data);
+    if (id) {
+      update(data);
+    } else {
+      create(data);
+    }
   };
-
-  // console.log("see this", form.formState.isDirty);
 
   React.useEffect(() => {
     if (data) {
       form.reset({
         title: data?.title,
         description: data?.description,
+        content: data?.content,
         seo_title: data?.seo_title,
         shape_ids: data?.shape_ids || [],
         category_ids: data?.category_ids || [],
+        slug: data?.slug,
+        keywords: data?.keywords,
       });
     }
   }, [data, form]);

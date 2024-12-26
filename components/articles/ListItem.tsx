@@ -18,10 +18,13 @@ export interface IArticle extends IRecordMeta {
   title: string;
   seo_title: string;
   description: string;
+  content: string;
   thumbnail: FileType | null;
   thumbnail_alt?: string;
   category_ids?: string[];
   shape_ids?: string[];
+  slug: string;
+  keywords: string[];
 }
 
 interface ListItemProps {
