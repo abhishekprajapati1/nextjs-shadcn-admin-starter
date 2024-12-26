@@ -12,6 +12,7 @@ import { setItemToDelete } from "@/store/articles/data.slice";
 import { capitalizeFirstLetter } from "@/lib/utils";
 import Avatar from "../ui/avatar";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export interface IArticle extends IRecordMeta {
   title: string;
@@ -31,12 +32,6 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
   const { id, ...rest } = data || {};
   const dispatch = useAppDispatch();
   const router = useRouter();
-
-  const handleEdit = () => {
-    dispatch(setItemId(data?.id || ""));
-    dispatch(setData(rest));
-    router.push(`/admin/articles/${id}`);
-  };
 
   if (!data) {
     return <ListItemSkeleton />;
@@ -63,12 +58,10 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
         </div>
         <div className="flex items-baseline flex-grow">
           <div className="flex items-end justify-end gap-2 flex-grow h-full">
-            <Button
-              onClick={() => handleEdit()}
-              variant="secondary"
-              size="icon"
-            >
-              <EditIcon />
+            <Button variant="secondary" size="icon" asChild>
+              <Link href={`/articles/${id}`} prefetch>
+                <EditIcon />
+              </Link>
             </Button>
             <Button
               variant="ghost"

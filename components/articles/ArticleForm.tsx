@@ -53,11 +53,15 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
     mode: "onBlur",
     resolver: zodResolver(formSchema),
   });
+
+  // article data to reset the article form
   const { data } = useFetch<IArticle>({
     endpoint: ENDPOINTS.admin.articles.fetch_single(id),
     enabledKey: id,
     validate: true,
   });
+
+  // shape, categories and product data to craft shapeOption, categoryOption and productOption respectively
   const { data: shapes } = useShapes({ completeFetch: true });
   const { data: categories } = useCategories({ completeFetch: true });
   const shapeOptions = shapes?.map((s) => ({
@@ -68,28 +72,6 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
     value: s.id,
     label: s.title,
   }));
-  const dataValueProps = [
-    {
-      value: "circl",
-      label: "Circle",
-    },
-    {
-      value: "oval",
-      label: "Oval",
-    },
-    {
-      value: "square",
-      label: "Square",
-    },
-    {
-      value: "rectangle",
-      label: "Rectangle",
-    },
-    {
-      value: "trapezoidal",
-      label: "Trapezoidal",
-    },
-  ];
 
   const { mutate: update, isPending: updating } = useUpdate();
   const { mutate: create, isPending: creating } = useCreate();
@@ -119,7 +101,7 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
         className="w-full grid grid-cols-12 gap-6"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <div className="col-span-8 flex flex-col gap-4">
+        <div className="col-span-12 lg:col-span-8 flex flex-col gap-2">
           <FormField
             control={form.control}
             name="thumbnail"
@@ -153,7 +135,7 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
             name="title"
             control={form.control}
             render={({ field }) => (
-              <FormItem className="col-span-8 pt-6">
+              <FormItem>
                 <FormControl>
                   <Textarea
                     placeholder="Enter Blog Title Here..."
@@ -184,7 +166,8 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
             )}
           />
         </div>
-        <div className="col-span-4 bg-white p-5 shadow-md flex flex-col justify-around rounded-lg gap-6">
+
+        <div className="col-span-12 lg:col-span-4 bg-white p-5 shadow-md flex flex-col-reverse lg:flex-col justify-around rounded-lg gap-6">
           <div className="w-full flex gap-2">
             <Button
               type="button"
@@ -203,142 +186,144 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
               />
             </Button>
           </div>
-          <FormField
-            name="seo_title"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-sm text-secondary-foreground/80">
-                  Title (For SEO)
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter here..." {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            name="description"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-sm text-secondary-foreground/80">
-                  Description (SEO Friendly)
-                </FormLabel>
-                <FormControl>
-                  <Textarea
-                    className="h-32 text-xs"
-                    placeholder="Enter description here..."
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            name="slug"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-sm text-secondary-foreground/80">
-                  Slug
-                </FormLabel>
-                <FormControl>
-                  <Textarea placeholder="enter-custom-slug" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="keywords"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-sm text-secondary-foreground/80">
-                  keywords
-                </FormLabel>
-                <FormControl>
-                  <MultiTextInput
-                    id="keyword-input"
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
-                </FormControl>
-                <FormMessage className="text-[10px] text-secondary-foreground/50">
-                  ! Enter comma, for adding keyword!
-                </FormMessage>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="shape_ids"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-sm text-secondary-foreground/80">
-                  Select Shapes
-                </FormLabel>
-                <FormControl>
-                  <MultiSelect
-                    id="shapes-input"
-                    value={field.value}
-                    onChange={field.onChange}
-                    options={shapeOptions || []}
-                  />
-                </FormControl>
-                <FormMessage className="text-[10px] text-secondary-foreground/50">
-                  ! Select shapes once from dropdown!
-                </FormMessage>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="category_ids"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-sm text-secondary-foreground/80">
-                  Select Categories
-                </FormLabel>
-                <FormControl>
-                  <MultiSelect
-                    id="category-input"
-                    value={field.value}
-                    onChange={field.onChange}
-                    options={categoryOptions || []}
-                  />
-                </FormControl>
-                <FormMessage className="text-[10px] text-secondary-foreground/50">
-                  ! Select category once from dropdown!
-                </FormMessage>
-              </FormItem>
-            )}
-          />
-          {/* <FormField
-            control={form.control}
-            name="product_ids"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-sm text-secondary-foreground/80">
-                  Select Products
-                </FormLabel>
-                <FormControl>
-                  <MultiSelect
-                    id="products-input"
-                    value={field.value}
-                    onChange={field.onChange}
-                    options={dataValueProps}
-                  />
-                </FormControl>
-                <FormMessage className="text-[10px] text-secondary-foreground/50">
-                  ! Select products once from dropdown!
-                </FormMessage>
-              </FormItem>
-            )}
-          /> */}
+          <div className="flex-grow flex flex-col gap-8">
+            <FormField
+              name="seo_title"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-secondary-foreground/80">
+                    Title (For SEO)
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter here..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="description"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-secondary-foreground/80">
+                    Description (SEO Friendly)
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea
+                      className="h-32 text-xs"
+                      placeholder="Enter description here..."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="slug"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-secondary-foreground/80">
+                    Slug
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="enter-custom-slug" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="keywords"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-secondary-foreground/80">
+                    keywords
+                  </FormLabel>
+                  <FormControl>
+                    <MultiTextInput
+                      id="keyword-input"
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-[10px] text-secondary-foreground/50">
+                    ! Enter comma, for adding keyword!
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="shape_ids"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-secondary-foreground/80">
+                    Select Shapes
+                  </FormLabel>
+                  <FormControl>
+                    <MultiSelect
+                      id="shapes-input"
+                      value={field.value}
+                      onChange={field.onChange}
+                      options={shapeOptions || []}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-[10px] text-secondary-foreground/50">
+                    ! Select shapes once from dropdown!
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="category_ids"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-secondary-foreground/80">
+                    Select Categories
+                  </FormLabel>
+                  <FormControl>
+                    <MultiSelect
+                      id="category-input"
+                      value={field.value}
+                      onChange={field.onChange}
+                      options={categoryOptions || []}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-[10px] text-secondary-foreground/50">
+                    ! Select category once from dropdown!
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+            {/* <FormField
+              control={form.control}
+              name="product_ids"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-secondary-foreground/80">
+                    Select Products
+                  </FormLabel>
+                  <FormControl>
+                    <MultiSelect
+                      id="products-input"
+                      value={field.value}
+                      onChange={field.onChange}
+                      options={dataValueProps}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-[10px] text-secondary-foreground/50">
+                    ! Select products once from dropdown!
+                  </FormMessage>
+                </FormItem>
+              )}
+            /> */}
+          </div>
         </div>
       </form>
     </Form>
