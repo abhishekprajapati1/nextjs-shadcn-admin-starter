@@ -42,13 +42,12 @@ const MultiSelect: FC<MultiSelectInputProps> = ({
 
   const handleSetValue = (val: string) => {
     let updatedTags: string[];
-    if (tags.includes(val)) {
-      updatedTags = tags.filter((tag) => tag !== val);
-    } else {
+    if (!tags.includes(val)) {
       updatedTags = [...tags, val];
+      setTags(updatedTags);
+      onChange(updatedTags);
     }
-    setTags(updatedTags);
-    onChange(updatedTags);
+    setOpen(false);
   };
 
   const handleTagRemove = (tagToRemove: string) => {
@@ -103,7 +102,7 @@ const MultiSelect: FC<MultiSelectInputProps> = ({
                   id={id}
                   key={option.value}
                   value={option.value}
-                  onSelect={() => handleSetValue(option.value)}
+                  onSelect={() => handleSetValue(option.value || "")}
                 >
                   {option.label}
                 </CommandItem>
