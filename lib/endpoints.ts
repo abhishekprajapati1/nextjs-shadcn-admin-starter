@@ -4,6 +4,13 @@ const ENDPOINTS = {
     LOGOUT: "auth/logout",
   },
   admin: {
+    products: {
+      fetch_all: (queryString?: string) =>
+        `products${queryString ? "?" + queryString : ""}`,
+      create: "products",
+      update: (id: string) => `products/${id}`,
+      delete: (id: string) => `products/${id}`,
+    },
     articles: {
       fetch_all: (queryString?: string) =>
         `articles${queryString ? "?" + queryString : ""}`,
@@ -75,38 +82,6 @@ const ENDPOINTS = {
       update: (id: string) => `colors/${id}`,
       delete: (id: string) => `colors/${id}`,
     },
-  },
-  OWNERS: {
-    GET_ALL: (filter: string) =>
-      `owners${filter !== "all" ? "?status=" + filter : ""}`,
-    VERIFY_ACCOUNT: (owner_id: string) =>
-      `owners/verify-account?owner_id=${owner_id}`,
-  },
-  FST: {
-    TASK_ICONS: {
-      GET_ALL: "manage/task-icons",
-      CREATE: "manage/task-icons",
-      UPDATE: (icon_id: string) => `manage/task-icons/${icon_id}`,
-      DELETE: (icon_id: string) => `manage/task-icons/${icon_id}`,
-    },
-  },
-  WHS: {
-    INJURY_TYPES: "manage/injury-types",
-    MUTATE_INJURY_TYPES: (id: string) => `manage/injury-types/${id}`,
-    INJURY_LEVELS: "manage/injury-levels",
-    MUTATE_INJURY_LEVELS: (id: string) => `manage/injury-levels/${id}`,
-    INCIDENT_TYPES: "manage/incident-types",
-    MUTATE_INCIDENT_TYPES: (id: string) => `manage/incident-types/${id}`,
-    INCIDENT_LEVELS: "manage/incident-levels",
-    MUTATE_INCIDENT_LEVELS: (id: string) => `manage/incident-levels/${id}`,
-    DAMAGE_TYPES: "manage/damage-types",
-    MUTATE_DAMAGE_TYPES: (id: string) => `manage/damage-types/${id}`,
-    DAMAGE_LEVELS: "manage/damage-levels",
-    MUTATE_DAMAGE_LEVELS: (id: string) => `manage/damage-levels/${id}`,
-    WITNESS_TYPES: "manage/witness-types",
-    MUTATE_WITNESS_TYPES: (id: string) => `manage/witness-types/${id}`,
-    REGIONS: "manage/regions",
-    MUTATE_REGIONS: (id: string) => `manage/regions/${id}`,
   },
 };
 

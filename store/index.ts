@@ -4,7 +4,7 @@ import userStore from "./slices/users.slice";
 import typeStore from "./slices/types.slice";
 import powerTypeStore from "./power-types";
 import placeOrderStore from "./placed-order";
-import productDetailStore from "./product-detail";
+import productStore from "./products";
 import lensFeatureStore from "./lens-features";
 import lensDetailStore from "./lens-details";
 import frameMaterialStore from "./frame-materials";
@@ -23,7 +23,7 @@ const store = configureStore({
     lensDetailStore,
     powerTypeStore,
     placeOrderStore,
-    productDetailStore,
+    productStore,
     frameMaterialStore,
     brandStore,
     colorStore,

@@ -5,11 +5,9 @@ import Header from "@/components/shapes/header";
 import List from "@/components/shapes/List";
 import PageWrapper from "@/components/wrappers/PageWrapper";
 
-
-const page=()=>
-{
-    return(
-<div className="flex flex-col h-full overflow-auto">
+const page = () => {
+  return (
+    <div className="flex flex-col h-full overflow-auto">
       <DeleteModal />
       <EditModal />
       <AddModal />
@@ -18,6 +16,6 @@ const page=()=>
         <List />
       </PageWrapper>
     </div>
-    )
-}
+  );
+};
 export default page;

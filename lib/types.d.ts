@@ -55,3 +55,8 @@ export interface IFormOption {
   myob_key?: string;
   _count: { [key: string]: number };
 }
+export enum Gender {
+  MALE = "MALE",
+  FEMALE = "FEMALE",
+  OTHER = "OTHER",
+}

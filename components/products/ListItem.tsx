@@ -11,13 +11,13 @@ import { setData } from "@/store/coupon-manager/form.slice";
 import { setItemId } from "@/store/coupon-manager/form.slice";
 import { setItemToDelete } from "@/store/coupon-manager/data.slice";
 import { z } from "zod";
-import { formSchema } from "@/lib/validations/admin/coupon-manager.validation";
+import { formSchema } from "@/lib/validations/admin/product.validation";
 import dayjs from "@/lib/dayjs";
 
-export interface ICoupon extends IRecordMeta, z.infer<typeof formSchema> {}
+export interface IProduct extends IRecordMeta, z.infer<typeof formSchema> {}
 
 interface ListItemProps {
-  data?: ICoupon;
+  data?: IProduct;
 }
 
 const ListItem: React.FC<ListItemProps> = ({ data }) => {
@@ -25,20 +25,9 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
 
   const handleEditClick = () => {
     dispatch(setItemId(data?.id || ""));
-    dispatch(
-      setData({
-        name: data?.name,
-        discount_type: data?.discount_type,
-        discount_value: data?.discount_value,
-        minimum_order: data?.minimum_order,
-        per_user_limit: data?.per_user_limit,
-        quantity: data?.quantity,
-        valid_from: data?.valid_from,
-        valid_till: data?.valid_till,
-      }),
-    );
+    dispatch(setData({}));
   };
-
+  console.log("see this", data);
   if (!data) {
     return <ListItemSkeleton />;
   }
@@ -46,29 +35,25 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
   return (
     <tr>
       <td className="uppercase">
-        <div>{data?.name}</div>
+        <div>{data?.model_name}</div>
       </td>
       <td>
-        <div className="justify-center">₹{data?.minimum_order}</div>
+        <div className="justify-center">{data?.model_number}</div>
       </td>
       <td>
-        <div className="justify-center">
-          {data?.discount_type === "FIXED" && "₹"}
-          {data?.discount_value || 0}
-          {data?.discount_type === "PERCENT" && "%"}
-        </div>
+        <div className="justify-center">{data?.gender}</div>
       </td>
       <td>
-        <div className="justify-center">{data?.quantity}</div>
+        <div className="justify-center">{data?.stock_quantity}</div>
       </td>
       <td>
-        <div className="justify-center">{data?.per_user_limit}</div>
+        <div className="justify-center">₹{data?.listing_price}</div>
       </td>
       <td>
-        <div>{dayjs(data?.valid_from).format("MMM DD, YYYY")}</div>
+        <div className="justify-center">₹{data?.price}</div>
       </td>
       <td>
-        <div>{dayjs(data?.valid_till).format("MMM DD, YYYY")}</div>
+        <div>{dayjs(data?.created_at).format("MMM DD, YYYY")}</div>
       </td>
       <td>
         <div className="flex items-center gap-2">
@@ -86,7 +71,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
               dispatch(
                 setItemToDelete({
                   id: data?.id || "",
-                  label: data.name || "",
+                  label: data.model_name || "",
                 }),
               )
             }

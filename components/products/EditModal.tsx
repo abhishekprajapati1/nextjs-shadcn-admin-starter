@@ -10,24 +10,24 @@ import Modal from "@/components/ui/modal";
 import React from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import {showEditProductDeatail} from "@/store/product-detail/modal.slice";
 import { useAppDispatch, useAppSelector } from "@/store";
+import { setItemId } from "@/store/products/form.slice";
 
-const EditPlaceOrderModel:React.FC=()=>
-{
-const dispatch=useAppDispatch();
-const edit_modal=useAppSelector((store)=> store.productDetailStore.modalStore.edit_modal);
-
+const EditModal: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const item_id = useAppSelector(
+    (store) => store.productStore.formStore?.item_id,
+  );
 
   return (
     <Modal
-    open={edit_modal}
-    onOpenChange={(val) => dispatch(showEditProductDeatail(val))}
+      open={Boolean(item_id)}
+      onOpenChange={(val) => dispatch(setItemId(val ? item_id : ""))}
     >
-<DialogHeader>
-        <DialogTitle>Edit profile</DialogTitle>
+      <DialogHeader>
+        <DialogTitle>Edit Product Details</DialogTitle>
         <DialogDescription>
-          Make changes to your profile here. Click save when you're done.
+          Make changes to product here. Click save when you're done.
         </DialogDescription>
       </DialogHeader>
       <div className="grid gap-4 py-4">
@@ -51,9 +51,8 @@ const edit_modal=useAppSelector((store)=> store.productDetailStore.modalStore.ed
       <DialogFooter>
         <Button type="submit">Save changes</Button>
       </DialogFooter>
-
     </Modal>
   );
 };
 
-export default EditPlaceOrderModel;
+export default EditModal;
