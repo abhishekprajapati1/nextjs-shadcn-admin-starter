@@ -10,7 +10,7 @@ import { Skeleton } from "../ui/skeleton";
 import { setData, setItemId } from "@/store/shapes/form.slice";
 import { setItemToDelete } from "@/store/shapes/data.slice";
 import { capitalizeFirstLetter } from "@/lib/utils";
-import Avatar from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export interface IShape extends IRecordMeta {
   title: string;
@@ -34,12 +34,12 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
     <Card>
       <CardContent className="pt-6 h-full flex flex-col gap-2">
         <div className="flex flex-col gap-2">
-          <Avatar
-            className="rounded-md w-full min-h-52"
-            src={data?.image?.url}
-            alt="Image for power type"
-            fallback={data?.title?.charAt(0)?.toUpperCase()}
-          />
+          <Avatar className="w-8 h-8 rounded-lg">
+            <AvatarImage src={data?.image?.url} alt={data?.title} />
+            <AvatarFallback>
+              {data?.title?.charAt(0)?.toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
           <div className="flex-grow">
             <h3 className="text-lg font-semibold text-gray-800 capitalize">
               {data?.title}

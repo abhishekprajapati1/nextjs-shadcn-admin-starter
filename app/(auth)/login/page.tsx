@@ -1,125 +1,153 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { LoginForm } from "@/components/auth/LoginForm";
+import AuthHeader from "@/components/navigation/AuthHeader";
+import Footer from "@/components/navigation/Footer";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { loginSchema } from "@/lib/validations/login.validation";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import useLogin from "@/lib/mutations/auth/login/useLogin";
-import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/lib/utils";
-import SpinnerIcon from "@/components/icons/SpinnerIcon";
+  Shield,
+  TagIcon,
+  Truck,
+  HeartHandshake,
+  LucideIcon,
+  Glasses,
+  ShieldCheck,
+  RotateCcw,
+  BadgeCheck,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
-const LoginPage = () => {
-  const { mutate, isPending } = useLogin();
-
-  const form = useForm<z.infer<typeof loginSchema>>({
-    mode: "all",
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-    resolver: zodResolver(loginSchema),
-  });
-
-  const onSubmit = (data: z.infer<typeof loginSchema>) => {
-    mutate(data);
-  };
-
+export default function LoginPage() {
   return (
-    <div
-      className={cn(
-        "w-full h-full grid place-content-center",
-        isPending && "pointer-events-none",
-      )}
-    >
-      <Card>
-        <CardHeader>Howdy! Admin</CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form
-              className="flex flex-col gap-6"
-              onSubmit={form.handleSubmit(onSubmit)}
-            >
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="e.g john.doe@example.com"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+    <div className="min-h-screen bg-gradient-to-b from-background to-secondary">
+      {/* Navigation */}
+      <AuthHeader>
+        <Link
+          href="/signup"
+          className="text-sm text-muted-foreground hover:text-primary"
+        >
+          Don't have an account?
+        </Link>
+      </AuthHeader>
 
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter password here..."
-                        type="password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+      <main className="container mx-auto px-4 py-8">
+        <div className="grid gap-8 lg:grid-cols-2">
+          {/* Left side - Content */}
+          <div className="flex flex-col justify-center">
+            <div className="mb-8">
+              <h1 className="text-4xl font-bold tracking-tight mb-4">
+                Welcome Back to Akku Ka Chasma
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                Access your wholesale eyewear dashboard and manage your business
+                efficiently.
+              </p>
+            </div>
 
-              <FormField
-                control={form.control}
-                name="remember_me"
-                render={({ field: { value, onChange } }) => {
-                  return (
-                    <FormItem>
-                      <FormControl>
-                        <Checkbox checked={value} onCheckedChange={onChange} />
-                      </FormControl>
-                      <FormLabel className="ms-2">Remember me</FormLabel>
-                      <FormMessage />
-                    </FormItem>
-                  );
-                }}
+            {/* Benefits Grid */}
+            <div className="grid gap-6 sm:grid-cols-2">
+              <BenefitCard
+                icon={Shield}
+                title="Secure Access"
+                description="Your business data is protected with enterprise-grade security"
               />
+              <BenefitCard
+                icon={Truck}
+                title="Order Tracking"
+                description="Track all your shipments and inventory in real-time"
+              />
+              <BenefitCard
+                icon={HeartHandshake}
+                title="Dedicated Support"
+                description="24/7 support for all your business needs"
+              />
+              <BenefitCard
+                icon={TagIcon}
+                title="Special Prices"
+                description="Access wholesale prices and bulk discounts"
+              />
+            </div>
 
-              <Button
-                className={cn("gap-2", isPending && "pointer-events-none")}
-                type={isPending ? "button" : "submit"}
-                disabled={isPending}
-              >
-                {isPending && (
-                  <>
-                    <SpinnerIcon /> Logging in...
-                  </>
-                )}
-                {!isPending && <>Login</>}
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
+            {/* Trust Banner */}
+            <div className="mt-12 p-6 bg-accent/50 rounded-lg">
+              <div className="text-center">
+                <p className="text-sm font-medium mb-4">
+                  Trusted by Leading Retailers Across India
+                </p>
+                <div className="flex justify-center space-x-8">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">2000+</div>
+                    <div className="text-sm text-muted-foreground">
+                      Active Retailers
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">50+</div>
+                    <div className="text-sm text-muted-foreground">
+                      Brand Partners
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">4.8/5</div>
+                    <div className="text-sm text-muted-foreground">
+                      Customer Rating
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right side - Login Form */}
+          <div className="lg:pl-8">
+            <LoginForm />
+            {/* Trust Indicators */}
+            <div className="mt-8 pt-6 border-t">
+              <div className="flex justify-center items-center space-x-8">
+                <div className="flex items-center space-x-2">
+                  <ShieldCheck className="h-4 w-4 text-primary" />
+                  <div className="text-xs">
+                    <span className="font-medium">100% Secure</span> Payment
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Truck className="h-4 w-4 text-primary" />
+                  <div className="text-xs">
+                    <span className="font-medium">Free Shipping</span> Above
+                    ₹999
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RotateCcw className="h-4 w-4 text-primary" />
+                  <div className="text-xs">
+                    <span className="font-medium">Easy Returns</span> Policy
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+// Benefit Card Component
+interface BenefitCardProps {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
+
+const BenefitCard: React.FC<BenefitCardProps> = ({
+  icon: Icon,
+  title,
+  description,
+}) => {
+  return (
+    <div className="group rounded-lg border bg-card p-6 shadow-sm transition-colors hover:bg-accent">
+      <Icon className="h-8 w-8 text-primary mb-4" />
+      <h3 className="font-semibold mb-2">{title}</h3>
+      <p className="text-sm text-muted-foreground">{description}</p>
     </div>
   );
 };
-
-export default LoginPage;

@@ -1,13 +1,25 @@
 import { PATTERNS } from "@/lib/constants";
-import { Gender } from "@/lib/types";
+import { InputOption } from "@/lib/types";
 import { z } from "zod";
 
 // Helper for MongoDB ObjectId validation
 const isValidObjectId = (value: string) => PATTERNS.mongo_id.test(value);
+
 export enum FrameStyle {
   FULL_FRAME = "FULL_FRAME",
   HALF_FRAME = "HALF_FRAME",
   RIMLESS = "RIMLESS",
+}
+export const frameStyles: InputOption[] = [
+  { label: "Full Frame", value: FrameStyle.FULL_FRAME },
+  { label: "Half Frame", value: FrameStyle.HALF_FRAME },
+  { label: "Rimless", value: FrameStyle.RIMLESS },
+];
+
+export enum Gender {
+  MALE = "MALE",
+  FEMALE = "FEMALE",
+  OTHER = "OTHER",
 }
 
 export enum FrameSize {
@@ -17,13 +29,21 @@ export enum FrameSize {
   WIDE = "WIDE",
   EXTRA_WIDE = "EXTRA_WIDE",
 }
+export const frameSizes: InputOption[] = [
+  { label: "Extra Narrow", value: FrameSize.EXTRA_NARROW },
+  { label: "Extra Wide", value: FrameSize.EXTRA_WIDE },
+  { label: "Medium", value: FrameSize.MEDIUM },
+  { label: "Narrow", value: FrameSize.NARROW },
+  { label: "Wide", value: FrameSize.WIDE },
+];
+
 export const formSchema = z.object({
   seo_title: z.string(),
   description: z.string(),
   tags: z.array(z.string()),
   model_name: z.string(),
   model_number: z.number().int().positive(),
-  gender: z.nativeEnum(Gender),
+  gender: z.enum([Gender.MALE, Gender.FEMALE, Gender.OTHER]),
 
   stock_quantity: z.number().int().min(0),
 

@@ -6,7 +6,7 @@ import { useAppDispatch } from "@/store";
 import { FileType, IRecordMeta } from "@/lib/types";
 import { setLensDetailToDelete } from "@/store/lens-details/data.slice";
 import { Skeleton } from "../ui/skeleton";
-import Avatar from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { setData, setLensDetailId } from "@/store/lens-details/form.slice";
 import { Badge } from "../ui/badge";
 import LensDetailsIcon from "../icons/LensDetailsIcon";
@@ -84,13 +84,12 @@ const LensDeatail: React.FC<LensDetailProps> = ({ data }) => {
       <CardContent className="pt-6 h-full flex flex-col gap-2">
         <div className="flex flex-col gap-2">
           <div className="flex items-start justify-between">
-            <Avatar
-              size="6xl"
-              className="rounded-md"
-              src={data?.image?.url}
-              alt="Image for lens feature"
-              fallback={data?.title?.charAt(0)?.toUpperCase()}
-            />
+            <Avatar className="w-8 h-8 rounded-lg">
+              <AvatarImage src={data?.image?.url} alt={data?.title} />
+              <AvatarFallback>
+                {data?.title?.charAt(0)?.toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
             <div className="">
               <span className="text-2xl font-bold text-success">
                 ₹ {data?.price}

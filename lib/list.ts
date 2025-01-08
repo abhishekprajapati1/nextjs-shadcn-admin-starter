@@ -18,6 +18,8 @@ import ProductIcon from "@/components/icons/ProductIcon";
 import ShapeIcon from "@/components/icons/ShapeIcon";
 import TryIcon from "@/components/icons/TryIcon";
 import UsersIcon from "@/components/icons/UsersIcon";
+import { ISidebarBrand, IUser, MenuItem } from "./types";
+import { Glasses } from "lucide-react";
 
 export const sidebar_menus: IMenuLink[] = [
   {
@@ -135,3 +137,20 @@ export const sidebar_menus: IMenuLink[] = [
     href: "/enquiries",
   },
 ];
+
+export const sidebarData: {
+  user: IUser | null;
+  brand: ISidebarBrand;
+  menus: MenuItem[];
+} = {
+  user: null,
+  brand: {
+    name: "Trackor",
+    logo: Glasses,
+    website: {
+      url: "https://abhishekprajapati1.com/",
+      label: "abhishekprajapati1.com",
+    },
+  },
+  menus: [],
+};

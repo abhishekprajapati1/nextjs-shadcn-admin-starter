@@ -10,7 +10,7 @@ import { Skeleton } from "../ui/skeleton";
 import { setData, setItemId } from "@/store/articles/form.slice";
 import { setItemToDelete } from "@/store/articles/data.slice";
 import { capitalizeFirstLetter } from "@/lib/utils";
-import Avatar from "../ui/avatar";
+import {Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Badge } from "../ui/badge";
@@ -48,12 +48,12 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
   return (
     <Card className="overflow-hidden">
       <CardContent className="!p-0 h-full flex flex-col">
-        <Avatar
-          className="rounded-none w-full min-h-52 flex-shrink-0"
-          src={data?.thumbnail?.url}
-          alt="Image for power type"
-          fallback={data?.title?.charAt(0)?.toUpperCase()}
-        />
+        <Avatar className="rounded-none w-full min-h-52 flex-shrink-0">
+          <AvatarImage src={data?.thumbnail?.url} alt={"Image for power type"} />
+          <AvatarFallback>
+            {data.title?.charAt(0)?.toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
         <div className="flex-grow px-4 pb-4 pt-2 flex flex-col">
           <div className="flex-grow">
             <Badge

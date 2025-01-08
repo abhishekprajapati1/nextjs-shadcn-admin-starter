@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import ENDPOINTS from "@/lib/endpoints";
 import { RequestError, getApiClient, getErrorMessage } from "@/lib/api";
 import { z } from "zod";
-import { loginSchema } from "@/lib/validations/login.validation";
+import { loginSchema } from "@/lib/validations/auth.validation";
 import { toast } from "@/lib/hooks/use-toast";
 
 const useLogin = (ret?: string) => {

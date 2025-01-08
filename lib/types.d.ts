@@ -1,9 +1,24 @@
+import { LucideProps } from "lucide-react";
 import * as React from "react";
 
 export interface IRecordMeta {
   id?: string;
   created_at?: string;
   updated_at?: string;
+}
+
+
+export interface IFile {
+  id?: string;
+  url?: string;
+  fieldname?: string;
+}
+
+
+export interface IUser {
+  name: string;
+  email: string;
+  avatar?: IFile;
 }
 
 export interface ISearchTerm {
@@ -55,8 +70,27 @@ export interface IFormOption {
   myob_key?: string;
   _count: { [key: string]: number };
 }
-export enum Gender {
-  MALE = "MALE",
-  FEMALE = "FEMALE",
-  OTHER = "OTHER",
+
+export interface ISidebarBrand {
+  name: string;
+  logo: React.ElementType;
+  website: {
+    url: string;
+    label: string;
+  };
+}
+
+export interface SubMenuItem {
+  title: string;
+  url: string;
+  isActive?: boolean;
+}
+export interface MenuItem {
+  title: string;
+  url: string;
+  icon: React.ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+  >;
+  isActive?: boolean;
+  items?: SubMenuItem[];
 }

@@ -6,7 +6,7 @@ import { useAppDispatch } from "@/store";
 import { FileType, IRecordMeta } from "@/lib/types";
 import { setLensFeatureToDelete } from "@/store/lens-features/data.slice";
 import { Skeleton } from "../ui/skeleton";
-import Avatar from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { capitalizeFirstLetter } from "@/lib/utils";
 import { setData, setLensFeatureId } from "@/store/lens-features/form.slice";
 export interface ILensFeature extends IRecordMeta {
@@ -30,13 +30,12 @@ const LensFeature: React.FC<LensFeatureProps> = ({ data }) => {
     <Card>
       <CardContent className="pt-6 h-full flex flex-col gap-2">
         <div className="flex flex-col gap-2">
-          <Avatar
-            size="6xl"
-            className="rounded-md"
-            src={data?.image?.url}
-            alt="Image for lens feature"
-            fallback={data?.title?.charAt(0)?.toUpperCase()}
-          />
+          <Avatar className="w-8 h-8 rounded-lg">
+            <AvatarImage src={data?.image?.url} alt={data?.title} />
+            <AvatarFallback>
+              {data?.title?.charAt(0)?.toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
           <div className="flex-grow">
             <h3 className="text-lg font-semibold text-gray-800 capitalize">
               {data?.title}

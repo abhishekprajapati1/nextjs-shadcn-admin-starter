@@ -7,7 +7,7 @@ import { Card, CardContent } from "../ui/card";
 import { useAppDispatch } from "@/store";
 import { FileType, IRecordMeta } from "@/lib/types";
 import { Skeleton } from "../ui/skeleton";
-import Avatar from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { capitalizeFirstLetter } from "@/lib/utils";
 import { setData, setPowerTypeId } from "@/store/power-types/form.slice";
 import { setPowerTypeToDelete } from "@/store/power-types/data.slice";
@@ -33,13 +33,12 @@ const PowerType: React.FC<PowerTypeProps> = ({ data }) => {
     <Card>
       <CardContent className="pt-6 h-full flex flex-col gap-2">
         <div className="flex flex-col gap-2">
-          <Avatar
-            size="6xl"
-            className="rounded-md"
-            src={data?.image?.url}
-            alt="Image for power type"
-            fallback={data?.title?.charAt(0)?.toUpperCase()}
-          />
+          <Avatar className="w-8 h-8 rounded-lg">
+            <AvatarImage src={data?.image?.url} alt={data?.title} />
+            <AvatarFallback>
+              {data?.title?.charAt(0)?.toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
           <div className="flex-grow">
             <h3 className="text-lg font-semibold text-gray-800 capitalize">
               {data?.title}
