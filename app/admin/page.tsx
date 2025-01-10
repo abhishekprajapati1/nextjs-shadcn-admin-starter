@@ -1,10 +1,11 @@
 import Header from "@/components/dashboard/header";
+import AdminPage from "@/components/navigation/admin/AdminPage";
 
 export default function Home() {
   return (
-    <main>
+    <AdminPage>
       <Header />
       dashboard
-    </main>
+    </AdminPage>
   );
 }

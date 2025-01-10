@@ -6,6 +6,7 @@ import {
   ChevronsUpDown,
   CreditCard,
   LogOut,
+  LogOutIcon,
   Sparkles,
 } from "lucide-react";
 import {
@@ -25,6 +26,7 @@ import {
 } from "@/components/ui/sidebar";
 import { IUser } from "@/lib/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import LogoutIcon from "@/components/icons/LogoutIcon";
 
 export function NavUser({ user }: { user: IUser | null }) {
   const { isMobile } = useSidebar();
@@ -78,28 +80,17 @@ export function NavUser({ user }: { user: IUser | null }) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
+                <BadgeCheck className="size-5 mr-2" />
                 Account
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
+                <Bell className="size-5 mr-2" />
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <LogOut />
+              <LogoutIcon className="size-5 mr-2" />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>

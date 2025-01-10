@@ -1,19 +1,21 @@
 import { LucideProps } from "lucide-react";
 import * as React from "react";
 
+export type IconElement = React.ForwardRefExoticComponent<
+  Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+>;
+
 export interface IRecordMeta {
   id?: string;
   created_at?: string;
   updated_at?: string;
 }
 
-
 export interface IFile {
   id?: string;
   url?: string;
   fieldname?: string;
 }
-
 
 export interface IUser {
   name: string;
@@ -81,6 +83,7 @@ export interface ISidebarBrand {
 }
 
 export interface SubMenuItem {
+  icon?: IconElement;
   title: string;
   url: string;
   isActive?: boolean;
@@ -88,9 +91,7 @@ export interface SubMenuItem {
 export interface MenuItem {
   title: string;
   url: string;
-  icon: React.ForwardRefExoticComponent<
-    Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
-  >;
+  icon: IconElement;
   isActive?: boolean;
   items?: SubMenuItem[];
 }

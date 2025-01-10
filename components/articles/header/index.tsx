@@ -7,16 +7,13 @@ import { showModal } from "@/store/shapes/form.slice";
 import { useAppSelector } from "@/store";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import HeaderWrapper from "@/components/navigation/admin/HeaderWrapper";
 
 const Header = () => {
   const total = useAppSelector((store) => store.articleStore.dataStore.total);
 
   return (
-    <PageHeader
-      title="Articles"
-      tagline={`${total} items`}
-      className="flex-shrink-0"
-    >
+    <HeaderWrapper title="Articles" tagline={`${total} items`}>
       <div className={cn("flex items-center gap-1")}>
         <Button className="gap-2" asChild>
           <Link href="/articles/new">
@@ -25,7 +22,7 @@ const Header = () => {
           </Link>
         </Button>
       </div>
-    </PageHeader>
+    </HeaderWrapper>
   );
 };
 

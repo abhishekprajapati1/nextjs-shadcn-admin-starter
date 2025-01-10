@@ -1,17 +1,18 @@
 import DeleteModal from "@/components/articles/DeleteModal";
 import Header from "@/components/articles/header";
 import List from "@/components/articles/List";
+import AdminPage from "@/components/navigation/admin/AdminPage";
 import PageWrapper from "@/components/wrappers/PageWrapper";
 
 const page = () => {
   return (
-    <div className="flex flex-col h-full overflow-auto">
+    <AdminPage>
       <DeleteModal />
       <Header />
       <PageWrapper>
         <List />
       </PageWrapper>
-    </div>
+    </AdminPage>
   );
 };
 export default page;

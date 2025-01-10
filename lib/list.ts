@@ -1,4 +1,3 @@
-import { IMenuLink } from "@/app/(protected)/Nav";
 import BannerManagerIcon from "@/components/icons/BannerManagerIcon";
 import BlogIcon from "@/components/icons/BlogIcon";
 import BrandIcon from "@/components/icons/BrandIcon";
@@ -19,124 +18,32 @@ import ShapeIcon from "@/components/icons/ShapeIcon";
 import TryIcon from "@/components/icons/TryIcon";
 import UsersIcon from "@/components/icons/UsersIcon";
 import { ISidebarBrand, IUser, MenuItem } from "./types";
-import { Glasses } from "lucide-react";
-
-export const sidebar_menus: IMenuLink[] = [
-  {
-    icon: DashboardIcon,
-    title: "Dashboard",
-    variant: "ghost",
-    href: "/",
-  },
-  {
-    icon: OrderIcon,
-    title: "Orders",
-    variant: "ghost",
-    href: "/orders",
-  },
-  {
-    icon: ProductIcon,
-    title: "Products",
-    variant: "ghost",
-    href: "/products",
-  },
-  {
-    icon: PowerType,
-    title: "Power Types",
-    variant: "ghost",
-    href: "/power-types",
-  },
-  {
-    icon: LensFeatureIcon,
-    title: "Lens Feature",
-    variant: "ghost",
-    href: "/lens-features",
-  },
-  {
-    icon: LensDetailsIcon,
-    title: "Lens  Details",
-    variant: "ghost",
-    href: "/lens-details",
-  },
-  {
-    icon: FramematerialIconIcon,
-    title: "Frame Matarials",
-    variant: "ghost",
-    href: "/frame-materials",
-  },
-  {
-    icon: BrandIcon,
-    title: "Brands",
-    variant: "ghost",
-    href: "/brands",
-  },
-  {
-    icon: ShapeIcon,
-    title: "Shapes",
-    variant: "ghost",
-    href: "/shapes",
-  },
-  {
-    icon: CategoriesIcon,
-    title: "Categories",
-    variant: "ghost",
-    href: "/categories",
-  },
-  {
-    icon: ColorsIcon,
-    title: "Colors",
-    variant: "ghost",
-    href: "/colors",
-  },
-  {
-    icon: CouponManagIcon,
-    title: "Coupon Manager",
-    variant: "ghost",
-    href: "/coupon-manager",
-  },
-  {
-    icon: BlogIcon,
-    title: "Articles",
-    variant: "ghost",
-    href: "/articles",
-  },
-  {
-    icon: NewslettersIcon,
-    title: "Received Newsletters",
-    variant: "ghost",
-    href: "/received-newsletters",
-  },
-  {
-    icon: BannerManagerIcon,
-    title: "Banner Manager",
-    variant: "ghost",
-    href: "/banner-manager",
-  },
-  {
-    icon: UsersIcon,
-    title: "Users",
-    variant: "ghost",
-    href: "/users",
-  },
-  {
-    icon: TryIcon,
-    title: "Try At Home",
-    variant: "ghost",
-    href: "/try-at-home",
-  },
-  {
-    icon: FranchisesIcon,
-    title: "Franchises",
-    variant: "ghost",
-    href: "/franchises",
-  },
-  {
-    icon: EnquiriesIcon,
-    title: "Enquiries",
-    variant: "ghost",
-    href: "/enquiries",
-  },
-];
+import {
+  Box,
+  Diamond,
+  Eye,
+  GalleryVerticalEnd,
+  Glasses,
+  Handshake,
+  HashIcon,
+  Headset,
+  LayoutDashboard,
+  LucideDiamond,
+  MapPin,
+  MapPinHouse,
+  Newspaper,
+  Palette,
+  Rss,
+  ScanText,
+  Shapes,
+  ShoppingCart,
+  Skull,
+  SquareStack,
+  SunMedium,
+  Tag,
+  UsersRound,
+  View,
+} from "lucide-react";
 
 export const sidebarData: {
   user: IUser | null;
@@ -145,12 +52,108 @@ export const sidebarData: {
 } = {
   user: null,
   brand: {
-    name: "Trackor",
+    name: "Akku Ka Chasma",
     logo: Glasses,
     website: {
-      url: "https://abhishekprajapati1.com/",
-      label: "abhishekprajapati1.com",
+      url: "https://akkukachasma.com/",
+      label: "visit website",
     },
   },
-  menus: [],
+  menus: [
+    {
+      icon: LayoutDashboard,
+      title: "Dashboard",
+      url: "/admin",
+    },
+    {
+      icon: Box,
+      title: "Orders",
+      url: "/admin/orders",
+    },
+    {
+      icon: ShoppingCart,
+      title: "Products",
+      url: "/admin/products",
+    },
+    {
+      icon: SunMedium,
+      title: "Power Types",
+      url: "/admin/power-types",
+    },
+    {
+      icon: View,
+      title: "Lense Features",
+      url: "/admin/lens-features",
+    },
+    {
+      icon: ScanText,
+      title: "Lens Details",
+      url: "/admin/lens-details",
+    },
+    {
+      icon: Shapes,
+      title: "Frame Matarials",
+      url: "/admin/frame-materials",
+    },
+    {
+      icon: Diamond,
+      title: "Brands",
+      url: "/admin/brands",
+    },
+    {
+      icon: Skull,
+      title: "Shapes",
+      url: "/admin/shapes",
+    },
+    {
+      icon: SquareStack,
+      title: "Categories",
+      url: "/admin/categories",
+    },
+    {
+      icon: Palette,
+      title: "Colors",
+      url: "/admin/colors",
+    },
+    {
+      icon: Tag,
+      title: "Coupon Manager",
+      url: "/admin/coupon-manager",
+    },
+    {
+      icon: Rss,
+      title: "Articles",
+      url: "/admin/articles",
+    },
+    {
+      icon: Newspaper,
+      title: "Newsletters",
+      url: "/admin/received-newsletters",
+    },
+    {
+      icon: GalleryVerticalEnd,
+      title: "Banner Manager",
+      url: "/admin/banner-manager",
+    },
+    {
+      icon: UsersRound,
+      title: "Users",
+      url: "/admin/users",
+    },
+    {
+      icon: MapPinHouse,
+      title: "Try At Home",
+      url: "/admin/try-at-home",
+    },
+    {
+      icon: Handshake,
+      title: "Franchises",
+      url: "/admin/franchises",
+    },
+    {
+      icon: Headset,
+      title: "Enquiries",
+      url: "/admin/enquiries",
+    },
+  ],
 };

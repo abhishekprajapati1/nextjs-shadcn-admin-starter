@@ -18,11 +18,11 @@ export const useSidebarData = (): ISidebarData => {
       : completePath;
 
   const hydratedMenus = React.useMemo(() => {
-    return data.menus.map((menu) => {
+    return sidebarData.menus.map((menu) => {
       menu.isActive =
-        pathname !== "/"
+        pathname !== "/admin"
           ? menu.url === pathname ||
-            (pathname.startsWith(menu.url) && menu.url !== "/")
+            (pathname.startsWith(menu.url) && menu.url !== "/admin")
           : menu.url === pathname;
       if (Array.isArray(menu.items)) {
         menu.items = menu.items.map((item) => {
@@ -32,27 +32,27 @@ export const useSidebarData = (): ISidebarData => {
       }
       return menu;
     });
-  }, [pathname, data.menus]);
+  }, [pathname]);
 
   React.useEffect(() => {
-    setData({
+    setData((data) => ({
       ...data,
       menus: hydratedMenus,
-    });
-  }, [hydratedMenus, data]);
+    }));
+  }, [hydratedMenus]);
 
   React.useEffect(() => {
-    setData({
+    setData((data) => ({
       ...data,
       user: {
-        name: "shadcn",
-        email: "m@example.com",
+        name: "Admin",
+        email: "admin@akkukachasma.com",
         avatar: {
           url: "/avatars/shadcn.jpg",
         },
       },
-    });
-  }, [data]);
+    }));
+  }, []);
 
   return data;
 };

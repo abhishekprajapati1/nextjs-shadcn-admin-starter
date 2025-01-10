@@ -7,7 +7,6 @@ import { Card, CardContent } from "../ui/card";
 import { useAppDispatch } from "@/store";
 import { IRecordMeta } from "@/lib/types";
 import { Skeleton } from "../ui/skeleton";
-import Avatar from "../ui/avatar";
 import { capitalizeFirstLetter } from "@/lib/utils";
 import { setData } from "@/store/frame-materials/form.slice";
 

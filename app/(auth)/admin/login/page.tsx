@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { loginSchema } from "@/lib/validations/login.validation";
+import { loginSchema } from "@/lib/validations/auth.validation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

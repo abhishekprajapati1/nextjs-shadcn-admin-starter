@@ -1,9 +1,8 @@
 "use client";
+import AdminHeaderWrapper from "@/components/navigation/admin/HeaderWrapper";
 
-import PageHeader from "@/components/PageHeader";
-
-const HeaderButton = () => {
-  return <PageHeader title="Dashboard">A</PageHeader>;
+const Header = () => {
+  return <AdminHeaderWrapper title="Dashboard">A</AdminHeaderWrapper>;
 };
 
-export default HeaderButton;
+export default Header;

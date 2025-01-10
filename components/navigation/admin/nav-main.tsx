@@ -69,6 +69,7 @@ export const NavMain: React.FC<NavMainProps> = ({ items }) => {
                                 subItem.isActive && "bg-primary/10",
                               )}
                             >
+                              {subItem.icon && <subItem.icon />}
                               <span>{subItem.title}</span>
                             </Link>
                           </SidebarMenuSubButton>
