@@ -5,7 +5,7 @@ import { toast } from "@/lib/hooks/use-toast";
 
 export const getBaseUrl = () => {
   if (process.env.NODE_ENV !== "development") {
-    return "https://akkukachasma.com";
+    return "https://api.akkukachasma.com";
   }
   if (typeof window === "undefined") {
     return process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
