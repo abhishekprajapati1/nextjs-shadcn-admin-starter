@@ -3,6 +3,7 @@ const ENDPOINTS = {
     LOGIN: "auth/login",
     LOGOUT: "auth/logout",
     SIGNUP: "auth/signup",
+    details: "auth/details"
   },
   admin: {
     products: {

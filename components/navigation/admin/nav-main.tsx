@@ -1,3 +1,4 @@
+"use client";
 import { ChevronRight } from "lucide-react";
 import {
   SidebarGroup,
@@ -66,7 +67,7 @@ export const NavMain: React.FC<NavMainProps> = ({ items }) => {
                               href={subItem.url}
                               className={cn(
                                 "",
-                                subItem.isActive && "bg-primary/10",
+                                subItem.isActive && "bg-primary/10"
                               )}
                             >
                               {subItem.icon && <subItem.icon />}

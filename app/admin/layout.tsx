@@ -1,21 +1,11 @@
-"use client";
 import React from "react";
-import { HelpCircle } from "lucide-react";
 import { IWrapper } from "@/lib/types";
-import { usePathname } from "next/navigation";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/navigation/admin/Sidebar";
-import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { protect } from "@/lib/server";
 
-const RootLayout: React.FC<IWrapper> = ({ children }) => {
-  const completePath = usePathname();
-
+const RootLayout: React.FC<IWrapper> = async ({ children }) => {
+  await protect("/admin/login");
   return (
     <SidebarProvider>
       <AppSidebar />

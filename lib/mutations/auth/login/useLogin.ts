@@ -4,9 +4,12 @@ import { RequestError, getApiClient, getErrorMessage } from "@/lib/api";
 import { z } from "zod";
 import { loginSchema } from "@/lib/validations/auth.validation";
 import { toast } from "@/lib/hooks/use-toast";
+import { useSearchParams } from "next/navigation";
 
-const useLogin = (ret?: string) => {
+const useLogin = () => {
   const api = getApiClient();
+  const params = useSearchParams();
+  const from = params.get('from');
   const mutation = useMutation({
     mutationFn: async (data: z.infer<typeof loginSchema>) => {
       const res = await api.post(ENDPOINTS.AUTH.LOGIN, data);
@@ -24,7 +27,7 @@ const useLogin = (ret?: string) => {
           token.type,
           JSON.stringify({ refresh_type: token.type, life: token.life }),
         );
-        window.location.href = ret ? ret : "/";
+        window.location.href = from ? from : "/";
       }
     },
     onError: (err: RequestError) => {
