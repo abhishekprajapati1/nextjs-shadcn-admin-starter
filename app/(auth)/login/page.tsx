@@ -7,13 +7,11 @@ import {
   Truck,
   HeartHandshake,
   LucideIcon,
-  Glasses,
   ShieldCheck,
   RotateCcw,
-  BadgeCheck,
 } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 
 export default function LoginPage() {
   return (
@@ -98,7 +96,9 @@ export default function LoginPage() {
 
           {/* Right side - Login Form */}
           <div className="lg:pl-8">
-            <LoginForm />
+            <React.Suspense fallback={<div>Please wait...</div>}>
+              <LoginForm />
+            </React.Suspense>
             {/* Trust Indicators */}
             <div className="mt-8 pt-6 border-t">
               <div className="flex justify-center items-center space-x-8">

@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  LogOutIcon,
-  Sparkles,
-} from "lucide-react";
+import { BadgeCheck, Bell, ChevronsUpDown } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,6 +19,7 @@ import {
 import { IUser } from "@/lib/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import LogoutIcon from "@/components/icons/LogoutIcon";
+import { logout } from "@/services/auth.service";
 
 export function NavUser({ user }: { user: IUser | null }) {
   const { isMobile } = useSidebar();
@@ -89,9 +82,11 @@ export function NavUser({ user }: { user: IUser | null }) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogoutIcon className="size-5 mr-2" />
-              Log out
+            <DropdownMenuItem asChild>
+              <button onClick={() => logout()} className="w-full">
+                <LogoutIcon className="size-5 mr-2" />
+                Log out
+              </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

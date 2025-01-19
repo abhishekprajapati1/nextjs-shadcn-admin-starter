@@ -1,35 +1,13 @@
-import BannerManagerIcon from "@/components/icons/BannerManagerIcon";
-import BlogIcon from "@/components/icons/BlogIcon";
-import BrandIcon from "@/components/icons/BrandIcon";
-import CategoriesIcon from "@/components/icons/CategoriesIcon";
-import ColorsIcon from "@/components/icons/ColorsIcon";
-import CouponManagIcon from "@/components/icons/CouponManagerIcon";
-import DashboardIcon from "@/components/icons/DashobardIcon";
-import EnquiriesIcon from "@/components/icons/EnquiriesIcon";
-import FramematerialIconIcon from "@/components/icons/FramematerialIcon";
-import FranchisesIcon from "@/components/icons/FranchisesIcon";
-import LensDetailsIcon from "@/components/icons/LensDetailsIcon";
-import LensFeatureIcon from "@/components/icons/LensFeatureIcon";
-import NewslettersIcon from "@/components/icons/NewslettersIcon";
-import OrderIcon from "@/components/icons/OrderIcon";
-import PowerType from "@/components/icons/PowerTypeIcon";
-import ProductIcon from "@/components/icons/ProductIcon";
-import ShapeIcon from "@/components/icons/ShapeIcon";
-import TryIcon from "@/components/icons/TryIcon";
-import UsersIcon from "@/components/icons/UsersIcon";
+
 import { ISidebarBrand, IUser, MenuItem } from "./types";
 import {
   Box,
   Diamond,
-  Eye,
   GalleryVerticalEnd,
   Glasses,
   Handshake,
-  HashIcon,
   Headset,
   LayoutDashboard,
-  LucideDiamond,
-  MapPin,
   MapPinHouse,
   Newspaper,
   Palette,

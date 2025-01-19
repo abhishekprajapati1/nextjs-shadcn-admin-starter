@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import React from "react";
-import { Mail, Lock, Loader2 } from "lucide-react";
+import { Mail, Lock } from "lucide-react";
 
 import { Button, ProcessIndicator } from "@/components/ui/button";
 import {
@@ -28,10 +28,10 @@ import useLogin from "@/lib/mutations/auth/login/useLogin";
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 interface LoginFormProps {
-  onSuccess?: () => void;
+  forAdmin?: boolean;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({ forAdmin = false }) => {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -143,37 +143,39 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="flex flex-col space-y-4">
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
+      {!forAdmin && (
+        <CardFooter className="flex flex-col space-y-4">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">
+                Or continue with
+              </span>
+            </div>
           </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">
-              Or continue with
-            </span>
+
+          <div className="grid grid-cols-2 gap-4">
+            <Button variant="outline" type="button" disabled={isPending}>
+              Google
+            </Button>
+            <Button variant="outline" type="button" disabled={isPending}>
+              GitHub
+            </Button>
           </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <Button variant="outline" type="button" disabled={isPending}>
-            Google
-          </Button>
-          <Button variant="outline" type="button" disabled={isPending}>
-            GitHub
-          </Button>
-        </div>
-
-        <div className="text-sm text-muted-foreground text-center">
-          Don't have an account?{" "}
-          <a
-            href="/signup"
-            className="text-primary underline hover:text-primary/90"
-          >
-            Sign up
-          </a>
-        </div>
-      </CardFooter>
+          <div className="text-sm text-muted-foreground text-center">
+            Don't have an account?{" "}
+            <a
+              href="/signup"
+              className="text-primary underline hover:text-primary/90"
+            >
+              Sign up
+            </a>
+          </div>
+        </CardFooter>
+      )}
     </Card>
   );
 };

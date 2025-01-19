@@ -63,15 +63,3 @@ export const getErrorMessage = (error: RequestError) => {
   return message;
 };
 
-export const logout = async () => {
-  const api = getApiClient();
-  try {
-    const response = await api.delete("auth/logout");
-    const msg = response.data.data?.message;
-    toast({ description: msg });
-    window.location.href = "/login";
-  } catch (error: unknown) {
-    const message = getErrorMessage(error as RequestError);
-    toast({ description: message, variant: "destructive" });
-  }
-};
