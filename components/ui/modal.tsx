@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { Dialog, DialogContent } from "./dialog";
 
 interface ModalProps {
@@ -21,7 +22,7 @@ const Modal: React.FC<ModalProps> = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         fullScreen={fullScreen}
-        className={className}
+        className={cn("max-h-[85vh]", className)}
         showCloseIcon={showCloseIcon}
       >
         {children}

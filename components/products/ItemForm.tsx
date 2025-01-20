@@ -23,19 +23,14 @@ import {
   FrameStyle,
   frameStyles,
   Gender,
+  genderOptions,
 } from "@/lib/validations/admin/product.validation";
 import { resetStore, showModal } from "@/store/products/form.slice";
 import useUpdate from "@/lib/mutations/admin/products/useUpdate";
 import useCreate from "@/lib/mutations/admin/products/useCreate";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import MultiSelect from "../ui/multi-select";
+import SelectBox from "../ui/select-box";
 
 const ItemForm: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -69,7 +64,7 @@ const ItemForm: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { data, item_id } = useAppSelector(
-    (store) => store.couponStore.formStore,
+    (store) => store.couponStore.formStore
   );
 
   const { mutate: update, isPending: updating } = useUpdate();
@@ -124,7 +119,16 @@ const ItemForm: React.FC = () => {
               <FormItem>
                 <FormLabel>Model Number</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter model number" {...field} />
+                  <Input
+                    placeholder="Enter model number"
+                    {...field}
+                    type="number"
+                    onChange={(e) =>
+                      field.onChange(
+                        isNaN(+e.target.value) ? 0 : +e.target.value
+                      )
+                    }
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -183,7 +187,7 @@ const ItemForm: React.FC = () => {
                     type="number"
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                        isNaN(+e.target.value) ? 0 : +e.target.value
                       )
                     }
                   />
@@ -207,7 +211,7 @@ const ItemForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                        isNaN(+e.target.value) ? 0 : +e.target.value
                       )
                     }
                   />
@@ -234,7 +238,7 @@ const ItemForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                        isNaN(+e.target.value) ? 0 : +e.target.value
                       )
                     }
                   />
@@ -256,19 +260,12 @@ const ItemForm: React.FC = () => {
               <FormItem>
                 <FormLabel>Gender</FormLabel>
                 <FormControl>
-                  <Select
+                  <SelectBox
+                    options={genderOptions}
+                    placeholder="Select gender"
                     value={field.value}
-                    onValueChange={(val) => field.onChange(val)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a fruit" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value={Gender.MALE}>Male</SelectItem>
-                      <SelectItem value={Gender.FEMALE}>Female</SelectItem>
-                      <SelectItem value={Gender.OTHER}>Other</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    onChange={field.onChange}
+                  />
                 </FormControl>
                 <FormDescription>
                   The gender this product is for
@@ -292,7 +289,7 @@ const ItemForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                        isNaN(+e.target.value) ? 0 : +e.target.value
                       )
                     }
                   />
@@ -316,7 +313,7 @@ const ItemForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                        isNaN(+e.target.value) ? 0 : +e.target.value
                       )
                     }
                   />
@@ -372,7 +369,7 @@ const ItemForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                        isNaN(+e.target.value) ? 0 : +e.target.value
                       )
                     }
                   />
@@ -391,21 +388,12 @@ const ItemForm: React.FC = () => {
               <FormItem>
                 <FormLabel>Frame Style</FormLabel>
                 <FormControl>
-                  <Select
+                  <SelectBox
+                    options={frameStyles}
+                    placeholder="Select frame style"
                     value={field.value}
-                    onValueChange={(val) => field.onChange(val)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a frame style" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {frameStyles?.map((fs) => (
-                        <SelectItem key={fs.value} value={fs.value || ""}>
-                          {fs.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    onChange={field.onChange}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

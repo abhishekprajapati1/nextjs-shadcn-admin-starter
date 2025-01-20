@@ -22,6 +22,11 @@ export enum Gender {
   OTHER = "OTHER",
 }
 
+export const genderOptions = Object.values(Gender).map(value => ({
+  label: value.charAt(0).toUpperCase() + value.slice(1).toLowerCase(),
+  value: value
+}));
+
 export enum FrameSize {
   EXTRA_NARROW = "EXTRA_NARROW",
   NARROW = "NARROW",
