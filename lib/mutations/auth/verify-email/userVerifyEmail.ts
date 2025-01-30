@@ -14,10 +14,9 @@ const useVerifyEmail = () => {
       return res.data;
     },
     onSuccess: (data) => {
-      // setTimeout(() => {
-      //   router.replace("/login");
-      // }, 3000);
-      console.log("data", data);
+      setTimeout(() => {
+        router.replace("/login");
+      }, 3000);
     },
     onError: (err: RequestError) => {
       const message = getErrorMessage(err);
