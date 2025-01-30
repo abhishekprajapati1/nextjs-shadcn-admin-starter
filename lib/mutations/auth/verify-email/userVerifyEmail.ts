@@ -13,7 +13,7 @@ const useVerifyEmail = () => {
       const res = await api.post(ENDPOINTS.AUTH.verify_email(token));
       return res.data;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       setTimeout(() => {
         router.replace("/login");
       }, 3000);

@@ -42,3 +42,10 @@ export const signupSchema = z.object({
     message: "You must agree to the terms and conditions",
   }),
 });
+
+export const ResendVerificationSchema = z.object({
+  email: z
+    .string()
+    .min(1, "Please enter your Email address")
+    .email("Please enter a valid Email address"),
+});
