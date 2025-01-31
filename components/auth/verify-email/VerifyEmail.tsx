@@ -1,17 +1,17 @@
 "use client";
 import React from "react";
-import { useSearchParams } from "next/navigation";
+import { notFound, useSearchParams } from "next/navigation";
 import useVerifyEmail from "@/lib/mutations/auth/verify-email/userVerifyEmail";
 import { useRouter } from "next/navigation"; // For navigation
 import Verified from "./Verified";
 import Verifying from "./Verifying";
 import VerifiedAlready from "./VerifiedAlready";
-import NoToken from "./NoToken";
 import TokenExpired from "./TokenExpired";
 
 const VerifyEmail: React.FC = () => {
   const searchParams = useSearchParams();
   const token = searchParams?.get("token");
+  // also get the email
   const router = useRouter(); // To handle navigation
 
   const { mutate, isPending, error, isSuccess } = useVerifyEmail();
@@ -33,7 +33,7 @@ const VerifyEmail: React.FC = () => {
   };
 
   if (!token) {
-    return <NoToken />;
+    notFound();
   }
 
   if (token && isPending) {
@@ -45,7 +45,7 @@ const VerifyEmail: React.FC = () => {
   }
   if (token && error) {
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center gap-4 bg-gray-100">
+      <div className="w-full h-full flex flex-col items-center justify-center gap-4 bg-black">
         <p className="text-red-500">
           {error?.response?.data?.message ===
           "Verification link is expired. Please request another verification link." ? (
