@@ -46,29 +46,29 @@ const VerifyEmail: React.FC = () => {
   if (token && error) {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center gap-4 bg-black">
-        <p className="text-red-500">
-          {error?.response?.data?.message ===
-          "Verification link is expired. Please request another verification link." ? (
+        {error?.response?.data?.type === "ERR_TOKEN_EXPIRED" ? (
+          <TokenExpired
+            onClick={handleRetry}
+            message={`${error?.response?.data?.message}`}
+          />
+        ) : error?.response?.data?.type === "ERR_ALREADY_VERIFIED" ? (
+          <VerifiedAlready
+            onClick={handleClose}
+            message={`${error?.response?.data?.message}`}
+          />
+        ) : error?.response?.data?.type === "ERR_TOKEN_INVALID" ? (
+          <TokenExpired
+            onClick={handleRetry}
+            message={`${error?.response?.data?.message}`}
+          />
+        ) : (
+          error?.response?.data?.type === "INTERNAL_SERVER_ERR" && (
             <TokenExpired
               onClick={handleRetry}
-              message="Verification link is expired. Please request another verification link."
+              message={`${error?.response?.data?.message}`}
             />
-          ) : error?.response?.data?.message ===
-            "Email is already verified. You can close this page." ? (
-            <VerifiedAlready
-              onClick={handleClose}
-              message="Email is already verified. You can close this page."
-            />
-          ) : error?.response?.data?.message ===
-            "Verification failed. No user exists with this email address." ? (
-            <TokenExpired
-              onClick={handleRetry}
-              message="Verification failed. No user exists with this email address."
-            />
-          ) : (
-            error?.response?.data?.message || "Verification failed."
-          )}
-        </p>
+          )
+        )}
       </div>
     );
   }
