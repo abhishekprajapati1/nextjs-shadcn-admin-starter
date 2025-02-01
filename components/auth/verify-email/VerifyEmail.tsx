@@ -7,14 +7,18 @@ import Verified from "./Verified";
 import Verifying from "./Verifying";
 import VerifiedAlready from "./VerifiedAlready";
 import TokenExpired from "./TokenExpired";
+import useResendVerification from "@/lib/mutations/auth/verify-email/useResendVerification";
+import ServerError from "./ServerError";
 
 const VerifyEmail: React.FC = () => {
   const searchParams = useSearchParams();
   const token = searchParams?.get("token");
-  // also get the email
-  const router = useRouter(); // To handle navigation
+  const email = searchParams?.get("email");
+  const router = useRouter();
 
   const { mutate, isPending, error, isSuccess } = useVerifyEmail();
+  const { mutate: resendMutate, isPending: resendIsPending } =
+    useResendVerification();
 
   React.useEffect(() => {
     if (token) {
@@ -22,17 +26,15 @@ const VerifyEmail: React.FC = () => {
     }
   }, [token, mutate]);
 
-  // Handler for "Try Again" button
   const handleRetry = () => {
-    router.push("/resend-verification");
+    resendMutate({ email: email || "" });
   };
 
-  // Handler to close the page or navigate to home
   const handleClose = () => {
     router.push("/login");
   };
 
-  if (!token) {
+  if (!token || !email) {
     notFound();
   }
 
@@ -63,10 +65,7 @@ const VerifyEmail: React.FC = () => {
           />
         ) : (
           error?.response?.data?.type === "INTERNAL_SERVER_ERR" && (
-            <TokenExpired
-              onClick={handleRetry}
-              message={`${error?.response?.data?.message}`}
-            />
+            <ServerError />
           )
         )}
       </div>

@@ -1,23 +1,30 @@
 import React from "react";
-import { Ban } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const ServerError: React.FC = () => {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center gap-4 bg-gray-100">
-      <div className="w-full h-screen flex flex-col items-center justify-center bg-gray-100">
-        <div className="w-[500px] h-[500px] flex flex-col items-center justify-center bg-white p-6 rounded-2xl shadow-lg gap-4">
-          <Ban className="w-20 h-20 text-destructive" />
-          <h2 className="text-2xl font-semibold text-destructive mt-4 text-center">
-            Error: No token found. Please check the link.
-          </h2>
-          <Button
-            //   onClick={handleClose}
-            className="mt-4 px-4 py-2 bg-primary text-white rounded hover:bg-green-600"
-          >
-            Close
-          </Button>
+    <div className="w-full h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted animate-smooth">
+      <div className="w-[400px] p-8 bg-card rounded-3xl shadow-2xl border border-border/50 flex flex-col items-center justify-center gap-6 text-center animate-fade-in">
+        {/* Icon with animation */}
+        <div className="p-4 bg-destructive/10 rounded-full animate-pulse">
+          <AlertTriangle className="w-16 h-16 text-destructive" />
         </div>
+
+        {/* Title */}
+        <h2 className="text-3xl font-bold text-destructive">Oops!</h2>
+
+        {/* Description */}
+        <p className="text-muted-foreground">
+          Something went wrong. Please check the link or try again later.
+        </p>
+
+        {/* Button */}
+        <Button
+          className="mt-4 px-6 py-3 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all duration-300"
+        >
+          Go Back
+        </Button>
       </div>
     </div>
   );
