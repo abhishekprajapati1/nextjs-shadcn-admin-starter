@@ -3,12 +3,12 @@ import React from "react";
 import { notFound, useSearchParams } from "next/navigation";
 import useVerifyEmail from "@/lib/mutations/auth/verify-email/userVerifyEmail";
 import { useRouter } from "next/navigation"; // For navigation
-import Verified from "./Verified";
-import Verifying from "./Verifying";
-import VerifiedAlready from "./VerifiedAlready";
-import TokenExpired from "./TokenExpired";
+import Verified from "./cards/Verified";
+import Verifying from "./cards/Verifying";
+import VerifiedAlready from "./cards/VerifiedAlready";
+import TokenExpired from "./cards/TokenExpired";
 import useResendVerification from "@/lib/mutations/auth/verify-email/useResendVerification";
-import ServerError from "./ServerError";
+import ServerError from "./cards/ServerError";
 
 const VerifyEmail: React.FC = () => {
   const searchParams = useSearchParams();

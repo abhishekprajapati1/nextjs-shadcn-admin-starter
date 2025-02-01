@@ -21,7 +21,7 @@ const VerifiedAlready: React.FC<VerifiedAlreadyProps> = ({
         onClick={onClick}
         className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
       >
-        Close
+        Back
       </Button>
     </div>
   );
