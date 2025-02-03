@@ -42,6 +42,7 @@ export type RequestError = AxiosError & {
     data: {
       success: boolean;
       message?: string;
+      type?: string;
       error?: any;
     };
   };
@@ -62,4 +63,3 @@ export const getErrorMessage = (error: RequestError) => {
   }
   return message;
 };
-

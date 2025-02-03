@@ -3,7 +3,9 @@ const ENDPOINTS = {
     LOGIN: "auth/login",
     LOGOUT: "auth/logout",
     SIGNUP: "auth/signup",
-    details: "auth/details"
+    details: "auth/details",
+    verify_email: (token: string) => `/auth/verfiy-email?token=${token}`,
+    resend_verification_mail:"auth/resend-verification-link",
   },
   admin: {
     products: {
