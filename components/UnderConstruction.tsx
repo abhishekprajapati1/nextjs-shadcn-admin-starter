@@ -6,16 +6,10 @@ import WhatsappIcon from "./icons/WhatsappIcon";
 
 interface UnderConstructionProps {
   className?: string;
-  whatsappNumber?: string;
-  message?: string;
 }
 
-const UnderConstruction: React.FC<UnderConstructionProps> = ({
-  className,
-  whatsappNumber = "+919999999999",
-  message = "Hello, I'm interested in Akku Ka Chasma.",
-}) => {
-  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+const UnderConstruction: React.FC<UnderConstructionProps> = ({ className }) => {
+  const whatsappLink = `https://api.whatsapp.com/send/?phone=918188881661&text=Hello%21+%0AI%E2%80%99m+interested+in+one+of+your+product+so+plz+contact+me`;
 
   return (
     <div
@@ -37,7 +31,8 @@ const UnderConstruction: React.FC<UnderConstructionProps> = ({
       <div className="mt-8">
         <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
           <Button variant="outline" className="flex gap-2 items-center">
-            <WhatsappIcon className="h-5 w-5 text-green-500" /> Contact us on WhatsApp
+            <WhatsappIcon className="h-5 w-5 text-green-500" /> Contact us on
+            WhatsApp
           </Button>
         </a>
       </div>
