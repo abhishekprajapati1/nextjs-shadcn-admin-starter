@@ -10,9 +10,58 @@ import {
   ShieldCheck,
   RotateCcw,
 } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
-
+export const metadata: Metadata = {
+  title: "Login - Akku Ka Chasma | Wholesale Eyewear Dashboard",
+  description:
+    "Access your Akku Ka Chasma business dashboard. Track orders, manage inventory, and access wholesale prices for eyewear products. Secure login for optical retailers.",
+  keywords: [
+    "optical business login",
+    "eyewear wholesale dashboard",
+    "optical retailer portal",
+    "business account login",
+    "wholesale eyewear access",
+    "optical supplier login",
+    "akku ka chasma login",
+    "eyewear business portal",
+    "optical inventory management",
+    "wholesale pricing access",
+  ],
+  robots: {
+    index: false, // Don't index login pages for security
+    follow: false,
+  },
+  openGraph: {
+    title: "Login to Your Akku Ka Chasma Business Account",
+    description:
+      "Access your wholesale eyewear dashboard. Manage orders, track inventory, and get exclusive wholesale prices.",
+    url: "https://akkukachasma.com/login",
+    siteName: "Akku Ka Chasma",
+    type: "website",
+    // images: [
+    //   {
+    //     url: "https://akkukachasma.com/images/business-login.jpg", // Add your actual image
+    //     width: 1200,
+    //     height: 630,
+    //     alt: "Akku Ka Chasma Business Login",
+    //   },
+    // ],
+  },
+  alternates: {
+    canonical: "https://akkukachasma.com/login",
+  },
+  other: {
+    "mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-capable": "yes",
+    "application-name": "Akku Ka Chasma",
+    "apple-mobile-web-app-title": "Akku Ka Chasma",
+  },
+  verification: {
+    google: "your-verification-code", // Add if you have one
+  },
+};
 export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary">
