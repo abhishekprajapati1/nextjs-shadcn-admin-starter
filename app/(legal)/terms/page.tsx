@@ -2,6 +2,49 @@ import LegalSection from "@/components/legal/LegalSection";
 import AuthHeader from "@/components/navigation/AuthHeader";
 import Footer from "@/components/navigation/Footer";
 import { AlertTriangle, ScrollText } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms & Conditions | Akku Ka Chasma",
+  description: "Read our terms and conditions for using Akku Ka Chasma's services. Learn about our ordering process, shipping policies, returns, and other important legal information.",
+  keywords: [
+    "terms and conditions",
+    "legal terms",
+    "user agreement",
+    "akku ka chasma terms",
+    "eyewear shopping terms",
+    "return policy",
+    "shipping policy",
+    "payment terms",
+    "privacy policy",
+  ],
+  openGraph: {
+    title: "Terms & Conditions | Akku Ka Chasma",
+    description: "Read our terms and conditions for using Akku Ka Chasma's services. Learn about our ordering process, shipping policies, returns, and other important legal information.",
+    url: "https://akkukachasma.com/terms",
+    siteName: "Akku Ka Chasma",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://akkukachasma.com/terms",
+  },
+  authors: [
+    {
+      name: "Akku Ka Chasma Legal Team",
+    },
+  ],
+  verification: {
+    google: "your-google-verification-code", // Add if you have one
+  },
+  other: {
+    "last-modified": "2024-02-15", // Match with your last updated date
+  },
+};
+
 
 export default function TermsPage() {
   return (

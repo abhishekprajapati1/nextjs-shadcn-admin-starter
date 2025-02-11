@@ -8,6 +8,42 @@ import {
 } from "lucide-react";
 import { ContactForm } from "@/components/support/ContactForm";
 import Footer from "@/components/navigation/Footer";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Support & Contact | Akku Ka Chasma",
+  description:
+    "Get in touch with Akku Ka Chasma's customer support team. We're here to help with your eyewear needs, queries, and concerns. Available via phone, email, or visit our store in New Delhi.",
+  keywords: [
+    "customer support",
+    "contact us",
+    "akku ka chasma support",
+    "eyewear help",
+    "optical store contact",
+    "eyewear customer service",
+    "delhi optical store",
+    "eyewear consultation",
+  ],
+  openGraph: {
+    title: "Support & Contact | Akku Ka Chasma",
+    description:
+      "Get in touch with Akku Ka Chasma's customer support team. We're here to help with your eyewear needs, queries, and concerns. Available via phone, email, or visit our store in New Delhi.",
+    url: "https://akkukachasma.com/support",
+    siteName: "Akku Ka Chasma",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://akkukachasma.com/support",
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+  },
+};
 
 export default function SupportPage() {
   return (

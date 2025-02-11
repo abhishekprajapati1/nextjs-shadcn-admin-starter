@@ -1,7 +1,52 @@
 import AuthHeader from "@/components/navigation/AuthHeader";
 import Footer from "@/components/navigation/Footer";
 import { Shield, Lock, Eye, FileKey, LucideIcon } from "lucide-react";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Privacy Policy | Akku Ka Chasma",
+  description:
+    "Learn how Akku Ka Chasma collects, protects, and manages your personal information. Read about our data protection measures, cookie policy, and your privacy rights.",
+  keywords: [
+    "privacy policy",
+    "data protection",
+    "cookie policy",
+    "personal information",
+    "data security",
+    "privacy rights",
+    "information collection",
+    "data sharing",
+    "GDPR compliance",
+    "customer privacy",
+  ],
+  openGraph: {
+    title: "Privacy Policy | Akku Ka Chasma",
+    description:
+      "Learn how Akku Ka Chasma collects, protects, and manages your personal information. Read about our data protection measures, cookie policy, and your privacy rights.",
+    url: "https://akkukachasma.com/privacy",
+    siteName: "Akku Ka Chasma",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://akkukachasma.com/privacy",
+  },
+  authors: [
+    {
+      name: "Akku Ka Chasma Legal Team",
+    },
+  ],
+  other: {
+    "last-modified": "2024-02-15",
+    "privacy-contact": "privacy@akkuchasma.com",
+  },
+  verification: {
+    google: "your-google-verification-code", // Add if you have one
+  },
+};
 export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary">

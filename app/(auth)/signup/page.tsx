@@ -17,10 +17,52 @@ import {
 import { Metadata } from "next";
 import Link from "next/link";
 
+
 export const metadata: Metadata = {
   title: "Sign Up - Akku Ka Chasma | Wholesale Eyewear Marketplace",
-  description:
-    "Create your business account on Akku Ka Chasma - India's leading wholesale marketplace for frames, lenses, and complete eyewear solutions.",
+  description: "Create your business account on Akku Ka Chasma - India's leading wholesale marketplace for frames, lenses, and complete eyewear solutions. Access bulk orders, connect with suppliers, and grow your optical business.",
+  keywords: [
+    "wholesale eyewear",
+    "business registration",
+    "optical business",
+    "eyewear marketplace",
+    "wholesale frames",
+    "optical supplier",
+    "bulk eyewear orders",
+    "optical business account",
+    "eyewear wholesale india",
+    "optical retail supplier",
+  ],
+  openGraph: {
+    title: "Join Akku Ka Chasma - India's Leading Wholesale Eyewear Marketplace",
+    description: "Create your business account and access wholesale prices, bulk orders, and a wide selection of eyewear products. Connect with top manufacturers and suppliers across India.",
+    url: "https://akkukachasma.com/signup",
+    siteName: "Akku Ka Chasma",
+    type: "website",
+    images: [
+      {
+        url: "https://akkukachasma.com/images/business-signup.jpg", // Add your actual image
+        width: 1200,
+        height: 630,
+        alt: "Akku Ka Chasma Business Registration",
+      },
+    ],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://akkukachasma.com/signup",
+  },
+  other: {
+    "google-site-verification": "your-verification-code", // Add if you have one
+    "business-type": "B2B",
+    "target-audience": "Optical Retailers",
+  },
+  verification: {
+    google: "your-verification-code", // Add if you have one
+  },
 };
 
 export default function SignupPage() {
