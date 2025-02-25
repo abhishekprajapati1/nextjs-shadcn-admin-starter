@@ -35,25 +35,25 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
   return (
     <tr>
       <td className="uppercase">
-        <div>{data?.model_name}</div>
+        <div className="hover:text-blue-500">{data?.model_name || "Blinde" }</div>
       </td>
       <td>
-        <div className="justify-center">{data?.model_number}</div>
+        <div className="justify-center">{data?.model_number || "Cube 136005"}</div>
       </td>
       <td>
-        <div className="justify-center">{data?.gender}</div>
+        <div className="justify-center">{data?.gender || "Male"}</div>
       </td>
       <td>
-        <div className="justify-center">{data?.stock_quantity}</div>
+        <div className="justify-center">{data?.stock_quantity || 0}</div>
       </td>
       <td>
-        <div className="justify-center">₹{data?.listing_price}</div>
+        <div className="justify-center">₹{data?.listing_price || 0}</div>
       </td>
       <td>
-        <div className="justify-center">₹{data?.price}</div>
+        <div className="justify-center">₹{data?.price || 0}</div>
       </td>
       <td>
-        <div>{dayjs(data?.created_at).format("MMM DD, YYYY")}</div>
+        <div className="justify-center">{dayjs(data?.created_at).format("MMM DD, YYYY")}</div>
       </td>
       <td>
         <div className="flex items-center gap-2">
