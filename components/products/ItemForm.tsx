@@ -24,6 +24,7 @@ import {
   frameStyles,
   Gender,
   genderOptions,
+  tags,
 } from "@/lib/validations/admin/product.validation";
 import { resetStore, showModal } from "@/store/products/form.slice";
 import useUpdate from "@/lib/mutations/admin/products/useUpdate";
@@ -31,6 +32,13 @@ import useCreate from "@/lib/mutations/admin/products/useCreate";
 import { Textarea } from "../ui/textarea";
 import MultiSelect from "../ui/multi-select";
 import SelectBox from "../ui/select-box";
+import useFetch from "@/lib/hooks/use-fetch";
+import ENDPOINTS from "@/lib/endpoints";
+import { ICategory } from "../categories/ListItem";
+import { IFrameMaterial } from "../frame-materials/FrameMaterial";
+import { IShape } from "../shapes/ListItem";
+import { IColor } from "../colors/ListItem";
+import { IPowerType } from "../power-types/PowerType";
 
 const ItemForm: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -61,6 +69,34 @@ const ItemForm: React.FC = () => {
     resolver: zodResolver(formSchema),
   });
 
+  const { data: categoriesData, isLoading: categoriesDataLoading } = useFetch<
+    ICategory[]
+  >({
+    endpoint: ENDPOINTS.admin.categories.fetch_all(),
+  });
+
+  const { data: frameMaterialsData, isLoading: frameMaterialsLoading } =
+    useFetch<IFrameMaterial[]>({
+      endpoint: ENDPOINTS.admin.frame_materials.fetch_all(),
+    });
+
+  const { data: shapesData, isLoading: shapesDataLoading } = useFetch<IShape[]>(
+    {
+      endpoint: ENDPOINTS.admin.shapes.fetch_all(),
+    }
+  );
+  const { data: colorData, isLoading: colorDataLoading } = useFetch<IColor[]>({
+    endpoint: ENDPOINTS.admin.colors.fetch_all(),
+  });
+
+  const { data: powerData, isLoading: powerDataLoading } = useFetch<
+    IPowerType[]
+  >({
+    endpoint: ENDPOINTS.admin.power_types.fetch_all(),
+  });
+
+  console.log("powerData", powerData);
+
   const dispatch = useAppDispatch();
 
   const { data, item_id } = useAppSelector(
@@ -69,15 +105,24 @@ const ItemForm: React.FC = () => {
 
   const { mutate: update, isPending: updating } = useUpdate();
 
-  const { mutate: create, isPending: creating } = useCreate();
+  const {
+    mutate: create,
+    isPending: creating,
+    isError,
+    isSuccess,
+  } = useCreate();
 
   const isPending = updating || creating;
 
+  console.log("error", form.formState.errors);
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     if (item_id) {
       update(data);
     } else {
       create(data);
+      if (isSuccess) {
+        console.log("data", data);
+      }
     }
   };
 
@@ -399,9 +444,147 @@ const ItemForm: React.FC = () => {
               </FormItem>
             )}
           />
-          {/* end of frame style */}
+          {/* Category starts */}
+          <FormField
+            control={form.control}
+            name="category_id"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category</FormLabel>
+                <FormControl>
+                  <SelectBox
+                    options={
+                      categoriesDataLoading
+                        ? []
+                        : categoriesData?.map((cat) => ({
+                            label: cat?.title ?? "Unknown",
+                            value: cat?.id ?? "",
+                          })) ?? []
+                    }
+                    placeholder="Select category"
+                    value={field.value ?? ""}
+                    onChange={(val) => field.onChange(val ?? "")}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* Category ends */}
 
-          {/* frame style */}
+          {/* Frame material starts */}
+          <FormField
+            control={form.control}
+            name="frame_material_id"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Frame Material</FormLabel>
+                <FormControl>
+                  <SelectBox
+                    options={
+                      frameMaterialsLoading
+                        ? []
+                        : frameMaterialsData?.map((mat) => ({
+                            label: mat?.title ?? "Unknown",
+                            value: mat?.id ?? "",
+                          })) ?? []
+                    }
+                    placeholder="Select Material"
+                    value={field.value ?? ""}
+                    onChange={(val) => field.onChange(val ?? "")}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* Frame material ends */}
+
+          {/* shape starts */}
+          <FormField
+            control={form.control}
+            name="shape_id"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Shape</FormLabel>
+                <FormControl>
+                  <SelectBox
+                    options={
+                      shapesDataLoading
+                        ? []
+                        : shapesData?.map((shape) => ({
+                            label: shape?.title ?? "Unknown",
+                            value: shape?.id ?? "",
+                          })) ?? []
+                    }
+                    placeholder="Select Shape"
+                    value={field.value ?? ""}
+                    onChange={(val) => field.onChange(val ?? "")}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* shape ends */}
+
+          {/* color start */}
+          <FormField
+            control={form.control}
+            name="color_ids"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tags</FormLabel>
+                <FormControl>
+                  <MultiSelect
+                    id="color_ids"
+                    options={
+                      colorDataLoading
+                        ? []
+                        : colorData?.map((color) => ({
+                            label: color?.color ?? "Unknown",
+                            value: color?.id ?? "",
+                          })) ?? []
+                    }
+                    value={field.value ?? ""}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* color ends */}
+
+          {/* power type start */}
+          <FormField
+            control={form.control}
+            name="power_type_ids"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tags</FormLabel>
+                <FormControl>
+                  <MultiSelect
+                    id="power_type_ids"
+                    options={
+                      powerDataLoading
+                        ? []
+                        : powerData?.map((power) => ({
+                            label: power?.title ?? "Unknown",
+                            value: power?.id ?? "",
+                          })) ?? []
+                    }
+                    value={field.value ?? ""}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* power types ends */}
+
+          {/* frame size  starts*/}
           <FormField
             control={form.control}
             name="frame_size"
@@ -420,7 +603,28 @@ const ItemForm: React.FC = () => {
               </FormItem>
             )}
           />
-          {/* end of frame size */}
+          {/* frame size ends */}
+
+          {/* tags start */}
+          <FormField
+            control={form.control}
+            name="tags"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tags</FormLabel>
+                <FormControl>
+                  <MultiSelect
+                    id="tags"
+                    options={tags}
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* tags ends */}
         </div>
 
         {/* Footer with buttons */}

@@ -42,6 +42,11 @@ export const frameSizes: InputOption[] = [
   { label: "Wide", value: FrameSize.WIDE },
 ];
 
+export const tags: InputOption[] = [
+  { label: "Kids", value: "Kids" },
+  { label: "Adults", value: "Adults" },
+  { label: "Old", value: "Old" },
+];
 export const formSchema = z.object({
   seo_title: z.string(),
   description: z.string(),
