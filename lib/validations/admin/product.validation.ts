@@ -22,9 +22,9 @@ export enum Gender {
   OTHER = "OTHER",
 }
 
-export const genderOptions = Object.values(Gender).map(value => ({
+export const genderOptions = Object.values(Gender).map((value) => ({
   label: value.charAt(0).toUpperCase() + value.slice(1).toLowerCase(),
-  value: value
+  value: value,
 }));
 
 export enum FrameSize {
@@ -88,21 +88,29 @@ export const formSchema = z.object({
         FrameSize.MEDIUM,
         FrameSize.NARROW,
         FrameSize.WIDE,
-      ]),
+      ])
     )
     .min(1),
 
   power_type_ids: z.array(
     z.string().refine(isValidObjectId, {
       message: "Invalid MongoDB ObjectId format",
-    }),
+    })
   ),
 
-  color_ids: z.array(
-    z.string().refine(isValidObjectId, {
-      message: "Invalid MongoDB ObjectId format",
-    }),
-  ),
+  // color_ids: z.array(
+  //   z.string().refine(isValidObjectId, {
+  //     message: "Invalid MongoDB ObjectId format",
+  //   }),
+  // ),
+
+  color_ids: z
+    .array(
+      z
+        .string()
+        .refine(isValidObjectId, { message: "Invalid MongoDB ObjectId format" })
+    )
+    .optional(),
 
   shape_id: z
     .string()

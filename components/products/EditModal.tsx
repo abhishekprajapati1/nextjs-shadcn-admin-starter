@@ -11,18 +11,26 @@ import React from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { setItemId } from "@/store/products/form.slice";
+import { editModal, setItemId } from "@/store/products/form.slice";
+import ItemForm from "./ItemForm";
 
 const EditModal: React.FC = () => {
   const dispatch = useAppDispatch();
-  const item_id = useAppSelector(
-    (store) => store.productStore.formStore?.item_id,
+  const modal = useAppSelector(
+    (store) => store.productStore.formStore.editModal
   );
+  // const item_id = useAppSelector(
+  //   (store) => store.productStore.formStore?.item_id
+  // );
 
   return (
     <Modal
-      open={Boolean(item_id)}
-      onOpenChange={(val) => dispatch(setItemId(val ? item_id : ""))}
+      showCloseIcon
+      open={modal}
+      onOpenChange={(val) => dispatch(editModal(val))}
+      // open={Boolean(item_id)}
+      // onOpenChange={(val) => dispatch(setItemId(val ? item_id : ""))}
+      className="max-w-[45rem]"
     >
       <DialogHeader>
         <DialogTitle>Edit Product Details</DialogTitle>
@@ -30,7 +38,7 @@ const EditModal: React.FC = () => {
           Make changes to product here. Click save when you're done.
         </DialogDescription>
       </DialogHeader>
-      <div className="grid gap-4 py-4">
+      {/* <div className="grid gap-4 py-4">
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="name" className="text-right">
             Name
@@ -47,10 +55,11 @@ const EditModal: React.FC = () => {
             className="col-span-3"
           />
         </div>
-      </div>
-      <DialogFooter>
+      </div> */}
+      {/* <DialogFooter>
         <Button type="submit">Save changes</Button>
-      </DialogFooter>
+      </DialogFooter> */}
+      <ItemForm />
     </Modal>
   );
 };

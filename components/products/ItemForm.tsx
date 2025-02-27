@@ -95,12 +95,10 @@ const ItemForm: React.FC = () => {
     endpoint: ENDPOINTS.admin.power_types.fetch_all(),
   });
 
-  console.log("powerData", powerData);
-
   const dispatch = useAppDispatch();
 
   const { data, item_id } = useAppSelector(
-    (store) => store.couponStore.formStore
+    (store) => store.productStore.formStore
   );
 
   const { mutate: update, isPending: updating } = useUpdate();
@@ -116,19 +114,19 @@ const ItemForm: React.FC = () => {
 
   console.log("error", form.formState.errors);
   const onSubmit = (data: z.infer<typeof formSchema>) => {
+    const payload = { ...data };
+
     if (item_id) {
-      update(data);
+      delete payload.color_ids;
+      update(payload);
     } else {
-      create(data);
-      if (isSuccess) {
-        console.log("data", data);
-      }
+      create(payload);
     }
   };
 
   React.useEffect(() => {
     if (data) {
-      form.reset({});
+      form.reset(data);
     }
   }, [data, form]);
 
@@ -546,7 +544,7 @@ const ItemForm: React.FC = () => {
                             value: color?.id ?? "",
                           })) ?? []
                     }
-                    value={field.value ?? ""}
+                    value={field.value}
                     onChange={field.onChange}
                   />
                 </FormControl>

@@ -7,12 +7,11 @@ import { useAppDispatch } from "@/store";
 import { IRecordMeta } from "@/lib/types";
 import { Skeleton } from "../ui/skeleton";
 import { capitalizeFirstLetter } from "@/lib/utils";
-import { setData } from "@/store/coupon-manager/form.slice";
-import { setItemId } from "@/store/coupon-manager/form.slice";
-import { setItemToDelete } from "@/store/coupon-manager/data.slice";
 import { z } from "zod";
 import { formSchema } from "@/lib/validations/admin/product.validation";
 import dayjs from "@/lib/dayjs";
+import { editModal, setData, setItemId } from "@/store/products/form.slice";
+import { setItemToDelete } from "@/store/products/data.slice";
 
 export interface IProduct extends IRecordMeta, z.infer<typeof formSchema> {}
 
@@ -24,10 +23,11 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
   const dispatch = useAppDispatch();
 
   const handleEditClick = () => {
-    dispatch(setItemId(data?.id || ""));
-    dispatch(setData({}));
+    dispatch(setItemId(data?.id ?? ""));
+    dispatch(setData(data ?? null));
+    dispatch(editModal(true));
   };
-  console.log("see this", data);
+
   if (!data) {
     return <ListItemSkeleton />;
   }
@@ -72,7 +72,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
                 setItemToDelete({
                   id: data?.id || "",
                   label: data.model_name || "",
-                }),
+                })
               )
             }
             className="bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white ease-linear duration-300"
