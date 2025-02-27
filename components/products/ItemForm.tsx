@@ -534,7 +534,7 @@ const ItemForm: React.FC = () => {
             name="color_ids"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Tags</FormLabel>
+                <FormLabel>Colors</FormLabel>
                 <FormControl>
                   <MultiSelect
                     id="color_ids"
@@ -562,7 +562,7 @@ const ItemForm: React.FC = () => {
             name="power_type_ids"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Tags</FormLabel>
+                <FormLabel>Power Types</FormLabel>
                 <FormControl>
                   <MultiSelect
                     id="power_type_ids"
