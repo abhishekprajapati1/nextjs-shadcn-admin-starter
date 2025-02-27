@@ -5,19 +5,8 @@ import glass from "../../../public/aviator.jpg";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import FileInput from "@/components/ui/file-input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
 import FilePreview from "@/components/ui/file-input/FilePreview";
 import DragDropIcon from "@/components/icons/DragDropIcon";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { productSchema } from "@/lib/validations/admin/product.validation";
 const PRODUCTS = {
   colors: [
     { id: "color_1", color: "#FF0000" }, // Red
@@ -26,62 +15,64 @@ const PRODUCTS = {
   ],
   images: [
     {
-      id: "img_101",
-      url: glass, // Red Image
-      fieldname: "thumbnail",
-      color_id: "#FF0000",
+      id: "1014534",
+      url: {
+        thumbnail: "",
+        image_1: "",
+        image_2: "",
+        image_3: "",
+        image_4: "",
+      },
+      color_id: "color_1",
     },
     {
-      id: "img_102",
-      url: glass, // Green Image
-      fieldname: "other_images",
-      color_id: "#00FF00",
+      id: "10235345",
+      url: {
+        thumbnail: "",
+        image_1: "",
+        image_2: "",
+        image_3: "",
+        image_4: "",
+      },
+      color_id: "color_2",
     },
     {
-      id: "img_103",
-      url: glass, // Blue Image
-      fieldname: "other_images",
-      color_id: "#0000FF",
-    },
-    {
-      id: "img_104",
-      url: glass, // Another Red Image
-      fieldname: "other_images",
-      color_id: "#FF0000",
-    },
-    {
-      id: "img_105",
-      url: glass, // Another Green Image
-      fieldname: "other_images",
-      color_id: "#00FF00",
+      id: "103234234",
+      url: {
+        thumbnail: "",
+        image_1: "",
+        image_2: "",
+        image_3: "",
+        image_4: "",
+      },
+      color_id: "color_3",
     },
   ],
 };
 
 function ItemDetail() {
-  const [data, setData] = useState(
+  const [colorData, setColorData] = useState(
     PRODUCTS?.images?.filter(
-      (item) => item.color_id === PRODUCTS?.colors[0]?.color
+      (item) => item.color_id === PRODUCTS?.colors[0]?.id
     )
   );
 
-  console.log("data", data);
-  const form = useForm<z.infer<typeof productSchema>>({
-    defaultValues: {
-      other_images: null,
-      thumbnail: null,
-    },
-    mode: "onBlur",
-    resolver: zodResolver(productSchema),
-  });
+  const [data, setData] = useState<any>(colorData[0].url);
 
   const handleColor = (colorValue: string) => {
-    setData(PRODUCTS?.images?.filter((items) => items.color_id === colorValue));
+    setColorData(
+      PRODUCTS?.images?.filter((items) => items.color_id === colorValue)
+    );
   };
 
-  const onSubmit = (data: z.infer<typeof productSchema>) => {
-    console.log("productDetails", data);
+  // Handle File Change
+  const handleFileChange = (field: string, file: any) => {
+    setData((prevData: any) => ({ ...prevData, [field]: file }));
+    console.log(data);
   };
+
+  console.log("data", data);
+  console.log("colorData", colorData);
 
   return (
     <Card className="flex flex-col gap-6 border-none shadow-none">
@@ -105,102 +96,120 @@ function ItemDetail() {
         </div>
       </div>
       <div className="flex flex-row gap-4 py-4 px-2">
-        {PRODUCTS?.colors?.map((items, id) => (
+        {PRODUCTS?.colors?.map((items, index) => (
           <Button
-            onClick={() => handleColor(items.color)}
-            key={id}
+            onClick={() => handleColor(items.id)}
+            key={index}
             className="w-24 cursor-pointer"
             style={{ backgroundColor: `${items.color}` }}
           ></Button>
         ))}
       </div>
-      <Form {...form}>
-        <form
-          className="w-full grid grid-cols-12 gap-6"
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
-          <div className="flex flex-row gap-6">
-            <div>
-              {data
-                ?.filter((item) => item.fieldname === "thumbnail")
-                ?.map((item, index) => (
-                  <span key={index}>
-                    <FormField
-                      control={form.control}
-                      name="thumbnail"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <FileInput
-                              value={field.value}
-                              onChange={(files) => field.onChange(files?.[0])}
-                              className="size-56 shadow-md"
-                            >
-                              <FilePreview
-                                file={field.value}
-                                {...(item?.url && {
-                                  defaultValue: {
-                                    type: "image",
-                                    url: item?.url.src,
-                                  },
-                                })}
-                                className="size-full grid place-content-center border-none"
-                              >
-                                <DragDropIcon className="size-[25px]" />
-                              </FilePreview>
-                            </FileInput>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </span>
-                ))}
-              <span className="min-w-56 block">Thumbnail</span>
-            </div>
-            <div>
-              <div className="flex flex-row gap-4">
-                {data
-                  ?.filter((item) => item.fieldname === "other_images")
-                  ?.map((item, index) => (
-                    <span key={index}>
-                      <FormField
-                        control={form.control}
-                        name="other_images"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <FileInput
-                                value={field.value}
-                                onChange={(files) => field.onChange(files?.[0])}
-                                className="size-56 shadow-md"
-                              >
-                                <FilePreview
-                                  file={field.value}
-                                  {...(item?.url && {
-                                    defaultValue: {
-                                      type: "image",
-                                      url: item?.url.src,
-                                    },
-                                  })}
-                                  className="size-full grid place-content-center border-none"
-                                >
-                                  <DragDropIcon className="size-[25px]" />
-                                </FilePreview>
-                              </FileInput>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </span>
-                  ))}
-              </div>
-              <span className="min-w-56 block">Other Images</span>
-            </div>
+
+      <div className="w-full grid grid-cols-12 gap-6">
+        <div className="flex flex-row gap-6">
+          <div>
+            <span>
+              <FileInput
+                value={data.thumbnail}
+                onChange={(files) =>
+                  files?.[0] && handleFileChange("thumbnail", files[0])
+                }
+                className="size-56 shadow-md"
+              >
+                <FilePreview
+                  file={data.thumbnail}
+                  defaultValue={{
+                    type: "image",
+                    url: data.thumbnail,
+                  }}
+                  className="size-full grid place-content-center border-none"
+                >
+                  <DragDropIcon className="size-[25px]" />
+                </FilePreview>
+              </FileInput>
+            </span>
+            <span className="min-w-56 block">Thumbnail</span>
           </div>
-        </form>
-      </Form>
+          <div>
+            <div className="flex flex-row gap-4">
+              <FileInput
+                value={data.image_1}
+                onChange={(files) =>
+                  files?.[0] && handleFileChange("image_1", files[0])
+                }
+                className="size-56 shadow-md"
+              >
+                <FilePreview
+                  file={data.image_1}
+                  defaultValue={{
+                    type: "image",
+                    url: data.image_1,
+                  }}
+                  className="size-full grid place-content-center border-none"
+                >
+                  <DragDropIcon className="size-[25px]" />
+                </FilePreview>
+              </FileInput>
+              <FileInput
+                value={data.image_2}
+                onChange={(files) =>
+                  files?.[0] && handleFileChange("image_2", files[0])
+                }
+                className="size-56 shadow-md"
+              >
+                <FilePreview
+                  file={data.image_2}
+                  defaultValue={{
+                    type: "image",
+                    url: data.image_2,
+                  }}
+                  className="size-full grid place-content-center border-none"
+                >
+                  <DragDropIcon className="size-[25px]" />
+                </FilePreview>
+              </FileInput>
+              <FileInput
+                value={data.image_3}
+                onChange={(files) =>
+                  files?.[0] && handleFileChange("image_3", files[0])
+                }
+                className="size-56 shadow-md"
+              >
+                <FilePreview
+                  file={data.image_3}
+                  defaultValue={{
+                    type: "image",
+                    url: data.image_3,
+                  }}
+                  className="size-full grid place-content-center border-none"
+                >
+                  <DragDropIcon className="size-[25px]" />
+                </FilePreview>
+              </FileInput>
+              <FileInput
+                value={data.image_4}
+                onChange={(files) =>
+                  files?.[0] && handleFileChange("image_4", files[0])
+                }
+                className="size-56 shadow-md"
+              >
+                <FilePreview
+                  file={data.image_4}
+                  defaultValue={{
+                    type: "image",
+                    url: data.image_4,
+                  }}
+                  className="size-full grid place-content-center border-none"
+                >
+                  <DragDropIcon className="size-[25px]" />
+                </FilePreview>
+              </FileInput>
+            </div>
+            <span className="min-w-56 block">Other Images</span>
+          </div>
+        </div>
+      </div>
     </Card>
   );
 }
