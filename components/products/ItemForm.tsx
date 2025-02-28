@@ -106,13 +106,10 @@ const ItemForm: React.FC = () => {
   const {
     mutate: create,
     isPending: creating,
-    isError,
-    isSuccess,
   } = useCreate();
 
   const isPending = updating || creating;
 
-  console.log("error", form.formState.errors);
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     const payload = { ...data };
 
