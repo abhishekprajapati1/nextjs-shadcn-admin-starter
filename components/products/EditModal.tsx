@@ -7,20 +7,18 @@ import {
 } from "@/components/ui/dialog";
 import Modal from "@/components/ui/modal";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { editModal } from "@/store/products/form.slice";
+import { setData } from "@/store/products/form.slice";
 import ItemForm from "./ItemForm";
 
 const EditModal: React.FC = () => {
   const dispatch = useAppDispatch();
-  const modal = useAppSelector(
-    (store) => store.productStore.formStore.editModal
-  );
- 
+  const data = useAppSelector((store) => store.productStore.formStore.data);
+
   return (
     <Modal
       showCloseIcon
-      open={modal}
-      onOpenChange={(val) => dispatch(editModal(val))}
+      open={Boolean(data)}
+      onOpenChange={(val) => dispatch(setData(val ? data : null))}
       className="max-w-[45rem]"
     >
       <DialogHeader>

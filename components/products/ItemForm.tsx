@@ -41,10 +41,11 @@ import { IColor } from "../colors/ListItem";
 import { IPowerType } from "../power-types/PowerType";
 
 const ItemForm: React.FC = () => {
+  const product = useAppSelector((store) => store.productStore.formStore.data);
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       category_id: "",
-      color_ids: [],
+      ...(product && { color_ids: [] }),
       description: "",
       frame_material_id: "",
       frame_size: [],
@@ -83,7 +84,7 @@ const ItemForm: React.FC = () => {
   const { data: shapesData, isLoading: shapesDataLoading } = useFetch<IShape[]>(
     {
       endpoint: ENDPOINTS.admin.shapes.fetch_all(),
-    }
+    },
   );
   const { data: colorData, isLoading: colorDataLoading } = useFetch<IColor[]>({
     endpoint: ENDPOINTS.admin.colors.fetch_all(),
@@ -97,35 +98,46 @@ const ItemForm: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const { data, item_id } = useAppSelector(
-    (store) => store.productStore.formStore
-  );
-
   const { mutate: update, isPending: updating } = useUpdate();
 
-  const {
-    mutate: create,
-    isPending: creating,
-  } = useCreate();
+  const { mutate: create, isPending: creating } = useCreate();
 
   const isPending = updating || creating;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    const payload = { ...data };
-
-    if (item_id) {
-      delete payload.color_ids;
-      update(payload);
+    if (product?.id) {
+      update(data);
     } else {
-      create(payload);
+      create(data);
     }
   };
 
   React.useEffect(() => {
-    if (data) {
-      form.reset(data);
+    if (product) {
+      form.reset({
+        category_id: product.category_id,
+        description: product.description,
+        frame_material_id: product.frame_material_id,
+        frame_size: product.frame_size,
+        frame_style: product.frame_style,
+        frame_width: product.frame_width,
+        raw_material_sourced_from: product.raw_material_sourced_from,
+        gender: product.gender,
+        lens_height: product.lens_height,
+        lens_width: product.lens_width,
+        lens_material: product.lens_material,
+        listing_price: product.listing_price,
+        model_name: product.model_name,
+        model_number: product.model_number,
+        power_type_ids: product.power_type_ids,
+        price: product.price,
+        seo_title: product.seo_title,
+        shape_id: product.shape_id,
+        stock_quantity: product.stock_quantity,
+        tags: product.tags,
+      });
     }
-  }, [data, form]);
+  }, [product, form]);
 
   return (
     <Form {...form}>
@@ -165,7 +177,7 @@ const ItemForm: React.FC = () => {
                     type="number"
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
                       )
                     }
                   />
@@ -227,7 +239,7 @@ const ItemForm: React.FC = () => {
                     type="number"
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
                       )
                     }
                   />
@@ -251,7 +263,7 @@ const ItemForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
                       )
                     }
                   />
@@ -278,7 +290,7 @@ const ItemForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
                       )
                     }
                   />
@@ -329,7 +341,7 @@ const ItemForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
                       )
                     }
                   />
@@ -353,7 +365,7 @@ const ItemForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
                       )
                     }
                   />
@@ -409,7 +421,7 @@ const ItemForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
                       )
                     }
                   />
@@ -451,10 +463,10 @@ const ItemForm: React.FC = () => {
                     options={
                       categoriesDataLoading
                         ? []
-                        : categoriesData?.map((cat) => ({
+                        : (categoriesData?.map((cat) => ({
                             label: cat?.title ?? "Unknown",
                             value: cat?.id ?? "",
-                          })) ?? []
+                          })) ?? [])
                     }
                     placeholder="Select category"
                     value={field.value ?? ""}
@@ -479,10 +491,10 @@ const ItemForm: React.FC = () => {
                     options={
                       frameMaterialsLoading
                         ? []
-                        : frameMaterialsData?.map((mat) => ({
+                        : (frameMaterialsData?.map((mat) => ({
                             label: mat?.title ?? "Unknown",
                             value: mat?.id ?? "",
-                          })) ?? []
+                          })) ?? [])
                     }
                     placeholder="Select Material"
                     value={field.value ?? ""}
@@ -507,10 +519,10 @@ const ItemForm: React.FC = () => {
                     options={
                       shapesDataLoading
                         ? []
-                        : shapesData?.map((shape) => ({
+                        : (shapesData?.map((shape) => ({
                             label: shape?.title ?? "Unknown",
                             value: shape?.id ?? "",
-                          })) ?? []
+                          })) ?? [])
                     }
                     placeholder="Select Shape"
                     value={field.value ?? ""}
@@ -524,31 +536,33 @@ const ItemForm: React.FC = () => {
           {/* shape ends */}
 
           {/* color start */}
-          <FormField
-            control={form.control}
-            name="color_ids"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Colors</FormLabel>
-                <FormControl>
-                  <MultiSelect
-                    id="color_ids"
-                    options={
-                      colorDataLoading
-                        ? []
-                        : colorData?.map((color) => ({
-                            label: color?.color ?? "Unknown",
-                            value: color?.id ?? "",
-                          })) ?? []
-                    }
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          {!product && (
+            <FormField
+              control={form.control}
+              name="color_ids"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Colors</FormLabel>
+                  <FormControl>
+                    <MultiSelect
+                      id="color_ids"
+                      options={
+                        colorDataLoading
+                          ? []
+                          : (colorData?.map((color) => ({
+                              label: color?.color ?? "Unknown",
+                              value: color?.id ?? "",
+                            })) ?? [])
+                      }
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
           {/* color ends */}
 
           {/* power type start */}
@@ -564,10 +578,10 @@ const ItemForm: React.FC = () => {
                     options={
                       powerDataLoading
                         ? []
-                        : powerData?.map((power) => ({
+                        : (powerData?.map((power) => ({
                             label: power?.title ?? "Unknown",
                             value: power?.id ?? "",
-                          })) ?? []
+                          })) ?? [])
                     }
                     value={field.value ?? ""}
                     onChange={field.onChange}
@@ -626,15 +640,17 @@ const ItemForm: React.FC = () => {
         <DialogFooter>
           <Button
             type="button"
-            onClick={() => dispatch(item_id ? resetStore() : showModal(false))}
+            onClick={() =>
+              dispatch(product?.id ? resetStore() : showModal(false))
+            }
             variant="secondary"
           >
-            {item_id ? "Discard" : "Cancel"}
+            {product?.id ? "Discard" : "Cancel"}
           </Button>
           <Button type="submit">
             <ProcessIndicator
               isProcessing={isPending}
-              btnText={item_id ? "Save" : "Create"}
+              btnText={product?.id ? "Save" : "Create"}
             />
           </Button>
         </DialogFooter>
