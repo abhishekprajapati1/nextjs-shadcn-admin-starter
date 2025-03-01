@@ -39,7 +39,9 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
         <div className="justify-center">{data?.model_number}</div>
       </td>
       <td>
-        <div className="justify-center">{data?.gender}</div>
+        <div className="justify-center">
+          {capitalizeFirstLetter(data?.gender)}
+        </div>
       </td>
       <td>
         <div className="justify-center">{data?.stock_quantity}</div>
@@ -70,7 +72,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
                 setItemToDelete({
                   id: data?.id || "",
                   label: data.model_name || "",
-                }),
+                })
               )
             }
             className="bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white ease-linear duration-300"
