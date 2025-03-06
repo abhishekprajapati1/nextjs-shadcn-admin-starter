@@ -22,9 +22,9 @@ export enum Gender {
   OTHER = "OTHER",
 }
 
-export const genderOptions = Object.values(Gender).map(value => ({
+export const genderOptions = Object.values(Gender).map((value) => ({
   label: value.charAt(0).toUpperCase() + value.slice(1).toLowerCase(),
-  value: value
+  value: value,
 }));
 
 export enum FrameSize {
@@ -42,6 +42,11 @@ export const frameSizes: InputOption[] = [
   { label: "Wide", value: FrameSize.WIDE },
 ];
 
+export const tags: InputOption[] = [
+  { label: "Kids", value: "Kids" },
+  { label: "Adults", value: "Adults" },
+  { label: "Old", value: "Old" },
+];
 export const formSchema = z.object({
   seo_title: z.string(),
   description: z.string(),
@@ -83,21 +88,29 @@ export const formSchema = z.object({
         FrameSize.MEDIUM,
         FrameSize.NARROW,
         FrameSize.WIDE,
-      ]),
+      ])
     )
     .min(1),
 
   power_type_ids: z.array(
     z.string().refine(isValidObjectId, {
       message: "Invalid MongoDB ObjectId format",
-    }),
+    })
   ),
 
-  color_ids: z.array(
-    z.string().refine(isValidObjectId, {
-      message: "Invalid MongoDB ObjectId format",
-    }),
-  ),
+  // color_ids: z.array(
+  //   z.string().refine(isValidObjectId, {
+  //     message: "Invalid MongoDB ObjectId format",
+  //   }),
+  // ),
+
+  color_ids: z
+    .array(
+      z
+        .string()
+        .refine(isValidObjectId, { message: "Invalid MongoDB ObjectId format" })
+    )
+    .optional(),
 
   shape_id: z
     .string()

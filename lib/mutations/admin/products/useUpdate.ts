@@ -10,15 +10,18 @@ import { formSchema } from "@/lib/validations/admin/product.validation";
 const useUpdate = (onSuccess?: () => void) => {
   const dispatch = useAppDispatch();
 
-  const item_id = useAppSelector(
-    (store) => store.productStore.formStore.item_id,
-  );
-
+  const product = useAppSelector((store) => store.productStore.formStore.data);
+  console.log("see this", product?.id);
   const api = getApiClient();
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (data: Partial<z.infer<typeof formSchema>>) => {
-      const res = await api.put(ENDPOINTS.admin.products.update(item_id), data);
+      if (!product?.id) throw new Error("Product ID is required");
+
+      const res = await api.put(
+        ENDPOINTS.admin.products.update(product?.id),
+        data,
+      );
       return res.data;
     },
     onSuccess: (_data) => {
