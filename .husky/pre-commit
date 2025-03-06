@@ -1,0 +1,10 @@
+current_branch=$(git branch --show-current)
+
+if [ "$current_branch" = "main" ]; then
+    echo "Waiiiiiiit Whhhaaaat!!😳 DO YOU REALLY WANT TO PUSH IN origin/main BRANCH?"
+    echo "YOU ARE A REAL DEVIL😈 PROMISE ME, YOU WON'T COME BACK AFTER THE DISASTER..."
+    exit 1
+else
+    pnpm validate
+    exit 0
+fi
