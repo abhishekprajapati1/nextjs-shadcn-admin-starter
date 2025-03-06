@@ -120,49 +120,49 @@
     @apply bg-background text-foreground;
   }
   /* table classes */
-  table {
+  table.ak-table {
     @apply min-w-full border-collapse;
   }
-  tr > th {
+  table.ak-table tr > th {
     @apply min-w-fit text-nowrap py-4 text-start font-extrabold text-sm text-muted-foreground border-b;
   }
-  tr > th:nth-child(1) {
+  table.ak-table tr > th:nth-child(1) {
     @apply flex items-center justify-start pl-4;
   }
-  tr > th:nth-last-child(1) {
+  table.ak-table tr > th:nth-last-child(1) {
     @apply flex items-center justify-end pr-4;
   }
-  tr > th:nth-child(1) > * {
+  table.ak-table tr > th:nth-child(1) > * {
     @apply pl-4;
   }
-  tr > th:nth-last-child(1) > * {
+  table.ak-table tr > th:nth-last-child(1) > * {
     @apply flex items-center justify-end pr-4;
   }
-  tbody {
+  table.ak-table tbody {
     @apply text-accent-foreground/70;
   }
 
-  tbody > tr {
+  table.ak-table tbody > tr {
     @apply !shadow-[0px_0px_20px_#00000005];
   }
 
-  tr > td > * {
+  table.ak-table tr > td > * {
     @apply h-12 flex text-nowrap text-sm items-center;
   }
 
-  tr > td {
+  table.ak-table tr > td {
     @apply bg-white;
   }
-  tr > td:nth-child(1) {
+  table.ak-table tr > td:nth-child(1) {
     @apply rounded-s-md;
   }
-  tr > td:nth-last-child(1) {
+  table.ak-table tr > td:nth-last-child(1) {
     @apply rounded-e-md;
   }
-  tr > td:nth-child(1) > * {
+  table.ak-table tr > td:nth-child(1) > * {
     @apply pl-4;
   }
-  tr > td:nth-last-child(1) > * {
+  table.ak-table tr > td:nth-last-child(1) > * {
     @apply flex items-center justify-end pr-4;
   }
 
@@ -285,9 +285,10 @@
       opacity: 0.5;
     }
   }
-  
+
   .bg-grid-primary {
-    background-image: linear-gradient(currentColor 1px, transparent 1px),
+    background-image:
+      linear-gradient(currentColor 1px, transparent 1px),
       linear-gradient(to right, currentColor 1px, transparent 1px);
   }
 }

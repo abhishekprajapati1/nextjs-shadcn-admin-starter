@@ -8,7 +8,10 @@ const List = () => {
     useItems();
   if (isLoading) {
     return (
-      <table style={{ borderCollapse: "separate", borderSpacing: "0 10px" }}>
+      <table
+        className="ak-table"
+        style={{ borderCollapse: "separate", borderSpacing: "0 10px" }}
+      >
         <thead>
           <tr>
             <th>Model Name</th>
@@ -24,7 +27,7 @@ const List = () => {
         <tbody>
           {Array(4)
             .fill("")
-            ?.map((d,index) => {
+            ?.map((d, index) => {
               return <ListItem key={index} />;
             })}
         </tbody>
@@ -33,7 +36,10 @@ const List = () => {
   }
 
   return (
-    <table style={{ borderCollapse: "separate", borderSpacing: "0 10px" }}>
+    <table
+      className="ak-table"
+      style={{ borderCollapse: "separate", borderSpacing: "0 10px" }}
+    >
       <thead>
         <tr>
           <th>Model Name</th>

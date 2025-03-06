@@ -3,7 +3,10 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { showEditPlaceOrder,showDeletePlaceOrder} from "@/store/placed-order/modal.slice";
+import {
+  showEditPlaceOrder,
+  showDeletePlaceOrder,
+} from "@/store/placed-order/modal.slice";
 import { useAppDispatch } from "@/store";
 
 const TableData = () => {
@@ -12,7 +15,7 @@ const TableData = () => {
     <>
       <div className="container mx-auto px-4 pt-2">
         <div className="  rounded my-6 overflow-x-auto">
-          <table style={{ borderSpacing: "0px 10px" }}>
+          <table className="ak-table" style={{ borderSpacing: "0px 10px" }}>
             <thead>
               <tr>
                 <th>Order Date</th>
@@ -54,7 +57,12 @@ const TableData = () => {
                     >
                       <FaRegEdit className="w-5 h-5 text-green-500" />
                     </Button>
-                    <Button variant={"ghost"} size={"icon"} title="Delete"  onClick={() => dispatch(showDeletePlaceOrder(true))}>
+                    <Button
+                      variant={"ghost"}
+                      size={"icon"}
+                      title="Delete"
+                      onClick={() => dispatch(showDeletePlaceOrder(true))}
+                    >
                       <MdDelete className="w-5 h-5 text-red-1000" />
                     </Button>
                   </div>

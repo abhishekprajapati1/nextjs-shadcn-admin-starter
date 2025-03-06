@@ -8,7 +8,10 @@ const List = () => {
     useItems();
   if (isLoading) {
     return (
-      <table style={{ borderCollapse: "separate", borderSpacing: "0 10px" }}>
+      <table
+        className="ak-table"
+        style={{ borderCollapse: "separate", borderSpacing: "0 10px" }}
+      >
         <thead>
           <tr>
             <th>Name</th>
