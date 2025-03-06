@@ -28,6 +28,9 @@ import {
   Menu,
   Heart,
   ChevronRight,
+  Phone,
+  Facebook,
+  PhoneCallIcon,
 } from "lucide-react";
 import {
   Sheet,
@@ -37,6 +40,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
+import { InstagramLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 
 const categories = [
   {
@@ -93,6 +97,38 @@ export function MainHeader() {
         </p>
       </div>
 
+      {/* Navigation */}
+      <div className="hidden md:flex h-fit items-center border-b-2 py-2">
+        <div className="container flex items-center justify-between">
+          <div className="hidden md:flex items-center space-x-5">
+            <Link
+              href="https://facebook.com"
+              className="text-secondary-foreground text-xs font-medium flex items-center gap-1 hover:text-primary"
+            >
+              <Facebook size={"1rem"} /> Facebook
+            </Link>
+            <Link
+              href="https://instagram.com"
+              className="text-secondary-foreground text-xs font-medium flex items-center gap-1 hover:text-primary"
+            >
+              <InstagramLogoIcon /> Instagram
+            </Link>
+            <Link
+              href="https://twitter.com"
+              className="text-secondary-foreground text-xs font-medium flex items-center gap-1 hover:text-primary"
+            >
+              <TwitterLogoIcon /> Twitter
+            </Link>
+          </div>
+          <a
+            className="flex items-center gap-1 text-xs font-semibold"
+            href="tel:6388233466"
+          >
+            <PhoneCallIcon size={"1rem"} /> +916388233466
+          </a>
+        </div>
+      </div>
+
       <div className="container flex h-16 items-center">
         {/* Mobile Menu */}
         <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
@@ -114,7 +150,10 @@ export function MainHeader() {
             </SheetHeader>
             <nav className="px-6">
               {categories.map((category) => (
-                <div key={category.title} className="py-4 border-b last:border-0">
+                <div
+                  key={category.title}
+                  className="py-4 border-b last:border-0"
+                >
                   <Link
                     href={category.href}
                     className="flex items-center justify-between text-lg font-medium hover:text-primary"
