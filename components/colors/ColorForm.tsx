@@ -27,11 +27,12 @@ const ColoreForm: React.FC = () => {
     mode: "onBlur",
     resolver: zodResolver(formSchema),
   });
+  const { isDirty } = form.formState;
 
   const dispatch = useAppDispatch();
 
   const { data, item_id } = useAppSelector(
-    (store) => store.colorStore.formStore
+    (store) => store.colorStore.formStore,
   );
 
   const { mutate: updateColor, isPending: updating } = useUpdate();
@@ -41,10 +42,15 @@ const ColoreForm: React.FC = () => {
   const isPending = updating || creating;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    if (item_id) {
-      updateColor(data);
+    console.log(isDirty);
+    if (isDirty) {
+      if (item_id) {
+        updateColor(data);
+      } else {
+        createColor(data);
+      }
     } else {
-      createColor(data);
+      dispatch(resetStore());
     }
   };
 
@@ -52,6 +58,7 @@ const ColoreForm: React.FC = () => {
     if (data) {
       form.reset({
         color: data?.color,
+        name: data?.name,
       });
     }
   }, [data, form]);
@@ -62,6 +69,21 @@ const ColoreForm: React.FC = () => {
         className="flex flex-col gap-4"
         onSubmit={form.handleSubmit(onSubmit)}
       >
+        <div>
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input placeholder="Enter color name." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
         <div className="flex items-center gap-4">
           <FormField
             control={form.control}

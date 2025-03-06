@@ -12,7 +12,8 @@ import { setItemId } from "@/store/colors/form.slice";
 import { setItemToDelete } from "@/store/colors/data.slice";
 
 export interface IColor extends IRecordMeta {
-  color?: string;
+  color: string;
+  name: string;
 }
 
 interface ListItemProps {
@@ -49,7 +50,8 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
               dispatch(
                 setData({
                   color: data?.color,
-                })
+                  name: data?.name,
+                }),
               );
             }}
             variant="secondary"
@@ -65,7 +67,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
                 setItemToDelete({
                   id: data?.id || "",
                   label: data.color || "",
-                })
+                }),
               )
             }
             className="bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white ease-linear duration-300"
