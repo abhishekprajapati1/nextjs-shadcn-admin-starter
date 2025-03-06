@@ -1,4 +1,4 @@
-// import { MainHeader } from "@/components/navigation/MainHeader";
+import { MainHeader } from "@/components/navigation/MainHeader";
 import UnderConstruction from "@/components/UnderConstruction";
 import { Metadata } from "next";
 
@@ -26,8 +26,8 @@ export const metadata: Metadata = {
 const HomePage = () => {
   return (
     <div>
-      {/* <MainHeader /> */}
-      <UnderConstruction />
+      <MainHeader />
+      {/* <UnderConstruction /> */}
     </div>
   );
 };

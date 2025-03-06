@@ -5,18 +5,17 @@ import Header from "@/components/coupon-manager/header";
 import List from "@/components/coupon-manager/List";
 import PageWrapper from "@/components/wrappers/PageWrapper";
 
-const page=()=>
-{
-    return(
-        <div className="flex flex-col h-full overflow-auto">
-        <DeleteModal />
-        <EditModal />
-        <AddModal />
-        <Header />
-        <PageWrapper>
-          <List />
-        </PageWrapper>
-      </div>
-    )
-}
+const page = () => {
+  return (
+    <div className="flex flex-col h-full overflow-auto">
+      <DeleteModal />
+      <EditModal />
+      <AddModal />
+      <Header />
+      <PageWrapper>
+        <List />
+      </PageWrapper>
+    </div>
+  );
+};
 export default page;
