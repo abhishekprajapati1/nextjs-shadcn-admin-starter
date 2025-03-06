@@ -4,12 +4,14 @@ import { createSlice } from "@reduxjs/toolkit";
 type InitialState = {
   item_id: string; // used to edit the item.
   modal: boolean;
+  editModal: boolean;
   data: Partial<IProduct> | null;
 };
 
 const initialState: InitialState = {
   data: null,
   modal: false,
+  editModal: false,
   item_id: "",
 };
 
@@ -26,11 +28,15 @@ const formSlice = createSlice({
     showModal: (state, { payload }: { payload: boolean }) => {
       state.modal = payload;
     },
+    editModal: (state, { payload }: { payload: boolean }) => {
+      state.editModal = payload;
+    },
     resetStore: () => {
       return initialState;
     },
   },
 });
 
-export const { setData, setItemId, showModal, resetStore } = formSlice.actions;
+export const { setData, setItemId, showModal, editModal, resetStore } =
+  formSlice.actions;
 export default formSlice.reducer;

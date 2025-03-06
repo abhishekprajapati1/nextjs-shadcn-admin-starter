@@ -24,8 +24,8 @@ const List = () => {
         <tbody>
           {Array(4)
             .fill("")
-            ?.map((d) => {
-              return <ListItem key={d.id} />;
+            ?.map((d,index) => {
+              return <ListItem key={index} />;
             })}
         </tbody>
       </table>

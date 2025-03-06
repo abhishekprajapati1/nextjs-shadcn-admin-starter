@@ -7,12 +7,11 @@ import { useAppDispatch } from "@/store";
 import { IRecordMeta } from "@/lib/types";
 import { Skeleton } from "../ui/skeleton";
 import { capitalizeFirstLetter } from "@/lib/utils";
-import { setData } from "@/store/coupon-manager/form.slice";
-import { setItemId } from "@/store/coupon-manager/form.slice";
-import { setItemToDelete } from "@/store/coupon-manager/data.slice";
 import { z } from "zod";
 import { formSchema } from "@/lib/validations/admin/product.validation";
 import dayjs from "@/lib/dayjs";
+import { setData } from "@/store/products/form.slice";
+import { setItemToDelete } from "@/store/products/data.slice";
 
 export interface IProduct extends IRecordMeta, z.infer<typeof formSchema> {}
 
@@ -24,24 +23,25 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
   const dispatch = useAppDispatch();
 
   const handleEditClick = () => {
-    dispatch(setItemId(data?.id || ""));
-    dispatch(setData({}));
+    dispatch(setData(data ?? null));
   };
-  console.log("see this", data);
+
   if (!data) {
     return <ListItemSkeleton />;
   }
 
   return (
     <tr>
-      <td className="uppercase">
-        <div className="hover:text-blue-500">{data?.model_name || "Blinde" }</div>
+      <td>
+        <div>{capitalizeFirstLetter(data?.model_name)}</div>
       </td>
       <td>
         <div className="justify-center">{data?.model_number || "Cube 136005"}</div>
       </td>
       <td>
-        <div className="justify-center">{data?.gender || "Male"}</div>
+        <div className="justify-center">
+          {capitalizeFirstLetter(data?.gender)}
+        </div>
       </td>
       <td>
         <div className="justify-center">{data?.stock_quantity || 0}</div>
@@ -72,7 +72,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
                 setItemToDelete({
                   id: data?.id || "",
                   label: data.model_name || "",
-                }),
+                })
               )
             }
             className="bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white ease-linear duration-300"

@@ -24,6 +24,7 @@ import {
   frameStyles,
   Gender,
   genderOptions,
+  tags,
 } from "@/lib/validations/admin/product.validation";
 import { resetStore, showModal } from "@/store/products/form.slice";
 import useUpdate from "@/lib/mutations/admin/products/useUpdate";
@@ -31,12 +32,20 @@ import useCreate from "@/lib/mutations/admin/products/useCreate";
 import { Textarea } from "../ui/textarea";
 import MultiSelect from "../ui/multi-select";
 import SelectBox from "../ui/select-box";
+import useFetch from "@/lib/hooks/use-fetch";
+import ENDPOINTS from "@/lib/endpoints";
+import { ICategory } from "../categories/ListItem";
+import { IFrameMaterial } from "../frame-materials/FrameMaterial";
+import { IShape } from "../shapes/ListItem";
+import { IColor } from "../colors/ListItem";
+import { IPowerType } from "../power-types/PowerType";
 
 const ItemForm: React.FC = () => {
+  const product = useAppSelector((store) => store.productStore.formStore.data);
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       category_id: "",
-      color_ids: [],
+      ...(product && { color_ids: [] }),
       description: "",
       frame_material_id: "",
       frame_size: [],
@@ -61,11 +70,33 @@ const ItemForm: React.FC = () => {
     resolver: zodResolver(formSchema),
   });
 
-  const dispatch = useAppDispatch();
+  const { data: categoriesData, isLoading: categoriesDataLoading } = useFetch<
+    ICategory[]
+  >({
+    endpoint: ENDPOINTS.admin.categories.fetch_all(),
+  });
 
-  const { data, item_id } = useAppSelector(
-    (store) => store.couponStore.formStore
+  const { data: frameMaterialsData, isLoading: frameMaterialsLoading } =
+    useFetch<IFrameMaterial[]>({
+      endpoint: ENDPOINTS.admin.frame_materials.fetch_all(),
+    });
+
+  const { data: shapesData, isLoading: shapesDataLoading } = useFetch<IShape[]>(
+    {
+      endpoint: ENDPOINTS.admin.shapes.fetch_all(),
+    },
   );
+  const { data: colorData, isLoading: colorDataLoading } = useFetch<IColor[]>({
+    endpoint: ENDPOINTS.admin.colors.fetch_all(),
+  });
+
+  const { data: powerData, isLoading: powerDataLoading } = useFetch<
+    IPowerType[]
+  >({
+    endpoint: ENDPOINTS.admin.power_types.fetch_all(),
+  });
+
+  const dispatch = useAppDispatch();
 
   const { mutate: update, isPending: updating } = useUpdate();
 
@@ -74,7 +105,7 @@ const ItemForm: React.FC = () => {
   const isPending = updating || creating;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    if (item_id) {
+    if (product?.id) {
       update(data);
     } else {
       create(data);
@@ -82,10 +113,31 @@ const ItemForm: React.FC = () => {
   };
 
   React.useEffect(() => {
-    if (data) {
-      form.reset({});
+    if (product) {
+      form.reset({
+        category_id: product.category_id,
+        description: product.description,
+        frame_material_id: product.frame_material_id,
+        frame_size: product.frame_size,
+        frame_style: product.frame_style,
+        frame_width: product.frame_width,
+        raw_material_sourced_from: product.raw_material_sourced_from,
+        gender: product.gender,
+        lens_height: product.lens_height,
+        lens_width: product.lens_width,
+        lens_material: product.lens_material,
+        listing_price: product.listing_price,
+        model_name: product.model_name,
+        model_number: product.model_number,
+        power_type_ids: product.power_type_ids,
+        price: product.price,
+        seo_title: product.seo_title,
+        shape_id: product.shape_id,
+        stock_quantity: product.stock_quantity,
+        tags: product.tags,
+      });
     }
-  }, [data, form]);
+  }, [product, form]);
 
   return (
     <Form {...form}>
@@ -125,7 +177,7 @@ const ItemForm: React.FC = () => {
                     type="number"
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
                       )
                     }
                   />
@@ -187,7 +239,7 @@ const ItemForm: React.FC = () => {
                     type="number"
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
                       )
                     }
                   />
@@ -211,7 +263,7 @@ const ItemForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
                       )
                     }
                   />
@@ -238,7 +290,7 @@ const ItemForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
                       )
                     }
                   />
@@ -289,7 +341,7 @@ const ItemForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
                       )
                     }
                   />
@@ -313,7 +365,7 @@ const ItemForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
                       )
                     }
                   />
@@ -369,7 +421,7 @@ const ItemForm: React.FC = () => {
                     {...field}
                     onChange={(e) =>
                       field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
                       )
                     }
                   />
@@ -399,9 +451,149 @@ const ItemForm: React.FC = () => {
               </FormItem>
             )}
           />
-          {/* end of frame style */}
+          {/* Category starts */}
+          <FormField
+            control={form.control}
+            name="category_id"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category</FormLabel>
+                <FormControl>
+                  <SelectBox
+                    options={
+                      categoriesDataLoading
+                        ? []
+                        : (categoriesData?.map((cat) => ({
+                            label: cat?.title ?? "Unknown",
+                            value: cat?.id ?? "",
+                          })) ?? [])
+                    }
+                    placeholder="Select category"
+                    value={field.value ?? ""}
+                    onChange={(val) => field.onChange(val ?? "")}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* Category ends */}
 
-          {/* frame style */}
+          {/* Frame material starts */}
+          <FormField
+            control={form.control}
+            name="frame_material_id"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Frame Material</FormLabel>
+                <FormControl>
+                  <SelectBox
+                    options={
+                      frameMaterialsLoading
+                        ? []
+                        : (frameMaterialsData?.map((mat) => ({
+                            label: mat?.title ?? "Unknown",
+                            value: mat?.id ?? "",
+                          })) ?? [])
+                    }
+                    placeholder="Select Material"
+                    value={field.value ?? ""}
+                    onChange={(val) => field.onChange(val ?? "")}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* Frame material ends */}
+
+          {/* shape starts */}
+          <FormField
+            control={form.control}
+            name="shape_id"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Shape</FormLabel>
+                <FormControl>
+                  <SelectBox
+                    options={
+                      shapesDataLoading
+                        ? []
+                        : (shapesData?.map((shape) => ({
+                            label: shape?.title ?? "Unknown",
+                            value: shape?.id ?? "",
+                          })) ?? [])
+                    }
+                    placeholder="Select Shape"
+                    value={field.value ?? ""}
+                    onChange={(val) => field.onChange(val ?? "")}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* shape ends */}
+
+          {/* color start */}
+          {!product && (
+            <FormField
+              control={form.control}
+              name="color_ids"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Colors</FormLabel>
+                  <FormControl>
+                    <MultiSelect
+                      id="color_ids"
+                      options={
+                        colorDataLoading
+                          ? []
+                          : (colorData?.map((color) => ({
+                              label: color?.color ?? "Unknown",
+                              value: color?.id ?? "",
+                            })) ?? [])
+                      }
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+          {/* color ends */}
+
+          {/* power type start */}
+          <FormField
+            control={form.control}
+            name="power_type_ids"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Power Types</FormLabel>
+                <FormControl>
+                  <MultiSelect
+                    id="power_type_ids"
+                    options={
+                      powerDataLoading
+                        ? []
+                        : (powerData?.map((power) => ({
+                            label: power?.title ?? "Unknown",
+                            value: power?.id ?? "",
+                          })) ?? [])
+                    }
+                    value={field.value ?? ""}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* power types ends */}
+
+          {/* frame size  starts*/}
           <FormField
             control={form.control}
             name="frame_size"
@@ -420,22 +612,45 @@ const ItemForm: React.FC = () => {
               </FormItem>
             )}
           />
-          {/* end of frame size */}
+          {/* frame size ends */}
+
+          {/* tags start */}
+          <FormField
+            control={form.control}
+            name="tags"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tags</FormLabel>
+                <FormControl>
+                  <MultiSelect
+                    id="tags"
+                    options={tags}
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* tags ends */}
         </div>
 
         {/* Footer with buttons */}
         <DialogFooter>
           <Button
             type="button"
-            onClick={() => dispatch(item_id ? resetStore() : showModal(false))}
+            onClick={() =>
+              dispatch(product?.id ? resetStore() : showModal(false))
+            }
             variant="secondary"
           >
-            {item_id ? "Discard" : "Cancel"}
+            {product?.id ? "Discard" : "Cancel"}
           </Button>
           <Button type="submit">
             <ProcessIndicator
               isProcessing={isPending}
-              btnText={item_id ? "Save" : "Create"}
+              btnText={product?.id ? "Save" : "Create"}
             />
           </Button>
         </DialogFooter>
