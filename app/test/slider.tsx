@@ -17,7 +17,7 @@ const Slider: React.FC = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
 
   return (
-    <section className="sm:max-w-[30rem] sm:min-w-[20rm] bg-white py-8">
+    <section className="max-w-[30rem] min-w-[20rm] bg-white py-8">
       <div className="container">
         <Swiper
           loop={true}
