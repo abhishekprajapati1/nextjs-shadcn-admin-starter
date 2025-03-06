@@ -97,7 +97,6 @@ export const formSchema = z.object({
       message: "Invalid MongoDB ObjectId format",
     })
   ),
-
   // color_ids: z.array(
   //   z.string().refine(isValidObjectId, {
   //     message: "Invalid MongoDB ObjectId format",
@@ -132,4 +131,9 @@ export const formSchema = z.object({
       message: "Invalid MongoDB ObjectId format",
     })
     .optional(),
+});
+
+export const productSchema = z.object({
+  other_images: z.any().optional(),
+  thumbnail: z.any().optional(),
 });

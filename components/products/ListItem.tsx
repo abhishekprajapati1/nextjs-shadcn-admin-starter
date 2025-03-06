@@ -36,7 +36,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
         <div>{capitalizeFirstLetter(data?.model_name)}</div>
       </td>
       <td>
-        <div className="justify-center">{data?.model_number}</div>
+        <div className="justify-center">{data?.model_number || "Cube 136005"}</div>
       </td>
       <td>
         <div className="justify-center">
@@ -44,16 +44,16 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
         </div>
       </td>
       <td>
-        <div className="justify-center">{data?.stock_quantity}</div>
+        <div className="justify-center">{data?.stock_quantity || 0}</div>
       </td>
       <td>
-        <div className="justify-center">₹{data?.listing_price}</div>
+        <div className="justify-center">₹{data?.listing_price || 0}</div>
       </td>
       <td>
-        <div className="justify-center">₹{data?.price}</div>
+        <div className="justify-center">₹{data?.price || 0}</div>
       </td>
       <td>
-        <div>{dayjs(data?.created_at).format("MMM DD, YYYY")}</div>
+        <div className="justify-center">{dayjs(data?.created_at).format("MMM DD, YYYY")}</div>
       </td>
       <td>
         <div className="flex items-center gap-2">
