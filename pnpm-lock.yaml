@@ -127,6 +127,9 @@ importers:
       react-resizable-panels:
         specifier: ^2.0.19
         version: 2.1.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      swiper:
+        specifier: ^11.2.5
+        version: 11.2.5
       tailwind-merge:
         specifier: ^2.6.0
         version: 2.6.0
@@ -3712,6 +3715,10 @@ packages:
       }
     engines: { node: ">= 0.4" }
 
+  swiper@11.2.5:
+    resolution: {integrity: sha512-nG0kbIyBfeE2BPFt9nPUX03qUBF75o6+enzjIT/DfCmbh8ORlwhc4eZz1+4H/yseAgb3H+OoEYzmb64i0tYNnQ==}
+    engines: {node: '>= 4.7.0'}
+
   tailwind-merge@2.6.0:
     resolution:
       {
@@ -6404,6 +6411,8 @@ snapshots:
       has-flag: 4.0.0
 
   supports-preserve-symlinks-flag@1.0.0: {}
+
+  swiper@11.2.5: {}
 
   tailwind-merge@2.6.0: {}
 
