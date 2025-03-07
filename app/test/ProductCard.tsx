@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
+import ProductSlider from "./ProductSlider";
 
 export interface Product {
   name: string;
@@ -18,14 +19,20 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Card className="w-80 border rounded-lg overflow-hidden shadow-md bg-[#F5F5F5] border-none">
       <div className="relative p-4">
-        <img
+        <ProductSlider />
+        {/* <img
           src={product.image}
           alt={product.name}
           className="w-full h-64 object-contain"
-        />
-        <button className="absolute top-4 right-4 bg-white p-1 rounded-full shadow">
-          <Heart className="w-5 h-5 text-red-700" />
-        </button>
+        /> */}
+        <Button
+          variant="ghost"
+          className="size-8 absolute top-4 right-4 bg-white rounded-full"
+        >
+          <span>
+            <Heart className="size-5 text-red-700" />
+          </span>
+        </Button>
       </div>
       <CardContent className="p-4">
         <div className="flex items-center gap-4">

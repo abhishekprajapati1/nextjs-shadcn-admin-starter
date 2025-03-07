@@ -2,6 +2,7 @@ import React from "react";
 import Slider from "./slider";
 import ProductCard, { Product } from "./ProductCard";
 import chasma from "@/public/chasma.png";
+import ProductSlider from "./ProductSlider";
 
 // interface Product {
 //   name: string;
@@ -23,8 +24,9 @@ const product: Product = {
 function page() {
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <Slider />
-      {/* <ProductCard product={product} />; */}
+      {/* <Slider /> */}
+      {/* <ProductSlider/> */}
+      <ProductCard product={product} />;
     </div>
   );
 }
