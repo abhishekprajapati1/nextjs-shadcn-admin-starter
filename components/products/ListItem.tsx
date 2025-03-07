@@ -12,6 +12,7 @@ import { formSchema } from "@/lib/validations/admin/product.validation";
 import dayjs from "@/lib/dayjs";
 import { setData } from "@/store/products/form.slice";
 import { setItemToDelete } from "@/store/products/data.slice";
+import Link from "next/link";
 
 export interface IProduct extends IRecordMeta, z.infer<typeof formSchema> {}
 
@@ -33,7 +34,12 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
   return (
     <tr>
       <td>
-        <div>{capitalizeFirstLetter(data?.model_name)}</div>
+        <Link
+          className="block animate-smooth hover:text-success hover:underline"
+          href={`/admin/products/${data?.id}`}
+        >
+          {capitalizeFirstLetter(data?.model_name)}
+        </Link>
       </td>
       <td>
         <div className="justify-center">{data?.model_number || "136005"}</div>
