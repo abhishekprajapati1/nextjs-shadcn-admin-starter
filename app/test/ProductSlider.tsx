@@ -9,10 +9,26 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
+import { useEffect, useRef } from "react";
 
-const ProductSlider: React.FC = () => {
+export interface Icolor {
+  color?: string;
+}
+
+export const ProductSlider: React.FC<Icolor> = ({ color }) => {
+  const swiperRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef.current.autoplay.stop();
+    }
+  }, []);
+
   return (
-    <section className="w-[20rm] bg-[#F5F5F5] py-8">
+    <section
+      style={color ? { backgroundColor: color } : undefined}
+      className="w-[20rm] py-8"
+    >
       <div className="container px-0">
         <Swiper
           loop={true}
@@ -21,15 +37,23 @@ const ProductSlider: React.FC = () => {
             dynamicBullets: true,
           }}
           autoplay={{
-            delay: 2500,
+            delay: 250,
             disableOnInteraction: false,
           }}
           modules={[FreeMode, Autoplay, Pagination]}
           className="h-44 w-full rounded-lg"
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
+            swiper.autoplay.stop();
+          }}
         >
           {images.map((image, index) => (
             <SwiperSlide key={index}>
-              <div className="flex h-full w-full items-center justify-center">
+              <div
+                className="flex h-full w-full items-center justify-center"
+                onMouseEnter={() => swiperRef.current?.autoplay.start()}
+                onMouseLeave={() => swiperRef.current?.autoplay.stop()}
+              >
                 <Image
                   src={image.src}
                   alt={image.alt}
@@ -45,5 +69,3 @@ const ProductSlider: React.FC = () => {
     </section>
   );
 };
-
-export default ProductSlider;
