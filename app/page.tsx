@@ -1,6 +1,9 @@
+import BannerSlider from "@/components/home/BannerSlider";
+import Glass from "@/components/home/Glass";
 import { MainHeader } from "@/components/navigation/MainHeader";
 import UnderConstruction from "@/components/UnderConstruction";
 import { Metadata } from "next";
+import { images } from "../components/home/images";
 
 export const metadata: Metadata = {
   title: "Akku Ka Chasma",
@@ -27,7 +30,9 @@ const HomePage = () => {
   return (
     <div>
       <MainHeader />
-      {/* <UnderConstruction /> */}
+      <BannerSlider />
+      <Glass title="EYEGLASSES" images={images} />
+      <Glass title="SUNGLASSES" images={images} />
     </div>
   );
 };
