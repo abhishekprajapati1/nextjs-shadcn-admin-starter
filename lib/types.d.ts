@@ -1,3 +1,5 @@
+import { IColor } from "@/components/colors/ListItem";
+import { IProductFile } from "@/components/products/details/product-color-images/ColorImages";
 import { LucideProps } from "lucide-react";
 import * as React from "react";
 
@@ -6,15 +8,15 @@ export type IconElement = React.ForwardRefExoticComponent<
 >;
 
 export interface IRecordMeta {
-  id?: string;
+  id: string;
   created_at?: string;
   updated_at?: string;
 }
 
 export interface IFile {
-  id?: string;
-  url?: string;
-  fieldname?: string;
+  id: string;
+  url: string;
+  fieldname: string;
 }
 
 export interface IUser {
@@ -94,4 +96,18 @@ export interface MenuItem {
   icon: IconElement;
   isActive?: boolean;
   items?: SubMenuItem[];
+}
+export interface IProductColor extends IRecordMeta {
+  color: IColor;
+  name: string;
+  product_id: string;
+  images: IProductFile[];
+}
+export interface IProduct {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  product_colors: IProductColor[];
 }

@@ -8,7 +8,7 @@ import {
 import Modal from "@/components/ui/modal";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { setData } from "@/store/products/form.slice";
-import ItemForm from "./ItemForm";
+import ItemForm from "../ItemForm";
 
 const EditModal: React.FC = () => {
   const dispatch = useAppDispatch();

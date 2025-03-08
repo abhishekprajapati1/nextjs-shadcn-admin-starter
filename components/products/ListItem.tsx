@@ -4,7 +4,7 @@ import DeleteIcon from "../icons/DeleteIcon";
 import EditIcon from "../icons/EditIcon";
 import { Button } from "../ui/button";
 import { useAppDispatch } from "@/store";
-import { IRecordMeta } from "@/lib/types";
+import { IProductColor, IRecordMeta } from "@/lib/types";
 import { Skeleton } from "../ui/skeleton";
 import { capitalizeFirstLetter } from "@/lib/utils";
 import { z } from "zod";
@@ -14,7 +14,9 @@ import { setData } from "@/store/products/form.slice";
 import { setItemToDelete } from "@/store/products/data.slice";
 import Link from "next/link";
 
-export interface IProduct extends IRecordMeta, z.infer<typeof formSchema> {}
+export interface IProduct extends IRecordMeta, z.infer<typeof formSchema> {
+  product_colors: IProductColor[];
+}
 
 interface ListItemProps {
   data?: IProduct;

@@ -1,24 +1,20 @@
 import { toast } from "@/lib/hooks/use-toast";
 import { RequestError, getApiClient, getErrorMessage } from "@/lib/api";
 import ENDPOINTS from "@/lib/endpoints";
-import { useAppDispatch } from "@/store";
-import { resetStore } from "@/store/products/form.slice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { z } from "zod";
-import { formSchema } from "@/lib/validations/admin/product.validation";
 
-const useCreate = (onSuccess?: () => void) => {
+const useSaveColorImages = (product_color_id: string) => {
   const api = getApiClient();
-  const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: async (data: z.infer<typeof formSchema>) => {
-      const res = await api.post(ENDPOINTS.admin.products.create, data);
+    mutationFn: async (data: { file_ids: string[] }) => {
+      const res = await api.post(
+        ENDPOINTS.admin.products.color.save_images(product_color_id),
+        data,
+      );
       return res.data;
     },
     onSuccess: () => {
-      dispatch(resetStore());
-      if (onSuccess) onSuccess();
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: (error: RequestError) => {
@@ -32,4 +28,4 @@ const useCreate = (onSuccess?: () => void) => {
   return mutation;
 };
 
-export default useCreate;
+export default useSaveColorImages;

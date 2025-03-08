@@ -1,3 +1,5 @@
+import ENDPOINTS from "@/lib/endpoints";
+import useFetch from "@/lib/hooks/use-fetch";
 import { sidebarData } from "@/lib/list";
 import { ISidebarBrand, IUser, MenuItem } from "@/lib/types";
 import { usePathname } from "next/navigation";
@@ -16,6 +18,10 @@ export const useSidebarData = (): ISidebarData => {
     completePath?.split("?")?.length > 0
       ? completePath?.split("?")[0]
       : completePath;
+
+  const { data: user } = useFetch<IUser>({
+    endpoint: ENDPOINTS.AUTH.details,
+  });
 
   const hydratedMenus = React.useMemo(() => {
     return sidebarData.menus.map((menu) => {
@@ -45,14 +51,12 @@ export const useSidebarData = (): ISidebarData => {
     setData((data) => ({
       ...data,
       user: {
-        name: "Admin",
-        email: "admin@akkukachasma.com",
-        avatar: {
-          url: "/avatars/shadcn.jpg",
-        },
+        name: user?.name || "Unknown",
+        email: user?.email || "unknown@example.com",
+        ...(user?.avatar && { avatar: user.avatar }),
       },
     }));
-  }, []);
+  }, [user]);
 
   return data;
 };
