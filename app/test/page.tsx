@@ -2,7 +2,7 @@ import React from "react";
 import Slider from "./slider";
 import ProductCard, { Product } from "./ProductCard";
 import chasma from "@/public/chasma.png";
-import ProductSlider from "./ProductSlider";
+import { ProductSlider } from "./ProductSlider";
 
 // interface Product {
 //   name: string;
