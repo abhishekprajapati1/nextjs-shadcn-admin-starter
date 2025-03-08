@@ -11,7 +11,7 @@ export function parse(value: string) {
     return JSON.parse(value);
   } catch (e) {
     console.error(e);
-    return null;
+    return value;
   }
 }
 export const bytesToMB = (bytes: number): number => {
@@ -68,4 +68,3 @@ export const generateQueryString = (
 
   return qs.stringify(validFilters());
 };
-
