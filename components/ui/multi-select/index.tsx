@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/popover";
 import PlusIcon from "@/components/icons/PlusIcon";
 import { InputOption } from "@/lib/types";
+import DefaultOptionTemplate from "./DefaultOptionTemplate";
 
 interface MultiSelectInputProps {
   value: string[] | undefined;
@@ -22,6 +23,11 @@ interface MultiSelectInputProps {
   options: InputOption[];
   label?: string;
   id: string;
+  optionTemplate?: React.FC<InputOption>;
+}
+
+export interface OptionTemplateProps extends InputOption {
+  onSelect: () => void;
 }
 
 const MultiSelect: FC<MultiSelectInputProps> = ({
@@ -30,15 +36,12 @@ const MultiSelect: FC<MultiSelectInputProps> = ({
   value,
   onChange,
   options,
+  optionTemplate = DefaultOptionTemplate,
 }) => {
   const [open, setOpen] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (Array.isArray(value)) {
-      setTags(value);
-    }
-  }, [value]);
+  const OptionTemplate = optionTemplate;
 
   const handleSetValue = (val: string) => {
     let updatedTags: string[];
@@ -55,6 +58,12 @@ const MultiSelect: FC<MultiSelectInputProps> = ({
     setTags(updatedTags);
     onChange(updatedTags);
   };
+
+  useEffect(() => {
+    if (Array.isArray(value)) {
+      setTags(value);
+    }
+  }, [value]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -102,9 +111,13 @@ const MultiSelect: FC<MultiSelectInputProps> = ({
                   id={id}
                   key={option.value}
                   value={option.value}
-                  onSelect={() => handleSetValue(option.value || "")}
+                  asChild
                 >
-                  {option.label}
+                  <OptionTemplate
+                    onSelect={() => handleSetValue(option.value || "")}
+                    {...option}
+                  />
+                  {/* {option.label} */}
                 </CommandItem>
               ))}
             </CommandList>

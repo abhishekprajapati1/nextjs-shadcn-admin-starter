@@ -550,7 +550,7 @@ const ItemForm: React.FC = () => {
                         colorDataLoading
                           ? []
                           : (colorData?.map((color) => ({
-                              label: color?.color ?? "Unknown",
+                              label: color?.name ?? "Unknown",
                               value: color?.id ?? "",
                             })) ?? [])
                       }
