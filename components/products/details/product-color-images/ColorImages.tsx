@@ -204,8 +204,10 @@ const ColorImages: React.FC<ColorImagesProps> = ({ product_id }) => {
                 },
               })}
             >
-              <DragDropIcon className="size-[25px]" />
-              <p>Upload thumbnail</p>
+              <div className="size-full flex flex-col justify-center items-center">
+                <DragDropIcon className="size-[25px]" />
+                <p className="max-w-[80%] text-center">Upload thumbnail</p>
+              </div>
             </FilePreview>
           </FileInput>
         </div>
