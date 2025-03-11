@@ -15,13 +15,27 @@ import {
 } from "@/components/ui/popover";
 import PlusIcon from "@/components/icons/PlusIcon";
 import { InputOption } from "@/lib/types";
+import DefaultOptionTemplate from "./DefaultOptionTemplate";
+import DefaultPreviewTemplate from "./DefaultPreviewTemplate";
 
-interface MultiSelectInputProps {
+export interface MultiSelectOption<T = any> extends InputOption {
+  data?: T;
+}
+export interface OptionTemplateProps<T = any> extends MultiSelectOption<T> {
+  onSelect: () => void;
+}
+export interface PreviewTemplateProps<T = any> extends MultiSelectOption<T> {
+  onRemove: () => void;
+}
+
+interface MultiSelectInputProps<T = any> {
   value: string[] | undefined;
   onChange: (value: string[]) => void;
-  options: InputOption[];
+  options: MultiSelectOption<T>[];
   label?: string;
   id: string;
+  optionTemplate?: React.FC<OptionTemplateProps<T>>;
+  previewTemplate?: React.FC<PreviewTemplateProps<T>>;
 }
 
 const MultiSelect: FC<MultiSelectInputProps> = ({
@@ -30,15 +44,14 @@ const MultiSelect: FC<MultiSelectInputProps> = ({
   value,
   onChange,
   options,
+  optionTemplate = DefaultOptionTemplate,
+  previewTemplate = DefaultPreviewTemplate,
 }) => {
   const [open, setOpen] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (Array.isArray(value)) {
-      setTags(value);
-    }
-  }, [value]);
+  const OptionTemplate = optionTemplate;
+  const PreviewTemplate = previewTemplate;
 
   const handleSetValue = (val: string) => {
     let updatedTags: string[];
@@ -56,6 +69,12 @@ const MultiSelect: FC<MultiSelectInputProps> = ({
     onChange(updatedTags);
   };
 
+  useEffect(() => {
+    if (Array.isArray(value)) {
+      setTags(value);
+    }
+  }, [value]);
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       {label && (
@@ -64,21 +83,16 @@ const MultiSelect: FC<MultiSelectInputProps> = ({
         </label>
       )}
       <div className="flex gap-2 flex-wrap justify-start w-full mb-2">
-        {tags.map((tag) => (
-          <div
-            key={tag}
-            className="flex items-center gap-1 px-2 py-1 rounded-xl border bg-slate-200 text-xs font-medium"
-          >
-            {options.find((option) => option.value === tag)?.label}
-            <button
-              type="button"
-              className="ml-2 text-red-500"
-              onClick={() => handleTagRemove(tag)}
-            >
-              ×
-            </button>
-          </div>
-        ))}
+        {tags.map((tag) => {
+          const option = options.find((option) => option.value === tag);
+          return (
+            <PreviewTemplate
+              key={tag}
+              {...option}
+              onRemove={() => handleTagRemove(tag)}
+            />
+          );
+        })}
       </div>
       <PopoverTrigger asChild>
         <Button
@@ -102,9 +116,13 @@ const MultiSelect: FC<MultiSelectInputProps> = ({
                   id={id}
                   key={option.value}
                   value={option.value}
-                  onSelect={() => handleSetValue(option.value || "")}
+                  asChild
                 >
-                  {option.label}
+                  <OptionTemplate
+                    onSelect={() => handleSetValue(option.value || "")}
+                    {...option}
+                  />
+                  {/* {option.label} */}
                 </CommandItem>
               ))}
             </CommandList>
