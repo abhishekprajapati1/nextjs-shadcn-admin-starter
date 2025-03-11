@@ -17,7 +17,7 @@ const useCreate = (onSuccess?: () => void) => {
       return res.data;
     },
     onSuccess: () => {
-      dispatch(resetStore());
+      // dispatch(resetStore()); // commenting becuase we don't want to close the modal.
       if (onSuccess) onSuccess();
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },

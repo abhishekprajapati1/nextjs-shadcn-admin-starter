@@ -14,6 +14,7 @@ import {
   FormLabel,
   FormMessage,
   FormDescription,
+  FormGroup,
 } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -193,122 +194,6 @@ const ItemForm: React.FC = () => {
           />
           {/* end of model number */}
 
-          {/* seo title */}
-          <FormField
-            control={form.control}
-            name="seo_title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>SEO Title</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter the title for seo purposes"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* end of seo title */}
-
-          {/* description */}
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Enter the description here..."
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* end of description */}
-
-          {/* listing price */}
-          <FormField
-            control={form.control}
-            name="listing_price"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Listing Price</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    type="number"
-                    onChange={(e) =>
-                      field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
-                      )
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* end of listing price */}
-
-          {/* selling price */}
-          <FormField
-            control={form.control}
-            name="price"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Selling Price</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) =>
-                      field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
-                      )
-                    }
-                  />
-                </FormControl>
-                <FormDescription>
-                  The price to sell this product at.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* end of selling price */}
-
-          {/* stock quantity */}
-          <FormField
-            control={form.control}
-            name="stock_quantity"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Quantity</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) =>
-                      field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
-                      )
-                    }
-                  />
-                </FormControl>
-                <FormDescription>
-                  How many products do you have in stock.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* end of stock quantity */}
-
           {/* gender */}
           <FormField
             control={form.control}
@@ -333,70 +218,6 @@ const ItemForm: React.FC = () => {
           />
           {/* end of gender */}
 
-          {/* lens width */}
-          <FormField
-            control={form.control}
-            name="lens_width"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Lens Width (mm)</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) =>
-                      field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
-                      )
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* end of lens width */}
-
-          {/* lens height */}
-          <FormField
-            control={form.control}
-            name="lens_height"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Lens Height (mm)</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) =>
-                      field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
-                      )
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* end of lens height */}
-
-          {/* raw material sourced from */}
-          <FormField
-            control={form.control}
-            name="lens_material"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Lens Material</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* end of lens material */}
-
           {/* raw material sourced from */}
           <FormField
             control={form.control}
@@ -413,49 +234,6 @@ const ItemForm: React.FC = () => {
           />
           {/* end of raw material sourced from */}
 
-          {/* frame width */}
-          <FormField
-            control={form.control}
-            name="frame_width"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>frame width (mm)</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) =>
-                      field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
-                      )
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* end of frame width */}
-
-          {/* frame style */}
-          <FormField
-            control={form.control}
-            name="frame_style"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Frame Style</FormLabel>
-                <FormControl>
-                  <SelectBox
-                    options={frameStyles}
-                    placeholder="Select frame style"
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           {/* Category starts */}
           <FormField
             control={form.control}
@@ -483,34 +261,6 @@ const ItemForm: React.FC = () => {
             )}
           />
           {/* Category ends */}
-
-          {/* Frame material starts */}
-          <FormField
-            control={form.control}
-            name="frame_material_id"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Frame Material</FormLabel>
-                <FormControl>
-                  <SelectBox
-                    options={
-                      frameMaterialsLoading
-                        ? []
-                        : (frameMaterialsData?.map((mat) => ({
-                            label: mat?.title ?? "Unknown",
-                            value: mat?.id ?? "",
-                          })) ?? [])
-                    }
-                    placeholder="Select Material"
-                    value={field.value ?? ""}
-                    onChange={(val) => field.onChange(val ?? "")}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* Frame material ends */}
 
           {/* shape starts */}
           <FormField
@@ -600,6 +350,161 @@ const ItemForm: React.FC = () => {
             )}
           />
           {/* power types ends */}
+        </div>
+
+        <FormGroup label="Pricing & Stocks">
+          {/* listing price */}
+          <FormField
+            control={form.control}
+            name="listing_price"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Listing Price</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="number"
+                    onChange={(e) =>
+                      field.onChange(
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                      )
+                    }
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* end of listing price */}
+
+          {/* selling price */}
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Selling Price</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    {...field}
+                    onChange={(e) =>
+                      field.onChange(
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                      )
+                    }
+                  />
+                </FormControl>
+                <FormDescription>
+                  The price to sell this product at.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* end of selling price */}
+
+          {/* stock quantity */}
+          <FormField
+            control={form.control}
+            name="stock_quantity"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Quantity</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    {...field}
+                    onChange={(e) =>
+                      field.onChange(
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                      )
+                    }
+                  />
+                </FormControl>
+                <FormDescription>
+                  How many products do you have in stock.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* end of stock quantity */}
+        </FormGroup>
+
+        <FormGroup label="Frame Information">
+          {/* frame width */}
+          <FormField
+            control={form.control}
+            name="frame_width"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>frame width (mm)</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    {...field}
+                    onChange={(e) =>
+                      field.onChange(
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                      )
+                    }
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* end of frame width */}
+
+          {/* frame style */}
+          <FormField
+            control={form.control}
+            name="frame_style"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Frame Style</FormLabel>
+                <FormControl>
+                  <SelectBox
+                    options={frameStyles}
+                    placeholder="Select frame style"
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* frame style ends */}
+
+          {/* Frame material starts */}
+          <FormField
+            control={form.control}
+            name="frame_material_id"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Frame Material</FormLabel>
+                <FormControl>
+                  <SelectBox
+                    options={
+                      frameMaterialsLoading
+                        ? []
+                        : (frameMaterialsData?.map((mat) => ({
+                            label: mat?.title ?? "Unknown",
+                            value: mat?.id ?? "",
+                          })) ?? [])
+                    }
+                    placeholder="Select Material"
+                    value={field.value ?? ""}
+                    onChange={(val) => field.onChange(val ?? "")}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* Frame material ends */}
 
           {/* frame size  starts*/}
           <FormField
@@ -621,28 +526,135 @@ const ItemForm: React.FC = () => {
             )}
           />
           {/* frame size ends */}
+        </FormGroup>
 
-          {/* tags start */}
+        <FormGroup label="Lens Information">
+          {/* lens width */}
           <FormField
             control={form.control}
-            name="tags"
+            name="lens_width"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Tags</FormLabel>
+                <FormLabel>Lens Width (mm)</FormLabel>
                 <FormControl>
-                  <MultiTextInput
-                    id="tags"
-                    value={field.value}
-                    onChange={field.onChange}
+                  <Input
+                    type="number"
+                    {...field}
+                    onChange={(e) =>
+                      field.onChange(
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                      )
+                    }
                   />
                 </FormControl>
-                <FormDescription>Type comma to add a tag.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          {/* tags ends */}
-        </div>
+          {/* end of lens width */}
+
+          {/* lens height */}
+          <FormField
+            control={form.control}
+            name="lens_height"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Lens Height (mm)</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    {...field}
+                    onChange={(e) =>
+                      field.onChange(
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                      )
+                    }
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* end of lens height */}
+
+          {/* raw material sourced from */}
+          <FormField
+            control={form.control}
+            name="lens_material"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Lens Material</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* end of lens material */}
+        </FormGroup>
+
+        <FormGroup label="Meta Details" className="flex flex-col gap-4">
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            {/* seo title */}
+            <FormField
+              control={form.control}
+              name="seo_title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>SEO Title</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter the title for seo purposes"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* end of seo title */}
+
+            {/* tags start */}
+            <FormField
+              control={form.control}
+              name="tags"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tags</FormLabel>
+                  <FormControl>
+                    <MultiTextInput
+                      id="tags"
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormDescription>Type comma to add a tag.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* tags ends */}
+          </div>
+          {/* description */}
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Enter the description here..."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* end of description */}
+        </FormGroup>
 
         {/* Footer with buttons */}
         <DialogFooter>
