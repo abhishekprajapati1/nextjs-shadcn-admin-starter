@@ -10,6 +10,8 @@ export interface FileInputProps {
   accept?: Accept;
   error?: string;
   value?: File[];
+  multiple?: boolean;
+  maxFiles?: number;
 }
 
 const FileInput: FC<FileInputProps> = ({
@@ -19,6 +21,8 @@ const FileInput: FC<FileInputProps> = ({
   accept,
   value,
   error,
+  multiple = false,
+  maxFiles = 1,
 }) => {
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -29,7 +33,8 @@ const FileInput: FC<FileInputProps> = ({
 
   const { getInputProps, getRootProps } = useDropzone({
     onDrop,
-    multiple: false,
+    multiple,
+    maxFiles,
     ...(accept && { accept }),
   });
 

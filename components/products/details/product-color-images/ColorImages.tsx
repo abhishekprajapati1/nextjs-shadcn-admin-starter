@@ -177,16 +177,16 @@ const ColorImages: React.FC<ColorImagesProps> = ({ product_id }) => {
                 files?.length > 0
               ) {
                 mutate(
-                  { file: files[0], name: "thumbnail" },
+                  { files, name: "thumbnail" },
                   {
                     onSuccess: (data) => {
                       setImages((prev) => ({
                         ...(prev && prev),
                         thumbnail: {
-                          id: data.id,
-                          url: data.url,
-                          fieldname: data.fieldname,
-                          product_color_id: data.product_color_id,
+                          id: data[0].id,
+                          url: data[0].url,
+                          fieldname: data[0].fieldname,
+                          product_color_id: data[0].product_color_id,
                         },
                       }));
                     },
@@ -235,6 +235,8 @@ const ColorImages: React.FC<ColorImagesProps> = ({ product_id }) => {
 
           {(images?.extras?.length || 0) < 4 && (
             <FileInput
+              multiple
+              maxFiles={4 - (images?.extras?.length || 0)}
               onChange={(files) => {
                 if (
                   Array.isArray(files) &&
@@ -242,7 +244,7 @@ const ColorImages: React.FC<ColorImagesProps> = ({ product_id }) => {
                   files?.length > 0
                 ) {
                   mutate(
-                    { file: files[0], name: "extras" },
+                    { files, name: "extras" },
                     {
                       onSuccess: (data) => {
                         setImages((prev) => {
@@ -252,12 +254,12 @@ const ColorImages: React.FC<ColorImagesProps> = ({ product_id }) => {
                               ...(Array.isArray(prev?.extras)
                                 ? prev.extras
                                 : []),
-                              {
-                                id: data.id,
-                                fieldname: data.fieldname,
-                                url: data.url,
-                                product_color_id: data.product_color_id,
-                              },
+                              ...data?.map((item) => ({
+                                id: item.id,
+                                fieldname: item.fieldname,
+                                url: item.url,
+                                product_color_id: item.product_color_id,
+                              })),
                             ],
                           };
                           return newImages;
@@ -273,7 +275,7 @@ const ColorImages: React.FC<ColorImagesProps> = ({ product_id }) => {
                 <div className="size-full flex flex-col justify-center items-center">
                   <DragDropIcon className="size-[25px]" />
                   <p className="max-w-[80%] text-center">
-                    Upload extra images ( max 5 )
+                    Upload extra images ( max 4 )
                   </p>
                 </div>
               </FilePreview>

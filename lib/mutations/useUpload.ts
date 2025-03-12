@@ -2,21 +2,26 @@ import { useMutation } from "@tanstack/react-query";
 import { getApiClient, getErrorMessage, RequestError } from "../api";
 import ENDPOINTS from "../endpoints";
 import { toast } from "../hooks/use-toast";
+const api = getApiClient({ multipart: true });
+const upload = async ({ file, name }: { file: File; name: string }) => {
+  const formData = new FormData();
+  formData.append(name, file);
+  const response = await api.post(ENDPOINTS.upload, formData);
+  return response.data.data;
+};
 
 const useUpload = () => {
-  const api = getApiClient({ multipart: true });
   return useMutation({
     mutationFn: async ({
-      file,
+      files,
       name = "file",
     }: {
-      file: File;
+      files: File[];
       name?: string;
     }) => {
-      const formData = new FormData();
-      formData.append(name, file);
-      const response = await api.post(ENDPOINTS.upload, formData);
-      return response.data.data;
+      const uploadPromises = files.map((file) => upload({ file, name }));
+      const responses = await Promise.all(uploadPromises);
+      return responses;
     },
     onError: (error: RequestError) => {
       const message = getErrorMessage(error);
