@@ -111,6 +111,16 @@ const LensDetailForm: React.FC = () => {
     }
   }, [data, form]);
 
+  React.useEffect(() => {
+    if (data?.image) {
+      setUploadedImage({
+        id: data.image.id,
+        url: data.image.url,
+        fieldname: data.image.fieldname || "",
+      });
+    }
+  }, [data]);
+
   return (
     <Form {...form}>
       <form
@@ -130,11 +140,11 @@ const LensDetailForm: React.FC = () => {
                   { files, name: "image" },
                   {
                     onSuccess: (data) => {
-                      console.log("see this", data);
                       setUploadedImage({
                         id: data[0].id,
                         url: data[0].url,
                         fieldname: data[0].fieldname,
+                        is_temp: data[0].is_temp,
                       });
                     },
                   },

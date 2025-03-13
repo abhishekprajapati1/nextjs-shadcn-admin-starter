@@ -22,7 +22,7 @@ const useUpdateLensDetail = (onSuccess?: () => void) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (data: z.infer<typeof lensDetailSchema>) => {
-      if (uploadedImage) {
+      if (uploadedImage && uploadedImage.is_temp) {
         data.image = uploadedImage.id;
       }
       const res = await api.put(

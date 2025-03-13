@@ -17,6 +17,7 @@ export interface IFile {
   id: string;
   url: string;
   fieldname: string;
+  is_temp?: boolean;
 }
 
 export interface IUser {
