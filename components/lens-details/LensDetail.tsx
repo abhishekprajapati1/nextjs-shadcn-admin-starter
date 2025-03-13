@@ -60,6 +60,7 @@ const LensDeatail: React.FC<LensDetailProps> = ({ data }) => {
           thickness: data?.thickness,
           uv_protection: data?.uv_protection,
           warranty_period: data?.warranty_period,
+          ...(data?.image && { image: data?.image }),
         }),
       );
     }
@@ -79,14 +80,16 @@ const LensDeatail: React.FC<LensDetailProps> = ({ data }) => {
   if (!data) {
     return <LensFeatureSkeleton />;
   }
+  console.log("see this", data?.image?.url);
+
   return (
     <Card>
       <CardContent className="pt-6 h-full flex flex-col gap-2">
         <div className="flex flex-col gap-2">
           <div className="flex items-start justify-between">
-            <Avatar className="w-8 h-8 rounded-lg">
+            <Avatar className="size-[100px] rounded-lg">
               <AvatarImage src={data?.image?.url} alt={data?.title} />
-              <AvatarFallback>
+              <AvatarFallback className="rounded-lg">
                 {data?.title?.charAt(0)?.toUpperCase()}
               </AvatarFallback>
             </Avatar>
