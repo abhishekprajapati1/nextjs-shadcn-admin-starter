@@ -11,7 +11,7 @@ import { IFile } from "@/lib/types";
 
 const useCreateLensDetails = (onSuccess?: () => void) => {
   const { value: uploadedImage, removeValue: removeUploadedImageFromSession } =
-    useSessionStorage<IFile>("");
+    useSessionStorage<IFile>("lens_detail_image");
   const api = getApiClient();
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();

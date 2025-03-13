@@ -47,7 +47,7 @@ const VerifyEmail: React.FC = () => {
   }
   if (token && error) {
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center gap-4 bg-black">
+      <React.Fragment>
         {error?.response?.data?.type === "ERR_TOKEN_EXPIRED" ? (
           <TokenExpired
             onClick={handleRetry}
@@ -68,7 +68,7 @@ const VerifyEmail: React.FC = () => {
             <ServerError />
           )
         )}
-      </div>
+      </React.Fragment>
     );
   }
 };

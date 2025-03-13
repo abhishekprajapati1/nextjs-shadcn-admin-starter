@@ -52,7 +52,7 @@ const LensDetailForm: React.FC = () => {
   });
 
   const { value: uploadedImage, setValue: setUploadedImage } =
-    useSessionStorage<IFile>("");
+    useSessionStorage<IFile>("lens_detail_image");
 
   const { mutate: upload, isPending: uploading } = useUpload();
 
@@ -130,6 +130,7 @@ const LensDetailForm: React.FC = () => {
                   { files, name: "image" },
                   {
                     onSuccess: (data) => {
+                      console.log("see this", data);
                       setUploadedImage({
                         id: data[0].id,
                         url: data[0].url,

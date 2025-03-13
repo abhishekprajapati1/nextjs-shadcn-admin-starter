@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/card";
 import { loginSchema } from "@/lib/validations/auth.validation";
 import useLogin from "@/lib/mutations/auth/login/useLogin";
+import Link from "next/link";
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
@@ -128,8 +129,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({ forAdmin = false }) => {
                 className="px-0 font-normal"
                 type="button"
                 disabled={isPending}
+                asChild
               >
-                Forgot password?
+                <Link href="/forgot-password">Forgot password?</Link>
               </Button>
             </div>
 

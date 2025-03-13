@@ -25,11 +25,7 @@ const Page = async ({ searchParams }: { searchParams: { token?: string } }) => {
     notFound();
   }
 
-  return (
-    <div className="w-full h-full flex justify-center items-center">
-      <VerifyEmail />
-    </div>
-  );
+  return <VerifyEmail />;
 };
 
 export default Page;

@@ -12,13 +12,13 @@ import { IFile } from "@/lib/types";
 const useUpdateLensDetail = (onSuccess?: () => void) => {
   const dispatch = useAppDispatch();
   const { value: uploadedImage, removeValue: removeUploadedImageFromSession } =
-    useSessionStorage<IFile>("");
+    useSessionStorage<IFile>("lens_detail_image");
 
   const lens_detail_id = useAppSelector(
     (store) => store.lensDetailStore.formStore.lens_detail_id,
   );
 
-  const api = getApiClient({ multipart: true });
+  const api = getApiClient();
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (data: z.infer<typeof lensDetailSchema>) => {
