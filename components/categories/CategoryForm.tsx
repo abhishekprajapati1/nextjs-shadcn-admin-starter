@@ -3,7 +3,6 @@ import React from "react";
 import { Button, ProcessIndicator } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -34,7 +33,7 @@ const CategoryForm: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const { data, item_id } = useAppSelector(
-    (store) => store.categoryStore.formStore
+    (store) => store.categoryStore.formStore,
   );
 
   const { mutate: updateShape, isPending: updating } = useUpdate();

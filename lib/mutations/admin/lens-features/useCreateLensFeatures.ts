@@ -8,7 +8,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 
 const useCreateLensFeature = (onSuccess?: () => void) => {
-  const api = getApiClient({ multipart: true });
+  const api = getApiClient();
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const mutation = useMutation({
