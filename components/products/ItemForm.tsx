@@ -14,6 +14,7 @@ import {
   FormLabel,
   FormMessage,
   FormDescription,
+  FormGroup,
 } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -30,7 +31,10 @@ import { resetStore, showModal } from "@/store/products/form.slice";
 import useUpdate from "@/lib/mutations/admin/products/useUpdate";
 import useCreate from "@/lib/mutations/admin/products/useCreate";
 import { Textarea } from "../ui/textarea";
-import MultiSelect from "../ui/multi-select";
+import MultiSelect, {
+  OptionTemplateProps,
+  PreviewTemplateProps,
+} from "../ui/multi-select";
 import SelectBox from "../ui/select-box";
 import useFetch from "@/lib/hooks/use-fetch";
 import ENDPOINTS from "@/lib/endpoints";
@@ -39,6 +43,8 @@ import { IFrameMaterial } from "../frame-materials/FrameMaterial";
 import { IShape } from "../shapes/ListItem";
 import { IColor } from "../colors/ListItem";
 import { IPowerType } from "../power-types/PowerType";
+import { Cross2Icon } from "@radix-ui/react-icons";
+import MultiTextInput from "../ui/mult-text-input";
 
 const ItemForm: React.FC = () => {
   const product = useAppSelector((store) => store.productStore.formStore.data);
@@ -188,44 +194,165 @@ const ItemForm: React.FC = () => {
           />
           {/* end of model number */}
 
-          {/* seo title */}
+          {/* gender */}
           <FormField
             control={form.control}
-            name="seo_title"
+            name="gender"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>SEO Title</FormLabel>
+                <FormLabel>Gender</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Enter the title for seo purposes"
-                    {...field}
+                  <SelectBox
+                    options={genderOptions}
+                    placeholder="Select gender"
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormDescription>
+                  The gender this product is for
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* end of gender */}
+
+          {/* raw material sourced from */}
+          <FormField
+            control={form.control}
+            name="raw_material_sourced_from"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Raw Material Sourced From</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* end of raw material sourced from */}
+
+          {/* Category starts */}
+          <FormField
+            control={form.control}
+            name="category_id"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category</FormLabel>
+                <FormControl>
+                  <SelectBox
+                    options={
+                      categoriesDataLoading
+                        ? []
+                        : (categoriesData?.map((cat) => ({
+                            label: cat?.title ?? "Unknown",
+                            value: cat?.id ?? "",
+                          })) ?? [])
+                    }
+                    placeholder="Select category"
+                    value={field.value ?? ""}
+                    onChange={(val) => field.onChange(val ?? "")}
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          {/* end of seo title */}
+          {/* Category ends */}
 
-          {/* description */}
+          {/* shape starts */}
           <FormField
             control={form.control}
-            name="description"
+            name="shape_id"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description</FormLabel>
+                <FormLabel>Shape</FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder="Enter the description here..."
-                    {...field}
+                  <SelectBox
+                    options={
+                      shapesDataLoading
+                        ? []
+                        : (shapesData?.map((shape) => ({
+                            label: shape?.title ?? "Unknown",
+                            value: shape?.id ?? "",
+                          })) ?? [])
+                    }
+                    placeholder="Select Shape"
+                    value={field.value ?? ""}
+                    onChange={(val) => field.onChange(val ?? "")}
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          {/* end of description */}
+          {/* shape ends */}
 
+          {/* color start */}
+          {!product && (
+            <FormField
+              control={form.control}
+              name="color_ids"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Colors</FormLabel>
+                  <FormControl>
+                    <MultiSelect
+                      id="color_ids"
+                      options={
+                        colorDataLoading
+                          ? []
+                          : (colorData?.map((color) => ({
+                              label: color?.name ?? "Unknown",
+                              value: color?.id ?? "",
+                              data: color,
+                            })) ?? [])
+                      }
+                      value={field.value}
+                      onChange={field.onChange}
+                      optionTemplate={ColorOptionTemplate}
+                      previewTemplate={ColorPreviewTemplate}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+          {/* color ends */}
+
+          {/* power type start */}
+          <FormField
+            control={form.control}
+            name="power_type_ids"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Power Types</FormLabel>
+                <FormControl>
+                  <MultiSelect
+                    id="power_type_ids"
+                    options={
+                      powerDataLoading
+                        ? []
+                        : (powerData?.map((power) => ({
+                            label: power?.title ?? "Unknown",
+                            value: power?.id ?? "",
+                          })) ?? [])
+                    }
+                    value={field.value ?? ""}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* power types ends */}
+        </div>
+
+        <FormGroup label="Pricing & Stocks">
           {/* listing price */}
           <FormField
             control={form.control}
@@ -303,31 +430,105 @@ const ItemForm: React.FC = () => {
             )}
           />
           {/* end of stock quantity */}
+        </FormGroup>
 
-          {/* gender */}
+        <FormGroup label="Frame Information">
+          {/* frame width */}
           <FormField
             control={form.control}
-            name="gender"
+            name="frame_width"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Gender</FormLabel>
+                <FormLabel>frame width (mm)</FormLabel>
                 <FormControl>
-                  <SelectBox
-                    options={genderOptions}
-                    placeholder="Select gender"
-                    value={field.value}
-                    onChange={field.onChange}
+                  <Input
+                    type="number"
+                    {...field}
+                    onChange={(e) =>
+                      field.onChange(
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                      )
+                    }
                   />
                 </FormControl>
-                <FormDescription>
-                  The gender this product is for
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          {/* end of gender */}
+          {/* end of frame width */}
 
+          {/* frame style */}
+          <FormField
+            control={form.control}
+            name="frame_style"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Frame Style</FormLabel>
+                <FormControl>
+                  <SelectBox
+                    options={frameStyles}
+                    placeholder="Select frame style"
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* frame style ends */}
+
+          {/* Frame material starts */}
+          <FormField
+            control={form.control}
+            name="frame_material_id"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Frame Material</FormLabel>
+                <FormControl>
+                  <SelectBox
+                    options={
+                      frameMaterialsLoading
+                        ? []
+                        : (frameMaterialsData?.map((mat) => ({
+                            label: mat?.title ?? "Unknown",
+                            value: mat?.id ?? "",
+                          })) ?? [])
+                    }
+                    placeholder="Select Material"
+                    value={field.value ?? ""}
+                    onChange={(val) => field.onChange(val ?? "")}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* Frame material ends */}
+
+          {/* frame size  starts*/}
+          <FormField
+            control={form.control}
+            name="frame_size"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Frame Size</FormLabel>
+                <FormControl>
+                  <MultiSelect
+                    id="frame-sizes"
+                    options={frameSizes}
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* frame size ends */}
+        </FormGroup>
+
+        <FormGroup label="Lens Information">
           {/* lens width */}
           <FormField
             control={form.control}
@@ -391,250 +592,69 @@ const ItemForm: React.FC = () => {
             )}
           />
           {/* end of lens material */}
+        </FormGroup>
 
-          {/* raw material sourced from */}
-          <FormField
-            control={form.control}
-            name="raw_material_sourced_from"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Raw Material Sourced From</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* end of raw material sourced from */}
-
-          {/* frame width */}
-          <FormField
-            control={form.control}
-            name="frame_width"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>frame width (mm)</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) =>
-                      field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
-                      )
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* end of frame width */}
-
-          {/* frame style */}
-          <FormField
-            control={form.control}
-            name="frame_style"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Frame Style</FormLabel>
-                <FormControl>
-                  <SelectBox
-                    options={frameStyles}
-                    placeholder="Select frame style"
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* Category starts */}
-          <FormField
-            control={form.control}
-            name="category_id"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Category</FormLabel>
-                <FormControl>
-                  <SelectBox
-                    options={
-                      categoriesDataLoading
-                        ? []
-                        : (categoriesData?.map((cat) => ({
-                            label: cat?.title ?? "Unknown",
-                            value: cat?.id ?? "",
-                          })) ?? [])
-                    }
-                    placeholder="Select category"
-                    value={field.value ?? ""}
-                    onChange={(val) => field.onChange(val ?? "")}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* Category ends */}
-
-          {/* Frame material starts */}
-          <FormField
-            control={form.control}
-            name="frame_material_id"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Frame Material</FormLabel>
-                <FormControl>
-                  <SelectBox
-                    options={
-                      frameMaterialsLoading
-                        ? []
-                        : (frameMaterialsData?.map((mat) => ({
-                            label: mat?.title ?? "Unknown",
-                            value: mat?.id ?? "",
-                          })) ?? [])
-                    }
-                    placeholder="Select Material"
-                    value={field.value ?? ""}
-                    onChange={(val) => field.onChange(val ?? "")}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* Frame material ends */}
-
-          {/* shape starts */}
-          <FormField
-            control={form.control}
-            name="shape_id"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Shape</FormLabel>
-                <FormControl>
-                  <SelectBox
-                    options={
-                      shapesDataLoading
-                        ? []
-                        : (shapesData?.map((shape) => ({
-                            label: shape?.title ?? "Unknown",
-                            value: shape?.id ?? "",
-                          })) ?? [])
-                    }
-                    placeholder="Select Shape"
-                    value={field.value ?? ""}
-                    onChange={(val) => field.onChange(val ?? "")}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* shape ends */}
-
-          {/* color start */}
-          {!product && (
+        <FormGroup label="Meta Details" className="flex flex-col gap-4">
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            {/* seo title */}
             <FormField
               control={form.control}
-              name="color_ids"
+              name="seo_title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Colors</FormLabel>
+                  <FormLabel>SEO Title</FormLabel>
                   <FormControl>
-                    <MultiSelect
-                      id="color_ids"
-                      options={
-                        colorDataLoading
-                          ? []
-                          : (colorData?.map((color) => ({
-                              label: color?.color ?? "Unknown",
-                              value: color?.id ?? "",
-                            })) ?? [])
-                      }
-                      value={field.value}
-                      onChange={field.onChange}
+                    <Input
+                      placeholder="Enter the title for seo purposes"
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-          )}
-          {/* color ends */}
+            {/* end of seo title */}
 
-          {/* power type start */}
+            {/* tags start */}
+            <FormField
+              control={form.control}
+              name="tags"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tags</FormLabel>
+                  <FormControl>
+                    <MultiTextInput
+                      id="tags"
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormDescription>Type comma to add a tag.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* tags ends */}
+          </div>
+          {/* description */}
           <FormField
             control={form.control}
-            name="power_type_ids"
+            name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Power Types</FormLabel>
+                <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <MultiSelect
-                    id="power_type_ids"
-                    options={
-                      powerDataLoading
-                        ? []
-                        : (powerData?.map((power) => ({
-                            label: power?.title ?? "Unknown",
-                            value: power?.id ?? "",
-                          })) ?? [])
-                    }
-                    value={field.value ?? ""}
-                    onChange={field.onChange}
+                  <Textarea
+                    placeholder="Enter the description here..."
+                    {...field}
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          {/* power types ends */}
-
-          {/* frame size  starts*/}
-          <FormField
-            control={form.control}
-            name="frame_size"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Frame Size</FormLabel>
-                <FormControl>
-                  <MultiSelect
-                    id="frame-sizes"
-                    options={frameSizes}
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* frame size ends */}
-
-          {/* tags start */}
-          <FormField
-            control={form.control}
-            name="tags"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Tags</FormLabel>
-                <FormControl>
-                  <MultiSelect
-                    id="tags"
-                    options={tags}
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* tags ends */}
-        </div>
+          {/* end of description */}
+        </FormGroup>
 
         {/* Footer with buttons */}
         <DialogFooter>
@@ -656,6 +676,50 @@ const ItemForm: React.FC = () => {
         </DialogFooter>
       </form>
     </Form>
+  );
+};
+
+export const ColorOptionTemplate: React.FC<OptionTemplateProps<IColor>> = ({
+  onSelect,
+  label,
+  data,
+}) => {
+  return (
+    <div
+      onClick={() => onSelect()}
+      className="flex items-center gap-2 p-2 animate-smooth rounded hover:bg-primary/10 hover:text-primary cursor-pointer"
+    >
+      <span
+        className="size-6 flex-shrink-0"
+        style={{ backgroundColor: data?.color || "" }}
+      />
+      <span className="mr-2">{label}</span>
+    </div>
+  );
+};
+
+export const ColorPreviewTemplate: React.FC<PreviewTemplateProps<IColor>> = ({
+  onRemove,
+  data,
+}) => {
+  return (
+    <div
+      style={{ backgroundColor: `${data?.color}20`, color: data?.color }}
+      className="flex items-center gap-1 px-2 py-1 rounded-xl border text-xs font-medium"
+    >
+      <span
+        className="size-4 rounded-md flex-shrink-0"
+        style={{ backgroundColor: data?.color || "" }}
+      />
+      {data?.name}
+      <button
+        type="button"
+        className="text-destructive"
+        onClick={() => onRemove()}
+      >
+        <Cross2Icon className="size-3" />
+      </button>
+    </div>
   );
 };
 

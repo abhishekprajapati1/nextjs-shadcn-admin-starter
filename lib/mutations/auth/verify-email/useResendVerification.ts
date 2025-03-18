@@ -15,7 +15,7 @@ const useResendVerification = () => {
     onSuccess: (data) => {
       toast({
         description: data.message,
-        variant: "succes",
+        variant: "success",
         type: "background",
       });
       router.replace("/login");

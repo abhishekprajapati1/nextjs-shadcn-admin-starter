@@ -19,6 +19,7 @@ export const frameStyles: InputOption[] = [
 export enum Gender {
   MALE = "MALE",
   FEMALE = "FEMALE",
+  UNISEX = "UNISEX",
   OTHER = "OTHER",
 }
 
@@ -53,7 +54,7 @@ export const formSchema = z.object({
   tags: z.array(z.string()),
   model_name: z.string(),
   model_number: z.number().int().positive(),
-  gender: z.enum([Gender.MALE, Gender.FEMALE, Gender.OTHER]),
+  gender: z.enum([Gender.MALE, Gender.FEMALE, Gender.UNISEX, Gender.OTHER]),
 
   stock_quantity: z.number().int().min(0),
 
@@ -88,14 +89,14 @@ export const formSchema = z.object({
         FrameSize.MEDIUM,
         FrameSize.NARROW,
         FrameSize.WIDE,
-      ])
+      ]),
     )
     .min(1),
 
   power_type_ids: z.array(
     z.string().refine(isValidObjectId, {
       message: "Invalid MongoDB ObjectId format",
-    })
+    }),
   ),
   // color_ids: z.array(
   //   z.string().refine(isValidObjectId, {
@@ -105,9 +106,9 @@ export const formSchema = z.object({
 
   color_ids: z
     .array(
-      z
-        .string()
-        .refine(isValidObjectId, { message: "Invalid MongoDB ObjectId format" })
+      z.string().refine(isValidObjectId, {
+        message: "Invalid MongoDB ObjectId format",
+      }),
     )
     .optional(),
 

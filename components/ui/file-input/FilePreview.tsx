@@ -23,9 +23,10 @@ const FilePreview: React.FC<FilePreviewProps> = ({
   return (
     <div
       className={twMerge(
-        "relative p-2 w-full h-full rounded-md bg-input text-gray-600 border-2 border-dashed border-gray-200 cursor-pointer overflow-hidden",
+        "relative p-2 w-full h-full rounded-md bg-input text-gray-600 border-2 border-gray-200 cursor-pointer overflow-hidden",
         error && "border-destructive bg-destructive/5",
         className,
+        (defaultValue || file) && "p-0",
       )}
     >
       {file && (
@@ -51,9 +52,10 @@ const FilePreview: React.FC<FilePreviewProps> = ({
           {defaultValue?.type?.startsWith("image") && defaultValue?.url && (
             <Image
               src={defaultValue?.url}
-              alt="Employee Photo"
-              fill
-              className="object-contain"
+              alt="Image"
+              width={200}
+              height={200}
+              className="w-full h-full"
             />
           )}
           {defaultValue?.type?.includes("pdf") && (

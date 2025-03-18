@@ -2,7 +2,7 @@ import { toast } from "@/lib/hooks/use-toast";
 import { RequestError, getApiClient, getErrorMessage } from "@/lib/api";
 import ENDPOINTS from "@/lib/endpoints";
 import { useAppDispatch } from "@/store";
-import { resetStore } from "@/store/coupon-manager/form.slice";
+import { resetStore } from "@/store/products/form.slice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import { formSchema } from "@/lib/validations/admin/product.validation";
@@ -17,7 +17,7 @@ const useCreate = (onSuccess?: () => void) => {
       return res.data;
     },
     onSuccess: () => {
-      dispatch(resetStore());
+      // dispatch(resetStore()); // commenting becuase we don't want to close the modal.
       if (onSuccess) onSuccess();
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },

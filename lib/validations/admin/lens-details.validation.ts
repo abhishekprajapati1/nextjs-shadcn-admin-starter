@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const lensDetailSchema = z.object({
-  image: z.any().optional(),
+  image: z.string().optional(),
   lens_id: z.string().min(1, { message: "Please provide lens id." }),
   lens_feature_id: z
     .string()

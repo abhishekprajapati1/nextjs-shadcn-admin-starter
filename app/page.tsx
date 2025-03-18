@@ -1,11 +1,6 @@
 import { MainHeader } from "@/components/navigation/MainHeader";
-import UnderConstruction from "@/components/UnderConstruction";
 import { Metadata } from "next";
-<<<<<<< Updated upstream
-=======
-import { images } from "../components/home/images";
 import Home from "@/components/home/home-section/Home";
->>>>>>> Stashed changes
 
 export const metadata: Metadata = {
   title: "Akku Ka Chasma",
@@ -32,9 +27,6 @@ const HomePage = () => {
   return (
     <div>
       <MainHeader />
-<<<<<<< Updated upstream
-      {/* <UnderConstruction /> */}
-=======
       {/* dont delete the commented codes start */}
 
       {/* <BannerSlider />
@@ -43,7 +35,6 @@ const HomePage = () => {
 
       {/* dont delete the commented codes start */}
       <Home />
->>>>>>> Stashed changes
     </div>
   );
 };

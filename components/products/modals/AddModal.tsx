@@ -8,7 +8,7 @@ import Modal from "@/components/ui/modal";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { showModal } from "@/store/products/form.slice";
-import ItemForm from "./ItemForm";
+import ItemForm from "../ItemForm";
 
 const AddModal: React.FC = () => {
   const dispatch = useAppDispatch();

@@ -26,13 +26,35 @@ import useCreateLensDetail from "@/lib/mutations/admin/lens-details/useCreateLen
 import Combobox, { ComboboxOption } from "../ui/combo-box";
 import useLensFeatures from "@/lib/queries/admin/lens-features/useLensFeatures";
 import { Checkbox } from "../ui/checkbox";
+import useUpdate from "@/lib/mutations/admin/products/useUpdate";
+import useUpload from "@/lib/mutations/useUpload";
+import useSessionStorage from "@/hooks/use-session-storage";
+import { IFile } from "@/lib/types";
 
 const LensDetailForm: React.FC = () => {
   const form = useForm<z.infer<typeof lensDetailSchema>>({
-    defaultValues: { image: null, title: "" },
+    defaultValues: {
+      title: "",
+      crack_resistant: 0,
+      hydrophobic: 0,
+      lens_feature_id: "",
+      lens_id: "",
+      power_range: "",
+      price: 0,
+      thickness: 0,
+      warranty_period: 0,
+      uv_protection: false,
+      anti_reflection: false,
+      blue_light_blocker: false,
+    },
     mode: "onBlur",
     resolver: zodResolver(lensDetailSchema),
   });
+
+  const { value: uploadedImage, setValue: setUploadedImage } =
+    useSessionStorage<IFile>("lens_detail_image");
+
+  const { mutate: upload, isPending: uploading } = useUpload();
 
   const dispatch = useAppDispatch();
 
@@ -89,6 +111,16 @@ const LensDetailForm: React.FC = () => {
     }
   }, [data, form]);
 
+  React.useEffect(() => {
+    if (data?.image) {
+      setUploadedImage({
+        id: data.image.id,
+        url: data.image.url,
+        fieldname: data.image.fieldname || "",
+      });
+    }
+  }, [data]);
+
   return (
     <Form {...form}>
       <form
@@ -97,36 +129,43 @@ const LensDetailForm: React.FC = () => {
       >
         <div className="flex flex-col gap-4">
           {/* Image Upload */}
-          <FormField
-            control={form.control}
-            name="image"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Image</FormLabel>
-                <FormControl>
-                  <FileInput
-                    value={field.value?.[0]}
-                    onChange={(files) => field.onChange(files?.[0])}
-                    className="size-[100px]"
-                  >
-                    <FilePreview
-                      file={field.value}
-                      {...(data?.default_url && {
-                        defaultValue: {
-                          type: "image",
-                          url: data?.default_url,
-                        },
-                      })}
-                      className="size-full grid place-content-center"
-                    >
-                      <DragDropIcon className="size-[25px]" />
-                    </FilePreview>
-                  </FileInput>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <FileInput
+            onChange={(files) => {
+              if (
+                Array.isArray(files) &&
+                !isNaN(files?.length) &&
+                files?.length > 0
+              ) {
+                upload(
+                  { files, name: "image" },
+                  {
+                    onSuccess: (data) => {
+                      setUploadedImage({
+                        id: data[0].id,
+                        url: data[0].url,
+                        fieldname: data[0].fieldname,
+                        is_temp: data[0].is_temp,
+                      });
+                    },
+                  },
+                );
+              }
+            }}
+            className="size-[100px]"
+          >
+            <FilePreview
+              file={null}
+              {...(uploadedImage && {
+                defaultValue: {
+                  type: "image",
+                  url: uploadedImage?.url,
+                },
+              })}
+              className="size-full grid place-content-center"
+            >
+              <DragDropIcon className="size-[25px]" />
+            </FilePreview>
+          </FileInput>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
             <div className="col-span-1 flex flex-col gap-4">

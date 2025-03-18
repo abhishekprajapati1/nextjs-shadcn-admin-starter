@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import glass from "../../../public/aviator.jpg";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import FileInput from "@/components/ui/file-input";
@@ -53,15 +52,15 @@ const PRODUCTS = {
 function ItemDetail() {
   const [colorData, setColorData] = useState(
     PRODUCTS?.images?.filter(
-      (item) => item.color_id === PRODUCTS?.colors[0]?.id
-    )
+      (item) => item.color_id === PRODUCTS?.colors[0]?.id,
+    ),
   );
 
   const [data, setData] = useState<any>(colorData[0].url);
 
   const handleColor = (colorValue: string) => {
     setColorData(
-      PRODUCTS?.images?.filter((items) => items.color_id === colorValue)
+      PRODUCTS?.images?.filter((items) => items.color_id === colorValue),
     );
   };
 
@@ -76,25 +75,6 @@ function ItemDetail() {
 
   return (
     <Card className="flex flex-col gap-6 border-none shadow-none">
-      <div className="flex flex-row justify-between">
-        <div className="flex flex-row gap-6">
-          <Image
-            src={glass}
-            width={500}
-            height={500}
-            alt="glass"
-            className="object-contain rounded-lg size-40 shadow-md"
-          />
-          <div className="flex flex-col gap-1">
-            <h2 className="font-semibold text-lg">Product A</h2>
-            <h4 className="text-gray-500 text-sm">Model Number</h4>
-          </div>
-        </div>
-        <div className="flex gap-6">
-          <Button className="w-28">Edit</Button>
-          <Button className="w-28">Delete</Button>
-        </div>
-      </div>
       <div className="flex flex-row gap-4 py-4 px-2">
         {PRODUCTS?.colors?.map((items, index) => (
           <Button
