@@ -20,7 +20,18 @@ export default function Slider() {
           navigation={true}
           modules={[FreeMode, Navigation]}
           className="h-40 w-full"
+          style={{
+            padding: "0px 60px",
+            // border: "2px solid red",
+          }}
         >
+          <style>
+            {`
+              .swiper-button-prev, .swiper-button-next {
+                color: #000000 !important;
+              }
+            `}
+          </style>
           {GlassesType?.map((slide, index) => (
             <SwiperSlide key={index} className="h-full w-full">
               <div className="h-full w-full flex flex-col justify-between">
