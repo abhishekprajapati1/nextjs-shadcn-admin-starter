@@ -23,6 +23,12 @@ import useUpdateLensFeature from "@/lib/mutations/admin/lens-features/useUpdateL
 import useCreateLensFeature from "@/lib/mutations/admin/lens-features/useCreateLensFeatures";
 import Combobox, { ComboboxOption } from "../ui/combo-box";
 import usePowerTypes from "@/lib/queries/admin/power-types/usePowerTypes";
+import FilePreview from "../ui/file-input/FilePreview";
+import DragDropIcon from "../icons/DragDropIcon";
+import FileInput from "../ui/file-input";
+import useUpload from "@/lib/mutations/useUpload";
+import useSessionStorage from "@/hooks/use-session-storage";
+import { IFile } from "@/lib/types";
 
 const LensFeatureForm: React.FC = () => {
   const form = useForm<z.infer<typeof lensFeatureSchema>>({
@@ -31,11 +37,16 @@ const LensFeatureForm: React.FC = () => {
     resolver: zodResolver(lensFeatureSchema),
   });
 
+  const { value: uploadedImage, setValue: setUploadedImage } =
+    useSessionStorage<IFile>("lens_feature_image");
+
   const dispatch = useAppDispatch();
 
   const { data, lens_feature_id } = useAppSelector(
     (store) => store.lensFeatureStore.formStore,
   );
+
+  const { mutate: upload, isPending: uploading } = useUpload();
 
   const { mutate: updateLensFeature, isPending: updating } =
     useUpdateLensFeature();
@@ -79,19 +90,43 @@ const LensFeatureForm: React.FC = () => {
       >
         <div className="flex flex-col gap-4">
           {/* Image Upload */}
-          <FormField
-            control={form.control}
-            name="image"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Image</FormLabel>
-                <FormControl>
-                 
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <FileInput
+            onChange={(files) => {
+              if (
+                Array.isArray(files) &&
+                !isNaN(files?.length) &&
+                files?.length > 0
+              ) {
+                upload(
+                  { files, name: "image" },
+                  {
+                    onSuccess: (data) => {
+                      setUploadedImage({
+                        id: data[0].id,
+                        url: data[0].url,
+                        fieldname: data[0].fieldname,
+                        is_temp: data[0].is_temp,
+                      });
+                    },
+                  },
+                );
+              }
+            }}
+            className="size-[100px]"
+          >
+            <FilePreview
+              file={null}
+              {...(uploadedImage && {
+                defaultValue: {
+                  type: "image",
+                  url: uploadedImage?.url,
+                },
+              })}
+              className="size-full grid place-content-center"
+            >
+              <DragDropIcon className="size-[25px]" />
+            </FilePreview>
+          </FileInput>
 
           <FormField
             control={form.control}
