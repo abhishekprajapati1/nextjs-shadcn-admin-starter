@@ -23,6 +23,9 @@ import FilePreview from "../ui/file-input/FilePreview";
 import DragDropIcon from "../icons/DragDropIcon";
 import TextEditor from "../ui/text-editor";
 import { formSchema } from "@/lib/validations/admin/shapes.validation";
+import useUpload from "@/lib/mutations/useUpload";
+import useSessionStorage from "@/hooks/use-session-storage";
+import { IFile } from "@/lib/types";
 
 const ShapeForm: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -33,9 +36,11 @@ const ShapeForm: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const { data, item_id } = useAppSelector(
-    (store) => store.shapeStore.formStore
+    (store) => store.shapeStore.formStore,
   );
-
+  const { value: uploadedImage, setValue: setUploadedImage } =
+    useSessionStorage<IFile>("shape_image");
+  const { mutate: upload, isPending: uploading } = useUpload();
   const { mutate: updateShape, isPending: updating } = useUpdate();
   const { mutate: createShape, isPending: creating } = useCreate();
   const isPending = updating || creating;
@@ -69,36 +74,44 @@ const ShapeForm: React.FC = () => {
         className="flex flex-col gap-4"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <FormField
-          control={form.control}
-          name="image"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Image</FormLabel>
-              <FormControl>
-                <FileInput
-                  value={field.value}
-                  onChange={(files) => field.onChange(files?.[0])}
-                  className="size-[100px]"
-                >
-                  <FilePreview
-                    file={field.value}
-                    {...(data?.image?.url && {
-                      defaultValue: {
-                        type: "image",
-                        url: data?.image?.url,
-                      },
-                    })}
-                    className="size-full grid place-content-center"
-                  >
-                    <DragDropIcon className="size-[25px]" />
-                  </FilePreview>
-                </FileInput>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {/* Image Upload */}
+        <FileInput
+          onChange={(files) => {
+            if (
+              Array.isArray(files) &&
+              !isNaN(files?.length) &&
+              files?.length > 0
+            ) {
+              upload(
+                { files, name: "image" },
+                {
+                  onSuccess: (data) => {
+                    setUploadedImage({
+                      id: data[0].id,
+                      url: data[0].url,
+                      fieldname: data[0].fieldname,
+                      is_temp: data[0].is_temp,
+                    });
+                  },
+                },
+              );
+            }
+          }}
+          className="size-[100px]"
+        >
+          <FilePreview
+            file={null}
+            {...(uploadedImage && {
+              defaultValue: {
+                type: "image",
+                url: uploadedImage?.url,
+              },
+            })}
+            className="size-full grid place-content-center"
+          >
+            <DragDropIcon className="size-[25px]" />
+          </FilePreview>
+        </FileInput>
 
         {/* Title input */}
         <div className="flex gap-4">
