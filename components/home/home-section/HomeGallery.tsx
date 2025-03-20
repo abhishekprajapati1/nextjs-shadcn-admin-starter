@@ -15,13 +15,13 @@ const HomeGallery: React.FC = () => {
 
       <GalleryGrid />
       <div className="border border-gray-200 py-4 text-center bg-white shadow-sm">
-        <p className="text-xl text-black font-normal tracking-wider py-2">
+        <p className="text-lg md:text-xl text-black font-normal tracking-wider py-2">
           Discount On Every Single Item On Our Site.
         </p>
-        <h1 className="text-3xl font-bold text-black tracking-wider py-2">
+        <h1 className="text-xl md:text-3xl font-bold text-black tracking-wider py-2">
           OMG! JUST LOOK AT THE GREAT DEALS!
         </h1>
-        <p className="text-base font-medium text-black tracking-widest py-2">
+        <p className="text-xs md:text-base font-medium text-black tracking-widest py-2">
           HOW DOES IT FEEL, WHEN YOU SEE GREAT DISCOUNT DEALS FOR EACH PRODUCT?
         </p>
       </div>
