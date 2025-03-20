@@ -15,7 +15,7 @@ export default function Slider() {
       <div className="container px-0">
         <Swiper
           loop={true}
-          slidesPerView={4}
+          // slidesPerView={4}
           spaceBetween={20}
           navigation={true}
           modules={[FreeMode, Navigation]}
@@ -23,6 +23,13 @@ export default function Slider() {
           style={{
             padding: "0px 60px",
             // border: "2px solid red",
+          }}
+          breakpoints={{
+            320: { slidesPerView: 1 },
+            480: { slidesPerView: 2 },
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+            1280:{ slidesPerView: 4 }
           }}
         >
           <style>
