@@ -34,7 +34,7 @@ const data = [
 ];
 const GlassesType = () => {
   return (
-    <motion.div className="w-full flex items-center gap-5 mt-6 justify-between">
+    <motion.div className="w-full flex flex-wrap md:flex-nowrap items-center gap-5 mt-6 justify-between">
       {data &&
         data.map((item, index) => (
           <div
@@ -52,7 +52,7 @@ const GlassesType = () => {
                 alt="Glass Type"
               />
             </motion.div>
-            <p className="text-sm font-semibold tracking-wide mt-2">
+            <p className="text-sm font-semibold tracking-wide mt-2 text-center">
               {item.title}
             </p>
           </div>

@@ -18,7 +18,7 @@ const Home = () => {
         <section className="flex flex-col h-auto gap-5">
           <GlassesType />
 
-          <div className="w-full flex flex-row items-center justify-between gap-2 h-[200px] py-2">
+          <div className="w-full flex flex-col md:flex-row items-center justify-between gap-2 md:h-[200px] py-2">
             <p className="flex flex-col font-bold text-5xl text-center">
               <span>EYEGLASSES</span>
               <span className="font-semibold">TREND</span>
