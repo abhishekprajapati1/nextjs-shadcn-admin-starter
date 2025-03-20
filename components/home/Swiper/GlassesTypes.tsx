@@ -34,7 +34,7 @@ const data = [
 ];
 const GlassesType = () => {
   return (
-    <motion.div className="w-full flex flex-wrap md:flex-nowrap items-center gap-5 mt-6 justify-between">
+    <motion.div className="w-full flex flex-wrap md:flex-nowrap items-center gap-5 mt-6 justify-evenly md:justify-between">
       {data &&
         data.map((item, index) => (
           <div
