@@ -41,8 +41,8 @@ import { FiSearch } from "react-icons/fi";
 
 const Navbar = () => {
   return (
-    <nav className="flex flex-wrap items-center justify-between py-4 px-4 lg:px-0">
-      <div className="w-full lg:w-auto flex flex-wrap justify-center lg:justify-start gap-4">
+    <nav className="flex flex-wrap items-center justify-between gap-6 py-4 px-4 lg:px-0">
+      <div className="w-full lg:w-auto flex flex-wrap justify-center lg:justify-start gap-6">
         {[
           "Accessories",
           "EyeGlasses",
