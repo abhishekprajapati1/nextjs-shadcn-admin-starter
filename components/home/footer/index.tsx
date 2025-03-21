@@ -11,8 +11,8 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="h-[450px] mx-auto mt-8 overflow-hidden w-[98%]">
-      <div className="bg-gray-700 py-2 flex items-center justify-around text-white">
+    <footer className="mx-auto mt-8 overflow-hidden w-[98%]">
+      <div className="bg-gray-700 p-4 md:p-2 flex gap-8 flex-wrap md:flex-nowrap items-center justify-around text-white">
         <span className="flex gap-3 items-center tracking-wide text-lg">
           <MdLocalShipping /> Free Shipping
         </span>
@@ -27,7 +27,7 @@ const Footer = () => {
         </span>
       </div>
 
-      <div className="bg-gray-900 py-8 flex items-center justify-evenly">
+      <div className="bg-gray-900 p-8 flex gap-6 flex-wrap items-center justify-evenly">
         <div className="text-white font-bold flex gap-4 items-center tracking-wide">
           <span className="text-5xl">
             <BsFillEnvelopePaperFill />
@@ -37,20 +37,20 @@ const Footer = () => {
             <h2 className="text-2xl">JOIN OUR NEWSLETTER</h2>
           </div>
         </div>
-        <div className="flex items-center h-10 ">
+        <div className="flex items-center flex-wrap">
           <input
             type="text"
             placeholder="Enter Your Whatsapp Number"
-            className="text-gray-600 h-full w-[350px] px-6 items-center focus:outline-none focus:ring-0"
+            className="text-gray-600 h-10 w-[350px] px-6 items-center focus:outline-none focus:ring-0"
           />
-          <button className="py-2 px-5 bg-gray-800 text-white tracking-wider font-semibold cursor-pointer">
+          <button className="h-10 py-2 px-5 bg-gray-800 text-white tracking-wider font-semibold cursor-pointer">
             SUBSCRIBE
           </button>
         </div>
       </div>
 
       <div className="grid grid-cols-5 shadow-sm px-6 gap-8 items-start justify-around bg-gray-200 py-8">
-        <div className="flex flex-col items-center justify-center gap-3 col-span-2">
+        <div className="flex flex-col items-center justify-center gap-3 col-span-3 lg:col-span-2">
           <span className="w-full h-12 flex justify-center items-center">
             <Image
               src="/logo.png"
@@ -68,7 +68,7 @@ const Footer = () => {
             Akku ka chasma and Buy Blue cut lens free with Eyeglass.
           </p>
         </div>
-        <div>
+        <div className="col-span-2 lg:col-span-1">
           <h1 className="font-bold text-lg tracking-wide mb-1">My Account</h1>
           <ul className="flex flex-col gap-2">
             <li>About Us</li>
@@ -81,7 +81,7 @@ const Footer = () => {
             <li>Shipping & Delivery</li>
           </ul>
         </div>
-        <div className="col-span-2 flex flex-col items-start">
+        <div className="col-span-5 lg:col-span-2 flex flex-col items-start">
           <h1 className="font-bold text-lg tracking-wide mb-1">CONTACT US</h1>
           <div className="flex flex-col gap-4">
             <div className="flex gap-2 items-center">
