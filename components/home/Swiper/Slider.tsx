@@ -1,14 +1,13 @@
 "use client";
-import { Swiper, SwiperSlide } from "swiper/react";
-
 import "swiper/css";
+import Image from "next/image";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
-
+import { IGlasses } from "@/lib/types";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation } from "swiper/modules";
-import { GlassesType } from "./Data";
-import Image from "next/image";
+import { GlassesType } from "@/lib/constants";
 
 export default function Slider() {
   return (
@@ -46,7 +45,7 @@ export default function Slider() {
               }
             `}
           </style>
-          {GlassesType?.map((slide, index) => (
+          {GlassesType?.map((slide: IGlasses, index: number) => (
             <SwiperSlide key={index} className="h-full w-full">
               <div className="h-full w-full flex flex-col justify-between">
                 <div className="h-full w-full flex items-center justify-center">

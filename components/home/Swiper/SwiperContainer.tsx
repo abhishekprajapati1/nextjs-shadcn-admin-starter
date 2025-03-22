@@ -5,9 +5,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { GlassesType } from "./Data";
 import { FreeMode, Navigation } from "swiper/modules";
 import Image from "next/image";
+import { GlassesType } from "@/lib/constants";
 
 const SwiperContainer = () => {
   return (
@@ -22,7 +22,7 @@ const SwiperContainer = () => {
             480: { slidesPerView: 2 },
             768: { slidesPerView: 3 },
             1024: { slidesPerView: 4 },
-            1280:{ slidesPerView: 4 }
+            1280: { slidesPerView: 4 },
           }}
           navigation={true}
           modules={[FreeMode, Navigation]}
@@ -40,7 +40,9 @@ const SwiperContainer = () => {
                     height={400}
                   />
                 </div>
-                <span className="block text-sm text-center max-h-[20%] h-[20%]">{slide.title}</span>
+                <span className="block text-sm text-center max-h-[20%] h-[20%]">
+                  {slide.title}
+                </span>
               </div>
             </SwiperSlide>
           ))}
