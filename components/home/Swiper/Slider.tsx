@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "swiper/css/effect-fade";
 
 import { FreeMode, Navigation } from "swiper/modules";
 import { GlassesType } from "./Data";
@@ -15,10 +16,16 @@ export default function Slider() {
       <div className="container px-0">
         <Swiper
           loop={true}
-          // slidesPerView={4}
+          slidesPerView={4}
           spaceBetween={20}
+          autoplay={{
+            delay: 1000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }}
           navigation={true}
           modules={[FreeMode, Navigation]}
+          effect="fade"
           className="h-40 w-full"
           style={{
             padding: "0px 60px",
@@ -29,7 +36,7 @@ export default function Slider() {
             480: { slidesPerView: 2 },
             768: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
-            1280:{ slidesPerView: 4 }
+            1280: { slidesPerView: 4 },
           }}
         >
           <style>
