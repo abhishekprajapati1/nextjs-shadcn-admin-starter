@@ -112,3 +112,8 @@ export interface IProduct {
   stock: number;
   product_colors: IProductColor[];
 }
+
+export interface IGlasses {
+  src: string;
+  title: string;
+}

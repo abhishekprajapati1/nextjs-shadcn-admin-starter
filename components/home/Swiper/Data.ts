@@ -1,9 +1,6 @@
-export interface IGlasses {
-  src: string;
-  title: string;
-}
+import { IGlasses } from "@/lib/types";
 
-export const GlassesType = [
+export const GlassesType: IGlasses[] = [
   { src: "images/1 (11).jpeg", title: "Aviator" },
   { src: "images/1 (12).jpeg", title: "Butterfly" },
   { src: "images/1 (13).jpeg", title: "Butterfly eyeglasses " },
