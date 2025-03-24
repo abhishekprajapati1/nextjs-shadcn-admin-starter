@@ -23,7 +23,7 @@ const Home = () => {
               <span>EYEGLASSES</span>
               <span className="font-semibold">TREND</span>
             </p>
-            <Slider />
+            <SwiperContainer />
           </div>
 
           <div className="w-full">
@@ -39,7 +39,7 @@ const Home = () => {
                   </span>
                 </h1>
               </div>
-              <SwiperContainer />
+              {/* <SwiperContainer /> */}
             </div>
 
             <div className="mt-7">

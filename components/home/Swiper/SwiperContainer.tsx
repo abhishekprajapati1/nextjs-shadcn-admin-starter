@@ -28,6 +28,13 @@ const SwiperContainer = () => {
           modules={[FreeMode, Navigation]}
           className="h-40 w-full"
         >
+          <style>
+            {`
+              .swiper-button-prev, .swiper-button-next {
+                color: #000000 !important;
+              }
+            `}
+          </style>
           {GlassesType?.map((slide, i) => (
             <SwiperSlide key={i} className="h-full w-full">
               <div className="h-full w-full flex flex-col justify-between">
