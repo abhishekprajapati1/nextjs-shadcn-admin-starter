@@ -1,9 +1,6 @@
-import BannerSlider from "@/components/home/BannerSlider";
-import Glass from "@/components/home/Glass";
 import { MainHeader } from "@/components/navigation/MainHeader";
-import UnderConstruction from "@/components/UnderConstruction";
 import { Metadata } from "next";
-import { images } from "../components/home/images";
+import Home from "@/components/home/home-section/Home";
 
 export const metadata: Metadata = {
   title: "Akku Ka Chasma",
@@ -30,9 +27,14 @@ const HomePage = () => {
   return (
     <div>
       <MainHeader />
-      <BannerSlider />
+      {/* dont delete the commented codes start */}
+
+      {/* <BannerSlider />
       <Glass title="EYEGLASSES" images={images} />
-      <Glass title="SUNGLASSES" images={images} />
+      <Glass title="SUNGLASSES" images={images} /> */}
+
+      {/* dont delete the commented codes start */}
+      <Home />
     </div>
   );
 };
