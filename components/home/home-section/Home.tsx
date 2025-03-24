@@ -1,13 +1,12 @@
 import React from "react";
-import GlassesType from "../Swiper/GlassesTypes";
-import Slider from "../Swiper/Slider";
-import SwiperContainer from "../Swiper/SwiperContainer";
 import HomeGallery from "./HomeGallery";
 import WomenFashionBanner from "./WomenFashionBanner";
 import GalleryGrid from "./GalleryGrid";
 import Footer from "./../footer";
 import Navbar from "../header/Navbar";
 import { GlassData } from "@/lib/constants";
+import GlassesType from "./GlassesTypes";
+import SwiperContainer from "@/components/ui/swiper/SwiperContainer";
 
 const Home = () => {
   return (
