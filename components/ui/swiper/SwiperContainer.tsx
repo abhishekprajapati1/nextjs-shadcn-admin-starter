@@ -6,9 +6,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Autoplay, FreeMode, Navigation } from "swiper/modules";
-import Image from "next/image";
 import type { SwiperOptions } from "swiper/types"; // ✅ Correct import
 import { IGlasses } from "@/lib/types";
+import SwiperCard from "./SwiperCard";
 
 // Correctly define breakpoints to match SwiperOptions
 interface IBreakpoints {
@@ -56,20 +56,7 @@ const SwiperContainer: React.FC<ISwiperContainerProps> = ({
           </style>
           {data?.map((slide, i) => (
             <SwiperSlide key={i} className="h-full w-full">
-              <div className="h-full w-full flex flex-col justify-between">
-                <div className="h-full w-full flex items-center justify-center">
-                  <Image
-                    src={`/${slide?.src}`}
-                    alt="glass"
-                    className="block max-h-[80%] h-[80%] w-full object-contain rounded-lg"
-                    width={600}
-                    height={400}
-                  />
-                </div>
-                <span className="block text-sm text-center max-h-[20%] h-[20%]">
-                  {slide.title}
-                </span>
-              </div>
+              <SwiperCard slide={slide} />
             </SwiperSlide>
           ))}
         </Swiper>
