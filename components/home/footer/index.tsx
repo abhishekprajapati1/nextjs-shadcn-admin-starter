@@ -100,7 +100,7 @@ const Footer = () => {
               <span className="text-lg">
                 <HiMail />
               </span>
-              <p>Email Us Help@Akkukachasma.com</p>
+              <p>Email Us help@akkukachasma.com</p>
             </div>
             <div className="flex gap-2 items-center">
               <span className="text-lg">
