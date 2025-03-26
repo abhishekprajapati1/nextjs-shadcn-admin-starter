@@ -11,10 +11,10 @@ import SwiperContainer from "@/components/ui/swiper/SwiperContainer";
 const Home = () => {
   return (
     <>
-      <nav className="w-[97%] mx-auto">
+      <nav className="w-full mx-auto container">
         <Navbar />
       </nav>
-      <main className="w-[97%] mx-auto">
+      <main className="w-full mx-auto container">
         <section className="flex flex-col h-auto gap-5">
           <GlassesType />
 
