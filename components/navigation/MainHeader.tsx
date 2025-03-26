@@ -87,7 +87,7 @@ export function MainHeader() {
     <header
       className={cn(
         "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-200",
-        isScrolled && "shadow-sm"
+        isScrolled && "shadow-sm",
       )}
     >
       {/* Announcement Bar */}
@@ -124,7 +124,7 @@ export function MainHeader() {
             className="flex items-center gap-1 text-xs font-semibold"
             href="tel:6388233466"
           >
-            <PhoneCallIcon size={"1rem"} /> +916388233466
+            <PhoneCallIcon size={"1rem"} /> +91 8188881661
           </a>
         </div>
       </div>
@@ -294,7 +294,7 @@ export function MainHeader() {
                   <ChevronRight className="mr-2 h-4 w-4" />
                   {item.title}
                 </CommandItem>
-              ))
+              )),
             )}
           </CommandGroup>
         </CommandList>
