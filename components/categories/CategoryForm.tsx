@@ -23,6 +23,7 @@ import FilePreview from "../ui/file-input/FilePreview";
 import DragDropIcon from "../icons/DragDropIcon";
 import TextEditor from "../ui/text-editor";
 import { formSchema } from "@/lib/validations/admin/categories.validation";
+import { generateSlug } from "../articles/ArticleForm";
 
 const CategoryForm: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -40,8 +41,10 @@ const CategoryForm: React.FC = () => {
   const { mutate: createShape, isPending: creating } = useCreate();
   const isPending = updating || creating;
 
+  const { isDirty } = form.formState;
+
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    if (form.formState.isDirty) {
+    if (isDirty) {
       if (item_id) {
         updateShape(data);
       } else {
@@ -52,14 +55,13 @@ const CategoryForm: React.FC = () => {
     }
   };
 
-  console.log("see this", form.formState.isDirty);
-
   React.useEffect(() => {
     if (data) {
       form.reset({
         title: data?.title,
         description: data?.description,
         seo_title: data?.seo_title,
+        slug: data?.slug,
       });
     }
   }, [data, form]);
@@ -110,7 +112,28 @@ const CategoryForm: React.FC = () => {
               <FormItem>
                 <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter title" {...field} />
+                  <Input
+                    placeholder="Enter title"
+                    {...field}
+                    onChange={(event) => {
+                      form.setValue("slug", generateSlug(event.target.value));
+                      field.onChange(event.target.value);
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="slug"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Slug</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter slug" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

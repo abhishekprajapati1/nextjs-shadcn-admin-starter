@@ -21,6 +21,7 @@ import { formSchema } from "@/lib/validations/admin/brands.validation";
 import useUpdateBrand from "@/lib/mutations/admin/brands/useUpdate";
 import useCreateBrand from "@/lib/mutations/admin/brands/useCreate";
 import { resetStore, showModal } from "@/store/brands/form.slice";
+import { generateSlug } from "../articles/ArticleForm";
 
 const BrandForm: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -32,7 +33,7 @@ const BrandForm: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { data, item_id } = useAppSelector(
-    (store) => store.brandStore.formStore
+    (store) => store.brandStore.formStore,
   );
 
   const { mutate: updateBrand, isPending: updating } = useUpdateBrand();
@@ -54,6 +55,7 @@ const BrandForm: React.FC = () => {
       form.reset({
         title: data?.title,
         description: data?.description,
+        slug: data?.slug,
       });
     }
   }, [data, form]);
@@ -72,7 +74,28 @@ const BrandForm: React.FC = () => {
               <FormItem>
                 <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter title" {...field} />
+                  <Input
+                    placeholder="Enter title"
+                    {...field}
+                    onChange={(event) => {
+                      form.setValue("slug", generateSlug(event.target.value));
+                      field.onChange(event.target.value);
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="slug"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Slug</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter slug" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

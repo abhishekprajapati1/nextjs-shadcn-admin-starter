@@ -10,10 +10,11 @@ import { Skeleton } from "../ui/skeleton";
 import { setData, setItemId } from "@/store/categories/form.slice";
 import { setItemToDelete } from "@/store/categories/data.slice";
 import { capitalizeFirstLetter } from "@/lib/utils";
-import {Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export interface ICategory extends IRecordMeta {
   title: string;
+  slug: string;
   seo_title: string;
   description: string;
   image: FileType | null;
@@ -57,10 +58,11 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
                 dispatch(
                   setData({
                     title: data?.title,
+                    slug: data?.slug,
                     seo_title: data?.seo_title,
                     description: data?.description,
                     image: data?.image,
-                  })
+                  }),
                 );
               }}
               variant="secondary"
@@ -76,7 +78,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
                   setItemToDelete({
                     id: data?.id || "",
                     label: data.title || "",
-                  })
+                  }),
                 )
               }
               className="bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white ease-linear duration-300"
