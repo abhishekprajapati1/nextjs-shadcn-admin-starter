@@ -15,6 +15,7 @@ import { setItemToDelete } from "@/store/brands/data.slice";
 export interface IBrand extends IRecordMeta {
   title?: string;
   description?: string;
+  slug?: string;
 }
 
 interface ListItemProps {
@@ -48,7 +49,8 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
                   setData({
                     title: data?.title,
                     description: data?.description,
-                  })
+                    slug: data?.slug,
+                  }),
                 );
               }}
               variant="secondary"
@@ -64,7 +66,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
                   setItemToDelete({
                     id: data?.id || "",
                     label: data.title || "",
-                  })
+                  }),
                 )
               }
               className="bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white ease-linear duration-300"
