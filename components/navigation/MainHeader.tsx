@@ -41,6 +41,7 @@ import {
 } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { InstagramLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
+import Logo from "./Logo";
 
 const categories = [
   {
@@ -144,8 +145,9 @@ export function MainHeader() {
           <SheetContent side="left" className="w-[300px] sm:w-[400px] p-0">
             <SheetHeader className="p-6 border-b">
               <SheetTitle className="flex items-center gap-2">
-                <Glasses className="h-5 w-5" />
-                Akku Ka Chasma
+                {/* <Glasses className="h-5 w-5" />
+                Akku Ka Chasma */}
+                <Logo />
               </SheetTitle>
             </SheetHeader>
             <nav className="px-6">
@@ -185,10 +187,11 @@ export function MainHeader() {
           href="/"
           className="mr-6 flex items-center space-x-2 transition-transform hover:scale-105"
         >
-          <Glasses className="h-6 w-6 text-primary" />
+          {/* <Glasses className="h-6 w-6 text-primary" />
           <span className="hidden font-bold sm:inline-block">
             Akku Ka Chasma
-          </span>
+          </span> */}
+          <Logo />
         </Link>
 
         {/* Desktop Navigation */}
