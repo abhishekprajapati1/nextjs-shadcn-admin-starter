@@ -47,12 +47,9 @@ const NotificationSettings = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6">
-      <h2 className="text-xl font-semibold text-center mb-6 text-muted-foreground tracking-widest">
-        Notification Settings
-      </h2>
-      <Card className="shadow-lg rounded-lg p-6">
-        <CardContent>
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="max-w-lg mx-auto p-6">
+        <div className="rounded-lg p-6 border">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {notifications.map(({ label, state }) => (
@@ -91,8 +88,8 @@ const NotificationSettings = () => {
               </DialogFooter>
             </form>
           </Form>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };
