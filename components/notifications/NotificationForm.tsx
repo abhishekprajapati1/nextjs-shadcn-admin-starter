@@ -3,7 +3,6 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import {
@@ -26,7 +25,7 @@ const notifications = [
   { label: "Mobile Message Notification", state: "smsNotification" },
 ] as const;
 
-const NotificationSettings = () => {
+const NotificationForm = () => {
   const form = useForm<NotificationFormValues>({
     defaultValues: {
       desktopNotification: false,
@@ -94,7 +93,7 @@ const NotificationSettings = () => {
   );
 };
 
-export default NotificationSettings;
+export default NotificationForm;
 
 // "use client";
 // import { Toggle } from "@/components/ui/toggle";
