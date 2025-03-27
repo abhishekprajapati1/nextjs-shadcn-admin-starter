@@ -1,20 +1,20 @@
 import React from "react";
-import GlassesType from "../Swiper/GlassesTypes";
-import Slider from "../Swiper/Slider";
-import SwiperContainer from "../Swiper/SwiperContainer";
 import HomeGallery from "./HomeGallery";
 import WomenFashionBanner from "./WomenFashionBanner";
 import GalleryGrid from "./GalleryGrid";
 import Footer from "./../footer";
 import Navbar from "../header/Navbar";
+import { GlassData } from "@/lib/constants";
+import GlassesType from "./GlassesTypes";
+import SwiperContainer from "@/components/ui/swiper/SwiperContainer";
 
 const Home = () => {
   return (
     <>
-      <nav className="w-[97%] mx-auto">
+      <nav className="w-full mx-auto container">
         <Navbar />
       </nav>
-      <main className="w-[97%] mx-auto">
+      <main className="w-full mx-auto container">
         <section className="flex flex-col h-auto gap-5">
           <GlassesType />
 
@@ -23,7 +23,17 @@ const Home = () => {
               <span>EYEGLASSES</span>
               <span className="font-semibold">TREND</span>
             </p>
-            <Slider />
+            <SwiperContainer
+              autoplay={true}
+              breakpoints={{
+                320: { slidesPerView: 1 },
+                480: { slidesPerView: 2 },
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+                1280: { slidesPerView: 4 },
+              }}
+              data={GlassData}
+            />
           </div>
 
           <div className="w-full">
@@ -39,7 +49,7 @@ const Home = () => {
                   </span>
                 </h1>
               </div>
-              <SwiperContainer />
+              <SwiperContainer autoplay={true} data={GlassData} />
             </div>
 
             <div className="mt-7">
@@ -53,7 +63,7 @@ const Home = () => {
                   </span>
                 </h1>
               </div>
-              <SwiperContainer />
+              <SwiperContainer autoplay={true} data={GlassData} />
             </div>
 
             <div className="mt-7">
@@ -67,7 +77,7 @@ const Home = () => {
                   </span>
                 </h1>
               </div>
-              <SwiperContainer />
+              <SwiperContainer autoplay={true} data={GlassData} />
             </div>
             <WomenFashionBanner />
             <div className="mt-7">
@@ -81,7 +91,7 @@ const Home = () => {
                   </span>
                 </h1>
               </div>
-              <SwiperContainer />
+              <SwiperContainer autoplay={true} data={GlassData} />
             </div>
             <div className="mt-7">
               <div className="p-2 rounded-md">
@@ -94,7 +104,7 @@ const Home = () => {
                   </span>
                 </h1>
               </div>
-              <SwiperContainer />
+              <SwiperContainer autoplay={true} data={GlassData} />
             </div>
             <div className="flex flex-col gap-6 py-6">
               <GalleryGrid />
@@ -110,7 +120,7 @@ const Home = () => {
                   </span>
                 </h1>
               </div>
-              <SwiperContainer />
+              <SwiperContainer autoplay={true} data={GlassData} />
             </div>
           </div>
         </section>
