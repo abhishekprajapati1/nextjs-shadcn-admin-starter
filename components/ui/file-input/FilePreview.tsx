@@ -11,6 +11,10 @@ interface FilePreviewProps {
   };
   children?: React.ReactNode;
   error?: string;
+  imagePreviewSize?: {
+    width: number;
+    height: number;
+  };
 }
 
 const FilePreview: React.FC<FilePreviewProps> = ({
@@ -19,6 +23,7 @@ const FilePreview: React.FC<FilePreviewProps> = ({
   children,
   file,
   defaultValue,
+  imagePreviewSize = { width: 200, height: 600 },
 }) => {
   return (
     <div
@@ -53,8 +58,8 @@ const FilePreview: React.FC<FilePreviewProps> = ({
             <Image
               src={defaultValue?.url}
               alt="Image"
-              width={200}
-              height={200}
+              width={imagePreviewSize.width}
+              height={imagePreviewSize.height}
               className="w-full h-full"
             />
           )}

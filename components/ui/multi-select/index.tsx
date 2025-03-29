@@ -36,6 +36,7 @@ interface MultiSelectInputProps<T = any> {
   id: string;
   optionTemplate?: React.FC<OptionTemplateProps<T>>;
   previewTemplate?: React.FC<PreviewTemplateProps<T>>;
+  optionRef?: React.RefObject<HTMLDivElement>;
 }
 
 const MultiSelect: FC<MultiSelectInputProps> = ({
@@ -46,6 +47,7 @@ const MultiSelect: FC<MultiSelectInputProps> = ({
   options,
   optionTemplate = DefaultOptionTemplate,
   previewTemplate = DefaultPreviewTemplate,
+  optionRef,
 }) => {
   const [open, setOpen] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
@@ -119,6 +121,7 @@ const MultiSelect: FC<MultiSelectInputProps> = ({
                   asChild
                 >
                   <OptionTemplate
+                    ref={optionRef}
                     onSelect={() => handleSetValue(option.value || "")}
                     {...option}
                   />

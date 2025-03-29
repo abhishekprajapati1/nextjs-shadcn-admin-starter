@@ -2,31 +2,28 @@ import { toast } from "@/lib/hooks/use-toast";
 import { RequestError, getApiClient, getErrorMessage } from "@/lib/api";
 import ENDPOINTS from "@/lib/endpoints";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { resetStore } from "@/store/products/form.slice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { z } from "zod";
-import { formSchema } from "@/lib/validations/admin/product.validation";
+import { setItemToDelete } from "@/store/banners/data.slice";
 
-const useUpdate = (onSuccess?: () => void) => {
+const useDelete = (onSuccess?: () => void) => {
+  const itemToDelete = useAppSelector(
+    (store) => store.bannerStore.dataStore.itemToDelete,
+  );
   const dispatch = useAppDispatch();
 
-  const product = useAppSelector((store) => store.productStore.formStore.data);
   const api = getApiClient();
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: async (data: Partial<z.infer<typeof formSchema>>) => {
-      if (!product?.id) throw new Error("Product ID is required");
-
-      const res = await api.put(
-        ENDPOINTS.admin.products.update(product?.id),
-        data,
+    mutationFn: async () => {
+      const res = await api.delete(
+        ENDPOINTS.admin.banners.delete(itemToDelete?.id || ""),
       );
       return res.data;
     },
     onSuccess: (_data) => {
-      dispatch(resetStore());
       if (onSuccess) onSuccess();
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+      dispatch(setItemToDelete(null));
+      queryClient.invalidateQueries({ queryKey: ["banners"] });
     },
     onError: (error: RequestError) => {
       const message = getErrorMessage(error);
@@ -39,4 +36,4 @@ const useUpdate = (onSuccess?: () => void) => {
   return mutation;
 };
 
-export default useUpdate;
+export default useDelete;
