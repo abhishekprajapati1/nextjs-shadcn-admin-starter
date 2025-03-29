@@ -1,4 +1,3 @@
-
 import { ISidebarBrand, IUser, MenuItem } from "./types";
 import {
   Box,
@@ -111,7 +110,7 @@ export const sidebarData: {
     {
       icon: GalleryVerticalEnd,
       title: "Banner Manager",
-      url: "/admin/banner-manager",
+      url: "/admin/banners",
     },
     {
       icon: UsersRound,
