@@ -20,8 +20,10 @@ import { IUser } from "@/lib/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import LogoutIcon from "@/components/icons/LogoutIcon";
 import { logout } from "@/services/auth.service";
+import { useRouter } from "next/navigation";
 
 export function NavUser({ user }: { user: IUser | null }) {
+  const router = useRouter();
   const { isMobile } = useSidebar();
 
   if (!user) {
@@ -77,8 +79,13 @@ export function NavUser({ user }: { user: IUser | null }) {
                 Account
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Bell className="size-5 mr-2" />
-                Notifications
+                <button
+                  onClick={() => router.push("/admin/notifications")}
+                  className="flex"
+                >
+                  <Bell className="size-5 mr-2" />
+                  Notifications
+                </button>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
