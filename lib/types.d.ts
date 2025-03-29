@@ -117,3 +117,8 @@ export interface IGlasses {
   src: string;
   title: string;
 }
+
+export interface IGlassTypeData {
+  src: string;
+  title: string;
+}

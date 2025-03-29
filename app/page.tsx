@@ -27,13 +27,6 @@ const HomePage = () => {
   return (
     <div>
       <MainHeader />
-      {/* dont delete the commented codes start */}
-
-      {/* <BannerSlider />
-      <Glass title="EYEGLASSES" images={images} />
-      <Glass title="SUNGLASSES" images={images} /> */}
-
-      {/* dont delete the commented codes start */}
       <Home />
     </div>
   );

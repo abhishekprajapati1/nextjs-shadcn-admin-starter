@@ -79,6 +79,13 @@ const ENDPOINTS = {
       update: (id: string) => `categories/${id}`,
       delete: (id: string) => `categories/${id}`,
     },
+    banners: {
+      fetch_all: (queryString?: string) =>
+        `banners${queryString ? "?" + queryString : ""}`,
+      create: "banners",
+      update: (id: string) => `banners/${id}`,
+      delete: (id: string) => `banners/${id}`,
+    },
     coupon_manager: {
       fetch_all: (queryString?: string) =>
         `coupons${queryString ? "?" + queryString : ""}`,

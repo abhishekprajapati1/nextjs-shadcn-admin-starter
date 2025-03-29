@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { Button } from "@/components/ui/button";
-import PageHeader from "@/components/PageHeader";
 import PlusIcon from "@/components/icons/PlusIcon";
 import { showModal } from "@/store/shapes/form.slice";
 import { useAppSelector } from "@/store";
@@ -16,7 +15,7 @@ const Header = () => {
     <HeaderWrapper title="Articles" tagline={`${total} items`}>
       <div className={cn("flex items-center gap-1")}>
         <Button className="gap-2" asChild>
-          <Link href="/articles/new">
+          <Link href="/admin/articles/new">
             <PlusIcon />
             Add New
           </Link>
