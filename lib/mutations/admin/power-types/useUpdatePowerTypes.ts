@@ -6,31 +6,37 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import { resetStore } from "@/store/power-types/form.slice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
+import useSessionStorage from "@/hooks/use-session-storage";
+import { IFile } from "@/lib/types";
 
 const useUpdatePowerType = (onSuccess?: () => void) => {
   const dispatch = useAppDispatch();
+  const { value: uploadedImage, removeValue: removeUploadedImageFromSession } =
+    useSessionStorage<IFile>("power_type_image");
 
   const power_type_id = useAppSelector(
     (store) => store.powerTypeStore.formStore.power_type_id,
   );
 
-  const api = getApiClient({ multipart: true });
+  const api = getApiClient();
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: async (data: z.infer<typeof powerTypeSchema>) => {
-      const { image, ...rest } = data;
-      const formdata = new FormData();
-      if (image) formdata.append("image", image);
-      formdata.append("json_payload", JSON.stringify(rest));
+    mutationFn: async (
+      data: z.infer<typeof powerTypeSchema> & { image?: string },
+    ) => {
+      if (uploadedImage && uploadedImage.is_temp) {
+        data.image = uploadedImage.id;
+      }
       const res = await api.put(
         ENDPOINTS.admin.power_types.update(power_type_id),
-        formdata,
+        data,
       );
       return res.data;
     },
     onSuccess: (_data) => {
       dispatch(resetStore());
       if (onSuccess) onSuccess();
+      removeUploadedImageFromSession();
       queryClient.invalidateQueries({ queryKey: ["power-types"] });
     },
     onError: (error: RequestError) => {

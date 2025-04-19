@@ -57,7 +57,7 @@ const PowerType: React.FC<PowerTypeProps> = ({ data }) => {
                   setData({
                     title: data?.title,
                     description: data?.description,
-                    default_url: data?.image?.url,
+                    ...(data?.image && { image: data?.image }),
                   }),
                 );
               }}

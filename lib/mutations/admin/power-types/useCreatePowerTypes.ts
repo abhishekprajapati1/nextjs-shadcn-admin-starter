@@ -6,23 +6,29 @@ import { useAppDispatch } from "@/store";
 import { showModal } from "@/store/power-types/form.slice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
+import useSessionStorage from "@/hooks/use-session-storage";
+import { IFile } from "@/lib/types";
 
 const useCreatePowerType = (onSuccess?: () => void) => {
   const api = getApiClient();
+  const { value: uploadedImage, removeValue: removeUploadedImageFromSession } =
+    useSessionStorage<IFile>("power_type_image");
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: async (data: z.infer<typeof powerTypeSchema>) => {
-      const { image, ...rest } = data;
-      const formdata = new FormData();
-      if (image) formdata.append("image", image);
-      formdata.append("json_payload", JSON.stringify(rest));
-      const res = await api.post(ENDPOINTS.admin.power_types.create, formdata);
+    mutationFn: async (
+      data: z.infer<typeof powerTypeSchema> & { image?: string },
+    ) => {
+      if (uploadedImage) {
+        data.image = uploadedImage.id;
+      }
+      const res = await api.post(ENDPOINTS.admin.power_types.create, data);
       return res.data;
     },
     onSuccess: (data) => {
       dispatch(showModal(false));
       if (onSuccess) onSuccess();
+      removeUploadedImageFromSession();
       queryClient.invalidateQueries({ queryKey: ["power-types"] });
     },
     onError: (error: RequestError) => {

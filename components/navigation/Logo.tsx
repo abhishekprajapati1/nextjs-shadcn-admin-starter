@@ -1,18 +1,22 @@
 import React from "react";
 import Image from "next/image";
-
-function Logo() {
-  return (
-    <div className="w-full h-10 flex justify-center items-center">
-      <Image
-        src="/logo.png"
-        alt="Logo"
-        width={200}
-        height={100}
-        className="w-full h-full object-contain md:scale-125"
-      />
-    </div>
-  );
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+interface LogoProps {
+  className?: string;
 }
+const Logo: React.FC<LogoProps> = ({ className = "" }) => {
+  return (
+    <Link href="/" className={cn("w-[300]  sm:w-[450px]", className)}>
+      <Image
+        src="/Logo.png"
+        alt="Logo"
+        width={400}
+        height={90}
+        className="w-full h-full"
+      />
+    </Link>
+  );
+};
 
 export default Logo;

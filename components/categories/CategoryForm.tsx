@@ -24,8 +24,14 @@ import DragDropIcon from "../icons/DragDropIcon";
 import TextEditor from "../ui/text-editor";
 import { formSchema } from "@/lib/validations/admin/categories.validation";
 import { generateSlug } from "../articles/ArticleForm";
+import useSessionStorage from "@/hooks/use-session-storage";
+import { IFile } from "@/lib/types";
+import useUpload from "@/lib/mutations/useUpload";
 
 const CategoryForm: React.FC = () => {
+  const { value: uploadedImage, setValue: setUploadedImage } =
+    useSessionStorage<IFile>("category_image");
+
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: { title: "", description: "", seo_title: "" },
     mode: "onBlur",
@@ -37,18 +43,19 @@ const CategoryForm: React.FC = () => {
     (store) => store.categoryStore.formStore,
   );
 
-  const { mutate: updateShape, isPending: updating } = useUpdate();
-  const { mutate: createShape, isPending: creating } = useCreate();
+  const { mutate: upload, isPending: uploading } = useUpload();
+  const { mutate: updateCategory, isPending: updating } = useUpdate();
+  const { mutate: createCategory, isPending: creating } = useCreate();
   const isPending = updating || creating;
 
   const { isDirty } = form.formState;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    if (isDirty) {
+    if (isDirty || uploadedImage?.is_temp) {
       if (item_id) {
-        updateShape(data);
+        updateCategory(data);
       } else {
-        createShape(data);
+        createCategory(data);
       }
     } else {
       dispatch(resetStore());
@@ -66,42 +73,60 @@ const CategoryForm: React.FC = () => {
     }
   }, [data, form]);
 
+  React.useEffect(() => {
+    if (data?.image) {
+      setUploadedImage({
+        id: data.image.id,
+        url: data.image.url,
+        fieldname: data.image.fieldname || "",
+      });
+    }
+  }, [data]);
+
   return (
     <Form {...form}>
       <form
         className="flex flex-col gap-4"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <FormField
-          control={form.control}
-          name="image"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Image</FormLabel>
-              <FormControl>
-                <FileInput
-                  value={field.value}
-                  onChange={(files) => field.onChange(files?.[0])}
-                  className="size-[100px]"
-                >
-                  <FilePreview
-                    file={field.value}
-                    {...(data?.image?.url && {
-                      defaultValue: {
-                        type: "image",
-                        url: data?.image?.url,
-                      },
-                    })}
-                    className="size-full grid place-content-center"
-                  >
-                    <DragDropIcon className="size-[25px]" />
-                  </FilePreview>
-                </FileInput>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {/* Image Upload */}
+        <FileInput
+          onChange={(files) => {
+            if (
+              Array.isArray(files) &&
+              !isNaN(files?.length) &&
+              files?.length > 0
+            ) {
+              upload(
+                { files, name: "image" },
+                {
+                  onSuccess: (data) => {
+                    setUploadedImage({
+                      id: data[0].id,
+                      url: data[0].url,
+                      fieldname: data[0].fieldname,
+                      is_temp: data[0].is_temp,
+                    });
+                  },
+                },
+              );
+            }
+          }}
+          className="size-[100px]"
+        >
+          <FilePreview
+            file={null}
+            {...(uploadedImage && {
+              defaultValue: {
+                type: "image",
+                url: uploadedImage?.url,
+              },
+            })}
+            className="size-full grid place-content-center"
+          >
+            <DragDropIcon className="size-[25px]" />
+          </FilePreview>
+        </FileInput>
 
         {/* Title input */}
         <div className="flex gap-4">

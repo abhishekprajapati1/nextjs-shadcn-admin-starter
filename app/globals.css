@@ -168,7 +168,7 @@
 
   /* transition/animation classes */
   .animate-smooth {
-    @apply transition-all ease-linear duration-300;
+    @apply ease-in-out duration-300;
   }
 
   /* custom text editor */
@@ -290,5 +290,10 @@
     background-image:
       linear-gradient(currentColor 1px, transparent 1px),
       linear-gradient(to right, currentColor 1px, transparent 1px);
+  }
+
+  /* IMP: do not alter it without understanding its impact on application */
+  .container {
+    @apply px-2 sm:px-4 md:px-6 lg:px-8;
   }
 }

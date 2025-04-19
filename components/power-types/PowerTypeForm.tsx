@@ -23,8 +23,19 @@ import { resetStore, showModal } from "@/store/power-types/form.slice";
 import FileInput from "../ui/file-input";
 import FilePreview from "../ui/file-input/FilePreview";
 import DragDropIcon from "../icons/DragDropIcon";
+import useUpload from "@/lib/mutations/useUpload";
+import useSessionStorage from "@/hooks/use-session-storage";
+import { IFile } from "@/lib/types";
 
 const PowerTypeForm: React.FC = () => {
+  const {
+    value: uploadedImage,
+    setValue: setUploadedImage,
+    removeValue: removeUploadedImageFromSession,
+  } = useSessionStorage<IFile>("power_type_image");
+
+  const { mutate: upload, isPending: uploading } = useUpload();
+
   const form = useForm<z.infer<typeof powerTypeSchema>>({
     defaultValues: { image: null, description: "", title: "" },
     mode: "onBlur",
@@ -58,47 +69,78 @@ const PowerTypeForm: React.FC = () => {
     }
   };
 
+  const handleDiscard = () => {
+    if (power_type_id) {
+      // means we are updating the record
+      dispatch(resetStore());
+      // remove the image from session so that it don't come up in non image powertype when editing them...
+      removeUploadedImageFromSession();
+    } else {
+      dispatch(showModal(false));
+    }
+  };
+
   React.useEffect(() => {
     if (data) {
       form.reset({ title: data?.title, description: data?.description });
     }
   }, [data, form]);
 
+  React.useEffect(() => {
+    if (data?.image) {
+      setUploadedImage({
+        id: data.image.id,
+        url: data.image.url,
+        fieldname: data.image.fieldname || "",
+      });
+    }
+  }, [data]);
+
   return (
     <Form {...form}>
-      <form className="flex flex-col gap-4" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className="flex flex-col gap-4"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <div className="flex flex-col gap-4">
           {/* Image Upload */}
-          <FormField
-            control={form.control}
-            name="image"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Image</FormLabel>
-                <FormControl>
-                  <FileInput
-                    value={field.value?.[0]}
-                    onChange={(files) => field.onChange(files?.[0])}
-                    className="size-[100px]"
-                  >
-                    <FilePreview
-                      file={field.value}
-                      {...(data?.default_url && {
-                        defaultValue: {
-                          type: "image",
-                          url: data?.default_url,
-                        },
-                      })}
-                      className="size-full grid place-content-center"
-                    >
-                      <DragDropIcon className="size-[25px]" />
-                    </FilePreview>
-                  </FileInput>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <FileInput
+            onChange={(files) => {
+              if (
+                Array.isArray(files) &&
+                !isNaN(files?.length) &&
+                files?.length > 0
+              ) {
+                upload(
+                  { files, name: "image" },
+                  {
+                    onSuccess: (data) => {
+                      setUploadedImage({
+                        id: data[0].id,
+                        url: data[0].url,
+                        fieldname: data[0].fieldname,
+                        is_temp: data[0].is_temp,
+                      });
+                    },
+                  },
+                );
+              }
+            }}
+            className="size-[100px]"
+          >
+            <FilePreview
+              file={null}
+              {...(uploadedImage && {
+                defaultValue: {
+                  type: "image",
+                  url: uploadedImage?.url,
+                },
+              })}
+              className="size-full grid place-content-center"
+            >
+              <DragDropIcon className="size-[25px]" />
+            </FilePreview>
+          </FileInput>
 
           <FormField
             control={form.control}
@@ -132,9 +174,7 @@ const PowerTypeForm: React.FC = () => {
         <DialogFooter>
           <Button
             type="button"
-            onClick={() =>
-              dispatch(power_type_id ? resetStore() : showModal(false))
-            }
+            onClick={() => handleDiscard()}
             variant="secondary"
           >
             {power_type_id ? "Discard" : "Cancel"}

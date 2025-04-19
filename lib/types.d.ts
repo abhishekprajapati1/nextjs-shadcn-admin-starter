@@ -7,6 +7,14 @@ export type IconElement = React.ForwardRefExoticComponent<
   Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
 >;
 
+export interface IPaginatedResponse<T> {
+  data: T[];
+  success: boolean;
+  total: number;
+  page: number;
+  page_size: number;
+}
+
 export interface IRecordMeta {
   id: string;
   created_at?: string;

@@ -80,7 +80,6 @@ const LensDeatail: React.FC<LensDetailProps> = ({ data }) => {
   if (!data) {
     return <LensFeatureSkeleton />;
   }
-  console.log("see this", data?.image?.url);
 
   return (
     <Card>
