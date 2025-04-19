@@ -28,9 +28,8 @@ import {
   Menu,
   Heart,
   ChevronRight,
-  Phone,
-  Facebook,
   PhoneCallIcon,
+  FacebookIcon,
 } from "lucide-react";
 import {
   Sheet,
@@ -39,25 +38,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Badge } from "@/components/ui/badge";
 import { InstagramLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import Logo from "./Logo";
+import { ICategory } from "../categories/ListItem";
 
-const categories = [
-  {
-    title: "Eyeglasses",
-    href: "/eyeglasses",
-    description: "Find your perfect pair of prescription glasses",
-    items: [
-      { title: "Men", href: "/eyeglasses/men" },
-      { title: "Women", href: "/eyeglasses/women" },
-      { title: "Kids", href: "/eyeglasses/kids" },
-    ],
-  },
-  // ... (other categories remain the same)
-];
+interface MainHeaderProps {
+  categories?: ICategory[];
+}
 
-export function MainHeader() {
+export const MainHeader: React.FC<MainHeaderProps> = ({ categories = [] }) => {
   const router = useRouter();
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -106,7 +95,7 @@ export function MainHeader() {
               href="https://facebook.com"
               className="text-secondary-foreground text-xs font-medium flex items-center gap-1 hover:text-primary"
             >
-              <Facebook size={"1rem"} /> Facebook
+              <FacebookIcon size={"1rem"} /> Facebook
             </Link>
             <Link
               href="https://instagram.com"
@@ -145,116 +134,56 @@ export function MainHeader() {
           <SheetContent side="left" className="w-[300px] sm:w-[400px] p-0">
             <SheetHeader className="p-6 border-b">
               <SheetTitle className="flex items-center gap-2">
-                {/* <Glasses className="h-5 w-5" />
-                Akku Ka Chasma */}
                 <Logo />
               </SheetTitle>
             </SheetHeader>
-            <nav className="px-6">
-              {categories.map((category) => (
-                <div
-                  key={category.title}
-                  className="py-4 border-b last:border-0"
-                >
-                  <Link
-                    href={category.href}
-                    className="flex items-center justify-between text-lg font-medium hover:text-primary"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {category.title}
-                    <ChevronRight className="h-4 w-4" />
-                  </Link>
-                  <div className="mt-2 space-y-1">
-                    {category.items.map((item) => (
-                      <Link
-                        key={item.title}
-                        href={item.href}
-                        className="block py-2 text-sm text-muted-foreground hover:text-primary"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        {item.title}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </nav>
+
+            <nav className="px-6"></nav>
           </SheetContent>
         </Sheet>
+        {/* end of Mobile Menu */}
 
-        {/* Logo */}
-        <Link
-          href="/"
-          className="mr-6 flex items-center space-x-2 transition-transform hover:scale-105"
-        >
-          {/* <Glasses className="h-6 w-6 text-primary" />
-          <span className="hidden font-bold sm:inline-block">
-            Akku Ka Chasma
-          </span> */}
-          <Logo />
-        </Link>
+        <Logo className="mr-6" />
 
         {/* Desktop Navigation */}
-        <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList>
-            {categories.map((category) => (
-              <NavigationMenuItem key={category.title}>
-                <NavigationMenuTrigger className="h-10 px-4 py-2">
-                  {category.title}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="w-[500px] p-6">
-                    <div className="mb-4">
-                      <h3 className="text-lg font-medium">{category.title}</h3>
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        {category.description}
-                      </p>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      {category.items.map((item) => (
-                        <Link
-                          key={item.title}
-                          href={item.href}
-                          className="group rounded-lg border p-4 hover:bg-accent hover:text-accent-foreground"
-                        >
-                          <div className="text-sm font-medium group-hover:text-primary">
-                            {item.title}
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
+        <div className="hidden md:flex">
+          <Button variant="ghost" size="sm" asChild>
+            <Link href="/blog">Blog</Link>
+          </Button>
+          <Button variant="ghost" size="sm" asChild>
+            <Link href="/contact-us">Contact Us</Link>
+          </Button>
+        </div>
 
         {/* Right Side Icons */}
         <div className="flex flex-1 items-center justify-end space-x-2 sm:space-x-4">
           <Button
             variant="ghost"
-            size="sm"
+            size="icon"
             className="hover:bg-accent"
             onClick={() => setIsSearchOpen(true)}
+            title="⌘ + K"
           >
             <Search className="h-5 w-5" />
-            <kbd className="ml-2 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+            <kbd className="ml-2 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100">
               <span className="text-xs">⌘</span>K
             </kbd>
           </Button>
 
-          <Button variant="ghost" size="sm" className="hover:bg-accent" asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="hover:bg-accent relative"
+            asChild
+          >
             <Link href="/wishlist">
               <Heart className="h-5 w-5" />
-              <Badge className="ml-1 hidden sm:inline-flex">0</Badge>
             </Link>
           </Button>
 
           <Button variant="ghost" size="sm" className="hover:bg-accent" asChild>
             <Link href="/cart">
               <ShoppingCart className="h-5 w-5" />
-              <Badge className="ml-1 hidden sm:inline-flex">0</Badge>
             </Link>
           </Button>
 
@@ -285,23 +214,13 @@ export function MainHeader() {
             </div>
           </CommandEmpty>
           <CommandGroup heading="Quick Links">
-            {categories.map((category) =>
-              category.items.map((item) => (
-                <CommandItem
-                  key={item.href}
-                  onSelect={() => {
-                    setIsSearchOpen(false);
-                    router.push(item.href);
-                  }}
-                >
-                  <ChevronRight className="mr-2 h-4 w-4" />
-                  {item.title}
-                </CommandItem>
-              )),
-            )}
+            <CommandItem>
+              <ChevronRight className="mr-2 h-4 w-4" />
+              Aviator glasses
+            </CommandItem>
           </CommandGroup>
         </CommandList>
       </CommandDialog>
     </header>
   );
-}
+};

@@ -1,6 +1,7 @@
 import { MainHeader } from "@/components/navigation/MainHeader";
 import { Metadata } from "next";
 import Home from "@/components/home/home-section/Home";
+import CategorySlider from "@/components/home/CategorySlider";
 
 export const metadata: Metadata = {
   title: "Akku Ka Chasma",
@@ -27,6 +28,7 @@ const HomePage = () => {
   return (
     <div>
       <MainHeader />
+      <CategorySlider />
       <Home />
     </div>
   );

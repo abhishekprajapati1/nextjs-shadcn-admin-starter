@@ -3,21 +3,14 @@ import HomeGallery from "./HomeGallery";
 import WomenFashionBanner from "./WomenFashionBanner";
 import GalleryGrid from "./GalleryGrid";
 import Footer from "./../footer";
-import Navbar from "../header/Navbar";
 import { GlassData } from "@/lib/constants";
-import GlassesType from "./GlassesTypes";
 import SwiperContainer from "@/components/ui/swiper/SwiperContainer";
 
 const Home = () => {
   return (
     <>
-      <nav className="w-full mx-auto container">
-        <Navbar />
-      </nav>
       <main className="w-full mx-auto container">
         <section className="flex flex-col h-auto gap-5">
-          <GlassesType />
-
           <div className="w-full flex flex-col md:flex-row items-center justify-between gap-2 md:h-[200px] py-2">
             <p className="flex flex-col font-bold text-5xl text-center">
               <span>EYEGLASSES</span>

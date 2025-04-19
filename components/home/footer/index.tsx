@@ -8,6 +8,7 @@ import {
 import { HiMail, HiOutlineClock } from "react-icons/hi";
 import { RiCustomerService2Line } from "react-icons/ri";
 import Image from "next/image";
+import Logo from "@/components/navigation/Logo";
 
 const Footer = () => {
   return (
@@ -55,16 +56,8 @@ const Footer = () => {
 
       <div className="bg-gray-200">
         <div className="container grid grid-cols-5 gap-8 shadow-sm  items-start justify-around py-8">
-          <div className="flex flex-col items-center justify-center gap-3 col-span-3 lg:col-span-2">
-            <span className="w-full h-12 flex justify-center items-center">
-              <Image
-                src="/logo.png"
-                alt="Logo"
-                width={200}
-                height={100}
-                className="w-[86%] object-cover max-h-12"
-              />
-            </span>
+          <div className="flex flex-col gap-3 col-span-3 lg:col-span-2">
+            <Logo />
             <p className="flex">
               Order Eyeglass and Sunglass Round - Square Geomantic shape
               eyeglass online from a vast range of products, styles and buy a

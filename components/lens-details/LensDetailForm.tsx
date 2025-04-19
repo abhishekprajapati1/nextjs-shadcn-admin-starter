@@ -26,7 +26,6 @@ import useCreateLensDetail from "@/lib/mutations/admin/lens-details/useCreateLen
 import Combobox, { ComboboxOption } from "../ui/combo-box";
 import useLensFeatures from "@/lib/queries/admin/lens-features/useLensFeatures";
 import { Checkbox } from "../ui/checkbox";
-import useUpdate from "@/lib/mutations/admin/products/useUpdate";
 import useUpload from "@/lib/mutations/useUpload";
 import useSessionStorage from "@/hooks/use-session-storage";
 import { IFile } from "@/lib/types";

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
 import PageHeader from "@/components/PageHeader";
 import PlusIcon from "@/components/icons/PlusIcon";
+import AdminHeaderWrapper from "@/components/navigation/admin/HeaderWrapper";
 import { showModal } from "@/store/lens-details/form.slice";
 import { useAppSelector } from "@/store";
 import { Cross2Icon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
@@ -34,11 +35,7 @@ const Header = () => {
   }, [search_term.query, dispatch]);
 
   return (
-    <PageHeader
-      title="Lens Details"
-      tagline={`${total} items`}
-      className="flex-shrink-0"
-    >
+    <AdminHeaderWrapper title="Lens Details" tagline={`${total} items`}>
       <div
         className={cn("flex items-center gap-1", search && "w-full xl:w-1/2")}
       >
@@ -77,7 +74,7 @@ const Header = () => {
           </React.Fragment>
         )}
       </div>
-    </PageHeader>
+    </AdminHeaderWrapper>
   );
 };
 
