@@ -26,10 +26,11 @@ import { formSchema } from "@/lib/validations/admin/shapes.validation";
 import useUpload from "@/lib/mutations/useUpload";
 import useSessionStorage from "@/hooks/use-session-storage";
 import { IFile } from "@/lib/types";
+import { generateSlug } from "../articles/ArticleForm";
 
 const ShapeForm: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
-    defaultValues: { title: "", description: "", seo_title: "" },
+    defaultValues: { title: "", description: "", seo_title: "", slug: "" },
     mode: "onBlur",
     resolver: zodResolver(formSchema),
   });
@@ -65,6 +66,7 @@ const ShapeForm: React.FC = () => {
         title: data?.title,
         description: data?.description,
         seo_title: data?.seo_title,
+        slug: data?.slug,
       });
     }
   }, [data, form]);
@@ -133,7 +135,28 @@ const ShapeForm: React.FC = () => {
               <FormItem>
                 <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter title" {...field} />
+                  <Input
+                    placeholder="Enter title"
+                    {...field}
+                    onChange={(event) => {
+                      form.setValue("slug", generateSlug(event.target.value));
+                      field.onChange(event.target.value);
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="slug"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Slug</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter slug" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

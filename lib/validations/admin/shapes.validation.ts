@@ -5,5 +5,5 @@ export const formSchema = z.object({
   seo_title: z.string().min(1, "Please provide a seo friendly title."),
   description: z.string().min(1, "Description is required"),
   image: z.any().optional(), // Optional for image upload
+  slug: z.string().optional(),
 });
-

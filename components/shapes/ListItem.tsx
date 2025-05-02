@@ -17,6 +17,7 @@ export interface IShape extends IRecordMeta {
   seo_title: string;
   description: string;
   image: FileType | null;
+  slug: string;
 }
 
 interface ListItemProps {
@@ -60,7 +61,8 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
                     seo_title: data?.seo_title,
                     description: data?.description,
                     image: data?.image,
-                  })
+                    slug: data?.slug,
+                  }),
                 );
               }}
               variant="secondary"
@@ -76,7 +78,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
                   setItemToDelete({
                     id: data?.id || "",
                     label: data.title || "",
-                  })
+                  }),
                 )
               }
               className="bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white ease-linear duration-300"
