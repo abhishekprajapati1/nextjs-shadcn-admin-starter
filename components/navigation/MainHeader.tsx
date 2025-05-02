@@ -1,5 +1,4 @@
 "use client";
-
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -41,6 +40,7 @@ import {
 import { InstagramLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import Logo from "./Logo";
 import { ICategory } from "../categories/ListItem";
+import SearchPanel from "./SearchPanel";
 
 interface MainHeaderProps {
   categories?: ICategory[];
@@ -62,16 +62,6 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ categories = [] }) => {
   }, []);
 
   // Keyboard shortcut for search
-  React.useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setIsSearchOpen((open) => !open);
-      }
-    };
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
-  }, []);
 
   return (
     <header
@@ -112,7 +102,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ categories = [] }) => {
           </div>
           <a
             className="flex items-center gap-1 text-xs font-semibold"
-            href="tel:6388233466"
+            href="tel:8188881661"
           >
             <PhoneCallIcon size={"1rem"} /> +91 8188881661
           </a>
@@ -151,25 +141,13 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ categories = [] }) => {
             <Link href="/blog">Blog</Link>
           </Button>
           <Button variant="ghost" size="sm" asChild>
-            <Link href="/contact-us">Contact Us</Link>
+            <Link href="/support">Contact Us</Link>
           </Button>
         </div>
 
         {/* Right Side Icons */}
         <div className="flex flex-1 items-center justify-end space-x-2 sm:space-x-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="hover:bg-accent"
-            onClick={() => setIsSearchOpen(true)}
-            title="⌘ + K"
-          >
-            <Search className="h-5 w-5" />
-            <kbd className="ml-2 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100">
-              <span className="text-xs">⌘</span>K
-            </kbd>
-          </Button>
-
+          <SearchPanel />
           <Button
             variant="ghost"
             size="icon"
@@ -180,13 +158,11 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ categories = [] }) => {
               <Heart className="h-5 w-5" />
             </Link>
           </Button>
-
           <Button variant="ghost" size="sm" className="hover:bg-accent" asChild>
             <Link href="/cart">
               <ShoppingCart className="h-5 w-5" />
             </Link>
           </Button>
-
           <Button
             variant="default"
             size="sm"
@@ -200,27 +176,6 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ categories = [] }) => {
           </Button>
         </div>
       </div>
-
-      {/* Search Dialog */}
-      <CommandDialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
-        <CommandInput placeholder="Search for frames, sunglasses, lenses... (ESC to close)" />
-        <CommandList>
-          <CommandEmpty>
-            <div className="flex flex-col items-center py-4">
-              <Search className="h-10 w-10 text-muted-foreground" />
-              <p className="mt-2 text-sm text-muted-foreground">
-                No results found.
-              </p>
-            </div>
-          </CommandEmpty>
-          <CommandGroup heading="Quick Links">
-            <CommandItem>
-              <ChevronRight className="mr-2 h-4 w-4" />
-              Aviator glasses
-            </CommandItem>
-          </CommandGroup>
-        </CommandList>
-      </CommandDialog>
     </header>
   );
 };

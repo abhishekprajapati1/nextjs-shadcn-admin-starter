@@ -29,12 +29,20 @@ import useFetch from "@/lib/hooks/use-fetch";
 import ENDPOINTS from "@/lib/endpoints";
 import { IArticle } from "./ListItem";
 import { useRouter } from "next/navigation";
+import useSessionStorage from "@/hooks/use-session-storage";
+import { IFile } from "@/lib/types";
+import useUpload from "@/lib/mutations/useUpload";
 
 interface ArticleFormProps {
   id?: string;
 }
 
 const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
+  const {
+    value: uploadedImage,
+    setValue: setUploadedImage,
+    removeValue: removeUploadedImageFromSession,
+  } = useSessionStorage<IFile>("article_image");
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
@@ -46,7 +54,6 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
       content: "",
       keywords: [],
       shape_ids: [],
-      thumbnail: null,
     },
     mode: "onBlur",
     resolver: zodResolver(formSchema),
@@ -71,15 +78,24 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
     label: s.title,
   }));
 
+  const { mutate: upload, isPending: uploading } = useUpload();
   const { mutate: update, isPending: updating } = useUpdate(id);
   const { mutate: create, isPending: creating } = useCreate();
   const isPending = updating || creating;
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     if (id) {
-      update(data, { onSuccess: () => router.replace("/articles") });
+      update(data, { onSuccess: () => router.replace("/admin/articles") });
     } else {
-      create(data, { onSuccess: () => router.replace("/articles") });
+      create(data, { onSuccess: () => router.replace("/admin/articles") });
+    }
+  };
+  const handleCancel = () => {
+    if (id) {
+      router.replace("/admin/articles");
+      if (uploadedImage) removeUploadedImageFromSession();
+    } else {
+      form.setValue("status", "DRAFT");
     }
   };
 
@@ -98,6 +114,16 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
     }
   }, [data, form]);
 
+  React.useEffect(() => {
+    if (data?.thumbnail) {
+      setUploadedImage({
+        id: data.thumbnail.id,
+        url: data.thumbnail.url,
+        fieldname: data.thumbnail.fieldname || "",
+      });
+    }
+  }, [data]);
+
   return (
     <Form {...form}>
       <form
@@ -105,35 +131,43 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className="col-span-12 lg:col-span-8 flex flex-col gap-2">
-          <FormField
-            control={form.control}
-            name="thumbnail"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <FileInput
-                    value={field.value}
-                    onChange={(files) => field.onChange(files?.[0])}
-                    className="aspect-[1200/675] w-full"
-                  >
-                    <FilePreview
-                      file={field.value}
-                      {...(data?.thumbnail?.url && {
-                        defaultValue: {
-                          type: "image",
-                          url: data?.thumbnail?.url,
-                        },
-                      })}
-                      className="size-full grid place-content-center"
-                    >
-                      <DragDropIcon className="size-[25px]" />
-                    </FilePreview>
-                  </FileInput>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <FileInput
+            onChange={(files) => {
+              if (
+                Array.isArray(files) &&
+                !isNaN(files?.length) &&
+                files?.length > 0
+              ) {
+                upload(
+                  { files, name: "thumbnail" },
+                  {
+                    onSuccess: (data) => {
+                      setUploadedImage({
+                        id: data[0].id,
+                        url: data[0].url,
+                        fieldname: data[0].fieldname,
+                        is_temp: data[0].is_temp,
+                      });
+                    },
+                  },
+                );
+              }
+            }}
+            className="h-96 lg:h-[30rem]"
+          >
+            <FilePreview
+              file={null}
+              {...(uploadedImage && {
+                defaultValue: {
+                  type: "image",
+                  url: uploadedImage?.url,
+                },
+              })}
+              className="size-full grid place-content-center"
+            >
+              <DragDropIcon className="size-[25px]" />
+            </FilePreview>
+          </FileInput>
           <FormField
             name="title"
             control={form.control}
@@ -177,11 +211,7 @@ const ArticleForm: React.FC<ArticleFormProps> = ({ id = "" }) => {
               variant="secondary"
               className="flex-grow"
               size="lg"
-              onClick={() =>
-                id
-                  ? router.replace("/articles")
-                  : form.setValue("status", "DRAFT")
-              }
+              onClick={() => handleCancel()}
             >
               {id ? "Discard" : "Save draft"}
             </Button>

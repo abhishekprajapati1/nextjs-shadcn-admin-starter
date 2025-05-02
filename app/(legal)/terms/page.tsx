@@ -6,7 +6,8 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions | Akku Ka Chasma",
-  description: "Read our terms and conditions for using Akku Ka Chasma's services. Learn about our ordering process, shipping policies, returns, and other important legal information.",
+  description:
+    "Read our terms and conditions for using Akku Ka Chasma's services. Learn about our ordering process, shipping policies, returns, and other important legal information.",
   keywords: [
     "terms and conditions",
     "legal terms",
@@ -20,7 +21,8 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Terms & Conditions | Akku Ka Chasma",
-    description: "Read our terms and conditions for using Akku Ka Chasma's services. Learn about our ordering process, shipping policies, returns, and other important legal information.",
+    description:
+      "Read our terms and conditions for using Akku Ka Chasma's services. Learn about our ordering process, shipping policies, returns, and other important legal information.",
     url: "https://akkukachasma.com/terms",
     siteName: "Akku Ka Chasma",
     type: "website",
@@ -44,7 +46,6 @@ export const metadata: Metadata = {
     "last-modified": "2024-02-15", // Match with your last updated date
   },
 };
-
 
 export default function TermsPage() {
   return (
@@ -131,7 +132,6 @@ export default function TermsPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

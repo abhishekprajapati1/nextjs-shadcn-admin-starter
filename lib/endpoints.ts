@@ -103,6 +103,16 @@ const ENDPOINTS = {
   },
   upload: "files",
   remove_file: (file_id: string) => `files/${file_id}`,
+  products: {
+    shape_starters: "products/shape-starters",
+    latest: "products/latest",
+    popular: "products/popular",
+    featured: "products/featured",
+    fetch_single_product: (slug: string) => `products/${slug}/details`,
+    category_products: (category_slug: string) =>
+      `categories/${category_slug}/products`,
+    shape_products: (shape_slug: string) => `shapes/${shape_slug}/products`,
+  },
 };
 
 export default ENDPOINTS;

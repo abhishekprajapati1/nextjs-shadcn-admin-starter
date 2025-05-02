@@ -32,7 +32,10 @@ export const sidebarData: {
     name: "Akku Ka Chasma",
     logo: Glasses,
     website: {
-      url: "https://akkukachasma.com/",
+      url:
+        process.env.ENVIRONMENT === "production"
+          ? "https://akkukachasma.com/"
+          : "http://localhost:3000/",
       label: "visit website",
     },
   },

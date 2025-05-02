@@ -1,48 +1,27 @@
 "use client";
-/*
-  INFO: this custom hook can be used to manage state straight in url bar. Tested in app directory using 'next/navigation'.
-  NOTE: you will need to do some adjustment if using with page router in nextjs or if you are using react with cra or vite.
-*/
+
 import { useState, useEffect, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-/**
- * A custom hook for managing state in the URL query parameters.
- *
- * This hook synchronizes a state value with a URL query parameter, allowing for
- * state persistence in the URL and enabling shareable URLs with state.
- *
- * @param name - The name of the query parameter to use in the URL
- * @param initialValue - Optional initial value for the state
- * @returns A tuple containing the current state value and a setter function
- *
- * @example
- * ```tsx
- * const [value, setValue] = useQueryState('filter', 'initial');
- * ```
- * OR if you just want to read the value...
- * ```tsx
- * const [value, setValue] = useQueryState('filter');
- * ```
- */
-function useQueryState<T>(
+type SetValue<T> = T | ((prevValue: T | null | undefined) => T);
+
+function useQueryState<T = any>(
   name: string,
-  initialValue?: T | null,
+  initialValue?: T,
 ): {
-  value: T | null | undefined;
-  setValue: React.Dispatch<React.SetStateAction<T | null | undefined>>;
+  value: T | undefined;
+  setValue: (value: SetValue<T>) => void;
+  removeValue: () => void;
 } {
   const isClient = typeof window !== "undefined";
   const router = useRouter();
   const params = useSearchParams();
-
-  const [value, setValue] = useState(initialValue);
+  const [state, setState] = useState<T | undefined>(initialValue);
 
   const createQueryString = useCallback(
-    (name: string, value: string) => {
+    (name: string, value: string | null) => {
       const newParams = new URLSearchParams(params);
-      const parsedValue = parseJson(value);
-      if (parsedValue !== null) {
+      if (value !== null) {
         newParams.set(name, value);
       } else {
         newParams.delete(name);
@@ -52,31 +31,81 @@ function useQueryState<T>(
     [params],
   );
 
-  useEffect(() => {
+  const setValue = useCallback(
+    (valueOrFn: SetValue<T>) => {
+      const newValue =
+        valueOrFn instanceof Function ? valueOrFn(state) : valueOrFn;
+
+      if (isClient) {
+        const valueToSave = JSON.stringify(newValue);
+        const newQueryString = createQueryString(name, valueToSave);
+        router.push("?" + newQueryString);
+
+        // Dispatch custom event for cross-tab communication
+        window.dispatchEvent(
+          new CustomEvent(`query-state-${name}`, {
+            detail: { name, value: newValue },
+          }),
+        );
+      }
+      setState(newValue);
+    },
+    [name, state, createQueryString, router, isClient],
+  );
+
+  const removeValue = useCallback(() => {
     if (isClient) {
-      const item = params.get(name);
-      setValue(item ? parseJson(item) : initialValue);
+      const newQueryString = createQueryString(name, null);
+      router.push("?" + newQueryString);
+
+      window.dispatchEvent(
+        new CustomEvent(`query-state-${name}`, {
+          detail: { name, value: undefined },
+        }),
+      );
     }
-  }, [name, initialValue, isClient, params]);
+    setState(undefined);
+  }, [name, createQueryString, router, isClient]);
 
   useEffect(() => {
-    const valueToSave = JSON.stringify(value);
-    if (valueToSave) {
-      const newQueryString = createQueryString(name, valueToSave);
-      router.push("?" + newQueryString);
+    const handleCustomChange = (e: CustomEvent<{ name: string; value: T }>) => {
+      if (isClient && e.detail.name === name) {
+        setState(e.detail.value);
+      }
+    };
+
+    if (isClient) {
+      window.addEventListener(
+        `query-state-${name}`,
+        handleCustomChange as EventListener,
+      );
+
+      // Initialize from URL params
+      const item = params.get(name);
+      if (item) {
+        try {
+          const parsedValue = JSON.parse(item);
+          setState(parsedValue);
+        } catch (error) {
+          console.error(`Error parsing query parameter ${name}:`, error);
+          setState(initialValue);
+        }
+      } else {
+        setState(initialValue);
+      }
     }
-  }, [name, value, createQueryString, router]);
 
-  return { value, setValue };
+    return () => {
+      if (isClient) {
+        window.removeEventListener(
+          `query-state-${name}`,
+          handleCustomChange as EventListener,
+        );
+      }
+    };
+  }, [name, params, initialValue, isClient]);
+
+  return { value: state, setValue, removeValue };
 }
-
-const parseJson = (str: string) => {
-  try {
-    return JSON.parse(str);
-  } catch (error) {
-    console.log({ error });
-    return null;
-  }
-};
 
 export default useQueryState;

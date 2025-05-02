@@ -1,7 +1,15 @@
 import { MainHeader } from "@/components/navigation/MainHeader";
 import { Metadata } from "next";
-import Home from "@/components/home/home-section/Home";
 import CategorySlider from "@/components/home/CategorySlider";
+import EyeglassTrends from "@/components/home/home-section/EyeglassTrends";
+import {
+  fetchFeaturedProducts,
+  fetchLatestProducts,
+  fetchPopularProducts,
+  fetchShapeStarters,
+} from "@/services/product.service";
+import ProductSlider from "@/components/home/home-section/ProductsSlider";
+import HomeGallery from "@/components/home/home-section/HomeGallery";
 
 export const metadata: Metadata = {
   title: "Akku Ka Chasma",
@@ -24,12 +32,31 @@ export const metadata: Metadata = {
   },
 };
 
-const HomePage = () => {
+const HomePage = async () => {
+  const shapeStarters = await fetchShapeStarters();
+  const featuredProducts = await fetchFeaturedProducts();
+  const popularProducts = await fetchPopularProducts();
+  const latestProducts = await fetchLatestProducts();
   return (
     <div>
       <MainHeader />
       <CategorySlider />
-      <Home />
+      <EyeglassTrends data={shapeStarters || []} />
+      <HomeGallery />
+      <ProductSlider
+        title="Featured"
+        subtitle="Products"
+        data={featuredProducts}
+      />
+      <HomeGallery />
+      <ProductSlider title="New" subtitle="Arrivals" data={latestProducts} />
+      <HomeGallery />
+      <ProductSlider
+        title="Popular"
+        subtitle="Products"
+        data={popularProducts}
+      />
+      <HomeGallery />
     </div>
   );
 };

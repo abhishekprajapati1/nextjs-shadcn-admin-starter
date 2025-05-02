@@ -5,12 +5,12 @@ import EditIcon from "../icons/EditIcon";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { useAppDispatch } from "@/store";
-import { FileType, IRecordMeta } from "@/lib/types";
+import { FileType, IFile, IRecordMeta } from "@/lib/types";
 import { Skeleton } from "../ui/skeleton";
 import { setData, setItemId } from "@/store/articles/form.slice";
 import { setItemToDelete } from "@/store/articles/data.slice";
 import { capitalizeFirstLetter } from "@/lib/utils";
-import {Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Badge } from "../ui/badge";
@@ -22,13 +22,13 @@ export interface IArticle extends IRecordMeta {
   seo_title: string;
   description: string;
   content: string;
-  thumbnail: FileType | null;
   thumbnail_alt?: string;
   category_ids?: string[];
   shape_ids?: string[];
   slug: string;
   keywords: string[];
   status: ArticleStatus;
+  thumbnail?: IFile;
 }
 
 interface ListItemProps {
@@ -49,7 +49,10 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
     <Card className="overflow-hidden">
       <CardContent className="!p-0 h-full flex flex-col">
         <Avatar className="rounded-none w-full min-h-52 flex-shrink-0">
-          <AvatarImage src={data?.thumbnail?.url} alt={"Image for power type"} />
+          <AvatarImage
+            src={data?.thumbnail?.url}
+            alt={"Image for power type"}
+          />
           <AvatarFallback>
             {data.title?.charAt(0)?.toUpperCase()}
           </AvatarFallback>
@@ -107,7 +110,7 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
                 <PaperPlaneIcon className="-rotate-[30deg]" />
               </Button>
               <Button variant="secondary" size="icon" asChild>
-                <Link href={`/articles/${id}`} prefetch>
+                <Link href={`/admin/articles/${id}`} prefetch>
                   <EditIcon />
                 </Link>
               </Button>
