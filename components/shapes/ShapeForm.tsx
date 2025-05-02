@@ -44,9 +44,11 @@ const ShapeForm: React.FC = () => {
   const { mutate: updateShape, isPending: updating } = useUpdate();
   const { mutate: createShape, isPending: creating } = useCreate();
   const isPending = updating || creating;
-
+  const {
+    formState: { isDirty },
+  } = form;
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    if (form.formState.isDirty) {
+    if (isDirty || uploadedImage?.is_temp) {
       if (item_id) {
         updateShape(data);
       } else {
@@ -56,7 +58,6 @@ const ShapeForm: React.FC = () => {
       dispatch(resetStore());
     }
   };
-  console.log("see this", form.formState.isDirty);
 
   React.useEffect(() => {
     if (data) {
@@ -67,6 +68,16 @@ const ShapeForm: React.FC = () => {
       });
     }
   }, [data, form]);
+
+  React.useEffect(() => {
+    if (data?.image) {
+      setUploadedImage({
+        id: data.image.id,
+        url: data.image.url,
+        fieldname: data.image.fieldname || "",
+      });
+    }
+  }, [data]);
 
   return (
     <Form {...form}>

@@ -29,8 +29,11 @@ import { IFile } from "@/lib/types";
 import useUpload from "@/lib/mutations/useUpload";
 
 const CategoryForm: React.FC = () => {
-  const { value: uploadedImage, setValue: setUploadedImage } =
-    useSessionStorage<IFile>("category_image");
+  const {
+    value: uploadedImage,
+    setValue: setUploadedImage,
+    removeValue: removeImageFromSessionStorage,
+  } = useSessionStorage<IFile>("category_image");
 
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: { title: "", description: "", seo_title: "" },
@@ -60,6 +63,15 @@ const CategoryForm: React.FC = () => {
     } else {
       dispatch(resetStore());
     }
+  };
+
+  const handleDiscard = () => {
+    if (item_id) {
+      dispatch(resetStore());
+    } else {
+      dispatch(showModal(false));
+    }
+    removeImageFromSessionStorage();
   };
 
   React.useEffect(() => {
@@ -198,7 +210,7 @@ const CategoryForm: React.FC = () => {
         <DialogFooter>
           <Button
             type="button"
-            onClick={() => dispatch(item_id ? resetStore() : showModal(false))}
+            onClick={() => handleDiscard()}
             variant="secondary"
           >
             {item_id ? "Discard" : "Cancel"}

@@ -6,23 +6,29 @@ import { resetStore } from "@/store/articles/form.slice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import { formSchema } from "@/lib/validations/admin/articles.validation";
+import useSessionStorage from "@/hooks/use-session-storage";
+import { IFile } from "@/lib/types";
 
 const useCreate = (onSuccess?: () => void) => {
+  const { value: uploadedImage, removeValue: removeUploadedImageFromSession } =
+    useSessionStorage<IFile>("article_image");
   const api = getApiClient();
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: async (data: z.infer<typeof formSchema>) => {
-      const { thumbnail, ...rest } = data;
-      const formData = new FormData();
-      if (thumbnail) formData.append("thumbnail", thumbnail);
-      formData.append("json_payload", JSON.stringify(rest));
-      const res = await api.post(ENDPOINTS.admin.articles.create, formData);
+    mutationFn: async (
+      data: z.infer<typeof formSchema> & { thumbnail?: string },
+    ) => {
+      if (uploadedImage) {
+        data.thumbnail = uploadedImage.id;
+      }
+      const res = await api.post(ENDPOINTS.admin.articles.create, data);
       return res.data;
     },
     onSuccess: () => {
       dispatch(resetStore());
       if (onSuccess) onSuccess();
+      removeUploadedImageFromSession();
       queryClient.invalidateQueries({ queryKey: ["articles"] });
     },
     onError: (error: RequestError) => {

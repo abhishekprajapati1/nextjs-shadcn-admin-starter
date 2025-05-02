@@ -13,9 +13,15 @@ import dayjs from "@/lib/dayjs";
 import { setData } from "@/store/products/form.slice";
 import { setItemToDelete } from "@/store/products/data.slice";
 import Link from "next/link";
+import { ICategory } from "../categories/ListItem";
+import { IShape } from "../shapes/ListItem";
 
 export interface IProduct extends IRecordMeta, z.infer<typeof formSchema> {
   product_colors: IProductColor[];
+  discount_percent: number;
+  slug: string;
+  category: ICategory;
+  shape: IShape;
 }
 
 interface ListItemProps {

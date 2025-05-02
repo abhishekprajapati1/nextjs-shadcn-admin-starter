@@ -9,7 +9,7 @@ const Categories = async () => {
   if (!categories) return <div>No categories found</div>;
 
   return (
-    <div className="flex items-center gap-4 mt-6 container">
+    <div className="flex items-center justify-center py-10 gap-8 container">
       {categories.data?.map((category) => (
         <Link
           href={`/categories/${category.slug}`}

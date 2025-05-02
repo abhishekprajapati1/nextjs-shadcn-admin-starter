@@ -1,0 +1,47 @@
+import { SliderTemplateProps } from "@/components/ui/swiper/MultiCardSlider";
+import React from "react";
+import { IProduct } from "../ListItem";
+import ImageCarousel from "@/components/ui/swiper/ImageCarousel";
+import { IProductColor } from "@/lib/types";
+import Link from "next/link";
+export interface ProductCardProps extends SliderTemplateProps<IProduct> {
+  className?: string;
+}
+const ProductCard1: React.FC<ProductCardProps> = ({ data, className = "" }) => {
+  const [activeColor, setActiveColor] = React.useState<IProductColor | null>(
+    null,
+  );
+  React.useEffect(() => {
+    if (Array.isArray(data.product_colors) && data.product_colors.length) {
+      setActiveColor(data.product_colors[0]);
+    }
+  }, [data]);
+
+  return (
+    <Link
+      href={`/${data?.slug}`}
+      className={`h-full w-full border border-primary/10 rounded-xl overflow-hidden cursor-pointer ${className}`}
+    >
+      <div className="h-40">
+        <ImageCarousel
+          images={activeColor?.images?.map((image) => image.url)}
+          height={160}
+          autoplay
+        />
+      </div>
+      <div className="px-4 pt-2 pb-4">
+        <h3 className="font-medium">{data?.model_name}</h3>
+        <div className="flex items-center gap-2">
+          <span className="text-success text-2xl">₹{data?.price}</span>
+          <span className="line-through text-destructive">
+            ₹{data?.listing_price}
+          </span>
+          <span className="text-gray-400 text-xs">
+            {data?.discount_percent?.toFixed(2)}% off
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+};
+export default ProductCard1;

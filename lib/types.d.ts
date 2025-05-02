@@ -130,3 +130,14 @@ export interface IGlassTypeData {
   src: string;
   title: string;
 }
+
+export interface IProductStarter {
+  title: string;
+  slug: string;
+  products: {
+    price: number;
+    listing_price: number;
+    discount_percent: number;
+    product_colors: { images: IFile[] }[];
+  }[];
+}
