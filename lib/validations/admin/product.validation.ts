@@ -138,3 +138,12 @@ export const productSchema = z.object({
   other_images: z.any().optional(),
   thumbnail: z.any().optional(),
 });
+
+export const purchaseSchema = z.object({
+  power_type_id: z.string().refine(isValidObjectId, {
+    message: "Invalid MongoDB ObjectId format",
+  }),
+  lens_feature_id: z.string().refine(isValidObjectId, {
+    message: "Invalid MongoDB ObjectId format",
+  }),
+});

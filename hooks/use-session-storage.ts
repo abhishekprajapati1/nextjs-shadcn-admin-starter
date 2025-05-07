@@ -92,6 +92,23 @@ const useSessionStorage = <T = any>(
     };
   }, [key]);
 
+  // this helps setting initial values in session storage.
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedValue = window.sessionStorage.getItem(key);
+      if (!savedValue && initialValue !== undefined) {
+        // No saved value but initialValue exists
+        window.sessionStorage.setItem(key, JSON.stringify(initialValue));
+        setState(initialValue);
+        window.dispatchEvent(
+          new CustomEvent(`session-storage-${key}`, {
+            detail: { key, value: initialValue },
+          }),
+        );
+      }
+    }
+  }, [key, initialValue]);
+
   return { value: state, setValue, removeValue };
 };
 

@@ -24,7 +24,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import EmptyWishlist from "@/components/wishlist/EmptyWishlist";
 import { Metadata } from "next";
-import { initialWishlistItems } from "@/app/wishlist/data";
+import { initialWishlistItems } from "@/app/(auth_protected)/wishlist/data";
+import Header from "../navigation/auth-protected/header";
 
 export const metadata: Metadata = {
   title: "My Wishlist | Akku Ka Chasma",
@@ -66,13 +67,7 @@ const Wishlist = () => {
 
   return (
     <div className="container py-8 min-h-[calc(100vh-4rem)]">
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="text-3xl font-bold">My Wishlist</h1>
-          <p className="text-muted-foreground mt-1">
-            {wishlistItems.length} items saved
-          </p>
-        </div>
+      <Header title="My Wishlist" subtitle="0 items in wishlist">
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="outline" className="flex items-center gap-2">
@@ -99,7 +94,7 @@ const Wishlist = () => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-      </div>
+      </Header>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {wishlistItems.map((item) => (

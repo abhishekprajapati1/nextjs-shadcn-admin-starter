@@ -55,3 +55,5 @@ export const GlassTypesData: IGlassTypeData[] = [
     title: "Offer 99",
   },
 ];
+
+export const NO_FOOTER = ["/admin"];

@@ -7,7 +7,7 @@ import { generateQueryString } from "@/lib/utils";
 import ENDPOINTS from "@/lib/endpoints";
 import { ILensDetail } from "@/components/lens-details/LensDetail";
 
-const useLensDetails = () => {
+const useLensDetails = (lens_feature_id?: string) => {
   const dispatch = useAppDispatch();
   const api = getApiClient();
   // Get sort_by selection
@@ -26,6 +26,7 @@ const useLensDetails = () => {
         sort_by,
         page_size: page_size?.toString(),
         search_term: search_term.query_string,
+        lens_feature_id: lens_feature_id,
       };
 
       const queryString = generateQueryString(filterObj);

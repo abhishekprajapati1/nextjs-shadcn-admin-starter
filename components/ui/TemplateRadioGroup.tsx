@@ -3,17 +3,17 @@ import { ChangeEvent, FC, FormEvent, Fragment } from "react";
 import { twMerge } from "tailwind-merge";
 import { Button } from "./button";
 
-export type TemplateRadioOption = {
+export type TemplateRadioOption<T = any> = {
   value: string | number;
   label: string;
   icon?: string;
-  data?: any;
+  data?: T;
 };
 
-export type TemplateProps = {
+export type TemplateProps<T = any> = {
   isLast: boolean;
   isChecked: boolean;
-  data: TemplateRadioOption;
+  data: TemplateRadioOption<T>;
   onClick: (event: any) => void;
 };
 
@@ -22,8 +22,11 @@ type TemplateRadiosTypes = {
   name: string;
   onChange: (arg: ChangeEvent<HTMLInputElement> | any) => void;
   options: TemplateRadioOption[];
-  template?: FC<TemplateProps>;
+  template?: React.ForwardRefExoticComponent<
+    TemplateProps & React.RefAttributes<HTMLElement>
+  >;
   className?: string;
+  templateRef?: (node: HTMLElement | null) => void;
 };
 
 const DefaultTemplate: FC<TemplateProps> = ({ onClick, isChecked, data }) => {
@@ -37,20 +40,20 @@ const DefaultTemplate: FC<TemplateProps> = ({ onClick, isChecked, data }) => {
       <span
         className={twMerge(
           "grid smooth place-content-center size-5 border-2 rounded-full",
-          isChecked && "border-primary"
+          isChecked && "border-primary",
         )}
       >
         <span
           className={twMerge(
             "block smooth size-3 bg-transparent rounded-full",
-            isChecked && "bg-primary"
+            isChecked && "bg-primary",
           )}
         />
       </span>
       <span
         className={twMerge(
           "smooth text-base font-normal",
-          isChecked && "text-primary"
+          isChecked && "text-primary",
         )}
       >
         {data.label}
@@ -66,6 +69,7 @@ const TemplateRadioGroup: FC<TemplateRadiosTypes> = ({
   className,
   options = [],
   template = DefaultTemplate,
+  templateRef,
 }) => {
   const Template = template;
 
@@ -93,6 +97,7 @@ const TemplateRadioGroup: FC<TemplateRadiosTypes> = ({
               isLast={index === options.length - 1}
               isChecked={value == item.value}
               data={item}
+              ref={templateRef}
             />
             <input
               className="hidden"
