@@ -41,14 +41,13 @@ import { InstagramLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import Logo from "./Logo";
 import { ICategory } from "../categories/ListItem";
 import SearchPanel from "./SearchPanel";
+import UserDropdown from "./UserDropdown";
 
 interface MainHeaderProps {
   categories?: ICategory[];
 }
 
 export const MainHeader: React.FC<MainHeaderProps> = ({ categories = [] }) => {
-  const router = useRouter();
-  const [isSearchOpen, setIsSearchOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
 
@@ -163,17 +162,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ categories = [] }) => {
               <ShoppingCart className="h-5 w-5" />
             </Link>
           </Button>
-          <Button
-            variant="default"
-            size="sm"
-            className="hidden sm:inline-flex"
-            asChild
-          >
-            <Link href="/login">
-              <User className="mr-2 h-5 w-5" />
-              Login
-            </Link>
-          </Button>
+          <UserDropdown />
         </div>
       </div>
     </header>

@@ -21,8 +21,11 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        fullScreen={fullScreen}
-        className={cn("max-h-[85vh]", className)}
+        className={cn(
+          "max-h-[85vh]",
+          fullScreen && "max-w-screen min-h-screen max-h-screen",
+          className,
+        )}
         showCloseIcon={showCloseIcon}
       >
         {children}

@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import Providers from "@/components/Providers";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import Footer from "@/components/navigation/Footer";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +25,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn("h-screen overflow-auto")}>
         <Providers>{children}</Providers>
-        <Footer />
       </body>
     </html>
   );
