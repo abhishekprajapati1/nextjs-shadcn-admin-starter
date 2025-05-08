@@ -140,10 +140,26 @@ export const productSchema = z.object({
 });
 
 export const purchaseSchema = z.object({
-  power_type_id: z.string().refine(isValidObjectId, {
-    message: "Invalid MongoDB ObjectId format",
-  }),
-  lens_feature_id: z.string().refine(isValidObjectId, {
-    message: "Invalid MongoDB ObjectId format",
-  }),
+  power_type_id: z
+    .string()
+    .refine(isValidObjectId, {
+      message: "Invalid MongoDB ObjectId format",
+    })
+    .optional(),
+  lens_feature_id: z
+    .string()
+    .refine(isValidObjectId, {
+      message: "Invalid MongoDB ObjectId format",
+    })
+    .optional(),
+  lens_detail_id: z
+    .string()
+    .refine(isValidObjectId, {
+      message: "Invalid MongoDB ObjectId format",
+    })
+    .optional(),
+  color_id: z
+    .string()
+    .refine(isValidObjectId, { message: "Invalid MongoDB ObjectId format" }),
+  frame_only: z.boolean().default(false),
 });

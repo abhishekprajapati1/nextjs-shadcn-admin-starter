@@ -67,7 +67,7 @@ const ProductDetailsPage = async ({
           />
 
           <div className="flex flex-wrap items-center mt-8 gap-2">
-            <ProceedToPurchase />
+            <ProceedToPurchase product_colors={product?.product_colors} />
             <Button
               variant="ghost"
               className="inline-flex items-center gap-2 !text-success hover:bg-success/10"

@@ -13,12 +13,23 @@ import useSessionStorage from "@/hooks/use-session-storage";
 import SelectLensDetail from "./SelectLensDetail";
 import useLoggedInUser from "@/lib/queries/useLoggedInUser";
 import SelectLensFeature from "./SelectLensFeature";
+import SetPrescription from "./SetPrescription";
+import { IColor } from "@/components/colors/ListItem";
+import { IProductColor } from "@/lib/types";
 export interface PurchaseStore {
   step: number;
   data: z.infer<typeof purchaseSchema> | null;
 }
-const ProceedToPurchase = () => {
+
+interface ProceedToPurchaseProps {
+  product_colors: IProductColor[];
+}
+
+const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
+  product_colors,
+}) => {
   const { data } = useLoggedInUser();
+  const [activeColor, setActiveColor] = React.useState<IColor | null>(null);
   const {
     value: purchaseStore,
     setValue: setPurchaseStore,
@@ -29,6 +40,7 @@ const ProceedToPurchase = () => {
   });
   const { value: open, setValue: onOpenChange } =
     useQueryState<boolean>("purchase");
+  const { value: colorName } = useQueryState<string>("color_name");
   const form = useForm<z.infer<typeof purchaseSchema>>({
     resolver: zodResolver(purchaseSchema),
     defaultValues: {
@@ -78,9 +90,37 @@ const ProceedToPurchase = () => {
     });
   }, [purchaseStore, form]);
 
+  React.useEffect(() => {
+    if (colorName) {
+      const name = colorName?.split("-")?.[0];
+      const color = colorName?.split("-")?.[1];
+      const product_color = product_colors?.find(
+        (pc) => pc.color.color === color && pc.color.name === name,
+      );
+      if (product_color) {
+        setActiveColor(product_color?.color);
+      }
+    }
+  }, [colorName, product_colors]);
+
   return (
     <React.Fragment>
-      {data && <Button onClick={() => onOpenChange(true)}>Buy Now</Button>}
+      {data && (
+        <Button
+          onClick={() => {
+            onOpenChange(true);
+            setPurchaseStore(
+              (prev) =>
+                ({
+                  ...prev,
+                  data: { ...prev.data, color_id: activeColor?.id || "" },
+                }) as PurchaseStore,
+            );
+          }}
+        >
+          Buy Now
+        </Button>
+      )}
       <Modal
         open={Boolean(open)}
         onOpenChange={(val) => handleModalClose(val)}
@@ -109,6 +149,8 @@ const ProceedToPurchase = () => {
             {purchaseStore?.step === 3 && (
               <SelectLensDetail control={form.control} />
             )}
+
+            {purchaseStore?.step === 4 && <SetPrescription />}
           </form>
         </Form>
       </Modal>

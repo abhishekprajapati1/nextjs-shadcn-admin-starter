@@ -2,41 +2,36 @@ import React from "react";
 import { getApiClient } from "@/lib/api";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { setTotal } from "@/store/lens-details/data.slice";
+import { setTotal } from "@/store/power-types/data.slice";
 import { generateQueryString } from "@/lib/utils";
+import { IPowerType } from "@/components/power-types/PowerType";
 import ENDPOINTS from "@/lib/endpoints";
-import { ILensDetail } from "@/components/lens-details/LensDetail";
-interface UseLensDetails {
-  lens_feature_id?: string;
-  validate?: boolean;
-}
-const useLensDetails = (param?: UseLensDetails) => {
-  const { lens_feature_id = "", validate = false } = param || {};
+
+const useCategoryProducts = () => {
   const dispatch = useAppDispatch();
   const api = getApiClient();
   // Get sort_by selection
   const { sort_by, total, search_term } = useAppSelector(
-    (store) => store.lensDetailStore.dataStore,
+    (store) => store.powerTypeStore.dataStore,
   );
 
   const page_size = 10; // Number of records per page.
 
-  const result = useInfiniteQuery<ILensDetail[]>({
+  const result = useInfiniteQuery<IPowerType[]>({
     initialPageParam: 1,
-    queryKey: ["lens-details", search_term, sort_by],
+    queryKey: ["power-types", search_term, sort_by],
     queryFn: async ({ pageParam }) => {
       const filterObj = {
         page: pageParam?.toString(),
         sort_by,
         page_size: page_size?.toString(),
-        search_term: search_term.query_string,
-        lens_feature_id: lens_feature_id,
+        search_term,
       };
 
       const queryString = generateQueryString(filterObj);
 
       const response = await api.get(
-        ENDPOINTS.admin.lens_details.fetch_all(queryString),
+        ENDPOINTS.admin.power_types.fetch_all(queryString),
       );
 
       dispatch(setTotal(response?.data?.total));
@@ -48,17 +43,16 @@ const useLensDetails = (param?: UseLensDetails) => {
         ? allPages.length + 1
         : undefined;
     },
-    enabled: validate ? Boolean(lens_feature_id) : true,
   });
 
-  const lens_details = React.useMemo(() => {
+  const customers = React.useMemo(() => {
     return result.data?.pages.reduce((acc, page) => {
       return [...acc, ...page];
-    }, []);
+    }, [] as IPowerType[]);
   }, [result?.data]);
 
   return {
-    data: lens_details,
+    data: customers,
     isLoading: result.isLoading,
     isFetching: result.isFetching,
     hasNextPage: result.hasNextPage,
@@ -67,4 +61,4 @@ const useLensDetails = (param?: UseLensDetails) => {
   };
 };
 
-export default useLensDetails;
+export default useCategoryProducts;

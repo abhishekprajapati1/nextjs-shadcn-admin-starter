@@ -19,7 +19,7 @@ export const protect = async (
   const encodedCurrentUrl = encodeURIComponent(currentUrl || "");
   const redirectUrl = `${redirectTo}?from=${encodedCurrentUrl}`;
   if (adminAccessRequired) {
-    if (!isLoggedIn || isLoggedIn.type != "admin") {
+    if (!isLoggedIn || isLoggedIn?.data?.type != "admin") {
       redirect(redirectUrl);
     }
   } else if (!isLoggedIn) {
