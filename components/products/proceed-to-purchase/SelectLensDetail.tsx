@@ -9,6 +9,8 @@ import LensDetailTemplate from "./LensDetailTemplate";
 import useLensDetails from "@/lib/queries/admin/lens-details/useLensDetails";
 import useInfiniteScroll from "@/hooks/use-infinite-scroll";
 
+import React from "react";
+
 const SelectLensDetail: React.FC<PurchaseStepProps> = ({
   onNext,
   onBack,
@@ -16,8 +18,12 @@ const SelectLensDetail: React.FC<PurchaseStepProps> = ({
 }) => {
   const { value: purchaseStore, setValue: setPurchaseStore } =
     useSessionStorage<PurchaseStore>("purchase_store");
+
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useLensDetails(purchaseStore?.data?.lens_feature_id || "");
+    useLensDetails({
+      lens_feature_id: purchaseStore?.data?.lens_feature_id,
+      validate: true,
+    });
   const elementRef = useInfiniteScroll({
     fetchNextPage,
     hasNextPage,
@@ -35,11 +41,8 @@ const SelectLensDetail: React.FC<PurchaseStepProps> = ({
           onClick={() =>
             setPurchaseStore((prev) => {
               return {
-                step: 2,
-                data: {
-                  lens_feature_id: prev.data?.lens_feature_id || "",
-                  power_type_id: prev.data?.power_type_id || "",
-                },
+                ...prev,
+                step: prev.step - 1,
               } as PurchaseStore;
             })
           }
@@ -48,42 +51,76 @@ const SelectLensDetail: React.FC<PurchaseStepProps> = ({
         </Button>
         <span> Select Lens Detail</span>
       </DialogTitle>
-      <div className="w-[900px] h-[620px] xl:w-full overflow-auto grid grid-cols-12">
-        <div className="col-span-3 flex flex-col">
+      <div className="  lg:w-[900px] h-[620px] xl:w-full overflow-auto grid grid-cols-12">
+        <div className="col-span-6 md:col-span-3 flex flex-col">
           <div className="h-52 border border-primary/30 flex-shrink-0" />
           <div className="flex flex-col flex-grow">
-            <div className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2">
-              Power Range
+            <div
+              title="Power Range"
+              className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2"
+            >
+              <span className="line-clamp-1">Power Range</span>
             </div>
-            <div className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2">
-              Index/Thickness
+            <div
+              title="Index/Thickness"
+              className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2"
+            >
+              <span className="line-clamp-1">Index/Thickness</span>
             </div>
-            <div className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2">
-              Warrenty Period
+            <div
+              title="Warrenty Period"
+              className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2"
+            >
+              <span className="line-clamp-1">Warrenty Period</span>
             </div>
-            <div className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2">
-              Blue Light Blocker
+            <div
+              title="lue Light Blocker"
+              className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2"
+            >
+              <span className="line-clamp-1">Blue Light Blocker</span>
             </div>
-            <div className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2">
-              Breakage &amp; Crack Resistance
+            <div
+              title="Breakage & Crack Resistance"
+              className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2"
+            >
+              <span className="line-clamp-1">
+                Breakage &amp; Crack Resistance
+              </span>
             </div>
-            <div className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2">
-              Both Side Anti Refelective Coating
+            <div
+              title="Both Side Anti Refelective Coating"
+              className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2"
+            >
+              <span className="line-clamp-1">
+                Both Side Anti Refelective Coating
+              </span>
             </div>
-            <div className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2">
-              UV Protection
+            <div
+              title="UV Protection"
+              className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2"
+            >
+              <span className="line-clamp-1">UV Protection</span>
             </div>
-            <div className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2">
-              Water &amp; Dust Protection (Hydrophobic)
+            <div
+              title="Water & Dust Protection (Hydrophobic)"
+              className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2"
+            >
+              <span className="line-clamp-1">
+                Water &amp; Dust Protection (Hydrophobic)
+              </span>
             </div>
-            <div className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2">
-              Lens ID
+            <div
+              title="Lens ID"
+              className="h-full text-sm text-foreground/80 border border-primary/30 border-t-0 flex items-center peer cursor-pointer px-2"
+            >
+              <span className="line-clamp-1">Lens ID</span>
             </div>
           </div>
         </div>
-        <div className="col-span-9">
+        <div className="col-span-6 md:col-span-9">
           <MultiCardSlider
             template={LensDetailTemplate}
+            navigation
             height={620}
             data={data}
             className="!px-0"

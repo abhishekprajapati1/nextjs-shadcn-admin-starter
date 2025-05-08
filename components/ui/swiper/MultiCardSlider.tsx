@@ -1,6 +1,6 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
-import type { SwiperProps } from "swiper/react";
+import type { SwiperProps, SwiperRef } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import React from "react";
 import "swiper/css";
@@ -52,8 +52,8 @@ const MultiCardSlider = ({
         modules={[Navigation]}
         style={
           {
-            "--swiper-navigation-color": "#fff",
-            "--swiper-pagination-color": "#fff",
+            "--swiper-navigation-color": "hsl(var(--primary))",
+            "--swiper-pagination-color": "hsl(var(--primary))",
           } as React.CSSProperties
         }
         navigation={navigation}

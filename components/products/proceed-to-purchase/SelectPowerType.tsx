@@ -56,13 +56,17 @@ const SelectPowerType: React.FC<PurchaseStepProps> = ({ control }) => {
               value={field.value}
               onChange={(val) => {
                 field.onChange(val);
-                setPurchaseStore({
-                  step: 2,
-                  data: {
-                    lens_feature_id: purchaseStore?.data?.lens_feature_id || "",
-                    power_type_id: val || "",
-                  },
-                } as PurchaseStore);
+                setPurchaseStore(
+                  (prev) =>
+                    ({
+                      ...prev,
+                      step: 2,
+                      data: {
+                        ...prev.data,
+                        power_type_id: val,
+                      },
+                    }) as PurchaseStore,
+                );
               }}
               name="power_type_id"
               template={PowerTypeInput as any}

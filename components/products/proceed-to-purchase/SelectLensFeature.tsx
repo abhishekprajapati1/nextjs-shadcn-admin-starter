@@ -31,7 +31,6 @@ const SelectLensFeature: React.FC<PurchaseStepProps> = ({
   onBack,
   control,
 }) => {
-  const watchedForm = useWatch({ control });
   const { value: purchaseStore, setValue: setPurchaseStore } =
     useSessionStorage<PurchaseStore>("purchase_store");
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
@@ -62,11 +61,8 @@ const SelectLensFeature: React.FC<PurchaseStepProps> = ({
           onClick={() =>
             setPurchaseStore((prev) => {
               return {
+                ...prev,
                 step: 1,
-                data: {
-                  lens_feature_id: prev.data?.lens_feature_id || "",
-                  power_type_id: prev.data?.power_type_id || "",
-                },
               } as PurchaseStore;
             })
           }
@@ -84,13 +80,17 @@ const SelectLensFeature: React.FC<PurchaseStepProps> = ({
               value={field.value}
               onChange={(val) => {
                 field.onChange(val);
-                setPurchaseStore({
-                  step: 3,
-                  data: {
-                    lens_feature_id: val || "",
-                    power_type_id: purchaseStore?.data?.power_type_id || "",
-                  },
-                } as PurchaseStore);
+                setPurchaseStore(
+                  (prev) =>
+                    ({
+                      ...prev,
+                      step: 3,
+                      data: {
+                        ...prev.data,
+                        lens_feature_id: val,
+                      },
+                    }) as PurchaseStore,
+                );
               }}
               name="lens_feature_id"
               template={LensFeatureInput as any}
