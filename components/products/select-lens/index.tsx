@@ -45,9 +45,17 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
     resolver: zodResolver(purchaseSchema),
     defaultValues: {
       power_type_id: "",
+      color_id: "",
+      frame_only: false,
+      lens_detail_id: "",
+      lens_feature_id: "",
     },
     mode: "onBlur",
   });
+  const {
+    formState: { errors },
+    watch,
+  } = form;
 
   // modal close handler
   const handleModalClose = (modalOpen: boolean) => {
@@ -58,7 +66,7 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
   };
 
   const onSubmit = (data: z.infer<typeof purchaseSchema>) => {
-    console.log("see this'", data);
+    console.log("see this form data", data);
   };
 
   const onNext = () => {
@@ -84,10 +92,23 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
   };
 
   React.useEffect(() => {
-    form.reset({
-      lens_feature_id: purchaseStore?.data?.lens_feature_id || "",
-      power_type_id: purchaseStore?.data?.power_type_id || "",
-    });
+    if (purchaseStore?.data) {
+      form.reset({
+        ...purchaseStore?.data,
+        prescription: {
+          type: "fillup",
+          comments: "",
+          right_sph: "0.00",
+          left_sph: "0.00",
+          right_cyl: "0.00",
+          left_cyl: "0.00",
+          right_axis: "0",
+          left_axis: "0",
+          right_add: "none",
+          left_add: "none",
+        },
+      });
+    }
   }, [purchaseStore, form]);
 
   React.useEffect(() => {
@@ -117,8 +138,9 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
                 }) as PurchaseStore,
             );
           }}
+          title="Buy frame + lens by configuring the lenses."
         >
-          Buy Now
+          Select Lens
         </Button>
       )}
       <Modal

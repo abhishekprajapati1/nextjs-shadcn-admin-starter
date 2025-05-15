@@ -51,6 +51,7 @@ const ItemForm: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       category_id: "",
+      slug: "",
       ...(product && { color_ids: [] }),
       description: "",
       frame_material_id: "",
@@ -141,6 +142,7 @@ const ItemForm: React.FC = () => {
         shape_id: product.shape_id,
         stock_quantity: product.stock_quantity,
         tags: product.tags,
+        slug: product.slug,
       });
     }
   }, [product, form]);
@@ -193,6 +195,31 @@ const ItemForm: React.FC = () => {
             )}
           />
           {/* end of model number */}
+
+          {/* product slug as unique identifier  */}
+          <FormField
+            control={form.control}
+            name="slug"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Slug</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter model number"
+                    {...field}
+                    type="number"
+                    onChange={(e) =>
+                      field.onChange(
+                        isNaN(+e.target.value) ? 0 : +e.target.value,
+                      )
+                    }
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* end of slug */}
 
           {/* gender */}
           <FormField

@@ -2,7 +2,8 @@ import DevelopmentWarning from "@/components/DevelopmentWarning";
 import WhatsappIcon from "@/components/icons/WhatsappIcon";
 import { MainHeader } from "@/components/navigation/MainHeader";
 import PersistedColorSwitcher from "@/components/products/PersistedColorSwitcher";
-import ProceedToPurchase from "@/components/products/proceed-to-purchase";
+import PurchaseFrameOnly from "@/components/products/PurchaseFrameOnly";
+import SelectLens from "@/components/products/select-lens";
 import { Button } from "@/components/ui/button";
 import GalleryCarousel from "@/components/ui/swiper/GalleryCarousel";
 import WishlistButton from "@/components/wishlist/WishlistButton";
@@ -67,7 +68,8 @@ const ProductDetailsPage = async ({
           />
 
           <div className="flex flex-wrap items-center mt-8 gap-2">
-            <ProceedToPurchase product_colors={product?.product_colors} />
+            <PurchaseFrameOnly />
+            <SelectLens product_colors={product?.product_colors} />
             <Button
               variant="ghost"
               className="inline-flex items-center gap-2 !text-success hover:bg-success/10"

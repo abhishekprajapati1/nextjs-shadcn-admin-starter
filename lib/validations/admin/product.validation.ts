@@ -49,6 +49,7 @@ export const tags: InputOption[] = [
   { label: "Old", value: "Old" },
 ];
 export const formSchema = z.object({
+  slug: z.string(),
   seo_title: z.string(),
   description: z.string(),
   tags: z.array(z.string()),
@@ -162,4 +163,25 @@ export const purchaseSchema = z.object({
     .string()
     .refine(isValidObjectId, { message: "Invalid MongoDB ObjectId format" }),
   frame_only: z.boolean().default(false),
+  prescription: z
+    .discriminatedUnion("type", [
+      z.object({
+        type: z.literal("photo"),
+        image: z.string(),
+        comments: z.string(),
+      }),
+      z.object({
+        type: z.literal("fillup"),
+        right_sph: z.string(),
+        right_cyl: z.string(),
+        right_axis: z.string(),
+        right_add: z.string(),
+        left_sph: z.string(),
+        left_cyl: z.string(),
+        left_axis: z.string(),
+        left_add: z.string(),
+        comments: z.string(),
+      }),
+    ])
+    .optional(),
 });

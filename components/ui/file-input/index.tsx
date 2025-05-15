@@ -42,7 +42,7 @@ const FileInput: FC<FileInputProps> = ({
     <div
       {...getRootProps()}
       className={twMerge(
-        "w-full relative h-full overflow-hidden",
+        "w-full relative h-full shadow-lg shadow-input overflow-hidden",
         error && "text-danger",
         className,
       )}

@@ -15,7 +15,7 @@ import { purchaseSchema } from "@/lib/validations/admin/product.validation";
 import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import { Control, useWatch } from "react-hook-form";
+import { Control } from "react-hook-form";
 import * as z from "zod";
 import { PurchaseStore } from ".";
 import useSessionStorage from "@/hooks/use-session-storage";
