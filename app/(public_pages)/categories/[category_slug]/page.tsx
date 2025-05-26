@@ -1,5 +1,6 @@
 import { MainHeader } from "@/components/navigation/MainHeader";
 import ProductResult from "@/components/products/product-result";
+import ENDPOINTS from "@/lib/endpoints";
 import { fetchCategoryProducts } from "@/services/category.service";
 import React from "react";
 interface CategoryResultPageProps {
@@ -12,7 +13,10 @@ const CategoryResultPage = async ({ params }: CategoryResultPageProps) => {
   return (
     <React.Fragment>
       <MainHeader />
-      <ProductResult data={data} />
+      <ProductResult
+        endpoint={ENDPOINTS.products.category_products(params.category_slug)}
+        initialData={data}
+      />
     </React.Fragment>
   );
 };
