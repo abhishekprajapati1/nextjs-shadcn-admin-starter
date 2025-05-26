@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { IColor } from "../colors/ListItem";
 
 interface ColorSwitcherProps {
-  colors?: IColor[];
+  colors?: Array<IColor[]>;
   value?: string;
   onChange?: (value: string) => void;
   className?: string;
@@ -39,24 +39,29 @@ const ColorSwitcher: React.FC<ColorSwitcherProps> = ({
       className={cn("flex items-center gap-2", className)}
     >
       {colors.map((color) => {
-        const isActive = `${color.name}-${color.color}` === activeColor;
+        const value = color?.map((c) => `${c.name}-${c.color}`).join("-and-"); // see useColorName hook
+        const isActive = value === activeColor;
         return (
-          <div key={color.id} className="flex items-center">
-            <RadioGroupItem
-              value={`${color.name}-${color.color}`}
-              id={color.id}
-              className="peer sr-only"
-            />
+          <div key={value} className="flex items-center">
+            <RadioGroupItem value={value} id={value} className="peer sr-only" />
             <Label
-              htmlFor={color.id}
+              htmlFor={value}
               className={cn(
-                "h-8 w-8 rounded-full border border-gray-200 cursor-pointer ring-offset-background transition-all hover:scale-110",
+                "h-8 w-8 rounded-full flex flex-col overflow-hidden border border-gray-200 cursor-pointer ring-offset-background transition-all hover:scale-110",
                 "peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-offset-2",
                 "peer-data-[state=checked]:ring-black",
               )}
-              style={{ backgroundColor: color.color }}
             >
-              <span className="sr-only">{color.name}</span>
+              {color?.map((c) => {
+                return (
+                  <span
+                    key={c.id}
+                    className="size-full inline-block"
+                    style={{ backgroundColor: c.color }}
+                  />
+                );
+              })}
+              <span className="sr-only">{value}</span>
             </Label>
           </div>
         );

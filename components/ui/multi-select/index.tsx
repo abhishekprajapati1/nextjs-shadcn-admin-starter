@@ -101,7 +101,7 @@ const MultiSelect: FC<MultiSelectInputProps> = ({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full h-fit justify-between"
+          className="w-full h-fit justify-between shadow-lg shadow-input"
         >
           <span className="text-sm font-normal text-secondary-foreground/70">
             Select...

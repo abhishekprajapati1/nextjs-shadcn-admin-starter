@@ -31,10 +31,12 @@ import useSessionStorage from "@/hooks/use-session-storage";
 import { IFile } from "@/lib/types";
 import useUpload from "@/lib/mutations/useUpload";
 import { toast } from "@/lib/hooks/use-toast";
+import { Input } from "../ui/input";
+import SelectBox from "../ui/select-box";
 
 const ItemForm: React.FC = () => {
-  const { value: uploadedImage, setValue: setUploadedImage } =
-    useSessionStorage<IFile>("banner_image");
+  // const { value: uploadedImage, setValue: setUploadedImage } =
+  //   useSessionStorage<IFile>("banner_image");
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       category_ids: [],
@@ -54,7 +56,7 @@ const ItemForm: React.FC = () => {
 
   const { mutate: updateBanner, isPending: updating } = useUpdate();
   const { mutate: createBanner, isPending: creating } = useCreate();
-  const { mutate: upload, isPending: uploading } = useUpload();
+  // const { mutate: upload, isPending: uploading } = useUpload();
   const isPending = updating || creating;
 
   // prepare category data
@@ -97,14 +99,6 @@ const ItemForm: React.FC = () => {
       value: shape.id,
     })) || [];
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    if (!uploadedImage) {
-      toast({
-        title: "Alert",
-        description: "Please upload an image",
-        variant: "default",
-      });
-      return;
-    }
     if (isDirty) {
       if (storeData?.id) {
         updateBanner(data);
@@ -118,25 +112,26 @@ const ItemForm: React.FC = () => {
 
   React.useEffect(() => {
     if (storeData) {
-      console.log(storeData?.category_ids);
       form.reset({
         is_active: storeData?.is_active,
         show_on_home: storeData?.show_on_home,
         category_ids: storeData?.category_ids || [],
         shape_ids: storeData?.shape_ids || [],
+        title: storeData?.title,
+        type: storeData?.type,
       });
     }
   }, [storeData, form]);
 
-  React.useEffect(() => {
-    if (storeData?.image) {
-      setUploadedImage({
-        id: storeData.image.id,
-        url: storeData.image.url,
-        fieldname: storeData.image.fieldname || "",
-      });
-    }
-  }, [storeData]);
+  // React.useEffect(() => {
+  //   if (storeData?.image) {
+  //     setUploadedImage({
+  //       id: storeData.image.id,
+  //       url: storeData.image.url,
+  //       fieldname: storeData.image.fieldname || "",
+  //     });
+  //   }
+  // }, [storeData]);
 
   return (
     <Form {...form}>
@@ -144,7 +139,7 @@ const ItemForm: React.FC = () => {
         className="flex flex-col gap-4"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <FileInput
+        {/* <FileInput
           onChange={(files) => {
             if (
               Array.isArray(files) &&
@@ -183,21 +178,28 @@ const ItemForm: React.FC = () => {
               <DragDropIcon className="size-[25px]" />
             </div>
           </FilePreview>
-        </FileInput>
+        </FileInput> */}
         {/* Title input */}
-        <div className="flex flex-col gap-4">
+
+        <div className="flex flex-col gap-6">
           <FormField
             control={form.control}
-            name="is_active"
+            name="type"
             render={({ field }) => (
-              <FormItem className="flex items-center gap-2">
+              <FormItem>
+                <FormLabel>Type</FormLabel>
                 <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
+                  <SelectBox
+                    options={[
+                      { value: "masonry", label: "Masonry" },
+                      { value: "grid", label: "Grid" },
+                      { value: "carousel", label: "Carousel" },
+                    ]}
+                    placeholder="Select Banner Type"
+                    value={field.value}
+                    onChange={field.onChange}
                   />
                 </FormControl>
-                <FormLabel className="!mt-0">Active</FormLabel>
                 <FormMessage />
               </FormItem>
             )}
@@ -205,20 +207,53 @@ const ItemForm: React.FC = () => {
 
           <FormField
             control={form.control}
-            name="show_on_home"
+            name="title"
             render={({ field }) => (
-              <FormItem className="flex items-center gap-2">
+              <FormItem>
+                <FormLabel>Banner Title</FormLabel>
                 <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
+                  <Input type="text" className="max-w-[400px]" {...field} />
                 </FormControl>
-                <FormLabel className="!mt-0">Show on Home</FormLabel>
                 <FormMessage />
               </FormItem>
             )}
           />
+
+          <div className="flex items-center gap-4">
+            <FormField
+              control={form.control}
+              name="is_active"
+              render={({ field }) => (
+                <FormItem className="flex items-center gap-2">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormLabel className="!mt-0">Active</FormLabel>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="show_on_home"
+              render={({ field }) => (
+                <FormItem className="flex items-center gap-2">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormLabel className="!mt-0">Show on Home</FormLabel>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <div className="flex flex-col sm:flex-row gap-4">
             <FormField

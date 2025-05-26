@@ -107,9 +107,9 @@ export interface MenuItem {
   items?: SubMenuItem[];
 }
 export interface IProductColor extends IRecordMeta {
-  color: IColor;
-  name: string;
+  colors: IColor[];
   product_id: string;
+  model_number: number;
   images: IProductFile[];
 }
 export interface IProduct {

@@ -45,12 +45,14 @@ import { IColor } from "../colors/ListItem";
 import { IPowerType } from "../power-types/PowerType";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import MultiTextInput from "../ui/mult-text-input";
+import ColorGroupInput from "../ui/color-group-input";
 
 const ItemForm: React.FC = () => {
   const product = useAppSelector((store) => store.productStore.formStore.data);
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       category_id: "",
+      slug: "",
       ...(product && { color_ids: [] }),
       description: "",
       frame_material_id: "",
@@ -64,7 +66,6 @@ const ItemForm: React.FC = () => {
       lens_material: "Demo Polycarbonate",
       listing_price: 0,
       model_name: "",
-      model_number: 0,
       power_type_ids: [],
       price: 0,
       seo_title: "",
@@ -134,13 +135,13 @@ const ItemForm: React.FC = () => {
         lens_material: product.lens_material,
         listing_price: product.listing_price,
         model_name: product.model_name,
-        model_number: product.model_number,
         power_type_ids: product.power_type_ids,
         price: product.price,
         seo_title: product.seo_title,
         shape_id: product.shape_id,
         stock_quantity: product.stock_quantity,
         tags: product.tags,
+        slug: product.slug,
       });
     }
   }, [product, form]);
@@ -169,30 +170,21 @@ const ItemForm: React.FC = () => {
           />
           {/* end of model name */}
 
-          {/* model number */}
+          {/* product slug as unique identifier  */}
           <FormField
             control={form.control}
-            name="model_number"
+            name="slug"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Model Number</FormLabel>
+                <FormLabel>Slug</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Enter model number"
-                    {...field}
-                    type="number"
-                    onChange={(e) =>
-                      field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
-                      )
-                    }
-                  />
+                  <Input placeholder="Enter slug for the product" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          {/* end of model number */}
+          {/* end of slug */}
 
           {/* gender */}
           <FormField
@@ -299,21 +291,18 @@ const ItemForm: React.FC = () => {
                 <FormItem>
                   <FormLabel>Colors</FormLabel>
                   <FormControl>
-                    <MultiSelect
-                      id="color_ids"
-                      options={
-                        colorDataLoading
-                          ? []
-                          : (colorData?.map((color) => ({
-                              label: color?.name ?? "Unknown",
-                              value: color?.id ?? "",
-                              data: color,
-                            })) ?? [])
-                      }
-                      value={field.value}
-                      onChange={field.onChange}
-                      optionTemplate={ColorOptionTemplate}
-                      previewTemplate={ColorPreviewTemplate}
+                    <ColorGroupInput
+                      value={field.value?.map((group) =>
+                        group?.map((color) => {
+                          const c = colorData?.find((cd) => cd.id === color);
+                          return { id: c?.id || "", color: c?.color || "" };
+                        }),
+                      )}
+                      onChange={(groups) => {
+                        field.onChange(
+                          groups.map((group) => group.map((color) => color.id)),
+                        );
+                      }}
                     />
                   </FormControl>
                   <FormMessage />

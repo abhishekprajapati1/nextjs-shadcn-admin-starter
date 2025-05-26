@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent } from "./dialog";
 
-interface ModalProps {
+export interface ModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   children: React.ReactNode;

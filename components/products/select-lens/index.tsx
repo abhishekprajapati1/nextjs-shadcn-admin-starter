@@ -16,6 +16,7 @@ import SelectLensFeature from "./SelectLensFeature";
 import SetPrescription from "./SetPrescription";
 import { IColor } from "@/components/colors/ListItem";
 import { IProductColor } from "@/lib/types";
+import useProductColor from "@/lib/hooks/useProductColor";
 export interface PurchaseStore {
   step: number;
   data: z.infer<typeof purchaseSchema> | null;
@@ -29,7 +30,6 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
   product_colors,
 }) => {
   const { data } = useLoggedInUser();
-  const [activeColor, setActiveColor] = React.useState<IColor | null>(null);
   const {
     value: purchaseStore,
     setValue: setPurchaseStore,
@@ -41,13 +41,22 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
   const { value: open, setValue: onOpenChange } =
     useQueryState<boolean>("purchase");
   const { value: colorName } = useQueryState<string>("color_name");
+  const productColor = useProductColor({ product_colors, colorName });
   const form = useForm<z.infer<typeof purchaseSchema>>({
     resolver: zodResolver(purchaseSchema),
     defaultValues: {
       power_type_id: "",
+      product_color_id: "",
+      frame_only: false,
+      lens_detail_id: "",
+      lens_feature_id: "",
     },
     mode: "onBlur",
   });
+  const {
+    formState: { errors },
+    watch,
+  } = form;
 
   // modal close handler
   const handleModalClose = (modalOpen: boolean) => {
@@ -58,7 +67,7 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
   };
 
   const onSubmit = (data: z.infer<typeof purchaseSchema>) => {
-    console.log("see this'", data);
+    console.log("see this form data", data);
   };
 
   const onNext = () => {
@@ -84,24 +93,24 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
   };
 
   React.useEffect(() => {
-    form.reset({
-      lens_feature_id: purchaseStore?.data?.lens_feature_id || "",
-      power_type_id: purchaseStore?.data?.power_type_id || "",
-    });
-  }, [purchaseStore, form]);
-
-  React.useEffect(() => {
-    if (colorName) {
-      const name = colorName?.split("-")?.[0];
-      const color = colorName?.split("-")?.[1];
-      const product_color = product_colors?.find(
-        (pc) => pc.color.color === color && pc.color.name === name,
-      );
-      if (product_color) {
-        setActiveColor(product_color?.color);
-      }
+    if (purchaseStore?.data) {
+      form.reset({
+        ...purchaseStore?.data,
+        prescription: {
+          type: "fillup",
+          comments: "",
+          right_sph: "0.00",
+          left_sph: "0.00",
+          right_cyl: "0.00",
+          left_cyl: "0.00",
+          right_axis: "0",
+          left_axis: "0",
+          right_add: "none",
+          left_add: "none",
+        },
+      });
     }
-  }, [colorName, product_colors]);
+  }, [purchaseStore, form]);
 
   return (
     <React.Fragment>
@@ -113,12 +122,16 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
               (prev) =>
                 ({
                   ...prev,
-                  data: { ...prev.data, color_id: activeColor?.id || "" },
+                  data: {
+                    ...prev.data,
+                    product_color_id: productColor?.id || "",
+                  },
                 }) as PurchaseStore,
             );
           }}
+          title="Buy frame + lens by configuring the lenses."
         >
-          Buy Now
+          Select Lens
         </Button>
       )}
       <Modal

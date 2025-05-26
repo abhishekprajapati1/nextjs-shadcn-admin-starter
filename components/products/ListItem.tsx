@@ -50,9 +50,6 @@ const ListItem: React.FC<ListItemProps> = ({ data }) => {
         </Link>
       </td>
       <td>
-        <div className="justify-center">{data?.model_number || "136005"}</div>
-      </td>
-      <td>
         <div className="justify-center">
           {capitalizeFirstLetter(data?.gender)}
         </div>

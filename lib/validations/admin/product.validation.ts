@@ -49,11 +49,11 @@ export const tags: InputOption[] = [
   { label: "Old", value: "Old" },
 ];
 export const formSchema = z.object({
+  slug: z.string(),
   seo_title: z.string(),
   description: z.string(),
   tags: z.array(z.string()),
   model_name: z.string(),
-  model_number: z.number().int().positive(),
   gender: z.enum([Gender.MALE, Gender.FEMALE, Gender.UNISEX, Gender.OTHER]),
 
   stock_quantity: z.number().int().min(0),
@@ -106,9 +106,11 @@ export const formSchema = z.object({
 
   color_ids: z
     .array(
-      z.string().refine(isValidObjectId, {
-        message: "Invalid MongoDB ObjectId format",
-      }),
+      z.array(
+        z.string().refine(isValidObjectId, {
+          message: "Invalid MongoDB ObjectId format",
+        }),
+      ),
     )
     .optional(),
 
@@ -158,8 +160,29 @@ export const purchaseSchema = z.object({
       message: "Invalid MongoDB ObjectId format",
     })
     .optional(),
-  color_id: z
+  product_color_id: z
     .string()
     .refine(isValidObjectId, { message: "Invalid MongoDB ObjectId format" }),
   frame_only: z.boolean().default(false),
+  prescription: z
+    .discriminatedUnion("type", [
+      z.object({
+        type: z.literal("photo"),
+        image: z.string(),
+        comments: z.string(),
+      }),
+      z.object({
+        type: z.literal("fillup"),
+        right_sph: z.string(),
+        right_cyl: z.string(),
+        right_axis: z.string(),
+        right_add: z.string(),
+        left_sph: z.string(),
+        left_cyl: z.string(),
+        left_axis: z.string(),
+        left_add: z.string(),
+        comments: z.string(),
+      }),
+    ])
+    .optional(),
 });

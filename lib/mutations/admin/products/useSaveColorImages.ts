@@ -7,7 +7,7 @@ const useSaveColorImages = (product_color_id: string) => {
   const api = getApiClient();
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: async (data: { file_ids: string[] }) => {
+    mutationFn: async (data: { file_ids: string[]; model_number?: number }) => {
       const res = await api.post(
         ENDPOINTS.admin.products.color.save_images(product_color_id),
         data,

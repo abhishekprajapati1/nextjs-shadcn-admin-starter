@@ -13,6 +13,10 @@ const useCreate = (onSuccess?: () => void) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (data: z.infer<typeof formSchema>) => {
+      data.color_ids =
+        (data.color_ids?.map((color_ids) => ({
+          colors: color_ids,
+        })) as any) || []; // We know for sure what we are doing
       const res = await api.post(ENDPOINTS.admin.products.create, data);
       return res.data;
     },
