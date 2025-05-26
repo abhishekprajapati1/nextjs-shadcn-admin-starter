@@ -16,6 +16,7 @@ import categoryStore from "./categories";
 import articleStore from "./articles";
 import newsletterStore from "./newsletters";
 import bannerStore from "./banners";
+import productResultStore from "./product-results.slice";
 
 const store = configureStore({
   reducer: {
@@ -35,6 +36,7 @@ const store = configureStore({
     newsletterStore,
     articleStore,
     bannerStore,
+    productResultStore,
   },
 });
 
