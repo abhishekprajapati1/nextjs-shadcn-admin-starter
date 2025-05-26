@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import DeleteIcon from "../icons/DeleteIcon";
 import EditIcon from "../icons/EditIcon";
 import { Button } from "../ui/button";
 import { useAppDispatch } from "@/store";
@@ -12,9 +11,20 @@ import { Avatar, AvatarImage } from "../ui/avatar";
 import { formSchema } from "@/lib/validations/admin/banners.validation";
 import { z } from "zod";
 import dayjs from "@/lib/dayjs";
+import Link from "next/link";
+import { DragHandleDots2Icon, TrashIcon } from "@radix-ui/react-icons";
+import { CSS } from "@dnd-kit/utilities";
+import { useSortable } from "@dnd-kit/sortable";
+import { IMAGE_RATIO } from "@/lib/constants";
 
+export interface IBannerImage extends IRecordMeta {
+  image?: IFile;
+  url?: string;
+  width: number;
+  aspect_ratio: keyof typeof IMAGE_RATIO;
+}
 export interface IBanner extends IRecordMeta, z.infer<typeof formSchema> {
-  image: IFile;
+  banner_images: IBannerImage[];
   categories: string[];
   shapes: string[];
 }
@@ -27,6 +37,26 @@ const ListItem = React.forwardRef<HTMLDivElement, ListItemProps>(
   ({ data }, ref) => {
     const dispatch = useAppDispatch();
 
+    const { attributes, listeners, setNodeRef, transform, transition } =
+      useSortable({ id: data?.id || "" });
+
+    const style = {
+      transform: CSS.Transform.toString(transform),
+      transition,
+    };
+
+    function mergeRefs(...refs: any[]) {
+      return (node: HTMLElement | null) => {
+        refs.forEach((ref) => {
+          if (typeof ref === "function") {
+            ref(node);
+          } else if (ref && typeof ref === "object") {
+            ref.current = node;
+          }
+        });
+      };
+    }
+
     const handleEditClick = () => {
       dispatch(setData(data ?? null));
     };
@@ -36,101 +66,84 @@ const ListItem = React.forwardRef<HTMLDivElement, ListItemProps>(
     }
 
     return (
-      <tr>
-        <td>
-          <div>
-            <Avatar className=" rounded-lg">
-              <AvatarImage
-                src={data?.image?.url}
-                alt={`Banner image ${data?.id}`}
-              />
-            </Avatar>
-          </div>
-        </td>
-        <td>
-          <div className="justify-center">
-            {data?.show_on_home ? "Yes" : "No"}
-          </div>
-        </td>
-        <td>
-          <div className="justify-center">{data?.is_active ? "on" : "off"}</div>
-        </td>
-        <td>
-          <div className="justify-center">
-            {dayjs(data?.created_at).format("MMM DD, YYYY")}
-          </div>
-        </td>
-        <td>
-          <div className="justify-center">
-            {dayjs(data?.updated_at).format("MMM DD, YYYY")}
-          </div>
-        </td>
-        <td>
-          <div className="flex items-center gap-2">
-            <Button
-              onClick={() => handleEditClick()}
-              variant="secondary"
-              size="icon"
-            >
-              <EditIcon />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() =>
-                dispatch(
-                  setItemToDelete({
-                    id: data?.id || "",
-                    label: data.image?.url || "",
-                  }),
-                )
-              }
-              className="bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white ease-linear duration-300"
-            >
-              <DeleteIcon />
-            </Button>
-          </div>
-        </td>
-      </tr>
+      <div
+        key={data.id}
+        className="grid grid-cols-12 gap-2 p-2 h-14 bg-white shadow-md border rounded-lg text-sm"
+        ref={mergeRefs(ref, setNodeRef)}
+        style={style}
+      >
+        <div className="col-span-2 flex items-center gap-1">
+          <DragHandleDots2Icon {...attributes} {...listeners} />
+          <Link href={`/admin/banners/${data.id}`} className="!cursor-pointer">
+            {data?.title || "No Title"}
+          </Link>
+        </div>
+        <div className="col-span-2 flex items-center">
+          {data?.show_on_home ? "Yes" : "No"}
+        </div>
+        <div className="col-span-2 flex items-center">
+          {data?.is_active ? "Active" : "Inactive"}
+        </div>
+        <div className="col-span-2 flex items-center">
+          {data.banner_images?.length}
+        </div>
+        <div className="col-span-2 flex items-center capitalize">
+          {data.type}
+        </div>
+        <div className="col-span-2 flex items-center justify-end gap-2 h-full">
+          <Button
+            type="button"
+            onClick={() => handleEditClick()}
+            variant="secondary"
+            size="icon"
+          >
+            <EditIcon />
+          </Button>
+          <Button
+            type="button"
+            onClick={() =>
+              dispatch(
+                setItemToDelete({
+                  id: data.id,
+                  label: data.title || "No Title",
+                }),
+              )
+            }
+            variant="destructive"
+            size="icon"
+          >
+            <TrashIcon />
+          </Button>
+        </div>
+      </div>
     );
   },
 );
 
 const ListItemSkeleton = () => {
   return (
-    <tr>
-      <td>
-        <div>
-          <Skeleton className="w-10 h-10 rounded-lg" />
-        </div>
-      </td>
-      <td>
-        <div className="justify-center">
-          <Skeleton className="w-6" />
-        </div>
-      </td>
-      <td>
-        <div className="justify-center">
-          <Skeleton className="w-5" />
-        </div>
-      </td>
-      <td>
-        <div className="justify-center">
-          <Skeleton className="w-24" />
-        </div>
-      </td>
-      <td>
-        <div className="justify-center">
-          <Skeleton className="w-24" />
-        </div>
-      </td>
-      <td>
-        <div className="flex items-center gap-2">
-          <Skeleton className="size-9" />
-          <Skeleton className="size-9 bg-destructive/50" />
-        </div>
-      </td>
-    </tr>
+    <div className="grid grid-cols-12 gap-2 p-2 h-14 bg-white shadow-md border rounded-lg text-sm">
+      <div className="col-span-2 flex items-center gap-1">
+        <DragHandleDots2Icon />
+        <Skeleton className="w-32" />
+      </div>
+      <div className="col-span-2 flex items-center">
+        <Skeleton className="w-8" />
+      </div>
+      <div className="col-span-2 flex items-center">
+        <Skeleton className="w-14" />
+      </div>
+      <div className="col-span-2 flex items-center">
+        <Skeleton className="w-4" />
+      </div>
+      <div className="col-span-2 flex items-center capitalize">
+        <Skeleton className="w-10" />
+      </div>
+      <div className="col-span-2 flex items-center justify-end gap-2 h-full">
+        <Skeleton className="size-9" />
+        <Skeleton className="size-9 bg-destructive/10" />
+      </div>
+    </div>
   );
 };
 

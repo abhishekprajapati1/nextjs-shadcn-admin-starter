@@ -4,15 +4,18 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import React from "react";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 interface ImageCarouselProps {
   className?: string;
+  imageClass?: string;
   height?: number;
   images?: string[];
   autoplay?: boolean;
 }
 const ImageCarousel = ({
   className = "",
+  imageClass = "",
   height = 250,
   images = [],
   autoplay = false,
@@ -36,7 +39,10 @@ const ImageCarousel = ({
               alt={`Carousel image ${index}`}
               width={300}
               height={height}
-              className="w-auto h-full mx-auto max-w-full max-h-full"
+              className={cn(
+                "w-auto h-full mx-auto max-w-full max-h-full",
+                imageClass,
+              )}
             />
           </SwiperSlide>
         ))}

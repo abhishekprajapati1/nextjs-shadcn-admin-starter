@@ -15,7 +15,6 @@ const List = () => {
         <thead>
           <tr>
             <th>Model Name</th>
-            <th className="text-center min-w-[135px]">Model Number</th>
             <th className="text-center min-w-[100px]">Gender</th>
             <th className="text-center min-w-[135px]">In Stock</th>
             <th className="text-center min-w-[135px]">Listing Price</th>
@@ -43,7 +42,6 @@ const List = () => {
       <thead>
         <tr>
           <th>Model Name</th>
-          <th className="text-center min-w-[135px]">Model Number</th>
           <th className="text-center min-w-[100px]">Gender</th>
           <th className="text-center min-w-[135px]">In Stock</th>
           <th className="text-center min-w-[135px]">Listing Price</th>

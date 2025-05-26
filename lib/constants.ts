@@ -57,3 +57,46 @@ export const GlassTypesData: IGlassTypeData[] = [
 ];
 
 export const NO_FOOTER = ["/admin"];
+
+export const IMAGE_RATIO = {
+  ratio_33x9: {
+    ratio: [33, 9],
+    class: "aspect-[33/9]",
+  },
+  ratio_21x9: {
+    ratio: [21, 9],
+    class: "aspect-[21/9]",
+  },
+  ratio_16x9: {
+    ratio: [16, 9],
+    class: "aspect-[16/9]",
+  },
+  ratio_7x3: {
+    ratio: [7, 3],
+    class: "aspect-[7/3]",
+  },
+  ratio_8x3: {
+    ratio: [8, 3],
+    class: "aspect-[8/3]",
+  },
+  ratio_5x3: {
+    ratio: [5, 3],
+    class: "aspect-[5/3]",
+  },
+  ratio_4x3: {
+    ratio: [4, 3],
+    class: "aspect-[4/3]",
+  },
+  ratio_13x1: {
+    ratio: [13, 1],
+    class: "aspect-[13/1]",
+  },
+  ratio_1x1: {
+    ratio: [1, 1],
+    class: "aspect-[1/1]",
+  },
+  auto: {
+    ratio: ["auto", "auto"],
+    class: "aspect-[7/3]",
+  },
+};

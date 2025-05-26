@@ -18,6 +18,8 @@ const ENDPOINTS = {
       update: (id: string) => `products/${id}`,
       delete: (id: string) => `products/${id}`,
       color: {
+        update_model_number: (product_color_id: string) =>
+          `products/colors/${product_color_id}`,
         save_images: (product_color_id: string) =>
           `products/colors/${product_color_id}/images`,
       },
@@ -80,11 +82,22 @@ const ENDPOINTS = {
       delete: (id: string) => `categories/${id}`,
     },
     banners: {
+      fetch_home_page: () => `banners/home`,
       fetch_all: (queryString?: string) =>
         `banners${queryString ? "?" + queryString : ""}`,
+      fetch_one: (id: string) => `banners/${id}`,
       create: "banners",
       update: (id: string) => `banners/${id}`,
+      update_order: "banners/reorder",
       delete: (id: string) => `banners/${id}`,
+      banner_images: {
+        create: (banner_id: string) => `banners/${banner_id}/banner-image`,
+        delete: (banner_image_id: string) =>
+          `banners/banner-images/${banner_image_id}`,
+        update: (banner_image_id: string) =>
+          `banners/banner-images/${banner_image_id}`,
+        update_order: "banners/banner-images/reorder",
+      },
     },
     coupon_manager: {
       fetch_all: (queryString?: string) =>

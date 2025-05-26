@@ -4,7 +4,7 @@ import { IColor } from "../colors/ListItem";
 import ColorSwitcher from "./ColorSwitcher";
 import useQueryState from "@/hooks/use-query-state";
 interface PersisgtedColorSwitcherProps {
-  colors?: IColor[];
+  colors?: Array<IColor[]>;
   className?: string;
 }
 const PersistedColorSwitcher: React.FC<PersisgtedColorSwitcherProps> = ({

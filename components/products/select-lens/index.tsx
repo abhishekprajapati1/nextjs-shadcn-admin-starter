@@ -16,6 +16,7 @@ import SelectLensFeature from "./SelectLensFeature";
 import SetPrescription from "./SetPrescription";
 import { IColor } from "@/components/colors/ListItem";
 import { IProductColor } from "@/lib/types";
+import useProductColor from "@/lib/hooks/useProductColor";
 export interface PurchaseStore {
   step: number;
   data: z.infer<typeof purchaseSchema> | null;
@@ -29,7 +30,6 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
   product_colors,
 }) => {
   const { data } = useLoggedInUser();
-  const [activeColor, setActiveColor] = React.useState<IColor | null>(null);
   const {
     value: purchaseStore,
     setValue: setPurchaseStore,
@@ -41,11 +41,12 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
   const { value: open, setValue: onOpenChange } =
     useQueryState<boolean>("purchase");
   const { value: colorName } = useQueryState<string>("color_name");
+  const productColor = useProductColor({ product_colors, colorName });
   const form = useForm<z.infer<typeof purchaseSchema>>({
     resolver: zodResolver(purchaseSchema),
     defaultValues: {
       power_type_id: "",
-      color_id: "",
+      product_color_id: "",
       frame_only: false,
       lens_detail_id: "",
       lens_feature_id: "",
@@ -111,19 +112,6 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
     }
   }, [purchaseStore, form]);
 
-  React.useEffect(() => {
-    if (colorName) {
-      const name = colorName?.split("-")?.[0];
-      const color = colorName?.split("-")?.[1];
-      const product_color = product_colors?.find(
-        (pc) => pc.color.color === color && pc.color.name === name,
-      );
-      if (product_color) {
-        setActiveColor(product_color?.color);
-      }
-    }
-  }, [colorName, product_colors]);
-
   return (
     <React.Fragment>
       {data && (
@@ -134,7 +122,10 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
               (prev) =>
                 ({
                   ...prev,
-                  data: { ...prev.data, color_id: activeColor?.id || "" },
+                  data: {
+                    ...prev.data,
+                    product_color_id: productColor?.id || "",
+                  },
                 }) as PurchaseStore,
             );
           }}

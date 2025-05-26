@@ -19,7 +19,7 @@ const AddModal: React.FC = () => {
       showCloseIcon
       open={modal}
       onOpenChange={(val) => dispatch(showModal(val))}
-      className="max-w-[1000px]"
+      className="max-w-[600px]"
     >
       <DialogHeader>
         <DialogTitle>Add Banner</DialogTitle>

@@ -10,6 +10,8 @@ import "swiper/css/thumbs";
 import Image from "next/image";
 import { IProductColor } from "@/lib/types";
 import useQueryState from "@/hooks/use-query-state";
+import { getColorName } from "@/lib/hooks/useColorName";
+import useProductColor from "@/lib/hooks/useProductColor";
 interface GalleryCarouselProps {
   product_colors: IProductColor[];
 }
@@ -19,28 +21,14 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
   const [thumbsSwiper, setThumbsSwiper] = React.useState<SwiperClass>();
   const { value: colorName, setValue: setColorName } =
     useQueryState<string>("color_name");
-  const [images, setImages] = React.useState<string[]>([]);
+  const product_color = useProductColor({ product_colors, colorName });
 
   React.useEffect(() => {
     if (Array.isArray(product_colors) && product_colors.length && !colorName) {
-      setColorName(
-        `${product_colors[0]?.color?.name}-${product_colors[0]?.color?.color}`,
-      );
+      const value = getColorName(product_colors[0]);
+      setColorName(value);
     }
   }, [product_colors, setColorName, colorName]);
-
-  React.useEffect(() => {
-    if (colorName) {
-      const name = colorName?.split("-")?.[0];
-      const color = colorName?.split("-")?.[1];
-      const product_color = product_colors?.find(
-        (pc) => pc.color.color === color && pc.color.name === name,
-      );
-      if (product_color) {
-        setImages(product_color.images?.map((image) => image.url));
-      }
-    }
-  }, [colorName, product_colors]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -58,11 +46,11 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
         loop
         className="w-full h-[500px]"
       >
-        {images?.length > 0 ? (
-          images.map((image) => (
-            <SwiperSlide key={image}>
+        {product_color?.images?.length ? (
+          product_color?.images.map((image) => (
+            <SwiperSlide key={image.id}>
               <Image
-                src={image}
+                src={image.url}
                 alt="product image"
                 width={900}
                 height={500}
@@ -86,10 +74,10 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
         modules={[FreeMode, Navigation, Thumbs]}
         className="w-[80%] h-20"
       >
-        {images.map((image) => (
-          <SwiperSlide key={image}>
+        {product_color?.images.map((image) => (
+          <SwiperSlide key={image.id}>
             <Image
-              src={image}
+              src={image.url}
               alt="product image"
               width={200}
               height={200}

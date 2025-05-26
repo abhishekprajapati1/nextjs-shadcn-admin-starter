@@ -10,6 +10,8 @@ import {
 } from "@/services/product.service";
 import ProductSlider from "@/components/home/home-section/ProductsSlider";
 import HomeGallery from "@/components/home/home-section/HomeGallery";
+import { fetchHomePageBanners } from "@/services/banner.service";
+import BannerRenderer from "@/components/banner-renderer";
 
 export const metadata: Metadata = {
   title: "Akku Ka Chasma",
@@ -37,25 +39,47 @@ const HomePage = async () => {
   const featuredProducts = await fetchFeaturedProducts();
   const popularProducts = await fetchPopularProducts();
   const latestProducts = await fetchLatestProducts();
+  const banners = await fetchHomePageBanners();
   return (
     <div>
       <MainHeader />
+
+      {Array.isArray(banners?.data) && banners?.data?.length > 0 && (
+        <BannerRenderer
+          banner={banners?.data[0]}
+          className="bg-red-200 !py-0"
+        />
+      )}
+
       <CategorySlider />
       <EyeglassTrends data={shapeStarters || []} />
-      <HomeGallery />
-      <ProductSlider
-        title="Featured"
-        subtitle="Products"
-        data={featuredProducts}
-      />
-      <HomeGallery />
-      <ProductSlider title="New" subtitle="Arrivals" data={latestProducts} />
-      <HomeGallery />
-      <ProductSlider
-        title="Popular"
-        subtitle="Products"
-        data={popularProducts}
-      />
+      {featuredProducts.length > 0 && (
+        <ProductSlider
+          title="Featured"
+          subtitle="Products"
+          data={featuredProducts}
+        />
+      )}
+
+      {Array.isArray(banners?.data) && banners?.data?.length > 1 && (
+        <BannerRenderer banner={banners?.data[1]} className="container" />
+      )}
+
+      {latestProducts.length > 0 && (
+        <ProductSlider title="New" subtitle="Arrivals" data={latestProducts} />
+      )}
+
+      {Array.isArray(banners?.data) && banners.length > 2 && (
+        <BannerRenderer banner={banners?.data[2]} />
+      )}
+
+      {popularProducts.length > 0 && (
+        <ProductSlider
+          title="Popular"
+          subtitle="Products"
+          data={popularProducts}
+        />
+      )}
       <HomeGallery />
     </div>
   );

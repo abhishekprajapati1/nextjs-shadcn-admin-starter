@@ -4,6 +4,7 @@ import { IProduct } from "../ListItem";
 import ImageCarousel from "@/components/ui/swiper/ImageCarousel";
 import { IProductColor } from "@/lib/types";
 import Link from "next/link";
+import useProductColor from "@/lib/hooks/useProductColor";
 export interface ProductCardProps extends SliderTemplateProps<IProduct> {
   className?: string;
 }
@@ -11,6 +12,11 @@ const ProductCard1: React.FC<ProductCardProps> = ({ data, className = "" }) => {
   const [activeColor, setActiveColor] = React.useState<IProductColor | null>(
     null,
   );
+
+  const productColor = useProductColor({
+    product_colors: data?.product_colors || [],
+  });
+
   React.useEffect(() => {
     if (Array.isArray(data.product_colors) && data.product_colors.length) {
       setActiveColor(data.product_colors[0]);
@@ -19,7 +25,7 @@ const ProductCard1: React.FC<ProductCardProps> = ({ data, className = "" }) => {
 
   return (
     <Link
-      href={`/${data?.slug}`}
+      href={`/${data?.slug}/${productColor?.model_number}`}
       className={`h-full w-full border border-primary/10 rounded-xl overflow-hidden cursor-pointer ${className}`}
     >
       <div className="h-40">

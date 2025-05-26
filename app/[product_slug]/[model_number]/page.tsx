@@ -2,6 +2,7 @@ import DevelopmentWarning from "@/components/DevelopmentWarning";
 import WhatsappIcon from "@/components/icons/WhatsappIcon";
 import { MainHeader } from "@/components/navigation/MainHeader";
 import PersistedColorSwitcher from "@/components/products/PersistedColorSwitcher";
+import ProductModelNumber from "@/components/products/ProductModelNumber";
 import PurchaseFrameOnly from "@/components/products/PurchaseFrameOnly";
 import SelectLens from "@/components/products/select-lens";
 import { Button } from "@/components/ui/button";
@@ -13,8 +14,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BsCart4 } from "react-icons/bs";
 
+export interface ProductDetailsParams {
+  product_slug: string;
+  model_number: string;
+}
 interface ProductDetailsPageProps {
-  params: { product_slug: string };
+  params: ProductDetailsParams;
 }
 
 const ProductDetailsPage = async ({
@@ -63,13 +68,13 @@ const ProductDetailsPage = async ({
           </div>
 
           <PersistedColorSwitcher
-            colors={product?.product_colors?.map((pc) => pc.color)}
+            colors={product.product_colors?.map((pc) => pc.colors)}
             className="mt-4"
           />
 
           <div className="flex flex-wrap items-center mt-8 gap-2">
             <PurchaseFrameOnly />
-            <SelectLens product_colors={product?.product_colors} />
+            <SelectLens product_colors={product.product_colors} />
             <Button
               variant="ghost"
               className="inline-flex items-center gap-2 !text-success hover:bg-success/10"
@@ -92,7 +97,11 @@ const ProductDetailsPage = async ({
               <tbody>
                 <tr>
                   <td className="w-40 text-gray-600">Model Number</td>
-                  <td className="text-gray-900">{product?.model_number}</td>
+                  <td className="text-gray-900">
+                    <ProductModelNumber
+                      product_colors={product?.product_colors}
+                    />
+                  </td>
                 </tr>
                 <tr>
                   <td className="text-gray-600">Model Name</td>
@@ -102,7 +111,11 @@ const ProductDetailsPage = async ({
                   <td className="text-gray-600">Color</td>
                   <td className="text-gray-900">
                     {product?.product_colors
-                      ?.map((pc) => pc.color.name)
+                      ?.map((pc) =>
+                        pc.colors
+                          ?.map((c) => `${c.name}-${c.color}`)
+                          .join("-and-"),
+                      )
                       ?.join(", ")}
                   </td>
                 </tr>

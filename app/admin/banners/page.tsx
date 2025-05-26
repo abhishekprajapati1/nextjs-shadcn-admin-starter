@@ -8,11 +8,11 @@ import PageWrapper from "@/components/wrappers/PageWrapper";
 const page = () => {
   return (
     <div className="flex flex-col h-full overflow-auto">
+      <Header />
       <DeleteModal />
       <EditModal />
       <AddModal />
-      <Header />
-      <PageWrapper>
+      <PageWrapper className="flex-grow">
         <List />
       </PageWrapper>
     </div>

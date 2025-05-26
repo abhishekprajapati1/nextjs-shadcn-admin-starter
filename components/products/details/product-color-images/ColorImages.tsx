@@ -14,6 +14,8 @@ import { IProduct } from "../../ListItem";
 import ENDPOINTS from "@/lib/endpoints";
 import useSaveColorImages from "@/lib/mutations/admin/products/useSaveColorImages";
 import { useQueryClient } from "@tanstack/react-query";
+import { Input } from "@/components/ui/input";
+import useUpdateModelNumber from "@/lib/mutations/admin/products/useUpdateModelNumber";
 interface ColorImagesProps {
   product_id: string;
 }
@@ -25,12 +27,14 @@ export interface IProductFile extends IFile {
 interface ColorImagesState {
   thumbnail?: IProductFile;
   extras?: IProductFile[];
+  model_number?: number;
 }
 
 const ColorImages: React.FC<ColorImagesProps> = ({ product_id }) => {
   const { data, isLoading } = useFetch<IProduct>({
     endpoint: ENDPOINTS.admin.products.fetch_single(product_id),
   });
+
   const queryClient = useQueryClient();
   const { mutate, isPending } = useUpload();
   const { value: product_color_id } = useSessionStorage(
@@ -42,8 +46,12 @@ const ColorImages: React.FC<ColorImagesProps> = ({ product_id }) => {
     removeValue: removeImagesFromSession,
   } = useSessionStorage<ColorImagesState>(product_color_id);
 
-  const { mutate: savingFiles, isPending: isSaving } =
+  const { mutate: saveFiles, isPending: isSaving } =
     useSaveColorImages(product_color_id);
+  const { mutate: updateModelNumber, isPending: updatingModelNumber } =
+    useUpdateModelNumber(product_color_id, () =>
+      queryClient.invalidateQueries({ queryKey: ["products", product_id] }),
+    );
   const { mutate: removeFile, isPending: isRemoving } = useRemoveFile();
 
   const handleFileDelete = (id: string, type: "thumbnail" | "extras") => {
@@ -106,6 +114,9 @@ const ColorImages: React.FC<ColorImagesProps> = ({ product_id }) => {
 
   const handleSave = () => {
     const files = [];
+    if (images?.model_number) {
+      updateModelNumber({ model_number: images?.model_number });
+    }
     if (images?.thumbnail && !images?.thumbnail?.product_color_id) {
       files.push(images.thumbnail.id);
     }
@@ -116,9 +127,8 @@ const ColorImages: React.FC<ColorImagesProps> = ({ product_id }) => {
           .map((file) => file.id),
       );
     }
-
     if (files.length > 0) {
-      savingFiles(
+      saveFiles(
         { file_ids: files },
         {
           onSuccess: () => {
@@ -132,11 +142,15 @@ const ColorImages: React.FC<ColorImagesProps> = ({ product_id }) => {
     }
   };
 
+  // for resetting the data in the session storage
   React.useEffect(() => {
     if (data && product_color_id) {
       const files = data.product_colors?.find(
         (color) => color.id === product_color_id,
       )?.images;
+      const model_number = data.product_colors?.find(
+        (color) => color.id === product_color_id,
+      )?.model_number;
       const images: ColorImagesState = {};
       const thumbnail = files?.find((file) => file.fieldname === "thumbnail");
       const extras = files?.filter((file) => file.fieldname === "extras");
@@ -148,6 +162,10 @@ const ColorImages: React.FC<ColorImagesProps> = ({ product_id }) => {
           fieldname: thumbnail.fieldname,
           product_color_id: thumbnail.product_color_id,
         };
+      }
+
+      if (model_number) {
+        images.model_number = model_number;
       }
 
       if (Array.isArray(extras) && extras.length > 0) {
@@ -166,7 +184,21 @@ const ColorImages: React.FC<ColorImagesProps> = ({ product_id }) => {
   }, [data, product_color_id]);
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
+      {/* model number */}
+      <Input
+        placeholder="Enter model number"
+        type="number"
+        value={images?.model_number || ""}
+        onChange={(e) => {
+          setImages((prev) => ({
+            ...(prev && prev),
+            model_number: isNaN(+e.target.value) ? 0 : +e.target.value,
+          }));
+        }}
+        className="max-w-96"
+      />
+      {/* end of model number */}
       <div className="flex flex-wrap gap-4">
         <div className="flex-shrink-0 w-52 h-52">
           <FileInput

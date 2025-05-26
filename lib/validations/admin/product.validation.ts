@@ -54,7 +54,6 @@ export const formSchema = z.object({
   description: z.string(),
   tags: z.array(z.string()),
   model_name: z.string(),
-  model_number: z.number().int().positive(),
   gender: z.enum([Gender.MALE, Gender.FEMALE, Gender.UNISEX, Gender.OTHER]),
 
   stock_quantity: z.number().int().min(0),
@@ -107,9 +106,11 @@ export const formSchema = z.object({
 
   color_ids: z
     .array(
-      z.string().refine(isValidObjectId, {
-        message: "Invalid MongoDB ObjectId format",
-      }),
+      z.array(
+        z.string().refine(isValidObjectId, {
+          message: "Invalid MongoDB ObjectId format",
+        }),
+      ),
     )
     .optional(),
 
@@ -159,7 +160,7 @@ export const purchaseSchema = z.object({
       message: "Invalid MongoDB ObjectId format",
     })
     .optional(),
-  color_id: z
+  product_color_id: z
     .string()
     .refine(isValidObjectId, { message: "Invalid MongoDB ObjectId format" }),
   frame_only: z.boolean().default(false),

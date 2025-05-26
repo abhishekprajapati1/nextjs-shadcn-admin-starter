@@ -26,7 +26,7 @@ const EditModal: React.FC = () => {
         dispatch(setData(val ? data : null));
       }}
       showCloseIcon
-      className="max-w-[1000px]"
+      className="max-w-[600px]"
     >
       <DialogHeader>
         <DialogTitle>Update Banner</DialogTitle>
