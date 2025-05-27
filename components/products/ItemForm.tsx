@@ -341,7 +341,7 @@ const ItemForm: React.FC = () => {
           {/* power types ends */}
         </div>
 
-        <FormGroup label="Pricing & Stocks">
+        <FormGroup label="Pricing">
           {/* listing price */}
           <FormField
             control={form.control}
@@ -392,33 +392,6 @@ const ItemForm: React.FC = () => {
             )}
           />
           {/* end of selling price */}
-
-          {/* stock quantity */}
-          <FormField
-            control={form.control}
-            name="stock_quantity"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Quantity</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) =>
-                      field.onChange(
-                        isNaN(+e.target.value) ? 0 : +e.target.value,
-                      )
-                    }
-                  />
-                </FormControl>
-                <FormDescription>
-                  How many products do you have in stock.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* end of stock quantity */}
         </FormGroup>
 
         <FormGroup label="Frame Information">

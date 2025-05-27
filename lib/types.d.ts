@@ -110,6 +110,7 @@ export interface IProductColor extends IRecordMeta {
   colors: IColor[];
   product_id: string;
   model_number: number;
+  stock_quantity: number;
   images: IProductFile[];
 }
 export interface IProduct {

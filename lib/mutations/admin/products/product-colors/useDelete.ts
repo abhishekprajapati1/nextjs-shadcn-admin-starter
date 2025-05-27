@@ -1,25 +1,28 @@
 import { toast } from "@/lib/hooks/use-toast";
 import { RequestError, getApiClient, getErrorMessage } from "@/lib/api";
 import ENDPOINTS from "@/lib/endpoints";
+import { useAppDispatch, useAppSelector } from "@/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { z } from "zod";
+import { setItemToDelete } from "@/store/products/product-color.slice";
 
-const useUpdateModelNumber = (
-  product_color_id: string,
-  onSuccess?: () => void,
-) => {
+const useDelete = (onSuccess?: () => void) => {
+  const itemToDelete = useAppSelector(
+    (store) => store.productStore.productColorStore.itemToDelete,
+  );
+  const dispatch = useAppDispatch();
+
   const api = getApiClient();
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: async (data: Partial<{ model_number: number }>) => {
-      const res = await api.post(
-        ENDPOINTS.admin.products.color.update_model_number(product_color_id),
-        data,
+    mutationFn: async () => {
+      const res = await api.delete(
+        ENDPOINTS.admin.products.color.remove(itemToDelete?.id || ""),
       );
       return res.data;
     },
     onSuccess: (_data) => {
-      onSuccess?.();
+      if (onSuccess) onSuccess();
+      dispatch(setItemToDelete(null));
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: (error: RequestError) => {
@@ -33,4 +36,4 @@ const useUpdateModelNumber = (
   return mutation;
 };
 
-export default useUpdateModelNumber;
+export default useDelete;
