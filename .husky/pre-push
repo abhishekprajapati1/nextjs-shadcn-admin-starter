@@ -1,16 +1,21 @@
 current_branch=$(git branch --show-current)
-if sudo rm -rf .next; then
+
+echo "Do you want to remove the .next directory? (Y/N)"
+read -r answer
+
+if [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
+    echo "Removing .next directory..."
+    rm -rf .next
     echo "Removed existing .next"
-    echo "🔍 Testing build before pushing..."
-    if pnpm run build; then
-        echo "✅ Build successful - pushing changes to origin/$current_branch..."
-        exit 0
-    else
-        echo "☠️ Build failed - please fix errors before pushing"
-        exit 1
-    fi
+else
+    echo "Skipping .next removal"
+fi
+
+echo "🔍 Testing build before pushing..."
+if pnpm run build; then
+    echo "✅ Build successful - pushing changes to origin/$current_branch..."
     exit 0
 else
-    echo "Removal of .next failed cannot proceed further"
+    echo "☠️ Build failed - please fix errors before pushing"
     exit 1
 fi
