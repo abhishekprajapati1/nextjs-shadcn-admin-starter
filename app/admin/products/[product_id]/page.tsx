@@ -17,7 +17,7 @@ function DetailsPage({ params }: DetailsPageProps) {
     <div className="flex flex-col h-full overflow-auto">
       <Header />
       <PageWrapper>
-        <ProductInfo />
+        <ProductInfo product_id={params.product_id} />
         <ProductColorImages product_id={params.product_id} />
       </PageWrapper>
     </div>

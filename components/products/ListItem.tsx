@@ -15,6 +15,8 @@ import { setItemToDelete } from "@/store/products/data.slice";
 import Link from "next/link";
 import { ICategory } from "../categories/ListItem";
 import { IShape } from "../shapes/ListItem";
+import { IFrameMaterial } from "../frame-materials/FrameMaterial";
+import { IPowerType } from "../power-types/PowerType";
 
 export interface IProduct extends IRecordMeta, z.infer<typeof formSchema> {
   product_colors: IProductColor[];
@@ -22,6 +24,8 @@ export interface IProduct extends IRecordMeta, z.infer<typeof formSchema> {
   slug: string;
   category: ICategory;
   shape: IShape;
+  frame_material: IFrameMaterial;
+  power_types: IPowerType[];
 }
 
 interface ListItemProps {

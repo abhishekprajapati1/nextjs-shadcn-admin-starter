@@ -12,6 +12,8 @@ import { useParams } from "next/navigation";
 import { ProductDetailsParams } from "@/app/admin/products/[product_id]/page";
 import { setData } from "@/store/products/form.slice";
 import { setItemToDelete } from "@/store/products/data.slice";
+import { EyeIcon } from "lucide-react";
+import Link from "next/link";
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -45,7 +47,20 @@ const Header = () => {
 
   return (
     <PageHeader title={product?.model_name} className="flex-shrink-0">
-      <div className={cn("flex items-center gap-1")}>
+      <div className={cn("flex items-center gap-2")}>
+        <Button
+          title="View product live"
+          variant="secondary"
+          size="icon"
+          asChild
+        >
+          <Link
+            target="_blank"
+            href={`/${product?.slug}/${product?.product_colors?.[0]?.model_number}`}
+          >
+            <EyeIcon />
+          </Link>
+        </Button>
         <Button
           size="icon"
           type="button"

@@ -112,6 +112,18 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      boxShadow: {
+        sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+        DEFAULT: "0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06)",
+        md: "0 8px 20px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.08)",
+        lg: "0 10px 25px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0, 0, 0, 0.08)",
+        xl: "0 12px 32px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.08)",
+        "2xl": "0 20px 50px rgba(0, 0, 0, 0.15)",
+        inner: "inset 0 2px 4px rgba(0, 0, 0, 0.06)",
+        subtle: "0 4px 10px rgba(0, 0, 0, 0.04)", // light elegant
+        hover: "0 8px 30px rgba(0, 0, 0, 0.12)", // on hover
+        around: "0 0 20px rgba(0, 0, 0, 0.08)", // spread in all directions
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
