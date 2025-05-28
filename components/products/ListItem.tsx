@@ -32,75 +32,79 @@ interface ListItemProps {
   data?: IProduct;
 }
 
-const ListItem: React.FC<ListItemProps> = ({ data }) => {
-  const dispatch = useAppDispatch();
+const ListItem = React.forwardRef<HTMLTableRowElement, ListItemProps>(
+  ({ data }, ref) => {
+    const dispatch = useAppDispatch();
 
-  const handleEditClick = () => {
-    dispatch(setData(data ?? null));
-  };
+    const handleEditClick = () => {
+      dispatch(setData(data ?? null));
+    };
 
-  if (!data) {
-    return <ListItemSkeleton />;
-  }
+    if (!data) {
+      return <ListItemSkeleton />;
+    }
 
-  return (
-    <tr>
-      <td>
-        <Link
-          className="block animate-smooth hover:text-success hover:underline"
-          href={`/admin/products/${data?.id}`}
-        >
-          {capitalizeFirstLetter(data?.model_name)}
-        </Link>
-      </td>
-      <td>
-        <div className="justify-center">
-          {capitalizeFirstLetter(data?.gender)}
-        </div>
-      </td>
-      <td>
-        <div className="justify-center">{data?.stock_quantity || 0}</div>
-      </td>
-      <td>
-        <div className="justify-center">₹{data?.listing_price || 0}</div>
-      </td>
-      <td>
-        <div className="justify-center">₹{data?.price || 0}</div>
-      </td>
-      <td>
-        <div className="justify-center">
-          {dayjs(data?.created_at).format("MMM DD, YYYY")}
-        </div>
-      </td>
-      <td>
-        <div className="flex items-center gap-2">
-          <Button
-            onClick={() => handleEditClick()}
-            variant="secondary"
-            size="icon"
+    return (
+      <tr ref={ref}>
+        <td>
+          <Link
+            className="block animate-smooth hover:text-success hover:underline"
+            href={`/admin/products/${data?.id}`}
           >
-            <EditIcon />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() =>
-              dispatch(
-                setItemToDelete({
-                  id: data?.id || "",
-                  label: data.model_name || "",
-                }),
-              )
-            }
-            className="bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white ease-linear duration-300"
-          >
-            <DeleteIcon />
-          </Button>
-        </div>
-      </td>
-    </tr>
-  );
-};
+            {capitalizeFirstLetter(data?.model_name)}
+          </Link>
+        </td>
+        <td>
+          <div className="justify-center">
+            {capitalizeFirstLetter(data?.gender)}
+          </div>
+        </td>
+        <td>
+          <div className="justify-center">{data?.stock_quantity || 0}</div>
+        </td>
+        <td>
+          <div className="justify-center">₹{data?.listing_price || 0}</div>
+        </td>
+        <td>
+          <div className="justify-center">₹{data?.price || 0}</div>
+        </td>
+        <td>
+          <div className="justify-center">
+            {dayjs(data?.created_at).format("MMM DD, YYYY")}
+          </div>
+        </td>
+        <td>
+          <div className="flex items-center gap-2">
+            <Button
+              onClick={() => handleEditClick()}
+              variant="secondary"
+              size="icon"
+            >
+              <EditIcon />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() =>
+                dispatch(
+                  setItemToDelete({
+                    id: data?.id || "",
+                    label: data.model_name || "",
+                  }),
+                )
+              }
+              className="bg-red-600/10 hover:bg-red-600 text-red-600 hover:text-white ease-linear duration-300"
+            >
+              <DeleteIcon />
+            </Button>
+          </div>
+        </td>
+      </tr>
+    );
+  },
+);
+
+ListItem.displayName = "ListItem";
 
 const ListItemSkeleton = () => {
   return (
