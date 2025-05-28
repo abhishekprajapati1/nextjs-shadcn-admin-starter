@@ -18,10 +18,13 @@ const ENDPOINTS = {
       update: (id: string) => `products/${id}`,
       delete: (id: string) => `products/${id}`,
       color: {
-        update_model_number: (product_color_id: string) =>
+        update: (product_color_id: string) =>
+          `products/colors/${product_color_id}`,
+        remove: (product_color_id: string) =>
           `products/colors/${product_color_id}`,
         save_images: (product_color_id: string) =>
           `products/colors/${product_color_id}/images`,
+        create: (product_id: string) => `products/${product_id}/colors`,
       },
     },
     articles: {

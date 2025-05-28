@@ -186,3 +186,13 @@ export const purchaseSchema = z.object({
     ])
     .optional(),
 });
+
+export const productColorSchema = z.object({
+  model_number: z.number(),
+  stock_quantity: z.number(),
+  color_ids: z.array(
+    z.string().refine(isValidObjectId, {
+      message: "Invalid MongoDB ObjectId format",
+    }),
+  ),
+});

@@ -177,7 +177,7 @@ const FormGroup: React.FC<FormGroupProps> = ({
 }) => {
   return (
     <div className="flex flex-col space-y-4 mb-4">
-      <h4 className="relative text-lg font-bold after:content-[''] after:absolute after:z-[1] after:w-full after:h-2 after:left-0 after:bottom-[7px] after:bg-primary/70">
+      <h4 className="relative text-lg font-bold after:content-[''] after:absolute after:z-[1] after:w-full after:h-1 after:left-0 after:bottom-[10px] after:bg-primary/70">
         <span className="bg-white inline-block relative text-primary/70 z-[2] pr-1">
           {label}
         </span>
