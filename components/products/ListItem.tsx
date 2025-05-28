@@ -60,7 +60,9 @@ const ListItem = React.forwardRef<HTMLTableRowElement, ListItemProps>(
           </div>
         </td>
         <td>
-          <div className="justify-center">{data?.stock_quantity || 0}</div>
+          <div className="justify-center">
+            {(data as any)?.stock_quantity || 0}
+          </div>
         </td>
         <td>
           <div className="justify-center">₹{data?.listing_price || 0}</div>

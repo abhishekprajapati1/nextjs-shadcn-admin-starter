@@ -56,8 +56,6 @@ export const formSchema = z.object({
   model_name: z.string(),
   gender: z.enum([Gender.MALE, Gender.FEMALE, Gender.UNISEX, Gender.OTHER]),
 
-  stock_quantity: z.number().int().min(0),
-
   lens_width: z.number().positive(),
 
   lens_height: z.number().positive(),
