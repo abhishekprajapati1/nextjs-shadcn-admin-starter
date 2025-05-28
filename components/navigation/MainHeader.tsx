@@ -42,6 +42,7 @@ import Logo from "./Logo";
 import { ICategory } from "../categories/ListItem";
 import SearchPanel from "./SearchPanel";
 import UserDropdown from "./UserDropdown";
+import WhatsappChannelIcon from "../icons/WhatsappChannelIcon";
 
 interface MainHeaderProps {
   categories?: ICategory[];
@@ -81,22 +82,22 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ categories = [] }) => {
         <div className="container flex items-center justify-between">
           <div className="hidden md:flex items-center space-x-5">
             <Link
-              href="https://facebook.com"
+              href="https://www.facebook.com/akkukachasma/"
               className="text-secondary-foreground text-xs font-medium flex items-center gap-1 hover:text-primary"
             >
               <FacebookIcon size={"1rem"} /> Facebook
             </Link>
             <Link
-              href="https://instagram.com"
+              href="https://www.instagram.com/akku_ka_chasma_._com/"
               className="text-secondary-foreground text-xs font-medium flex items-center gap-1 hover:text-primary"
             >
               <InstagramLogoIcon /> Instagram
             </Link>
             <Link
-              href="https://twitter.com"
+              href="https://whatsapp.com/channel/0029VaBII82ISTkO8xHViI28"
               className="text-secondary-foreground text-xs font-medium flex items-center gap-1 hover:text-primary"
             >
-              <TwitterLogoIcon /> Twitter
+              <WhatsappChannelIcon className="size-4" /> Join now
             </Link>
           </div>
           <a

@@ -18,7 +18,7 @@ const useItems = (configs?: UseItems) => {
     (store) => store.productStore.dataStore,
   );
 
-  const page_size = completeFetch ? 1000 : 10; // Number of records per page.
+  const page_size = completeFetch ? 1000 : 30; // Number of records per page.
 
   const result = useInfiniteQuery<IProduct[]>({
     initialPageParam: 1,

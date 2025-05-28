@@ -2,10 +2,18 @@
 import ListItem from "./ListItem";
 import { Button, ProcessIndicator } from "../ui/button";
 import useItems from "@/lib/queries/admin/products/useItems";
+import useInfiniteScroll from "@/hooks/use-infinite-scroll";
 
 const List = () => {
-  const { data, isLoading, isFetching, hasNextPage, fetchNextPage } =
+  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } =
     useItems();
+  const elementRef = useInfiniteScroll({
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  });
+
   if (isLoading) {
     return (
       <table
@@ -52,22 +60,9 @@ const List = () => {
       </thead>
       <tbody>
         {data?.map((d) => {
-          return <ListItem key={d.id} data={d} />;
+          return <ListItem ref={elementRef} key={d.id} data={d} />;
         })}
       </tbody>
-
-      {hasNextPage && (
-        <div className="min-h-24 grid place-content-center">
-          <Button
-            type="button"
-            disabled={isFetching}
-            variant="ghost"
-            onClick={() => (isFetching ? null : fetchNextPage())}
-          >
-            <ProcessIndicator isProcessing={isFetching} btnText="Load more" />
-          </Button>
-        </div>
-      )}
     </table>
   );
 };
