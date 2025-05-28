@@ -37,7 +37,7 @@ const ImageCarousel = ({
             <Image
               src={image}
               alt={`Carousel image ${index}`}
-              width={300}
+              width={1000}
               height={height}
               className={cn(
                 "w-auto h-full mx-auto max-w-full max-h-full",

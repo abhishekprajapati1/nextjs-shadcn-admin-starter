@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { MainHeader } from "@/components/navigation/MainHeader";
 import { Metadata } from "next";
 import CategorySlider from "@/components/home/CategorySlider";
@@ -45,10 +46,7 @@ const HomePage = async () => {
       <MainHeader />
 
       {Array.isArray(banners?.data) && banners?.data?.length > 0 && (
-        <BannerRenderer
-          banner={banners?.data[0]}
-          className="bg-red-200 !py-0"
-        />
+        <BannerRenderer banner={banners?.data[0]} className="!py-0" />
       )}
 
       <CategorySlider />
@@ -62,7 +60,7 @@ const HomePage = async () => {
       )}
 
       {Array.isArray(banners?.data) && banners?.data?.length > 1 && (
-        <BannerRenderer banner={banners?.data[1]} className="container" />
+        <BannerRenderer banner={banners?.data[1]} />
       )}
 
       {latestProducts.length > 0 && (

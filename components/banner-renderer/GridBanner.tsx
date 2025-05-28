@@ -11,7 +11,7 @@ interface GridBannerProps {
 
 const GridBanner: React.FC<GridBannerProps> = ({ banner_images }) => {
   return (
-    <div className="flex flex-wrap gap-2 sm:gap-4 md:gap-6 lg:gap-8 justify-center">
+    <div className="flex flex-wrap gap-4 justify-center">
       {banner_images.map((img, index) => {
         const ratioClass =
           IMAGE_RATIO[img.aspect_ratio]?.class || "aspect-[4/3]";
@@ -24,8 +24,10 @@ const GridBanner: React.FC<GridBannerProps> = ({ banner_images }) => {
         return (
           <div
             key={index}
-            className={`relative overflow-hidden rounded-sm sm:rounded-md md:rounded-xl lg:rounded-3xl shadow-xl ${ratioClass}`}
-            style={{ width }}
+            className={`relative overflow-hidden ${ratioClass}`}
+            style={{
+              width,
+            }}
           >
             <Link
               href={img?.url || "#"}
