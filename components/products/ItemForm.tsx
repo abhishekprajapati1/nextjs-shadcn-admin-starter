@@ -70,7 +70,6 @@ const ItemForm: React.FC = () => {
       price: 0,
       seo_title: "",
       shape_id: "",
-      stock_quantity: 0,
       tags: [],
     },
     mode: "onBlur",
@@ -139,7 +138,6 @@ const ItemForm: React.FC = () => {
         price: product.price,
         seo_title: product.seo_title,
         shape_id: product.shape_id,
-        stock_quantity: product.stock_quantity,
         tags: product.tags,
         slug: product.slug,
       });
