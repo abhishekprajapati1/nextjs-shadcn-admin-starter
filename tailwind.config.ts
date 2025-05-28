@@ -8,6 +8,17 @@ const config = {
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],
+  safelist: [
+    "aspect-[33/9]",
+    "aspect-[21/9]",
+    "aspect-[16/9]",
+    "aspect-[8/3]",
+    "aspect-[7/3]",
+    "aspect-[5/3]",
+    "aspect-[4/3]",
+    "aspect-[13/1]",
+    "aspect-[1/1]",
+  ],
   prefix: "",
   theme: {
     container: {

@@ -25,7 +25,10 @@ const GridBanner: React.FC<GridBannerProps> = ({ banner_images }) => {
           <div
             key={index}
             className={`relative overflow-hidden rounded-sm sm:rounded-md md:rounded-xl lg:rounded-3xl shadow-xl ${ratioClass}`}
-            style={{ width }}
+            style={{
+              width,
+              // aspectRatio: `${IMAGE_RATIO[img.aspect_ratio].ratio[0]}/${IMAGE_RATIO[img.aspect_ratio].ratio[1]}`,
+            }}
           >
             <Link
               href={img?.url || "#"}
