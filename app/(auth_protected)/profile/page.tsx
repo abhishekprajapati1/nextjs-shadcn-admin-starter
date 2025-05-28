@@ -1,13 +1,7 @@
 import Header from "@/components/navigation/auth-protected/header";
+import PageWrapper from "@/components/wrappers/PageWrapper";
 
 const ProfilePage = () => {
-  return (
-    <div>
-      <Header title="My Profile" subtitle="Manage your profile details">
-        A
-      </Header>
-      page
-    </div>
-  );
+  return <div>hi</div>;
 };
 export default ProfilePage;

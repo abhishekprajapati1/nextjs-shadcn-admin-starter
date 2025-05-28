@@ -30,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({
   const router = useRouter();
 
   return (
-    <div className="container py-2 flex justify-between items-center mb-8">
+    <div className="py-2 px-4 lg:px-10 flex justify-between items-center mb-4">
       <div className="flex items-start gap-2">
         <Button
           onClick={() => (onBack ? onBack() : router.back())}

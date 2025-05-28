@@ -30,7 +30,7 @@ const ProductColorForm = () => {
   const form = useForm<z.infer<typeof productColorSchema>>({
     mode: "all",
     defaultValues: {
-      model_number: 0,
+      model_number: "",
       stock_quantity: 0,
       color_ids: [],
     },
@@ -63,7 +63,7 @@ const ProductColorForm = () => {
     if (dataToEdit) {
       // means the form is in edit mode....
       reset({
-        model_number: dataToEdit.model_number || 0,
+        model_number: dataToEdit.model_number || "",
         stock_quantity: dataToEdit.stock_quantity || 0,
         color_ids: dataToEdit.colors?.map((c) => c.id),
       });
@@ -86,18 +86,7 @@ const ProductColorForm = () => {
             <FormItem>
               <FormLabel>Model Number</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Enter model number"
-                  type="number"
-                  {...field}
-                  onChange={(event) => {
-                    const value = event.target.value;
-                    const numericValue = Number(value);
-                    if (!isNaN(numericValue)) {
-                      field.onChange(numericValue);
-                    }
-                  }}
-                />
+                <Input placeholder="Enter model number" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
