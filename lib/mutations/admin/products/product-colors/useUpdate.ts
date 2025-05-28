@@ -4,9 +4,11 @@ import ENDPOINTS from "@/lib/endpoints";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import { productColorSchema } from "@/lib/validations/admin/product.validation";
-import { useAppSelector } from "@/store";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { resetStore } from "@/store/products/product-color.slice";
 
 const useUpdate = (onSuccess?: () => void) => {
+  const dispatch = useAppDispatch();
   const api = getApiClient();
   const queryClient = useQueryClient();
   const storedData = useAppSelector(
@@ -22,6 +24,7 @@ const useUpdate = (onSuccess?: () => void) => {
     },
     onSuccess: (_data) => {
       onSuccess?.();
+      dispatch(resetStore());
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: (error: RequestError) => {

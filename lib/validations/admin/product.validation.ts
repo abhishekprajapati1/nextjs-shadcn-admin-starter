@@ -186,7 +186,7 @@ export const purchaseSchema = z.object({
 });
 
 export const productColorSchema = z.object({
-  model_number: z.number(),
+  model_number: z.string(),
   stock_quantity: z.number(),
   color_ids: z.array(
     z.string().refine(isValidObjectId, {
