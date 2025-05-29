@@ -53,6 +53,7 @@ export const useSidebarData = (): ISidebarData => {
       user: {
         name: user?.name || "Unknown",
         email: user?.email || "unknown@example.com",
+        phone_number: user?.phone_number || "",
         ...(user?.avatar && { avatar: user.avatar }),
       },
     }));

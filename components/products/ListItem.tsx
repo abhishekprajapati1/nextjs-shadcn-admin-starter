@@ -61,6 +61,11 @@ const ListItem = React.forwardRef<HTMLTableRowElement, ListItemProps>(
         </td>
         <td>
           <div className="justify-center">
+            {capitalizeFirstLetter((data as any)?.model_number)}
+          </div>
+        </td>
+        <td>
+          <div className="justify-center">
             {(data as any)?.stock_quantity || 0}
           </div>
         </td>
