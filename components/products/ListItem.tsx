@@ -60,9 +60,7 @@ const ListItem = React.forwardRef<HTMLTableRowElement, ListItemProps>(
           </div>
         </td>
         <td>
-          <div className="justify-center">
-            {capitalizeFirstLetter((data as any)?.model_number)}
-          </div>
+          <div className="justify-center">{(data as any)?.model_number}</div>
         </td>
         <td>
           <div className="justify-center">
