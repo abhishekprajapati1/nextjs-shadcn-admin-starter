@@ -31,6 +31,7 @@ export interface IFile {
 export interface IUser {
   name: string;
   email: string;
+  phone_number: string;
   avatar?: IFile;
 }
 

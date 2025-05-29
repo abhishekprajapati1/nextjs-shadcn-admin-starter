@@ -24,6 +24,7 @@ const List = () => {
           <tr>
             <th>Model Name</th>
             <th className="text-center min-w-[100px]">Gender</th>
+            <th className="text-center min-w-[100px]">Model Number</th>
             <th className="text-center min-w-[135px]">In Stock</th>
             <th className="text-center min-w-[135px]">Listing Price</th>
             <th className="text-center min-w-[160px]">Selling Price</th>
@@ -51,6 +52,7 @@ const List = () => {
         <tr>
           <th>Model Name</th>
           <th className="text-center min-w-[100px]">Gender</th>
+          <th className="text-center min-w-[100px]">Model Number</th>
           <th className="text-center min-w-[135px]">In Stock</th>
           <th className="text-center min-w-[135px]">Listing Price</th>
           <th className="text-center min-w-[160px]">Selling Price</th>

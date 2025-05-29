@@ -129,6 +129,10 @@ const ENDPOINTS = {
       `categories/${category_slug}/products`,
     shape_products: (shape_slug: string) => `shapes/${shape_slug}/products`,
   },
+  account: {
+    update_details: "account",
+    update_password: "account/update-password",
+  },
 };
 
 export default ENDPOINTS;

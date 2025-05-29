@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { IWrapper } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import { ChevronLeft, SendToBack, StepBack, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -20,17 +21,24 @@ interface HeaderProps extends IWrapper {
   title: string;
   subtitle?: string;
   onBack?: () => void;
+  className?: string;
 }
 const Header: React.FC<HeaderProps> = ({
   title,
   subtitle,
   onBack,
   children,
+  className = "",
 }) => {
   const router = useRouter();
 
   return (
-    <div className="py-2 px-4 lg:px-10 flex justify-between items-center mb-4">
+    <div
+      className={cn(
+        "py-2 px-4 lg:px-10 flex justify-between items-center mb-4",
+        className,
+      )}
+    >
       <div className="flex items-start gap-2">
         <Button
           onClick={() => (onBack ? onBack() : router.back())}
