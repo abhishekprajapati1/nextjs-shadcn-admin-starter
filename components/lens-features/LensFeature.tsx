@@ -56,6 +56,7 @@ const LensFeature: React.FC<LensFeatureProps> = ({ data }) => {
                     description: data?.description,
                     default_url: data?.image?.url,
                     power_type_id: data?.power_type_id,
+                    image: data.image,
                   }),
                 );
               }}

@@ -1,6 +1,6 @@
 "use client";
 import { Button, ProcessIndicator } from "@/components/ui/button";
-import { DialogFooter } from "@/components/ui/dialog";
+import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { Input } from "../ui/input";
@@ -81,6 +81,16 @@ const LensFeatureForm: React.FC = () => {
       });
     }
   }, [data, form]);
+
+  React.useEffect(() => {
+    if (data?.image) {
+      setUploadedImage({
+        id: data.image.id,
+        url: data.image.url,
+        fieldname: data.image.fieldname || "",
+      });
+    }
+  }, [data]);
 
   return (
     <Form {...form}>
@@ -177,15 +187,11 @@ const LensFeatureForm: React.FC = () => {
         </div>
 
         <DialogFooter>
-          <Button
-            type="button"
-            onClick={() =>
-              dispatch(lens_feature_id ? resetStore() : showModal(false))
-            }
-            variant="secondary"
-          >
-            {lens_feature_id ? "Discard" : "Cancel"}
-          </Button>
+          <DialogClose asChild>
+            <Button type="button" variant="secondary">
+              {lens_feature_id ? "Discard" : "Cancel"}
+            </Button>
+          </DialogClose>
           <Button type="submit">
             <ProcessIndicator
               isProcessing={isPending}

@@ -11,22 +11,29 @@ import React from "react";
 import { resetStore } from "@/store/banners/banner-image.slice";
 import Form from "./ItemForm";
 import { setData } from "@/store/banners/banner-image.slice";
+import useSessionStorage from "@/hooks/use-session-storage";
+import { IFile } from "@/lib/types";
 
 const EditModal: React.FC = () => {
+  const { removeValue: removeUploadedImageFromSession } =
+    useSessionStorage<IFile>("banner_image");
   const dispatch = useAppDispatch();
   const data = useAppSelector(
     (store) => store.bannerStore.bannerImageStore.data,
   );
 
+  const handleClose = (val: boolean) => {
+    if (!val) {
+      dispatch(resetStore());
+      removeUploadedImageFromSession();
+    }
+    dispatch(setData(val ? data : null));
+  };
+
   return (
     <Modal
       open={Boolean(data)}
-      onOpenChange={(val) => {
-        if (!val) {
-          dispatch(resetStore());
-        }
-        dispatch(setData(val ? data : null));
-      }}
+      onOpenChange={(val) => handleClose(val)}
       showCloseIcon
       className="max-w-[600px]"
     >

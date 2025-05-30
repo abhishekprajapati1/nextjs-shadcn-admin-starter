@@ -6,10 +6,13 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import { resetStore } from "@/store/lens-features/form.slice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
+import useSessionStorage from "@/hooks/use-session-storage";
+import { IFile } from "@/lib/types";
 
 const useUpdateLensFeature = (onSuccess?: () => void) => {
   const dispatch = useAppDispatch();
-
+  const { value: uploadedImage, removeValue: removeUploadedImageFromSession } =
+    useSessionStorage<IFile>("lens_feature_image");
   const lens_feature_id = useAppSelector(
     (store) => store.lensFeatureStore.formStore.lens_feature_id,
   );
@@ -18,19 +21,23 @@ const useUpdateLensFeature = (onSuccess?: () => void) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (data: z.infer<typeof lensFeatureSchema>) => {
-      const { image, ...rest } = data;
-      const formdata = new FormData();
-      if (image) formdata.append("image", image);
-      formdata.append("json_payload", JSON.stringify(rest));
+      if (uploadedImage && uploadedImage.is_temp) {
+        data.image = uploadedImage.id;
+      }
       const res = await api.put(
         ENDPOINTS.admin.lens_features.update(lens_feature_id),
-        formdata,
+        data,
       );
       return res.data;
     },
-    onSuccess: (_data) => {
+    onSuccess: (data) => {
       dispatch(resetStore());
+      toast({
+        description: data.message,
+        variant: "success",
+      });
       if (onSuccess) onSuccess();
+      if (uploadedImage?.is_temp) removeUploadedImageFromSession();
       queryClient.invalidateQueries({ queryKey: ["lens-features"] });
     },
     onError: (error: RequestError) => {
