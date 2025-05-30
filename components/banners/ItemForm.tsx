@@ -17,26 +17,16 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import { resetStore, showModal } from "@/store/banners/form.slice";
 import useUpdate from "@/lib/mutations/admin/banners/useUpdate";
 import useCreate from "@/lib/mutations/admin/banners/useCreate";
-import FileInput from "../ui/file-input";
-import FilePreview from "../ui/file-input/FilePreview";
-import DragDropIcon from "../icons/DragDropIcon";
-import TextEditor from "../ui/text-editor";
 import { formSchema } from "@/lib/validations/admin/banners.validation";
 import { Checkbox } from "../ui/checkbox";
 import MultiSelect from "../ui/multi-select";
 import useCategories from "@/lib/queries/admin/categories/useItems";
 import useShapes from "@/lib/queries/admin/shapes/useItems";
 import useInfiniteScroll from "@/hooks/use-infinite-scroll";
-import useSessionStorage from "@/hooks/use-session-storage";
-import { IFile } from "@/lib/types";
-import useUpload from "@/lib/mutations/useUpload";
-import { toast } from "@/lib/hooks/use-toast";
 import { Input } from "../ui/input";
 import SelectBox from "../ui/select-box";
 
 const ItemForm: React.FC = () => {
-  // const { value: uploadedImage, setValue: setUploadedImage } =
-  //   useSessionStorage<IFile>("banner_image");
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       category_ids: [],
@@ -47,7 +37,7 @@ const ItemForm: React.FC = () => {
     mode: "onBlur",
     resolver: zodResolver(formSchema),
   });
-  const { isDirty, errors } = form.formState;
+  const { isDirty } = form.formState;
 
   const dispatch = useAppDispatch();
   const { data: storeData } = useAppSelector(
@@ -56,7 +46,6 @@ const ItemForm: React.FC = () => {
 
   const { mutate: updateBanner, isPending: updating } = useUpdate();
   const { mutate: createBanner, isPending: creating } = useCreate();
-  // const { mutate: upload, isPending: uploading } = useUpload();
   const isPending = updating || creating;
 
   // prepare category data
@@ -67,12 +56,14 @@ const ItemForm: React.FC = () => {
     fetchNextPage: categoryFetchNextPage,
     isFetchingNextPage: categoryIsFetchingNextPage,
   } = useCategories();
+
   const categoryElementRef = useInfiniteScroll({
     hasNextPage: categoryHasNextPage,
     fetchNextPage: categoryFetchNextPage,
     isLoading: categoryLoading,
     isFetchingNextPage: categoryIsFetchingNextPage,
   });
+
   const categoryOptions =
     categories?.map((category) => ({
       label: category.title,
@@ -87,17 +78,20 @@ const ItemForm: React.FC = () => {
     fetchNextPage: shapeFetchNextPage,
     isFetchingNextPage: shapeIsFetchingNextPage,
   } = useShapes();
+
   const shapeElementRef = useInfiniteScroll({
     hasNextPage: shapeHasNextPage,
     fetchNextPage: shapeFetchNextPage,
     isLoading: shapeLoading,
     isFetchingNextPage: shapeIsFetchingNextPage,
   });
+
   const shapeOptions =
     shapes?.map((shape) => ({
       label: shape.title,
       value: shape.id,
     })) || [];
+
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     if (isDirty) {
       if (storeData?.id) {
@@ -123,64 +117,13 @@ const ItemForm: React.FC = () => {
     }
   }, [storeData, form]);
 
-  // React.useEffect(() => {
-  //   if (storeData?.image) {
-  //     setUploadedImage({
-  //       id: storeData.image.id,
-  //       url: storeData.image.url,
-  //       fieldname: storeData.image.fieldname || "",
-  //     });
-  //   }
-  // }, [storeData]);
-
   return (
     <Form {...form}>
       <form
         className="flex flex-col gap-4"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        {/* <FileInput
-          onChange={(files) => {
-            if (
-              Array.isArray(files) &&
-              !isNaN(files?.length) &&
-              files?.length > 0
-            ) {
-              upload(
-                { files, name: "image" },
-                {
-                  onSuccess: (data) => {
-                    setUploadedImage({
-                      id: data[0].id,
-                      url: data[0].url,
-                      fieldname: data[0].fieldname,
-                      is_temp: data[0].is_temp,
-                    });
-                  },
-                },
-              );
-            }
-          }}
-          className="w-full aspect-video"
-        >
-          <FilePreview
-            imagePreviewSize={{ width: 1080, height: 720 }}
-            file={null}
-            {...(uploadedImage && {
-              defaultValue: {
-                type: "image",
-                url: uploadedImage.url,
-              },
-            })}
-            className="size-full"
-          >
-            <div className="size-full grid place-content-center">
-              <DragDropIcon className="size-[25px]" />
-            </div>
-          </FilePreview>
-        </FileInput> */}
         {/* Title input */}
-
         <div className="flex flex-col gap-6">
           <FormField
             control={form.control}
