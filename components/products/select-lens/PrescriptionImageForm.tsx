@@ -6,19 +6,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Modal, { ModalProps } from "@/components/ui/modal";
-import { useWatch } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { PurchaseStepProps } from "./SelectPowerType";
-import SelectBox from "@/components/ui/select-box";
 import { Textarea } from "@/components/ui/textarea";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import useSessionStorage from "@/hooks/use-session-storage";
 import { PurchaseStore } from ".";
-import { IFile, InputOption } from "@/lib/types";
+import { IFile } from "@/lib/types";
 import FileInput from "@/components/ui/file-input";
 import FilePreview from "@/components/ui/file-input/FilePreview";
 import DragDropIcon from "@/components/icons/DragDropIcon";
 import useUpload from "@/lib/mutations/useUpload";
+import { z } from "zod";
+import { purchaseSchema } from "@/lib/validations/admin/product.validation";
 interface PrescriptionFormProps extends Omit<ModalProps, "children"> {
   control: PurchaseStepProps["control"];
 }
@@ -28,13 +29,11 @@ const PrescriptionImageForm: React.FC<PrescriptionFormProps> = ({
   onOpenChange,
   control,
 }) => {
+  const { setValue } = useFormContext<z.infer<typeof purchaseSchema>>();
   const { value: purchaseStore, setValue: setPurchaseStore } =
     useSessionStorage<PurchaseStore>("purchase_store");
-  const {
-    value: uploadedImage,
-    setValue: setUploadedImage,
-    removeValue: removeUploadedImageFromSession,
-  } = useSessionStorage<IFile>("prescription_image");
+  const { value: uploadedImage, setValue: setUploadedImage } =
+    useSessionStorage<IFile>("prescription_image");
 
   const { mutate: upload, isPending: uploading } = useUpload();
 
@@ -66,15 +65,12 @@ const PrescriptionImageForm: React.FC<PrescriptionFormProps> = ({
     );
   };
 
-  // React.useEffect(() => {
-  //   if (data?.thumbnail) {
-  //     setUploadedImage({
-  //       id: data.thumbnail.id,
-  //       url: data.thumbnail.url,
-  //       fieldname: data.thumbnail.fieldname || "",
-  //     });
-  //   }
-  // }, [data]);
+  const handleSaveClick = () => {
+    onOpenChange(false);
+    if (uploadedImage?.id) {
+      setValue("prescription.image", uploadedImage?.id);
+    }
+  };
 
   return (
     <Modal open={open} onOpenChange={onOpenChange} className="max-w-[900px]">
@@ -166,7 +162,7 @@ const PrescriptionImageForm: React.FC<PrescriptionFormProps> = ({
         >
           I want to fill the details manually
         </Button>
-        <Button type="button" onClick={() => onOpenChange(false)}>
+        <Button type="button" onClick={() => handleSaveClick()}>
           Save Prescription
         </Button>
       </DialogFooter>

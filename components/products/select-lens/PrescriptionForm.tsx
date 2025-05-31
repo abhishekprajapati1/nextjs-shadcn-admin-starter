@@ -79,19 +79,18 @@ const PrescriptionForm: React.FC<PrescriptionFormProps> = ({
   };
 
   const handleFieldChange = (name: string, val: string) => {
-    setPurchaseStore(
-      (prev) =>
-        ({
-          ...prev,
-          data: {
-            ...prev.data,
-            prescription: {
-              ...(prev?.data?.prescription && prev?.data?.prescription),
-              [name]: val,
-            },
+    setPurchaseStore((prev) => {
+      return {
+        ...prev,
+        data: {
+          ...prev.data,
+          prescription: {
+            ...(prev?.data?.prescription && prev?.data?.prescription),
+            [name]: val,
           },
-        }) as PurchaseStore,
-    );
+        },
+      } as PurchaseStore;
+    });
   };
 
   return (

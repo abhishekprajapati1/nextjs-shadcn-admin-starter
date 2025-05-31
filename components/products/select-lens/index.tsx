@@ -14,7 +14,6 @@ import SelectLensDetail from "./SelectLensDetail";
 import useLoggedInUser from "@/lib/queries/useLoggedInUser";
 import SelectLensFeature from "./SelectLensFeature";
 import SetPrescription from "./SetPrescription";
-import { IColor } from "@/components/colors/ListItem";
 import { IProductColor } from "@/lib/types";
 import useProductColor from "@/lib/hooks/useProductColor";
 export interface PurchaseStore {
@@ -55,7 +54,6 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
   });
   const {
     formState: { errors },
-    watch,
   } = form;
 
   // modal close handler
@@ -97,16 +95,20 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
       form.reset({
         ...purchaseStore?.data,
         prescription: {
-          type: "fillup",
-          comments: "",
-          right_sph: "0.00",
-          left_sph: "0.00",
-          right_cyl: "0.00",
-          left_cyl: "0.00",
-          right_axis: "0",
-          left_axis: "0",
-          right_add: "none",
-          left_add: "none",
+          ...(purchaseStore?.data?.prescription
+            ? purchaseStore?.data?.prescription
+            : {
+                type: "fillup",
+                comments: "",
+                right_sph: "0.00",
+                left_sph: "0.00",
+                right_cyl: "0.00",
+                left_cyl: "0.00",
+                right_axis: "0",
+                left_axis: "0",
+                right_add: "none",
+                left_add: "none",
+              }),
         },
       });
     }

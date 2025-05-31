@@ -14,10 +14,15 @@ export interface SliderTemplateProps<T = any> {
 interface MultiCardSliderProps {
   className?: string;
   height?: number;
-  template: React.FC<SliderTemplateProps>;
+  template:
+    | React.ForwardRefExoticComponent<
+        SliderTemplateProps & React.RefAttributes<any>
+      >
+    | React.FC<SliderTemplateProps>;
   data?: any[];
   breakpoints?: SwiperProps["breakpoints"];
   navigation?: boolean;
+  templateRef?: React.Ref<any>;
 }
 const defaultBreakPoints: SwiperProps["breakpoints"] = {
   "@0.00": {
@@ -44,6 +49,7 @@ const MultiCardSlider = ({
   data = [],
   breakpoints = defaultBreakPoints,
   navigation = false,
+  templateRef,
 }: MultiCardSliderProps) => {
   const Template = template;
   return (
@@ -68,7 +74,7 @@ const MultiCardSlider = ({
       >
         {data.map((d, index) => (
           <SwiperSlide style={{ height }} key={index}>
-            <Template data={d} index={index} />
+            <Template ref={templateRef} data={d} index={index} />
           </SwiperSlide>
         ))}
       </Swiper>

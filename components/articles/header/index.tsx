@@ -2,7 +2,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import PlusIcon from "@/components/icons/PlusIcon";
-import { showModal } from "@/store/shapes/form.slice";
 import { useAppSelector } from "@/store";
 import { cn } from "@/lib/utils";
 import Link from "next/link";

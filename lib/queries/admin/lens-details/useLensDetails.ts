@@ -8,10 +8,9 @@ import ENDPOINTS from "@/lib/endpoints";
 import { ILensDetail } from "@/components/lens-details/LensDetail";
 interface UseLensDetails {
   lens_feature_id?: string;
-  validate?: boolean;
 }
 const useLensDetails = (param?: UseLensDetails) => {
-  const { lens_feature_id = "", validate = false } = param || {};
+  const { lens_feature_id } = param || {};
   const dispatch = useAppDispatch();
   const api = getApiClient();
   // Get sort_by selection
@@ -23,7 +22,7 @@ const useLensDetails = (param?: UseLensDetails) => {
 
   const result = useInfiniteQuery<ILensDetail[]>({
     initialPageParam: 1,
-    queryKey: ["lens-details", search_term, sort_by],
+    queryKey: ["lens-details", search_term, sort_by, lens_feature_id],
     queryFn: async ({ pageParam }) => {
       const filterObj = {
         page: pageParam?.toString(),
@@ -48,7 +47,7 @@ const useLensDetails = (param?: UseLensDetails) => {
         ? allPages.length + 1
         : undefined;
     },
-    enabled: validate ? Boolean(lens_feature_id) : true,
+    enabled: lens_feature_id !== undefined ? Boolean(lens_feature_id) : true,
   });
 
   const lens_details = React.useMemo(() => {
