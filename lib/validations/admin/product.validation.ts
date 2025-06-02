@@ -162,6 +162,7 @@ export const purchaseSchema = z.object({
     .string()
     .refine(isValidObjectId, { message: "Invalid MongoDB ObjectId format" }),
   frame_only: z.boolean().default(false),
+  save_prescription: z.boolean().default(false),
   prescription: z
     .discriminatedUnion("type", [
       z.object({

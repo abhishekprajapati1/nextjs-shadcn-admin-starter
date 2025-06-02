@@ -6,7 +6,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Modal, { ModalProps } from "@/components/ui/modal"; // stock and model number as par the color.
-import { useWatch } from "react-hook-form";
 import { PurchaseStepProps } from "./SelectPowerType";
 import SelectBox from "@/components/ui/select-box";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import useSessionStorage from "@/hooks/use-session-storage";
 import { PurchaseStore } from ".";
 import { InputOption } from "@/lib/types";
+import { Checkbox } from "@/components/ui/checkbox";
 interface PrescriptionFormProps extends Omit<ModalProps, "children"> {
   control: PurchaseStepProps["control"];
 }
@@ -315,6 +315,37 @@ const PrescriptionForm: React.FC<PrescriptionFormProps> = ({
                         onChange={(event) => {
                           field.onChange(event.target.value);
                           handleFieldChange("comments", event.target.value);
+                        }}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td className="font-bold">Save For Future</td>
+            <td colSpan={4}>
+              <FormField
+                name="save_prescription"
+                control={control}
+                render={({ field }) => (
+                  <FormItem className="flex items-center">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={(checked) => {
+                          field.onChange(checked);
+                          setPurchaseStore(
+                            (prev) =>
+                              ({
+                                ...prev,
+                                data: {
+                                  ...prev.data,
+                                  save_prescription: checked,
+                                },
+                              }) as PurchaseStore,
+                          );
                         }}
                       />
                     </FormControl>

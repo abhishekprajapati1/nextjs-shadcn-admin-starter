@@ -20,6 +20,7 @@ import DragDropIcon from "@/components/icons/DragDropIcon";
 import useUpload from "@/lib/mutations/useUpload";
 import { z } from "zod";
 import { purchaseSchema } from "@/lib/validations/admin/product.validation";
+import { Checkbox } from "@/components/ui/checkbox";
 interface PrescriptionFormProps extends Omit<ModalProps, "children"> {
   control: PurchaseStepProps["control"];
 }
@@ -81,12 +82,13 @@ const PrescriptionImageForm: React.FC<PrescriptionFormProps> = ({
       <div className="flex flex-col gap-8 mb-4">
         <div className="flex flex-col md:flex-row items-start w-full gap-2">
           <label
-            htmlFor="comments"
+            htmlFor="image"
             className="flex-shrink-0 w-full md:w-48 font-bold"
           >
             Prescription Photo
           </label>
           <FileInput
+            id="image"
             onChange={(files) => {
               if (
                 Array.isArray(files) &&
@@ -146,6 +148,41 @@ const PrescriptionImageForm: React.FC<PrescriptionFormProps> = ({
                       field.onChange(event.target.value);
                       handleFieldChange("comments", event.target.value);
                     }}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="flex items-center w-full gap-2">
+          <label
+            htmlFor="save_rescription"
+            className="flex-shrink-0 w-full md:w-48 font-bold"
+          >
+            Save Prescription
+          </label>
+          <FormField
+            name="save_prescription"
+            control={control}
+            render={({ field }) => (
+              <FormItem className="flex items-center">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={(checked) => {
+                      field.onChange(checked);
+                      setPurchaseStore(
+                        (prev) =>
+                          ({
+                            ...prev,
+                            data: {
+                              ...prev.data,
+                              save_prescription: checked,
+                            },
+                          }) as PurchaseStore,
+                      );
+                    }}
+                    id="save_rescription"
                   />
                 </FormControl>
               </FormItem>

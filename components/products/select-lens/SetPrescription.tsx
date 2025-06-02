@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button, ProcessIndicator } from "@/components/ui/button";
 import { DialogTitle } from "@/components/ui/dialog";
 import { Camera, ChevronLeft, Pencil } from "lucide-react";
 import { PurchaseStore } from ".";
@@ -10,7 +10,9 @@ import PrescriptionImageForm from "./PrescriptionImageForm";
 import { cn } from "@/lib/utils";
 import { PurchaseStepProps } from "./SelectPowerType";
 
-const SetPrescription: React.FC<PurchaseStepProps> = ({ control }) => {
+const SetPrescription: React.FC<
+  PurchaseStepProps & { isPending?: boolean }
+> = ({ control, isPending }) => {
   const { setValue: setPurchaseStore, value: purchaseStore } =
     useSessionStorage<PurchaseStore>("purchase_store");
   const [fillup, setFillup] = React.useState(false);
@@ -126,7 +128,9 @@ const SetPrescription: React.FC<PurchaseStepProps> = ({ control }) => {
         />
       </div>
       <div className="flex items-center gap-2 justify-center mt-4">
-        <Button variant="ghost">Add To Cart</Button>
+        <Button type="submit" variant="ghost">
+          <ProcessIndicator btnText="Add To Cart" isProcessing={isPending} />.
+        </Button>
         <Button type="submit">Ready To Checkout</Button>
       </div>
     </div>

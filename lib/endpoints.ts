@@ -133,6 +133,9 @@ const ENDPOINTS = {
     update_details: "account",
     update_password: "account/update-password",
   },
+  cart: {
+    add_product: `cart`,
+  },
 };
 
 export default ENDPOINTS;
