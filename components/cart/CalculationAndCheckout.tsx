@@ -11,6 +11,8 @@ const CalculationAndCheckout = () => {
     endpoint: ENDPOINTS.cart.fetch_items,
   });
 
+  if (!Array.isArray(data?.cart_items) || !data?.cart_items.length) return null;
+
   return (
     <div className="flex-grow flex flex-col gap-4">
       <div className="p-4 space-y-4 w-full">
@@ -34,11 +36,6 @@ const CalculationAndCheckout = () => {
         <div className="flex justify-between">
           <span>Prescription Upload</span>
           <span>Free</span>
-        </div>
-
-        <div className="flex justify-between">
-          <span>Shipping</span>
-          <span>₹ {data?.calculation?.shipping_price || 0}</span>
         </div>
 
         <ApplyPromoCode data={data?.calculation?.applied_coupon} />

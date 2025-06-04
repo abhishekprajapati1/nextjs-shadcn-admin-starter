@@ -47,9 +47,10 @@ export interface IWrapper {
   children: React.ReactNode;
 }
 
-export interface IDeleteRecord {
+export interface IDeleteRecord<T = any> {
   id: string;
   label: string;
+  data?: T;
 }
 
 export type FileType = {

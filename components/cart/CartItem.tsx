@@ -242,7 +242,7 @@ const CartItem: React.FC<ICartItemProps> = ({ item }) => {
               </div>
             </div>
             {!item.frame_only && (
-              <div className="overflow-hidden border rounded-md">
+              <div className="overflow-hidden border rounded-md h-32">
                 <PrescriptionDetails data={item.prescription} />
               </div>
             )}

@@ -2,7 +2,7 @@ import { IDeleteRecord } from "@/lib/types";
 import { createSlice } from "@reduxjs/toolkit";
 
 type InitialState = {
-  itemToDelete: IDeleteRecord | null;
+  itemToDelete: IDeleteRecord<string> | null;
   search_term?: string;
   total: number;
 };
