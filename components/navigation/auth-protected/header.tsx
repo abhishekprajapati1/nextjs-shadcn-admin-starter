@@ -1,27 +1,15 @@
 "use client";
-
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { IWrapper } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { ChevronLeft, SendToBack, StepBack, Trash2 } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-interface HeaderProps extends IWrapper {
+interface HeaderProps {
   title: string;
   subtitle?: string;
   onBack?: () => void;
   className?: string;
+  children?: React.ReactNode;
 }
 const Header: React.FC<HeaderProps> = ({
   title,
@@ -52,7 +40,7 @@ const Header: React.FC<HeaderProps> = ({
           {subtitle && <p className="text-muted-foreground mt-1">{subtitle}</p>}
         </div>
       </div>
-      {children}
+      {!children ? "" : children}
     </div>
   );
 };

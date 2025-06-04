@@ -4,7 +4,7 @@ import Modal from "@/components/ui/modal";
 import useQueryState from "@/hooks/use-query-state";
 import React from "react";
 import SelectPowerType from "./SelectPowerType";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 import * as z from "zod";
 import { purchaseSchema } from "@/lib/validations/admin/product.validation";
@@ -14,9 +14,10 @@ import SelectLensDetail from "./SelectLensDetail";
 import useLoggedInUser from "@/lib/queries/useLoggedInUser";
 import SelectLensFeature from "./SelectLensFeature";
 import SetPrescription from "./SetPrescription";
-import { IColor } from "@/components/colors/ListItem";
 import { IProductColor } from "@/lib/types";
 import useProductColor from "@/lib/hooks/useProductColor";
+import { cn } from "@/lib/utils";
+import useAddProductToCart from "@/lib/mutations/cart/useAddProductToCart";
 export interface PurchaseStore {
   step: number;
   data: z.infer<typeof purchaseSchema> | null;
@@ -50,13 +51,14 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
       frame_only: false,
       lens_detail_id: "",
       lens_feature_id: "",
+      save_prescription: false,
     },
     mode: "onBlur",
   });
   const {
     formState: { errors },
-    watch,
   } = form;
+  console.log("see this", errors);
 
   // modal close handler
   const handleModalClose = (modalOpen: boolean) => {
@@ -66,8 +68,10 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
     onOpenChange(modalOpen);
   };
 
+  const { mutate: addToCart, isPending } = useAddProductToCart();
+
   const onSubmit = (data: z.infer<typeof purchaseSchema>) => {
-    console.log("see this form data", data);
+    addToCart(data);
   };
 
   const onNext = () => {
@@ -97,16 +101,20 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
       form.reset({
         ...purchaseStore?.data,
         prescription: {
-          type: "fillup",
-          comments: "",
-          right_sph: "0.00",
-          left_sph: "0.00",
-          right_cyl: "0.00",
-          left_cyl: "0.00",
-          right_axis: "0",
-          left_axis: "0",
-          right_add: "none",
-          left_add: "none",
+          ...(purchaseStore?.data?.prescription
+            ? purchaseStore?.data?.prescription
+            : {
+                type: "fillup",
+                comments: "",
+                right_sph: "0.00",
+                left_sph: "0.00",
+                right_cyl: "0.00",
+                left_cyl: "0.00",
+                right_axis: "0",
+                left_axis: "0",
+                right_add: "none",
+                left_add: "none",
+              }),
         },
       });
     }
@@ -139,6 +147,7 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
         onOpenChange={(val) => handleModalClose(val)}
         fullScreen
         showCloseIcon
+        className={cn(isPending && "pointer-events-none")}
       >
         <Form {...form}>
           <form
@@ -163,7 +172,9 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
               <SelectLensDetail control={form.control} />
             )}
 
-            {purchaseStore?.step === 4 && <SetPrescription />}
+            {purchaseStore?.step === 4 && (
+              <SetPrescription isPending={isPending} />
+            )}
           </form>
         </Form>
       </Modal>

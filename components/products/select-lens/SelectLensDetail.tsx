@@ -22,7 +22,6 @@ const SelectLensDetail: React.FC<PurchaseStepProps> = ({
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useLensDetails({
       lens_feature_id: purchaseStore?.data?.lens_feature_id,
-      validate: true,
     });
   const elementRef = useInfiniteScroll({
     fetchNextPage,
@@ -142,6 +141,7 @@ const SelectLensDetail: React.FC<PurchaseStepProps> = ({
                 spaceBetween: 0,
               },
             }}
+            templateRef={elementRef}
           />
         </div>
       </div>

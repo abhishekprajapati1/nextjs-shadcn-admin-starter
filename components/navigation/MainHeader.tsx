@@ -158,7 +158,12 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ categories = [] }) => {
               <Heart className="h-5 w-5" />
             </Link>
           </Button>
-          <Button variant="ghost" size="sm" className="hover:bg-accent" asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="hover:bg-accent"
+            asChild
+          >
             <Link href="/cart">
               <ShoppingCart className="h-5 w-5" />
             </Link>

@@ -5,7 +5,6 @@ import PageWrapper from "@/components/wrappers/PageWrapper";
 import { IWrapper } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { logout } from "@/services/auth.service";
-import { SwitchIcon } from "@radix-ui/react-icons";
 import { PowerIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -14,6 +13,8 @@ import React from "react";
 const pages = [
   { label: "Profile", path: "" },
   { label: "Security", path: "security" },
+  { label: "Orders", path: "orders" },
+  { label: "Prescriptions", path: "prescriptions" },
   // { label: "Settings", path: "settings" },
   // { label: "Notifications", path: "notifications" },
 ];

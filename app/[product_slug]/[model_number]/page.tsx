@@ -9,10 +9,8 @@ import { Button } from "@/components/ui/button";
 import GalleryCarousel from "@/components/ui/swiper/GalleryCarousel";
 import WishlistButton from "@/components/wishlist/WishlistButton";
 import { fetchProductDetails } from "@/services/product.service";
-import { Heart } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { BsCart4 } from "react-icons/bs";
 
 export interface ProductDetailsParams {
   product_slug: string;

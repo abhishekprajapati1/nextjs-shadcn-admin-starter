@@ -138,7 +138,25 @@ export const productSchema = z.object({
   other_images: z.any().optional(),
   thumbnail: z.any().optional(),
 });
-
+export const prescriptionSchema = z.discriminatedUnion("type", [
+  z.object({
+    type: z.literal("photo"),
+    image: z.string(),
+    comments: z.string(),
+  }),
+  z.object({
+    type: z.literal("fillup"),
+    right_sph: z.string(),
+    right_cyl: z.string(),
+    right_axis: z.string(),
+    right_add: z.string(),
+    left_sph: z.string(),
+    left_cyl: z.string(),
+    left_axis: z.string(),
+    left_add: z.string(),
+    comments: z.string(),
+  }),
+]);
 export const purchaseSchema = z.object({
   power_type_id: z
     .string()
@@ -162,27 +180,8 @@ export const purchaseSchema = z.object({
     .string()
     .refine(isValidObjectId, { message: "Invalid MongoDB ObjectId format" }),
   frame_only: z.boolean().default(false),
-  prescription: z
-    .discriminatedUnion("type", [
-      z.object({
-        type: z.literal("photo"),
-        image: z.string(),
-        comments: z.string(),
-      }),
-      z.object({
-        type: z.literal("fillup"),
-        right_sph: z.string(),
-        right_cyl: z.string(),
-        right_axis: z.string(),
-        right_add: z.string(),
-        left_sph: z.string(),
-        left_cyl: z.string(),
-        left_axis: z.string(),
-        left_add: z.string(),
-        comments: z.string(),
-      }),
-    ])
-    .optional(),
+  save_prescription: z.boolean().default(false),
+  prescription: prescriptionSchema.optional(),
 });
 
 export const productColorSchema = z.object({

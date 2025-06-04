@@ -12,6 +12,7 @@ export interface FileInputProps {
   value?: File[];
   multiple?: boolean;
   maxFiles?: number;
+  id?: string;
 }
 
 const FileInput: FC<FileInputProps> = ({
@@ -23,6 +24,7 @@ const FileInput: FC<FileInputProps> = ({
   error,
   multiple = false,
   maxFiles = 1,
+  id,
 }) => {
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -48,7 +50,7 @@ const FileInput: FC<FileInputProps> = ({
       )}
       title="Click or drag and drop to select the file."
     >
-      <input {...getInputProps()} type="file" />
+      <input {...getInputProps()} id={id} type="file" />
       {children}
       {error && <small className="text-destructive">{error}</small>}
       {Boolean(value?.length) && (

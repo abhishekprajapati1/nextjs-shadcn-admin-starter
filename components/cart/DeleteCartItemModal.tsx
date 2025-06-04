@@ -9,17 +9,15 @@ import {
 import Modal from "@/components/ui/modal";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
-import useDelete from "@/lib/mutations/admin/banners/useDelete";
-import { setItemToDelete } from "@/store/banners/data.slice";
+import useRemoveProductFromCart from "@/lib/mutations/cart/useRemoveProductFromCart";
+import { setItemToDelete } from "@/store/cart.slice";
 
-const DeleteModal: React.FC = () => {
+const DeleteCartItemModal: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { mutate: deleteItem, isPending } = useDelete();
+  const { mutate: deleteItem, isPending } = useRemoveProductFromCart();
 
   // Accessing delete_modal from store
-  const itemToDelete = useAppSelector(
-    (store) => store.bannerStore.dataStore.itemToDelete,
-  );
+  const itemToDelete = useAppSelector((store) => store.cartStore.itemToDelete);
 
   return (
     <Modal
@@ -30,10 +28,11 @@ const DeleteModal: React.FC = () => {
       }
     >
       <DialogHeader>
-        <DialogTitle>Delete Banner</DialogTitle>
+        <DialogTitle>Remove Item From Cart</DialogTitle>
         {/* Changed title to match delete purpose */}
         <DialogDescription>
-          Are you sure you want to delete? This action cannot be undone.
+          Are you sure you want to remove this item from your cart? This action
+          cannot be undone.
         </DialogDescription>
         {/* Updated description to reflect delete action */}
       </DialogHeader>
@@ -47,4 +46,4 @@ const DeleteModal: React.FC = () => {
   );
 };
 
-export default DeleteModal;
+export default DeleteCartItemModal;

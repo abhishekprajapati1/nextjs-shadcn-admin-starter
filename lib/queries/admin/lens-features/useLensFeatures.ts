@@ -9,10 +9,11 @@ import { ILensFeature } from "@/components/lens-features/LensFeature";
 
 interface UseLensFeature {
   completeFetch?: boolean;
+  power_type_id?: string;
 }
 
 const useLensFeatures = (configs?: UseLensFeature) => {
-  const { completeFetch = false } = configs || {};
+  const { completeFetch = false, power_type_id } = configs || {};
   const dispatch = useAppDispatch();
   const api = getApiClient();
   // Get sort_by selection
@@ -24,13 +25,14 @@ const useLensFeatures = (configs?: UseLensFeature) => {
 
   const result = useInfiniteQuery<ILensFeature[]>({
     initialPageParam: 1,
-    queryKey: ["lens-features", search_term, sort_by],
+    queryKey: ["lens-features", search_term, sort_by, power_type_id],
     queryFn: async ({ pageParam }) => {
       const filterObj = {
         page: pageParam?.toString(),
         sort_by,
         page_size: page_size?.toString(),
         search_term,
+        ...(power_type_id && { power_type_id }),
       };
 
       const queryString = generateQueryString(filterObj);

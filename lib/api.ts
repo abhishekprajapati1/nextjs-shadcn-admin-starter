@@ -1,7 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { getCookie } from "cookies-next";
 import { TOKENS } from "./constants";
-import { toast } from "@/lib/hooks/use-toast";
 
 export const getBaseUrl = () => {
   if (process.env.NODE_ENV !== "development") {
@@ -15,7 +14,6 @@ export const getBaseUrl = () => {
 };
 
 export const baseURL = getBaseUrl() + "/api";
-const BearerToken = `Bearer ${getCookie(TOKENS.AUTH_TOKEN)}`;
 
 type ApiClientProps = {
   multipart?: boolean;

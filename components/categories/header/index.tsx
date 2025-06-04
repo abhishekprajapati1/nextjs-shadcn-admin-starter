@@ -2,7 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
-import PageHeader from "@/components/PageHeader";
+import HeaderWrapper from "@/components/navigation/admin/HeaderWrapper";
 import PlusIcon from "@/components/icons/PlusIcon";
 import { showModal } from "@/store/categories/form.slice";
 import { useAppSelector } from "@/store";
@@ -23,11 +23,7 @@ const Header = () => {
   }, [query, dispatch]);
 
   return (
-    <PageHeader
-      title="Categories"
-      tagline={`${total} items`}
-      className="flex-shrink-0"
-    >
+    <HeaderWrapper title="Categories" tagline={`${total} items`}>
       <div
         className={cn("flex items-center gap-1", search && "w-full xl:w-1/2")}
       >
@@ -66,7 +62,7 @@ const Header = () => {
           </React.Fragment>
         )}
       </div>
-    </PageHeader>
+    </HeaderWrapper>
   );
 };
 

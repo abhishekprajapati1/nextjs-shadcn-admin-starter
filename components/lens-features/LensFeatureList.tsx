@@ -2,10 +2,17 @@
 import LensFeature from "./LensFeature";
 import { Button, ProcessIndicator } from "../ui/button";
 import useLensFeatures from "@/lib/queries/admin/lens-features/useLensFeatures";
+import useInfiniteScroll from "@/hooks/use-infinite-scroll";
 
 const LensFeatureList = () => {
-  const { data, isLoading, isFetching, hasNextPage, fetchNextPage } =
+  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } =
     useLensFeatures();
+  const elementRef = useInfiniteScroll({
+    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  });
 
   if (isLoading) {
     return (
@@ -23,21 +30,8 @@ const LensFeatureList = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
       {data?.map((d) => {
-        return <LensFeature key={d.id} data={d} />;
+        return <LensFeature ref={elementRef} key={d.id} data={d} />;
       })}
-
-      {hasNextPage && (
-        <div className="min-h-24 grid place-content-center">
-          <Button
-            type="button"
-            disabled={isFetching}
-            variant="ghost"
-            onClick={() => (isFetching ? null : fetchNextPage())}
-          >
-            <ProcessIndicator isProcessing={isFetching} btnText="Load more" />
-          </Button>
-        </div>
-      )}
     </div>
   );
 };

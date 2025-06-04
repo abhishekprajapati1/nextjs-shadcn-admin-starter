@@ -2,7 +2,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
-import PageHeader from "@/components/PageHeader";
 import PlusIcon from "@/components/icons/PlusIcon";
 import { showModal } from "@/store/frame-materials/form.slice";
 import { useAppSelector } from "@/store";
@@ -13,6 +12,7 @@ import {
   buildQueryString,
   setSearchTerm,
 } from "@/store/frame-materials/data.slice";
+import HeaderWrapper from "@/components/navigation/admin/HeaderWrapper";
 
 const Header = () => {
   const [search, setSearch] = React.useState(false);
@@ -34,11 +34,7 @@ const Header = () => {
   }, [search_term.query, dispatch]);
 
   return (
-    <PageHeader
-      title="Frame Materials"
-      tagline={`${total} items`}
-      className="flex-shrink-0"
-    >
+    <HeaderWrapper title="Frame Materials" tagline={`${total} items`}>
       <div
         className={cn("flex items-center gap-1", search && "w-full xl:w-1/2")}
       >
@@ -77,7 +73,7 @@ const Header = () => {
           </React.Fragment>
         )}
       </div>
-    </PageHeader>
+    </HeaderWrapper>
   );
 };
 

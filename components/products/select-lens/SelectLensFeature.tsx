@@ -19,6 +19,7 @@ import { Control } from "react-hook-form";
 import * as z from "zod";
 import { PurchaseStore } from ".";
 import useSessionStorage from "@/hooks/use-session-storage";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export interface PurchaseStepProps {
   onBack?: () => void;
@@ -26,15 +27,11 @@ export interface PurchaseStepProps {
   control?: Control<z.infer<typeof purchaseSchema>>;
 }
 
-const SelectLensFeature: React.FC<PurchaseStepProps> = ({
-  onNext,
-  onBack,
-  control,
-}) => {
+const SelectLensFeature: React.FC<PurchaseStepProps> = ({ control }) => {
   const { value: purchaseStore, setValue: setPurchaseStore } =
     useSessionStorage<PurchaseStore>("purchase_store");
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useLensFeatures();
+    useLensFeatures({ power_type_id: purchaseStore?.data?.power_type_id });
 
   const elementRef = useInfiniteScroll({
     fetchNextPage,
@@ -50,6 +47,50 @@ const SelectLensFeature: React.FC<PurchaseStepProps> = ({
       icon: d.image?.url,
       data: d,
     })) || [];
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col gap-10">
+        <DialogTitle className="items-center flex gap-2">
+          <Button
+            title="Back to power type selection"
+            size="icon"
+            variant="ghost"
+            onClick={() =>
+              setPurchaseStore((prev) => {
+                return {
+                  ...prev,
+                  step: 1,
+                } as PurchaseStore;
+              })
+            }
+          >
+            <ChevronLeft />
+          </Button>
+          <span> Select Lens Feature</span>
+        </DialogTitle>
+        <div className="flex-grow overflow-auto">
+          <div className="grid grid-cols-12 gap-4">
+            {Array(6)
+              .fill("")
+              .map((_, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="col-span-6 sm:col-span-6 md:col-span-4 lg:col-span-3 border p-4 rounded-xl flex flex-col items-center"
+                  >
+                    <Skeleton className="size-16 rounded-full mx-auto mb-4" />
+                    <Skeleton className="w-3/5 mb-2" />
+                    <Skeleton className="w-4/5 mb-2" />
+                    <Skeleton className="w-1/2" />
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-10">
