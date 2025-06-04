@@ -5,6 +5,7 @@ import { Input } from "../ui/input";
 import { IGetCartResponse } from "./CartItems";
 import { XIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import OfferListModal from "./OfferListModal";
 
 interface ApplyPromoCodeProps {
   data: IGetCartResponse["calculation"]["applied_coupon"];
@@ -40,7 +41,9 @@ const ApplyPromoCode: React.FC<ApplyPromoCodeProps> = ({
 
   return (
     <div className={cn("flex items-center justify-between", className)}>
-      <label className="block">Apply Promo Code</label>
+      <label className="block">
+        Apply Promo Code <OfferListModal />
+      </label>
       <div className="relative">
         <Input
           type="text"
@@ -53,6 +56,9 @@ const ApplyPromoCode: React.FC<ApplyPromoCodeProps> = ({
           size="sm"
           variant={promoCode ? "default" : "secondary"}
           className="w-20 absolute top-1/2 right-[5px] -translate-y-1/2 shadow-none rounded-sm"
+          onClick={() => {
+            console.log("see this", promoCode);
+          }}
         >
           Apply
         </Button>
