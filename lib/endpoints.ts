@@ -135,6 +135,8 @@ const ENDPOINTS = {
   },
   cart: {
     add_product: `cart`,
+    remove_product: (cart_item_id: string) => `cart/${cart_item_id}`,
+    fetch_items: "cart",
   },
 };
 

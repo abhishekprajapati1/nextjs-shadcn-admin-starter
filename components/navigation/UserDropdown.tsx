@@ -6,17 +6,11 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import useLoggedInUser from "@/lib/queries/useLoggedInUser";
 import { User } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Skeleton } from "../ui/skeleton";
@@ -49,7 +43,11 @@ const UserDropdown = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" className="rounded-full">
+        <Button
+          variant="outline"
+          size="icon"
+          className="rounded-full overflow-hidden"
+        >
           <Avatar className="rounded-none w-full h-full flex-shrink-0">
             <AvatarImage src={data?.avatar?.url} alt={"Image for power type"} />
             <AvatarFallback>
