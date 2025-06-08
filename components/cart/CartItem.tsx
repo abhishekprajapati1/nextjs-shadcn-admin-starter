@@ -51,17 +51,20 @@ export interface ICartItem {
 
 interface ICartItemProps {
   item?: ICartItem;
+  forOrder?: boolean;
 }
 
-const CartItem: React.FC<ICartItemProps> = ({ item }) => {
+const CartItem: React.FC<ICartItemProps> = ({ item, forOrder }) => {
   const dispatch = useAppDispatch();
 
   if (!item) {
     return (
       <div className="relative border rounded-md">
-        <div className="absolute top-2 right-2 flex text-xs tracking-wide">
-          <Skeleton className="w-20 bg-destructive/10 h-6" />
-        </div>
+        {!forOrder && (
+          <div className="absolute top-2 right-2 flex text-xs tracking-wide">
+            <Skeleton className="w-20 bg-destructive/10 h-6" />
+          </div>
+        )}
         <div className="p-2">
           <div className="flex gap-5 py-5">
             <Skeleton className="w-56 h-24" />
@@ -170,25 +173,27 @@ const CartItem: React.FC<ICartItemProps> = ({ item }) => {
 
   return (
     <React.Fragment>
-      <DeleteCartItemModal />
+      {!forOrder && <DeleteCartItemModal />}
       <div className="relative border rounded-md">
-        <div className="absolute top-2 right-2 flex text-xs tracking-wide">
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={() =>
-              dispatch(
-                setItemToDelete({
-                  id: item.id,
-                  label: item.product_color.product.model_name,
-                }),
-              )
-            }
-            className="font-medium !bg-transparent text-orange-600 hover:text-indigo-500 h-6 py-0"
-          >
-            Remove
-          </Button>
-        </div>
+        {!forOrder && (
+          <div className="absolute top-2 right-2 flex text-xs tracking-wide">
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() =>
+                dispatch(
+                  setItemToDelete({
+                    id: item.id,
+                    label: item.product_color.product.model_name,
+                  }),
+                )
+              }
+              className="font-medium !bg-transparent text-orange-600 hover:text-indigo-500 h-6 py-0"
+            >
+              Remove
+            </Button>
+          </div>
+        )}
         <div className="p-2">
           <div className="flex gap-5 py-5">
             <Image
