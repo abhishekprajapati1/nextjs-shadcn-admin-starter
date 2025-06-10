@@ -8,19 +8,24 @@ import { cn } from "@/lib/utils";
 import OfferListModal from "./OfferListModal";
 import useApplyPromoCode from "@/lib/mutations/cart/useApplyPromoCode";
 import useRemovePromoCode from "@/lib/mutations/cart/useRemovePromoCode";
+import useUpdateOrderCoupon from "@/lib/mutations/order/useUpdateOrderCoupon";
 
 interface ApplyPromoCodeProps {
   data: IGetCartResponse["calculation"]["applied_coupon"];
   className?: string;
+  order_id?: string;
 }
 
 const ApplyPromoCode: React.FC<ApplyPromoCodeProps> = ({
   data,
   className = "",
+  order_id,
 }) => {
   const [promoCode, setPromoCode] = React.useState("");
   const { mutate: applyPromocode, isPending: applying } = useApplyPromoCode();
   const { mutate: removePromocode, isPending: removing } = useRemovePromoCode();
+  const { mutate: updateOrderCoupon, isPending: updatingOrderCoupon } =
+    useUpdateOrderCoupon(order_id || "");
 
   if (data?.coupon) {
     return (
@@ -35,11 +40,13 @@ const ApplyPromoCode: React.FC<ApplyPromoCodeProps> = ({
           <Button
             type="button"
             size="icon"
-            disabled={removing}
+            disabled={removing || updatingOrderCoupon}
             variant="ghost"
             className="!text-destructive !bg-transparent size-6"
             title="Remove Coupon"
-            onClick={() => removePromocode()}
+            onClick={() =>
+              order_id ? updateOrderCoupon({}) : removePromocode()
+            }
           >
             <XIcon className="size-4" />
           </Button>
@@ -64,13 +71,17 @@ const ApplyPromoCode: React.FC<ApplyPromoCodeProps> = ({
         />
         <Button
           size="sm"
-          disabled={applying}
+          disabled={applying || updatingOrderCoupon}
           variant={promoCode ? "default" : "secondary"}
           className="w-20 absolute top-1/2 right-[5px] -translate-y-1/2 shadow-none rounded-sm"
-          onClick={() => applyPromocode({ coupon_code: promoCode })}
+          onClick={() =>
+            order_id
+              ? updateOrderCoupon({ coupon_code: promoCode })
+              : applyPromocode({ coupon_code: promoCode })
+          }
         >
           <ProcessIndicator
-            isProcessing={applying}
+            isProcessing={applying || updatingOrderCoupon}
             btnText="Apply"
             processingText="Applying..."
           />

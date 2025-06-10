@@ -6,12 +6,11 @@ import { IProduct } from "../products/ListItem";
 import { Skeleton } from "../ui/skeleton";
 import { Button } from "../ui/button";
 import { Cable, PencilRuler } from "lucide-react";
-import PrescriptionDetails from "./PrescriptionDetails";
 import { z } from "zod";
 import { prescriptionSchema } from "@/lib/validations/admin/product.validation";
 import { useAppDispatch } from "@/store";
 import { setItemToDelete } from "@/store/cart.slice";
-import DeleteCartItemModal from "./DeleteCartItemModal";
+import PrescriptionDetails from "../cart/PrescriptionDetails";
 
 export interface ICartItem {
   id: string;
@@ -53,7 +52,7 @@ interface ICartItemProps {
   item?: ICartItem;
 }
 
-const CartItem: React.FC<ICartItemProps> = ({ item }) => {
+const OrderItem: React.FC<ICartItemProps> = ({ item }) => {
   const dispatch = useAppDispatch();
 
   if (!item) {
@@ -170,7 +169,6 @@ const CartItem: React.FC<ICartItemProps> = ({ item }) => {
 
   return (
     <React.Fragment>
-      <DeleteCartItemModal />
       <div className="relative border rounded-md">
         <div className="absolute top-2 right-2 flex text-xs tracking-wide">
           <Button
@@ -192,7 +190,7 @@ const CartItem: React.FC<ICartItemProps> = ({ item }) => {
         <div className="p-2">
           <div className="flex gap-5 py-5">
             <Image
-              src={item.product_color?.images?.[0]?.url}
+              src={(item.product_color as any).thumbnail}
               width={500}
               height={350}
               alt="Cart Item image"
@@ -201,7 +199,7 @@ const CartItem: React.FC<ICartItemProps> = ({ item }) => {
             <div className="text-sm tracking-wide space-y-2">
               <div>
                 <p>{item.product_color.product.model_name}</p>
-                <p className="text-xs text-gray-500 flex gap-1 items-center">
+                <p className="text-xs text-gray-500 flex gap-1 items-center flex-wrap">
                   <span>
                     {item.lens_detail.hydrophobic
                       ? "Hydrophobic"
@@ -252,4 +250,4 @@ const CartItem: React.FC<ICartItemProps> = ({ item }) => {
     </React.Fragment>
   );
 };
-export default CartItem;
+export default OrderItem;

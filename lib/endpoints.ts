@@ -147,6 +147,8 @@ const ENDPOINTS = {
   checkout: {
     from_cart: "orders/cart-checkout",
     fetch_checkout_details: "orders/checkout",
+    update_payment_mode: (order_id: string) => `orders/${order_id}/mode`,
+    update_order_coupon: (order_id: string) => `orders/${order_id}/coupon`,
   },
 };
 

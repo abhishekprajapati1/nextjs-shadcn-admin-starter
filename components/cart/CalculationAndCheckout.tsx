@@ -28,15 +28,15 @@ const CalculationAndCheckout = () => {
         </div>
 
         <div className="flex justify-between">
+          <span>Lens Price</span>
+          <span>₹ {data?.calculation?.lens_detail_price || 0}</span>
+        </div>
+
+        <div className="flex justify-between">
           <span>Discount on MRP</span>
           <span className="text-destructive">
             − ₹ {data?.calculation?.discount_on_mrp || 0}
           </span>
-        </div>
-
-        <div className="flex justify-between">
-          <span>Lens Price</span>
-          <span>₹ {data?.calculation?.lens_detail_price || 0}</span>
         </div>
 
         <div className="flex justify-between">
