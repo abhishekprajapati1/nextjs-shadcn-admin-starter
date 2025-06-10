@@ -137,6 +137,18 @@ const ENDPOINTS = {
     add_product: `cart`,
     remove_product: (cart_item_id: string) => `cart/${cart_item_id}`,
     fetch_items: "cart",
+    coupon: "cart/coupon",
+  },
+
+  offers: {
+    fetch_all: (queryString?: string) =>
+      `coupons/public${queryString ? "?" + queryString : ""}`,
+  },
+  checkout: {
+    from_cart: "orders/cart-checkout",
+    fetch_checkout_details: "orders/checkout",
+    update_payment_mode: (order_id: string) => `orders/${order_id}/mode`,
+    update_order_coupon: (order_id: string) => `orders/${order_id}/coupon`,
   },
 };
 

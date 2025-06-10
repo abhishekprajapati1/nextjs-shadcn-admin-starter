@@ -9,16 +9,6 @@ export const formSchema = z.object({
     .refine((date: string): boolean => isValidDate(date), {
       message: errorMessages.invalidDate,
     })
-    // .refine(
-    //   (date: string): boolean => {
-    //     const inputDate = dayjs(date).startOf("day");
-    //     const today = dayjs().startOf("day");
-    //     return inputDate.isSameOrAfter(today);
-    //   },
-    //   {
-    //     message: errorMessages.pastDate,
-    //   },
-    // )
     .refine(
       (date: string): boolean => {
         const inputDate: Dayjs = dayjs(date);

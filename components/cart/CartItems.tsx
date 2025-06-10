@@ -5,20 +5,24 @@ import ENDPOINTS from "@/lib/endpoints";
 import { ICoupon } from "../coupon-manager/ListItem";
 import { Card, CardContent } from "../ui/card";
 import { ShoppingCart } from "lucide-react";
-import { Button } from "../ui/button";
+
+export interface ICalculation {
+  subtotal: number;
+  discount_on_mrp: number;
+  lens_detail_price: number;
+  shipping_price: number;
+  total: number;
+  applied_coupon?: {
+    coupon: ICoupon | null;
+    discount: number;
+  };
+  gst?: number;
+  gst_amount?: number;
+}
 export interface IGetCartResponse {
   cart_items: Array<ICartItem>;
-  calculation: {
-    subtotal: number;
-    discount_on_mrp: number;
-    lens_detail_price: number;
-    shipping_price: number;
-    total: number;
-    applied_coupon?: {
-      coupon: ICoupon | null;
-      discount: number;
-    };
-  };
+  calculation: ICalculation;
+  checkout_initiated: boolean;
 }
 const CartItems = () => {
   const { data, isLoading } = useFetch<IGetCartResponse>({

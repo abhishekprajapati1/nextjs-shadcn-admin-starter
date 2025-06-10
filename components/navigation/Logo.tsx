@@ -7,12 +7,15 @@ interface LogoProps {
 }
 const Logo: React.FC<LogoProps> = ({ className = "" }) => {
   return (
-    <Link href="/" className={cn("w-[300]  sm:w-[450px]", className)}>
+    <Link
+      href="/"
+      className={cn("inline-block w-[300px]  sm:w-[450px]", className)}
+    >
       <Image
         src="/Logo.png"
         alt="Logo"
-        width={400}
-        height={90}
+        width={800}
+        height={400}
         className="w-full h-full"
       />
     </Link>
