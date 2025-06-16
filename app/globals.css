@@ -296,4 +296,27 @@
   .container {
     @apply px-2 sm:px-4 md:px-6 lg:px-8;
   }
+
+  /* IMP: following styles define how an article will look a like */
+  .article-container {
+    @apply px-10 py-6;
+  }
+
+  .article-container p {
+    @apply px-10 py-4;
+  }
+
+  .article-container a {
+    @apply p-[2px] underline;
+  }
+
+  .article-container a:hover {
+    color: blue;
+  }
+
+  .article-container img {
+    box-shadow: 0 0 60px 2px rgba(0, 0, 0, 0.367);
+    border-radius: 15px;
+    display: inline-block;
+  }
 }

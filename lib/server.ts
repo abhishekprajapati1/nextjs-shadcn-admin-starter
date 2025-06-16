@@ -26,3 +26,18 @@ export const protect = async (
     redirect(redirectUrl);
   }
 };
+
+export const isMobileDevice = () => {
+  let headerStore = headers();
+  const userAgent = headerStore.get("user-agent");
+  let isMobile = false;
+  if (userAgent && userAgent !== "") {
+    let mobileCheck = userAgent.match(
+      /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i,
+    );
+    if (mobileCheck && mobileCheck?.length > 0) {
+      isMobile = true;
+    }
+  }
+  return isMobile;
+};

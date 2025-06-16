@@ -12,7 +12,6 @@ const CategoryResultPage = async ({ params }: CategoryResultPageProps) => {
   const data = await fetchCategoryProducts(params.category_slug);
   return (
     <React.Fragment>
-      <MainHeader />
       <ProductResult
         endpoint={ENDPOINTS.products.category_products(params.category_slug)}
         initialData={data}

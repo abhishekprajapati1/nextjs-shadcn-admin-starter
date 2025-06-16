@@ -71,11 +71,11 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ categories = [] }) => {
       )}
     >
       {/* Announcement Bar */}
-      <div className="bg-primary px-4 py-2 text-primary-foreground">
+      {/* <div className="bg-primary px-4 py-2 text-primary-foreground">
         <p className="text-center text-sm font-medium">
           Free shipping on orders above ₹999! 🚚
         </p>
-      </div>
+      </div> */}
 
       {/* Navigation */}
       <div className="hidden md:flex h-fit items-center border-b-2 py-2">
