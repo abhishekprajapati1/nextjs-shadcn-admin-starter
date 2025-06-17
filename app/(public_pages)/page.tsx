@@ -1,5 +1,4 @@
 export const dynamic = "force-dynamic";
-import { MainHeader } from "@/components/navigation/MainHeader";
 import { Metadata } from "next";
 import CategorySlider from "@/components/home/CategorySlider";
 import EyeglassTrends from "@/components/home/home-section/EyeglassTrends";

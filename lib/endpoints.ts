@@ -152,6 +152,7 @@ const ENDPOINTS = {
   },
   blog: {
     fetch_popular: "articles/popular",
+    fetch_published: "articles/published",
   },
 };
 

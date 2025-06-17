@@ -27,6 +27,8 @@ export interface IArticle extends IRecordMeta {
   shape_ids?: string[];
   slug: string;
   keywords: string[];
+  reading_time: number;
+  views: number;
   status: ArticleStatus;
   thumbnail?: IFile;
 }

@@ -6,12 +6,18 @@ import useFetch from "@/lib/hooks/use-fetch";
 import ENDPOINTS from "@/lib/endpoints";
 import "swiper/css";
 import HeroSliderTemplate from "./HeroSliderTemplate";
+import { IArticle } from "../articles/ListItem";
 interface PopularPostsProps {
   height?: number;
+  articles?: IArticle[];
 }
-const PopularPosts: React.FC<PopularPostsProps> = ({ height }) => {
-  let { data, isLoading } = useFetch({
+const PopularPosts: React.FC<PopularPostsProps> = ({
+  height,
+  articles = [],
+}) => {
+  let { data } = useFetch<IArticle[]>({
     endpoint: ENDPOINTS.blog.fetch_popular,
+    initialData: articles,
   });
 
   data = data || Array(4).fill("");
