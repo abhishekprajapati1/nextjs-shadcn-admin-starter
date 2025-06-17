@@ -7,7 +7,7 @@ import ENDPOINTS from "@/lib/endpoints";
 import "swiper/css";
 import HeroSliderTemplate from "./HeroSliderTemplate";
 interface PopularPostsProps {
-  height: number;
+  height?: number;
 }
 const PopularPosts: React.FC<PopularPostsProps> = ({ height }) => {
   let { data, isLoading } = useFetch({
@@ -17,7 +17,7 @@ const PopularPosts: React.FC<PopularPostsProps> = ({ height }) => {
   data = data || Array(4).fill("");
 
   return (
-    <div className="container" style={{ height }}>
+    <div className="" style={{ height }}>
       <Swiper
         modules={[Autoplay]}
         slidesPerView={1}
