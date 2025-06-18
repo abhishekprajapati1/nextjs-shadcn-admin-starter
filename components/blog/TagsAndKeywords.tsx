@@ -10,9 +10,9 @@ const TagsAndKeywords = ({
   const strings = [...tags, ...keywords];
 
   return (
-    <div className="flex gap-2">
+    <div className="flex flex-wrap gap-2">
       {strings.map((keyword, index) => (
-        <Badge variant="secondary" key={index} className="keyword">
+        <Badge variant="secondary" key={index} className="flex-shrink-0 font-normal">
           #{keyword}
         </Badge>
       ))}
