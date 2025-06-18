@@ -1,4 +1,4 @@
-// import ProductsSlider from "@/components/home/home-section/ProductsSlider";
+export const dynamic = "force-dynamic";
 import React from "react";
 import { fetchArticleBySlug } from "@/services/article.service";
 import dayjs from "dayjs";
