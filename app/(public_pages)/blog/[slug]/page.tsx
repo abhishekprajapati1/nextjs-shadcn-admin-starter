@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import { Calendar, Clock, Eye } from "lucide-react";
 import Image from "next/image";
 import TagsAndKeywords from "@/components/blog/TagsAndKeywords";
+import { notFound } from "next/navigation";
 
 interface BlogDetailsPageProps {
   params: { slug: string };
@@ -22,7 +23,9 @@ export async function generateMetadata({ params }: BlogDetailsPageProps) {
 const BlogDetailsPage = async ({ params: { slug } }: BlogDetailsPageProps) => {
   const article = await fetchArticleBySlug(slug);
 
-  console.log(article.related_products);
+  if (!article) {
+    notFound();
+  }
 
   return (
     <React.Fragment>
