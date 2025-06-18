@@ -1,4 +1,3 @@
-import { MainHeader } from "@/components/navigation/MainHeader";
 import ProductResult from "@/components/products/product-result";
 import ENDPOINTS from "@/lib/endpoints";
 import { fetchCategoryProducts } from "@/services/category.service";

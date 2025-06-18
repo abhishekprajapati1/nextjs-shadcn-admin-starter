@@ -32,7 +32,7 @@ export default async function Page() {
   const popularArticles = await fetchPopularArticles();
   const publishedArticles = await fetchPublishedArticles();
   return (
-    <div className="pb-10 container max-w-full sm:max-w-[70%] mx-auto">
+    <div className="pb-10 container max-w-full sm:max-w-[95%] md:max-w-[90%] lg:max-w-[900px] mx-auto">
       <HeroSlider articles={popularArticles} />
       <div>
         <div className="py-8">

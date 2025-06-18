@@ -5,9 +5,8 @@ import EditIcon from "../icons/EditIcon";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { useAppDispatch } from "@/store";
-import { FileType, IFile, IRecordMeta } from "@/lib/types";
+import { IFile, IRecordMeta, ISeparatedProduct } from "@/lib/types";
 import { Skeleton } from "../ui/skeleton";
-import { setData, setItemId } from "@/store/articles/form.slice";
 import { setItemToDelete } from "@/store/articles/data.slice";
 import { capitalizeFirstLetter } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -27,10 +26,12 @@ export interface IArticle extends IRecordMeta {
   shape_ids?: string[];
   slug: string;
   keywords: string[];
+  tags: string[];
   reading_time: number;
   views: number;
   status: ArticleStatus;
   thumbnail?: IFile;
+  related_products: ISeparatedProduct[];
 }
 
 interface ListItemProps {

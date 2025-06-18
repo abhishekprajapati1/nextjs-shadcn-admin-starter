@@ -16,3 +16,9 @@ export const fetchPublishedArticles = async (): Promise<
   const response = await api.get(ENDPOINTS.blog.fetch_published);
   return response.data;
 };
+
+export const fetchArticleBySlug = async (slug: string): Promise<IArticle> => {
+  const api = getApiClient();
+  const response = await api.get(ENDPOINTS.blog.fetch_single_article(slug));
+  return response.data.data;
+};
