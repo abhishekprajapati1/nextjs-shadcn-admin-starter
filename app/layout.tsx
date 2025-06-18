@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn("h-screen overflow-auto")}>
+      <body className={cn("")}>
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -1,5 +1,4 @@
 export const dynamic = "force-dynamic";
-import { MainHeader } from "@/components/navigation/MainHeader";
 import { Metadata } from "next";
 import CategorySlider from "@/components/home/CategorySlider";
 import EyeglassTrends from "@/components/home/home-section/EyeglassTrends";
@@ -43,7 +42,7 @@ const HomePage = async () => {
   const banners = await fetchHomePageBanners();
   return (
     <div>
-      <MainHeader />
+      {/* <MainHeader /> */}
 
       {Array.isArray(banners?.data) && banners?.data?.length > 0 && (
         <BannerRenderer banner={banners?.data[0]} className="!py-0" />

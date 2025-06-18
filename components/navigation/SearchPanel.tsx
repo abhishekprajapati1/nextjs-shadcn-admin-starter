@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Button } from "../ui/button";
 import { ChevronRight, Search } from "lucide-react";
@@ -28,15 +29,17 @@ const SearchPanel = () => {
   return (
     <React.Fragment>
       <Button
-        variant="ghost"
-        size="icon"
-        className="hover:bg-accent"
+        variant="outline"
         onClick={() => setIsSearchOpen(true)}
         title="⌘ + K"
+        className="px-2 lg:min-w-32 inline-flex items-center gap-2 justify-start"
       >
-        <Search className="h-5 w-5" />
-        <kbd className="ml-2 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100">
-          <span className="text-xs">⌘</span>K
+        <Search className="h-4 w-4" />
+        <span className="font-normal text-sm hidden lg:inline-block">
+          Search eyeglasses...
+        </span>
+        <kbd className="ml-2 h-5 inline-flex select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100">
+          <span className="text-sm">⌘</span> <span>K</span>
         </kbd>
       </Button>
       <CommandDialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>

@@ -23,8 +23,8 @@ const UserDropdown = () => {
   if (isLoading) {
     return (
       <div className="flex items-center gap-2">
-        <Skeleton className="rounded-full w-10 h-10" />
-        <Skeleton className="w-10 h-4 ps-0" />
+        <Skeleton className="w-20 h-3" />
+        <Skeleton className="rounded-full w-8 h-8" />
       </div>
     );
   }
@@ -32,10 +32,10 @@ const UserDropdown = () => {
   if (!data) {
     return (
       <Link href="/login" className="flex items-center gap-2">
-        <div className="rounded-full w-10 h-10 bg-gray-300 grid place-content-center">
-          <User className="w-4 h-4" />
+        <div>Login/Signup</div>
+        <div className="rounded-full w-8 h-8 bg-gray-300 grid place-content-center">
+          <User className="w-3 h-3" />
         </div>
-        <div>Login</div>
       </Link>
     );
   }

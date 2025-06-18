@@ -150,6 +150,11 @@ const ENDPOINTS = {
     update_payment_mode: (order_id: string) => `orders/${order_id}/mode`,
     update_order_coupon: (order_id: string) => `orders/${order_id}/coupon`,
   },
+  blog: {
+    fetch_popular: "articles/popular",
+    fetch_published: "articles/published",
+    fetch_single_article: (slug: string) => `articles/published/${slug}`,
+  },
 };
 
 export default ENDPOINTS;

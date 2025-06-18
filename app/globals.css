@@ -297,3 +297,77 @@
     @apply px-2 sm:px-4 md:px-6 lg:px-8;
   }
 }
+
+@layer base {
+  .article-container {
+    @apply py-6 text-base leading-relaxed text-foreground;
+  }
+
+  .article-container h1 {
+    @apply text-3xl sm:text-4xl font-bold mt-8 mb-4 text-foreground;
+  }
+
+  .article-container h2 {
+    @apply text-2xl sm:text-3xl font-semibold mt-6 mb-3 text-foreground;
+  }
+
+  .article-container h3 {
+    @apply text-xl sm:text-2xl font-semibold mt-5 mb-2 text-foreground;
+  }
+
+  .article-container h4 {
+    @apply text-lg sm:text-xl font-medium mt-4 mb-2 text-foreground;
+  }
+
+  .article-container p {
+    @apply py-4 text-foreground/70;
+  }
+
+  .article-container a {
+    @apply p-[2px] underline text-primary;
+  }
+
+  .article-container a:hover {
+    @apply text-primary-foreground;
+  }
+
+  .article-container ul {
+    @apply list-disc list-inside mb-4 pl-5 text-foreground/70;
+  }
+
+  .article-container ol {
+    @apply list-decimal list-inside mb-4 pl-5 text-foreground/70;
+  }
+
+  .article-container li {
+    @apply mb-1;
+  }
+
+  .article-container blockquote {
+    @apply border-l-4 pl-4 italic my-6 text-muted-foreground border-border;
+  }
+
+  .article-container pre {
+    @apply bg-muted text-muted-foreground text-sm p-4 rounded-lg overflow-x-auto my-4;
+  }
+
+  .article-container code {
+    @apply bg-muted text-pink-600 dark:text-pink-400 px-1 py-0.5 rounded text-sm;
+  }
+
+  .article-container hr {
+    @apply my-8 border-t border-border;
+  }
+
+  .article-container img {
+    @apply my-6 rounded-xl shadow-md max-w-full h-auto;
+  }
+
+  .article-container strong {
+    @apply font-semibold text-foreground;
+  }
+
+  .article-container em {
+    @apply italic text-foreground;
+  }
+}

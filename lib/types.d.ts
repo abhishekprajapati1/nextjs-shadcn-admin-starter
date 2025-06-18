@@ -2,6 +2,7 @@ import { IColor } from "@/components/colors/ListItem";
 import { IProductFile } from "@/components/products/details/product-color-images/ColorImages";
 import { LucideProps } from "lucide-react";
 import * as React from "react";
+import { FrameStyle } from "./validations/admin/product.validation";
 
 export type IconElement = React.ForwardRefExoticComponent<
   Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
@@ -143,4 +144,27 @@ export interface IProductStarter {
     discount_percent: number;
     product_colors: { images: IFile[] }[];
   }[];
+}
+
+export interface ISeparatedProduct extends IRecordMeta {
+  model_number: string;
+  stock_quantity: number;
+  color_ids: string[];
+  product_id: string;
+  product: {
+    frame_size: string[];
+    frame_style: keyof typeof FrameStyle;
+    slug: string;
+    price: number;
+    model_name: string;
+    listing_price: number;
+    is_featured: boolean;
+    lens_width: number;
+    lens_height: number;
+    gender: string;
+    popularity: number;
+    discount_percent: number;
+  };
+  colors: IColor[];
+  images: IProductFile[];
 }

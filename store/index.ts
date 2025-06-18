@@ -18,6 +18,7 @@ import newsletterStore from "./newsletters";
 import bannerStore from "./banners";
 import productResultStore from "./product-results.slice";
 import cartStore from "./cart.slice";
+import globalStore from "./global.slice";
 
 const store = configureStore({
   reducer: {
@@ -39,6 +40,7 @@ const store = configureStore({
     bannerStore,
     productResultStore,
     cartStore,
+    globalStore,
   },
 });
 
