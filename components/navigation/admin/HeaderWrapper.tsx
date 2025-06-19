@@ -1,9 +1,10 @@
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { IWrapper } from "@/lib/types";
-interface HeaderProps extends IWrapper {
+interface HeaderProps {
   title?: string;
   tagline?: string;
+  children?: React.ReactNode;
 }
 const HeaderWrapper: React.FC<HeaderProps> = ({ children, title, tagline }) => {
   return (
@@ -12,10 +13,16 @@ const HeaderWrapper: React.FC<HeaderProps> = ({ children, title, tagline }) => {
         <SidebarTrigger className="-ml-1" />
         <Separator orientation="vertical" className="mr-2 h-4" />
         {title && <span>{title}</span>}
-        <Separator orientation="vertical" className="mr-2 h-4" />
-        {tagline && <span>{tagline}</span>}
+        {tagline && (
+          <>
+            <Separator orientation="vertical" className="mr-2 h-4" />
+            <span>{tagline}</span>
+          </>
+        )}
       </div>
-      <div className="flex-shrink-0 flex items-center gap-2">{children}</div>
+      {children && (
+        <div className="flex-shrink-0 flex items-center gap-2">{children}</div>
+      )}
     </header>
   );
 };

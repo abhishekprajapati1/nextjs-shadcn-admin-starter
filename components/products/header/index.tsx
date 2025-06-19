@@ -1,6 +1,5 @@
 "use client";
 import PlusIcon from "@/components/icons/PlusIcon";
-import PageHeader from "@/components/PageHeader";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch } from "@/store";
 import { showModal } from "@/store/products/form.slice";
