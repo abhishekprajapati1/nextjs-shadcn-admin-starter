@@ -11,7 +11,7 @@ const EyeglassTrends: React.FC<{ data: IProduct[] }> = ({ data }) => {
       </div>
       <MultiCardSlider
         className=" w-screen md:w-[calc(100%-20rem)]"
-        height={150}
+        swiperClass="h-[150px]"
         template={ProductStarter}
         breakpoints={{
           "@0.00": {

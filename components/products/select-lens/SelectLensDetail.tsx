@@ -120,7 +120,7 @@ const SelectLensDetail: React.FC<PurchaseStepProps> = ({
           <MultiCardSlider
             template={LensDetailTemplate}
             navigation
-            height={620}
+            swiperClass="h-[620px]"
             data={data}
             className="!px-0"
             breakpoints={{

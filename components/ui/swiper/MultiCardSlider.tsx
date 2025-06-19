@@ -1,10 +1,11 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
-import type { SwiperProps, SwiperRef } from "swiper/react";
+import type { SwiperProps } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import React from "react";
 import "swiper/css";
 import "swiper/css/navigation";
+import { cn } from "@/lib/utils";
 
 export interface SliderTemplateProps<T = any> {
   index: number;
@@ -23,6 +24,8 @@ interface MultiCardSliderProps {
   breakpoints?: SwiperProps["breakpoints"];
   navigation?: boolean;
   templateRef?: React.Ref<any>;
+  swiperClass?: string;
+  slideClass?: string;
 }
 const defaultBreakPoints: SwiperProps["breakpoints"] = {
   "@0.00": {
@@ -43,17 +46,18 @@ const defaultBreakPoints: SwiperProps["breakpoints"] = {
   },
 };
 const MultiCardSlider = ({
-  className,
-  height = 250,
+  className = "",
+  swiperClass = "",
+  slideClass = "",
   template,
   data = [],
   breakpoints = defaultBreakPoints,
   navigation = false,
   templateRef,
 }: MultiCardSliderProps) => {
-  const Template = template;
+  const Template = React.memo(template);
   return (
-    <div className={`px-2 ${className}`} style={{ height }}>
+    <div className={`px-2 ${className}`}>
       <Swiper
         modules={[Navigation]}
         style={
@@ -65,15 +69,14 @@ const MultiCardSlider = ({
         navigation={navigation}
         loop
         breakpoints={breakpoints}
-        slidesPerView={5}
         spaceBetween={10}
         pagination={{
           clickable: true,
         }}
-        className="mySwiper"
+        className={cn("mySwiper", swiperClass)}
       >
         {data.map((d, index) => (
-          <SwiperSlide style={{ height }} key={index}>
+          <SwiperSlide key={index} className={cn("", slideClass)}>
             <Template ref={templateRef} data={d} index={index} />
           </SwiperSlide>
         ))}
