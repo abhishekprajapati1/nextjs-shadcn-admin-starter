@@ -6,6 +6,7 @@ import { Calendar, Clock, Eye } from "lucide-react";
 import Image from "next/image";
 import TagsAndKeywords from "@/components/blog/TagsAndKeywords";
 import { notFound } from "next/navigation";
+import { ProductSlider } from "@/features/products-slider";
 
 interface BlogDetailsPageProps {
   params: { slug: string };
@@ -59,13 +60,25 @@ const BlogDetailsPage = async ({ params: { slug } }: BlogDetailsPageProps) => {
           dangerouslySetInnerHTML={{ __html: article.content }}
         />
         <TagsAndKeywords tags={article.tags} keywords={article.keywords} />
+        {article.related_products?.length > 0 && (
+          <div className="mt-12">
+            <h2 className="text-2xl font-bold">Products you want</h2>
+            <ProductSlider
+              data={article.related_products}
+              breakpoints={{
+                "@0.00": {
+                  slidesPerView: 1,
+                  spaceBetween: 10,
+                },
+                "@0.70": {
+                  slidesPerView: 2,
+                  spaceBetween: 10,
+                },
+              }}
+            />
+          </div>
+        )}
       </div>
-      {/* <ProductsSlider
-        title="Related"
-        subtitle="Products"
-        data={article.related_products}
-        className="mb-8"
-      /> */}
     </React.Fragment>
   );
 };

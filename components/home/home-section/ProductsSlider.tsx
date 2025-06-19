@@ -23,7 +23,7 @@ const ProductsSlider: React.FC<ProductsSliderProps> = ({
       </h2>
       <MultiCardSlider
         className=""
-        height={250}
+        swiperClass="h-[250px]"
         template={ProductCard1}
         data={data}
         navigation
