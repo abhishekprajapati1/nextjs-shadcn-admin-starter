@@ -1,5 +1,4 @@
 import DevelopmentWarning from "@/components/DevelopmentWarning";
-import WhatsappIcon from "@/components/icons/WhatsappIcon";
 import { MainHeader } from "@/components/navigation/MainHeader";
 import PersistedColorSwitcher from "@/components/products/PersistedColorSwitcher";
 import ProductModelNumber from "@/components/products/ProductModelNumber";
@@ -9,8 +8,9 @@ import { Button } from "@/components/ui/button";
 import GalleryCarousel from "@/components/ui/swiper/GalleryCarousel";
 import WishlistButton from "@/components/wishlist/WishlistButton";
 import { fetchProductDetails } from "@/services/product.service";
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import { headers } from "next/headers";
+import BuyOnWhatsapp from "@/features/products/components/BuyOnWhatsapp";
 
 export interface ProductDetailsParams {
   product_slug: string;
@@ -24,11 +24,6 @@ const ProductDetailsPage = async ({
   params: { product_slug },
 }: ProductDetailsPageProps) => {
   const product = await fetchProductDetails(product_slug);
-
-  const message = encodeURIComponent(`
-    Hi, I am interested in one of your product. Please contact me.
-    The link to the product is https://akkukachasma.com/${product_slug}/
-    `);
 
   if (!product) {
     notFound();
@@ -73,20 +68,7 @@ const ProductDetailsPage = async ({
           <div className="flex flex-wrap items-center mt-8 gap-2">
             <PurchaseFrameOnly />
             <SelectLens product_colors={product.product_colors} />
-            <Button
-              variant="ghost"
-              className="inline-flex items-center gap-2 !text-success hover:bg-success/10"
-              asChild
-            >
-              <Link
-                href={`https://api.whatsapp.com/send/?phone=918188881661&text=${message}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <WhatsappIcon className="w-5 h-5" />
-                <span className="font-medium">Buy on WhatsApp</span>
-              </Link>
-            </Button>
+            <BuyOnWhatsapp />
           </div>
 
           <div className="mt-8">
