@@ -1,26 +1,30 @@
 "use client";
-import { ProductCard2 } from "@/features/product-cards";
 import MultiCardSlider from "@/components/ui/swiper/MultiCardSlider";
 import { ISeparatedProduct } from "@/lib/types";
 import { SwiperProps } from "swiper/react";
+import ProductCard2 from "./cards/ProductCard2";
 
 interface ProductsSliderProps {
   data?: ISeparatedProduct[];
   breakpoints?: SwiperProps["breakpoints"];
+  slideClass?: string;
+  className?: string;
 }
-const ProductsSlider: React.FC<ProductsSliderProps> = ({
+const ProductSlider: React.FC<ProductsSliderProps> = ({
   data = [],
   breakpoints,
+  slideClass = "",
+  className = "",
 }) => {
   return (
     <MultiCardSlider
       template={ProductCard2}
       data={data}
-      slideClass="py-8 px-4"
-      className="px-4"
+      slideClass={slideClass}
+      className={className}
       breakpoints={breakpoints}
       navigation
     />
   );
 };
-export default ProductsSlider;
+export default ProductSlider;

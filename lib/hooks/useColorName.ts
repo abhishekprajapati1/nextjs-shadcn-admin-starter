@@ -1,26 +1,21 @@
 import React from "react";
 import { IProductColor } from "../types";
+import { IColor } from "@/components/colors/ListItem";
 
-export const getColorName = (product_color: IProductColor): string => {
-  if (product_color) {
-    const value = product_color.colors
-      ?.map((c) => `${c.name}-${c.color}`)
-      .join("-and-");
+export const getColorName = (colors: Array<IColor>): string => {
+  if (Array.isArray(colors) && colors.length > 0) {
+    const value = colors?.map((c) => `${c.name}-${c.color}`).join("-and-");
     return value;
   }
   return "";
 };
 
-const useColorName = ({
-  product_color,
-}: {
-  product_color: IProductColor;
-}): string => {
+const useColorName = ({ colors }: { colors: Array<IColor> }): string => {
   const [colorName, setColorName] = React.useState<string>("");
   React.useEffect(() => {
-    const value = getColorName(product_color);
+    const value = getColorName(colors);
     if (value) setColorName(value);
-  }, [product_color]);
+  }, [colors]);
   return colorName;
 };
 export default useColorName;

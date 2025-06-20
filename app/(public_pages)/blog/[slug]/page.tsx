@@ -6,7 +6,7 @@ import { Calendar, Clock, Eye } from "lucide-react";
 import Image from "next/image";
 import TagsAndKeywords from "@/components/blog/TagsAndKeywords";
 import { notFound } from "next/navigation";
-import { ProductSlider } from "@/features/products-slider";
+import { ProductSlider } from "@/features/products";
 
 interface BlogDetailsPageProps {
   params: { slug: string };
@@ -65,6 +65,8 @@ const BlogDetailsPage = async ({ params: { slug } }: BlogDetailsPageProps) => {
             <h2 className="text-2xl font-bold">Products you want</h2>
             <ProductSlider
               data={article.related_products}
+              className="py-8 px-4"
+              slideClass="px-4"
               breakpoints={{
                 "@0.00": {
                   slidesPerView: 1,

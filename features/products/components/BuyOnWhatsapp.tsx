@@ -7,7 +7,6 @@ import { useSearchParams } from "next/navigation";
 
 const BuyOnWhatsapp = () => {
   const url = useCurrentUrl();
-  console.log("see this", url);
   const message = encodeURIComponent(`
     Hi, I am interested in one of your product. Please contact me.
     The link to the product is: ${url}
