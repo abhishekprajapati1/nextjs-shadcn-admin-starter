@@ -1,6 +1,6 @@
 "use client";
-import ProductCard1 from "@/components/products/cards/ProductCard1";
 import MultiCardSlider from "@/components/ui/swiper/MultiCardSlider";
+import ProductCard1 from "@/features/products/components/cards/ProductCard1";
 import { ISeparatedProduct } from "@/lib/types";
 import { cn } from "@/lib/utils";
 interface ProductsSliderProps {
@@ -22,8 +22,7 @@ const ProductsSlider: React.FC<ProductsSliderProps> = ({
         <span className="border-b-2 border-gray-700">{subtitle}</span>
       </h2>
       <MultiCardSlider
-        className=""
-        height={250}
+        slideClass="px-4 py-8"
         template={ProductCard1}
         data={data}
         navigation

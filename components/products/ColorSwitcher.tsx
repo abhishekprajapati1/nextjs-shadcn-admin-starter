@@ -4,6 +4,7 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import { cn } from "@/lib/utils";
 import { IColor } from "../colors/ListItem";
+import { getColorName } from "@/lib/hooks/useColorName";
 
 interface ColorSwitcherProps {
   colors?: Array<IColor[]>;
@@ -39,7 +40,7 @@ const ColorSwitcher: React.FC<ColorSwitcherProps> = ({
       className={cn("flex items-center gap-2", className)}
     >
       {colors.map((color) => {
-        const value = color?.map((c) => `${c.name}-${c.color}`).join("-and-"); // see useColorName hook
+        const value = getColorName(color);
         const isActive = value === activeColor;
         return (
           <div key={value} className="flex items-center">

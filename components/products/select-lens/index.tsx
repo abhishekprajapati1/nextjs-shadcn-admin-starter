@@ -58,7 +58,7 @@ const ProceedToPurchase: React.FC<ProceedToPurchaseProps> = ({
   const {
     formState: { errors },
   } = form;
-  console.log("see this", errors);
+  // console.log("see this", errors);
 
   // modal close handler
   const handleModalClose = (modalOpen: boolean) => {

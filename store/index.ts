@@ -19,6 +19,7 @@ import bannerStore from "./banners";
 import productResultStore from "./product-results.slice";
 import cartStore from "./cart.slice";
 import globalStore from "./global.slice";
+import { taxStore } from "@/features/admin/settings/tax";
 
 const store = configureStore({
   reducer: {
@@ -41,6 +42,7 @@ const store = configureStore({
     productResultStore,
     cartStore,
     globalStore,
+    taxStore,
   },
 });
 

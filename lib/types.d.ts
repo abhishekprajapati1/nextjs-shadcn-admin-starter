@@ -3,6 +3,7 @@ import { IProductFile } from "@/components/products/details/product-color-images
 import { LucideProps } from "lucide-react";
 import * as React from "react";
 import { FrameStyle } from "./validations/admin/product.validation";
+import { IProduct } from "@/components/products/ListItem";
 
 export type IconElement = React.ForwardRefExoticComponent<
   Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
@@ -116,14 +117,6 @@ export interface IProductColor extends IRecordMeta {
   stock_quantity: number;
   images: IProductFile[];
 }
-export interface IProduct {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  product_colors: IProductColor[];
-}
 
 export interface IGlasses {
   src: string;
@@ -151,20 +144,7 @@ export interface ISeparatedProduct extends IRecordMeta {
   stock_quantity: number;
   color_ids: string[];
   product_id: string;
-  product: {
-    frame_size: string[];
-    frame_style: keyof typeof FrameStyle;
-    slug: string;
-    price: number;
-    model_name: string;
-    listing_price: number;
-    is_featured: boolean;
-    lens_width: number;
-    lens_height: number;
-    gender: string;
-    popularity: number;
-    discount_percent: number;
-  };
+  product: Omit<IProduct, "product_colors", "frame_material", "power_types">;
   colors: IColor[];
   images: IProductFile[];
 }
