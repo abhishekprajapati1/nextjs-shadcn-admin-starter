@@ -1,4 +1,4 @@
-import ProductResult from "@/components/products/product-result";
+import ProductResult from "@/features/products/components/product-result";
 import ENDPOINTS from "@/lib/endpoints";
 import { fetchCategoryProducts } from "@/services/category.service";
 import React from "react";

@@ -39,7 +39,7 @@ function useQueryState<T = any>(
       if (isClient) {
         const valueToSave = JSON.stringify(newValue);
         const newQueryString = createQueryString(name, valueToSave);
-        router.push("?" + newQueryString);
+        router.replace(`?${newQueryString}`);
 
         // Dispatch custom event for cross-tab communication
         window.dispatchEvent(

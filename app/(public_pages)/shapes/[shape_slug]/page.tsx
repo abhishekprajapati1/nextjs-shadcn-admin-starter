@@ -1,5 +1,5 @@
 import { MainHeader } from "@/components/navigation/MainHeader";
-import ProductResult from "@/components/products/product-result";
+import ProductResult from "@/features/products/components/product-result";
 import ENDPOINTS from "@/lib/endpoints";
 import { fetchShapeProducts } from "@/services/shape.service";
 import React from "react";
@@ -13,7 +13,6 @@ const ShapeResultPage = async ({ params }: ShapeResultPageProps) => {
 
   return (
     <React.Fragment>
-      <MainHeader />
       <ProductResult
         endpoint={ENDPOINTS.products.shape_products(params.shape_slug)}
         initialData={data}

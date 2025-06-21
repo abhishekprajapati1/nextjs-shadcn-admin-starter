@@ -19,16 +19,26 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
   product_colors,
 }) => {
   const [thumbsSwiper, setThumbsSwiper] = React.useState<SwiperClass>();
-  const { value: colorName, setValue: setColorName } =
-    useQueryState<string>("color_name");
-  const product_color = useProductColor({ product_colors, colorName });
+  const { value: colorName, setValue: setColorName } = useQueryState<
+    string | undefined
+  >(
+    "color_name",
+    Array.isArray(product_colors) && product_colors.length
+      ? getColorName(product_colors[0]?.colors)
+      : undefined,
+  );
+  const product_color = useProductColor({
+    product_colors,
+    colorName: colorName || "",
+  });
 
-  React.useEffect(() => {
-    if (Array.isArray(product_colors) && product_colors.length && !colorName) {
-      const value = getColorName(product_colors[0]);
-      setColorName(value);
-    }
-  }, [product_colors, setColorName, colorName]);
+  // React.useEffect(() => {
+  //   if (Array.isArray(product_colors) && product_colors.length) {
+  //     if (colorName) {
+  //       setColorName(colorName);
+  //     }
+  //   }
+  // }, [product_colors, setColorName, colorName]);
 
   return (
     <div className="flex flex-col gap-4">

@@ -1,7 +1,7 @@
 "use client";
-import ProductStarter from "@/components/products/cards/Starter";
 import { IProduct } from "@/components/products/ListItem";
 import MultiCardSlider from "@/components/ui/swiper/MultiCardSlider";
+import ProductStarter from "@/features/products/components/cards/Starter";
 const EyeglassTrends: React.FC<{ data: IProduct[] }> = ({ data }) => {
   return (
     <div className="container w-full flex flex-col md:flex-row items-center gap-2 md:gap-4 lg:gap-6 xl:gap-8 md:h-[200px] py-2">
