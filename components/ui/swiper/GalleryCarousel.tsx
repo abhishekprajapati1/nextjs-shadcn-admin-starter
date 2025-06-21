@@ -8,37 +8,12 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import Image from "next/image";
-import { IProductColor } from "@/lib/types";
-import useQueryState from "@/hooks/use-query-state";
-import { getColorName } from "@/lib/hooks/useColorName";
-import useProductColor from "@/lib/hooks/useProductColor";
+import { IFile } from "@/lib/types";
 interface GalleryCarouselProps {
-  product_colors: IProductColor[];
+  images: IFile[];
 }
-const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
-  product_colors,
-}) => {
+const GalleryCarousel: React.FC<GalleryCarouselProps> = ({ images }) => {
   const [thumbsSwiper, setThumbsSwiper] = React.useState<SwiperClass>();
-  const { value: colorName, setValue: setColorName } = useQueryState<
-    string | undefined
-  >(
-    "color_name",
-    Array.isArray(product_colors) && product_colors.length
-      ? getColorName(product_colors[0]?.colors)
-      : undefined,
-  );
-  const product_color = useProductColor({
-    product_colors,
-    colorName: colorName || "",
-  });
-
-  // React.useEffect(() => {
-  //   if (Array.isArray(product_colors) && product_colors.length) {
-  //     if (colorName) {
-  //       setColorName(colorName);
-  //     }
-  //   }
-  // }, [product_colors, setColorName, colorName]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -56,8 +31,8 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
         loop
         className="w-full h-[500px]"
       >
-        {product_color?.images?.length ? (
-          product_color?.images.map((image) => (
+        {images?.length ? (
+          images.map((image) => (
             <SwiperSlide key={image.id}>
               <Image
                 src={image.url}
@@ -84,7 +59,7 @@ const GalleryCarousel: React.FC<GalleryCarouselProps> = ({
         modules={[FreeMode, Navigation, Thumbs]}
         className="w-[80%] h-20"
       >
-        {product_color?.images.map((image) => (
+        {images.map((image) => (
           <SwiperSlide key={image.id}>
             <Image
               src={image.url}
