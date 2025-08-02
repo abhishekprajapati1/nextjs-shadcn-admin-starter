@@ -1,8 +1,8 @@
 import { IGlasses, IGlassTypeData } from "@/lib/types";
 
 export const TOKENS = {
-  AUTH_TOKEN: "_akat",
-  REFRESH_TOKEN: "_akrt",
+  AUTH_TOKEN: "_rktat",
+  REFRESH_TOKEN: "_rktrt",
 };
 
 export const PATTERNS = {

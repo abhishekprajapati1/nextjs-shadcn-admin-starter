@@ -29,12 +29,12 @@ export const sidebarData: {
 } = {
   user: null,
   brand: {
-    name: "Akku Ka Chasma",
-    logo: Glasses,
+    name: "Rakritech",
+    logo: UsersRound,
     website: {
       url:
         process.env.ENVIRONMENT === "production"
-          ? "https://akkukachasma.com/"
+          ? "https://rakritech.com/"
           : "http://localhost:3000/",
       label: "visit website",
     },

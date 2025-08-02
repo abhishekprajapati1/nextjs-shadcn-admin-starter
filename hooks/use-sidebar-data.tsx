@@ -23,6 +23,8 @@ export const useSidebarData = (): ISidebarData => {
     endpoint: ENDPOINTS.AUTH.details,
   });
 
+  console.log("user", user);
+
   const hydratedMenus = React.useMemo(() => {
     return sidebarData.menus.map((menu) => {
       menu.isActive =

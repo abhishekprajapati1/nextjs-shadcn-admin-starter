@@ -56,12 +56,9 @@ const Footer = () => {
           <div className="flex flex-col gap-3 col-span-3 lg:col-span-2">
             <Logo />
             <p className="flex">
-              Order Eyeglass and Sunglass Round - Square Geomantic shape
-              eyeglass online from a vast range of products, styles and buy a
-              pair of branded shades online from the portel. Open your
-              eyeglasses style and adopt the new way designer eyeglasses shop
-              Online / Offline with Akku ka chasma and Buy Blue cut lens free
-              with Eyeglass.
+              Rakritech helps you hire talent seamlessly. Just upload your job
+              description and we will find the best candidate for you. We are a
+              team of 100+ engineers and we are here to help you.
             </p>
           </div>
           <div className="col-span-2 lg:col-span-1">
@@ -96,7 +93,7 @@ const Footer = () => {
                 <span className="text-lg">
                   <HiMail />
                 </span>
-                <p>help@akkukachasma.com</p>
+                <p>help@rakritech.com</p>
               </div>
               <div className="flex gap-2 items-center">
                 <span className="text-lg">
@@ -111,7 +108,7 @@ const Footer = () => {
 
       <div className="container mx-auto px-4 py-6">
         <div className="flex flex-col items-center justify-between space-y-4 text-center text-sm text-muted-foreground md:flex-row md:text-left">
-          <div>© 2024 Akku Ka Chasma. All rights reserved.</div>
+          <div>© 2025 Rakritech. All rights reserved.</div>
           <div className="flex space-x-4">
             <Link href="/privacy" className="hover:text-primary">
               Privacy Policy
