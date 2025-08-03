@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 
 const LoginPage = () => {
   const token = checkToken();
+
   if (token) {
     redirect("/");
   }

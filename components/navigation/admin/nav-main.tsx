@@ -19,9 +19,11 @@ import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { MenuItem } from "@/lib/types";
 import Link from "next/link";
+
 interface NavMainProps {
   items: MenuItem[];
 }
+
 export const NavMain: React.FC<NavMainProps> = ({ items }) => {
   const router = useRouter();
 
@@ -47,14 +49,8 @@ export const NavMain: React.FC<NavMainProps> = ({ items }) => {
                       tooltip={item.title}
                       className={cn("", item.isActive && "bg-primary/10")}
                     >
-                      {item.icon && (
-                        <item.icon
-                          onClick={() => handleUrlRedirect(item.url || "#")}
-                        />
-                      )}
-                      <span onClick={() => handleUrlRedirect(item.url || "#")}>
-                        {item.title}
-                      </span>
+                      {item.icon && <item.icon />}
+                      <span>{item.title}</span>
                       <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
@@ -64,10 +60,10 @@ export const NavMain: React.FC<NavMainProps> = ({ items }) => {
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton asChild>
                             <Link
-                              href={subItem.url}
+                              href={subItem.url || "#"}
                               className={cn(
                                 "",
-                                subItem.isActive && "bg-primary/10"
+                                subItem.isActive && "bg-primary/10",
                               )}
                             >
                               {subItem.icon && <subItem.icon />}

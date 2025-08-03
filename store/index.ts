@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import globalStore from "./global.slice";
-import { taxStore } from "@/features/admin/settings/tax";
+import { adminUsersStore } from "@/features/users";
 
 const store = configureStore({
   reducer: {
     globalStore,
-    taxStore,
+    adminUsersStore,
   },
 });
 

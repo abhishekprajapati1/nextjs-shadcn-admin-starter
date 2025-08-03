@@ -2,27 +2,23 @@ import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { TOKENS } from "./constants";
 import { getDetails } from "@/services/auth.service";
+import { deleteCookie } from "cookies-next";
 
 export const checkToken = (name?: string): string | undefined => {
   const token = cookies().get(name || TOKENS.AUTH_TOKEN)?.value;
   return token;
 };
 
-export const protect = async (
-  redirectTo = "/login",
-  adminAccessRequired: boolean = true,
-) => {
+export const protect = async (redirectTo = "/login") => {
   const headerList = headers();
   const token = checkToken();
   const isLoggedIn = await getDetails(token);
   const currentUrl = headerList.get("x-current-path");
   const encodedCurrentUrl = encodeURIComponent(currentUrl || "");
   const redirectUrl = `${redirectTo}?from=${encodedCurrentUrl}`;
-  if (adminAccessRequired) {
-    if (!isLoggedIn || isLoggedIn?.data?.type != "admin") {
-      redirect(redirectUrl);
-    }
-  } else if (!isLoggedIn) {
+  if (!isLoggedIn) {
+    deleteCookie(TOKENS.AUTH_TOKEN);
+    deleteCookie(TOKENS.REFRESH_TOKEN);
     redirect(redirectUrl);
   }
 };

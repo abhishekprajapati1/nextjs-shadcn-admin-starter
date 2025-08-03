@@ -23,22 +23,32 @@ export const useSidebarData = (): ISidebarData => {
     endpoint: ENDPOINTS.AUTH.details,
   });
 
-  console.log("user", user);
-
   const hydratedMenus = React.useMemo(() => {
     return sidebarData.menus.map((menu) => {
-      menu.isActive =
-        pathname !== "/admin"
+      // Handle regular menu items
+      if (!menu.items) {
+        menu.isActive = !!(pathname !== "/"
           ? menu.url === pathname ||
-            (pathname.startsWith(menu.url) && menu.url !== "/admin")
-          : menu.url === pathname;
-      if (Array.isArray(menu.items)) {
-        menu.items = menu.items.map((item) => {
-          item.isActive = item.url === pathname;
-          return item;
-        });
+            (menu.url && pathname.startsWith(menu.url) && menu.url !== "/")
+          : menu.url === pathname);
+        return menu;
       }
-      return menu;
+
+      // Handle grouped menu items
+      const updatedItems = menu.items.map((item) => {
+        item.isActive = !!(pathname !== "/"
+          ? item.url === pathname ||
+            (item.url && pathname.startsWith(item.url) && item.url !== "/")
+          : item.url === pathname);
+        return item;
+      });
+
+      menu.isActive = updatedItems.some((item) => item.isActive);
+
+      return {
+        ...menu,
+        items: updatedItems,
+      };
     });
   }, [pathname]);
 
