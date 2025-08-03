@@ -4,13 +4,13 @@ import { TOKENS } from "./constants";
 
 export const getBaseUrl = () => {
   if (process.env.NODE_ENV !== "development") {
-    return "https://api.akkukachasma.com";
+    return "https://api.rakritech.com";
   }
   if (typeof window === "undefined") {
-    return process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    return process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
   }
 
-  return "http://localhost:8000";
+  return "http://localhost:8001";
 };
 
 export const baseURL = getBaseUrl() + "/api";

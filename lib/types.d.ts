@@ -103,13 +103,15 @@ export interface SubMenuItem {
   url: string;
   isActive?: boolean;
 }
+
 export interface MenuItem {
   title: string;
-  url: string;
+  url?: string;
   icon: IconElement;
   isActive?: boolean;
-  items?: SubMenuItem[];
+  items?: Omit<MenuItem, "items">[];
 }
+
 export interface IProductColor extends IRecordMeta {
   colors: IColor[];
   product_id: string;
