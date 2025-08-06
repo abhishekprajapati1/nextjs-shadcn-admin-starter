@@ -1,4 +1,4 @@
-import SendPasswordResetLinkForm from "@/components/auth/forgot-password/SendPasswordResetLinkForm";
+import { SendPasswordResetLinkForm } from "@/features/auth";
 
 const ForgotPasswordPage = () => {
   return (

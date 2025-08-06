@@ -1,5 +1,5 @@
 import React from "react";
-import { SignupForm } from "@/components/auth/SignupForm";
+import { SignupForm } from "@/features/auth";
 import { checkToken } from "@/lib/server";
 import { redirect } from "next/navigation";
 

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import React from "react";
-import VerifyEmail from "@/components/auth/verify-email/VerifyEmail";
+import { VerifyEmail } from "@/features/auth";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

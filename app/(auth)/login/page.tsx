@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-import { LoginForm } from "@/components/auth/LoginForm";
+import { LoginForm } from "@/features/auth";
 import { checkToken } from "@/lib/server";
 import { redirect } from "next/navigation";
 
